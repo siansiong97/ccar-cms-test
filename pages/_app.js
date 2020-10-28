@@ -1,3 +1,4 @@
+import "../styles/antd.less";
 import { wrapper } from '../store/store'
 
 const WrappedApp = ({ Component, pageProps }) => {

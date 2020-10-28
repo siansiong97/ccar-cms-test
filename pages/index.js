@@ -1,33 +1,45 @@
-import { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import Page from '../components/Page'
-import { addCount } from '../store/count/action'
-import { wrapper } from '../store/store'
-import { serverRenderClock, startClock } from '../store/tick/action'
+// import { useEffect } from 'react'
+import Head from 'next/head'
+import Layout from '../components/layout'
+import client from '../feathers'
+import carAdsFilter from '../api/carAdsFilter'
 
-const Index = (props) => {
-  useEffect(() => {
-    const timer = props.startClock()
+const Index = ({carAds}) => {
+  console.log({carAds});
+  // useEffect(() => {
+  //   const timer = props.startClock()
 
-    return () => {
-      clearInterval(timer)
-    }
-  }, [props])
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [props])
 
-  return <Page title="Index Page" linkTo="/other" />
+  return (
+    <Layout>
+      <Head>
+        <title>CCAR SOCIAL HOME</title>
+        <link rel="icon" href="/logo.png" />
+        <meta name="og:title" content="CCAR SOCIAL HOME" key="title"/>
+        {/* <meta name="description" content="hello" />
+        <meta property="og:type" content="website" />
+        <meta name="og:description" property="og:description" content="desc" />
+        <meta property="og:site_name" content="ccar social" />
+        <meta property="og:url" content="" />  
+        <meta property="og:image" content="" />   */}
+      </Head>
+    </Layout>
+  )
 }
 
-export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
-  store.dispatch(serverRenderClock(true))
-  store.dispatch(addCount())
-})
+export default Index
 
-const mapDispatchToProps = (dispatch) => {
+export async function getServerSideProps(params) {
+  console.log({params});
+
+  let carAds = await carAdsFilter({}, 0)
   return {
-    addCount: bindActionCreators(addCount, dispatch),
-    startClock: bindActionCreators(startClock, dispatch),
+    props:{
+      carAds
+    }
   }
 }
-
-export default connect(null, mapDispatchToProps)(Index)

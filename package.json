@@ -7,6 +7,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "@feathersjs/authentication-client": "4.5.8",
+    "@feathersjs/feathers": "4.5.8",
+    "@feathersjs/socketio-client": "4.5.8",
+    "@zeit/next-css": "1.0.1",
+    "@zeit/next-less": "1.0.1",
+    "@zeit/next-sass": "1.0.1",
+    "antd": "4.6.6",
+    "axios": "0.20.0",
+    "babel-plugin-import": "1.13.0",
+    "less": "3.12.2",
+    "lodash": "4.17.20",
     "next": "9.4.1",
     "next-redux-wrapper": "^6.0.1",
     "react": "^16.12.0",
@@ -14,7 +25,8 @@
     "react-redux": "7.1.3",
     "redux": "4.0.5",
     "redux-devtools-extension": "2.13.8",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "2.3.0",
+    "socket.io-client": "2.3.1"
   },
   "license": "MIT"
 }

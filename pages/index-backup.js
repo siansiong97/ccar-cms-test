@@ -6,9 +6,7 @@ import { addCount } from '../store/count/action'
 import { wrapper } from '../store/store'
 import { serverRenderClock, startClock } from '../store/tick/action'
 
-import { Row, Col } from  'antd'
-
-const Other = (props) => {
+const Index = (props) => {
   useEffect(() => {
     const timer = props.startClock()
 
@@ -17,15 +15,13 @@ const Other = (props) => {
     }
   }, [props])
 
-  return <Page title="Other Page" linkTo="/" />
+  return <Page title="Index Page" linkTo="/other" />
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  async ({ store }) => {
-    store.dispatch(serverRenderClock(true))
-    store.dispatch(addCount())
-  }
-)
+export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
+  store.dispatch(serverRenderClock(true))
+  store.dispatch(addCount())
+})
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
@@ -34,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(Other)
+export default connect(null, mapDispatchToProps)(Index)
