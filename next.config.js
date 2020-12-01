@@ -10,6 +10,7 @@ if (typeof require !== "undefined") {
 }
 
 module.exports = withCSS({
+  useFileSystemPublicRoutes: false,
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,

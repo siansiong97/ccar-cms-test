@@ -18,7 +18,7 @@ const Index = ({carAds}) => {
     <Layout>
       <Head>
         <title>CCAR SOCIAL HOME</title>
-        <link rel="icon" href="/logo.png" />
+        {/* <link rel="icon" href="/logo.png" /> */}
         <meta name="og:title" content="CCAR SOCIAL HOME" key="title"/>
         {/* <meta name="description" content="hello" />
         <meta property="og:type" content="website" />
