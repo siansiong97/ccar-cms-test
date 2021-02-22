@@ -2,6 +2,7 @@
   "name": "with-redux-wrapper",
   "version": "1.0.0",
   "scripts": {
+    "devNx": "next",
     "dev": "node server.js",
     "build": "next build",
     "start": "node server.js"

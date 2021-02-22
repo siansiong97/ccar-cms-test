@@ -9,6 +9,10 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
+  server.get('/', (req, res) => {
+    return app.render(req, res, '/', req.query)
+  })
+
   server.get('/used-cars/:pid', (req, res) => {
     return app.render(req, res, '/used-cars/:pid', req.query)
   })
@@ -23,6 +27,10 @@ app.prepare().then(() => {
 
   server.get('/car-freaks/:id', (req, res) => {
     return app.render(req, res, '/car-freaks/:id', req.query)
+  })
+
+  server.get('/live/:id', (req, res) => {
+    return app.render(req, res, '/live/:id', req.query)
   })
 
   // server.get('/b', (req, res) => {

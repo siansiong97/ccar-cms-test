@@ -3,6 +3,11 @@ import { useState, useEffect  } from 'react'
 import { useRouter } from 'next/router'
 import redirect from 'nextjs-redirect'
 import _ from 'lodash'
+const domain = 'https://ccar.my'
+const apiUrl = 'https://uat2-api.ccar.my'
+// const domain = 'https://c47d00d5953d.ngrok.io/car-freaks/6004f709117d406c1077794d'
+// const apiUrl = 'http://localhost:3030'
+
 function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: undefined,
@@ -36,8 +41,8 @@ function useWindowSize() {
 
 const App = (props) => {
   const { chatInfo, user } = props
-  const url = "https://ccar.my/car-freaks/" + chatInfo._id 
-  const oriUrl = chatInfo.title?"https://ccar.my/car-freaks/" + chatInfo._id:"https://ccar.my" 
+  const url = domain + "/car-freaks/" + chatInfo._id 
+  const oriUrl = chatInfo.title? domain + "/car-freaks/" + chatInfo._id:"https://ccar.my" 
   let desc = chatInfo.content 
   console.log({user});
 
@@ -48,13 +53,15 @@ const App = (props) => {
       window.location.href=oriUrl
     }, 300);
   },[])
+  // https://share.uat2.ccar.my/car-freaks/6004f709117d406c1077794d
   
   const size = useWindowSize();
 
   if(chatInfo.code){
     return null
   }else{
-    let imageUrl = chatInfo.mediaList[0].url.indexOf('.jpg')>=0?chatInfo.mediaList[0].url:chatInfo.mediaList[0].url+'.jpg'
+    let imageUrl = chatInfo.mediaList[0].url
+    console.log({imageUrl})
     return (
       <>
         <Head>
@@ -84,11 +91,11 @@ export default App
 
 export async function getServerSideProps({req,res}) {
   const { id } = req.params 
-  const product = await fetch(`https://api.ccar.my/chats/${id}`);
+  const product = await fetch(`${apiUrl}/chats/${id}`);
   let json = await product.json();
   console.log(json.createdBy);
 
-  const user = await fetch(`https://api.ccar.my/users?_id=${json.createdBy}`);
+  const user = await fetch(`${apiUrl}/users?_id=${json.createdBy}`);
   let json2 = await user.json();
   console.log({json2});
 

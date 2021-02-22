@@ -9,22 +9,49 @@ export default function MainLayout({children}) {
 //   render () {
     return (
       <Layout>
-        <Header>
-          <Row gutter={10}>
-            <Col span={5}>
+          <Row justify='center' style={{height:'80px', backgroundColor:'#000', paddingTop:'20px'}} gutter={10}>
+            <Col span={3} style={{textAlign:"right"}}>
               <Link href='/'>
                 <a>Home</a>
               </Link>
             </Col>
-            <Col span={5}>
-              <Link href='/used-car'>
-                <a>Buy Car</a>
-              </Link>
+            
+            <Col offset={0} span={21} style={{backgroundColor:"red"}}>
+              <Row gutter={10} justify='end'>
+                <Col span={2}>
+                  <Link href='/used-car'>
+                    <a>CarMarket</a>
+                  </Link>
+                </Col>
+                <Col span={2}>
+                  <Link href='/used-car'>
+                    <a>All-NewCar</a>
+                  </Link>
+                </Col>
+                <Col span={2}>
+                  <Link href='/used-car'>
+                    <a>LIVE</a>
+                  </Link>
+                </Col>
+                <Col span={2}>
+                  <Link href='/used-car'>
+                    <a>Menu</a>
+                  </Link>
+                </Col>
+                <Col span={2}>
+                  <Link href='/used-car'>
+                    <a>Login</a>
+                  </Link>
+                </Col>
+                <Col span={2}>
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Header>
+
         <Content style={{minHeight:360,  backgroundColor:'#fff', margin:'0 20px'}}>{ children }</Content>
-        <Footer>Footer</Footer>
+
+        {/* <Footer>Footer</Footer> */}
     </Layout>
     )
   }
