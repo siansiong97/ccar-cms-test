@@ -1,0 +1,5 @@
+<krpano title="CCAR 360 View">
+	<include url="https://ccar.s3-ap-southeast-1.amazonaws.com/each/each.xml" />
+</krpano>
+
+

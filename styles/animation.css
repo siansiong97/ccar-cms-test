@@ -1,0 +1,62 @@
+@keyframes example {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: yellow;
+    }
+    50% {
+        background-color: blue;
+    }
+    100% {
+        background-color: green;
+    }
+}
+
+@keyframes slide-x {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes slide-y {
+    from {
+        height: 0%;
+    }
+    to {
+        height: 100%;
+    }
+}
+
+.slide-down-fast {
+    animation-name: slide-y;
+    animation-duration: 0.5s;
+    overflow: hidden;
+    height: 0%
+}
+
+.slide-up-fast {
+    animation-name: slide-y;
+    animation-duration: 0.5s;
+    animation-direction: reverse;
+    overflow: hidden;
+    height: 100%
+}
+
+.slide-right-fast {
+    animation-name: slide-x;
+    animation-duration: 0.5s;
+    overflow: hidden;
+    width: 0%
+}
+
+.slide-left-fast {
+    animation-name: slide-x;
+    animation-duration: 0.5s;
+    animation-direction: reverse;
+    overflow: hidden;
+    width: 100%
+}

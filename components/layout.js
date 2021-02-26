@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import Link from 'next/link'
 import { Layout } from 'antd';
-import { Row, Col } from 'antd'
+import { Row, Col, } from 'antd'
 const { Header, Footer, Sider, Content } = Layout;
 
 export default function MainLayout({children}) {
@@ -9,7 +9,7 @@ export default function MainLayout({children}) {
 //   render () {
     return (
       <Layout>
-          <Row justify='center' style={{height:'80px', backgroundColor:'#000', paddingTop:'20px'}} gutter={10}>
+          <Row justify='center' className="wrapBorderRed" style={{height:'80px', backgroundColor:'#000', paddingTop:'20px'}} gutter={10}>
             <Col span={3} style={{textAlign:"right"}}>
               <Link href='/'>
                 <a>Home</a>
@@ -17,7 +17,7 @@ export default function MainLayout({children}) {
             </Col>
             
             <Col offset={0} span={21} style={{backgroundColor:"red"}}>
-              <Row gutter={10} justify='end'>
+              <Row className="wrapBorderRed" gutter={10} justify='end'>
                 <Col span={2}>
                   <Link href='/used-car'>
                     <a>CarMarket</a>

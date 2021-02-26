@@ -1,0 +1,399 @@
+/* label, p, span, strong, h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+} */
+
+.ant-input, .ant-select-selection {
+    border: 1px solid #E3C57D !important;
+}
+
+.ant-menu.ant-menu-dark, .ant-menu.ant-menu-dark .ant-menu-sub {
+    background-color: white !important;
+}
+
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    background-color: white !important;
+}
+
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu-submenu-title:hover, .ant-menu-item-group-title {
+    color: black !important;
+}
+
+.condition-form span.ant-radio+* {
+    padding-right: 2px;
+    padding-left: 2px;
+    font-size: 12px;
+}
+
+.ant-layout-header {
+    background-color: white !important;
+    padding: 0 !important;
+}
+
+.ant-card-head, .ant-modal-header {
+    /* background: rgb(237, 236, 234) !important; */
+    /* background: #FBB040 !important; */
+    background: #FFCC32 !important;
+}
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    background: initial !important;
+    /* width: 140px; */
+}
+
+.ant-menu-dark .ant-menu-item, .ant-menu-dark .ant-menu-item-group-title, .ant-menu-dark .ant-menu-item>a {
+    color: black !important;
+}
+
+.ant-layout {
+    background-color: #ffffff !important;
+}
+
+.ant-layout-footer {
+    color: #ffffff !important;
+    background-color: #000000!important;
+    position: relative;
+    padding: 5px 5px;
+}
+
+.ant-menu-item {
+    height: 100% !important;
+}
+
+.hide-radio-border div .ant-form-item-control span div .ant-radio-button-wrapper:first-child {
+    border-left: none !important;
+}
+
+.hide-radio-border div .ant-form-item-control span div .ant-radio-button-wrapper:not(:first-child)::before {
+    background-color: initial !important;
+}
+
+.hide-radio-border div .ant-form-item-control span div .ant-radio-button-wrapper {
+    border: none !important;
+    background-color: initial !important;
+}
+
+.ant-divider-horizontal.ant-divider-with-text-left::before, .ant-divider-horizontal.ant-divider-with-text-left::after {
+    border-top: 1px solid rgba(0, 0, 0, 0.65) !important;
+}
+
+.ant-checkbox-wrapper+.ant-checkbox-wrapper {
+    margin: 0 !important;
+}
+
+.ant-upload-select-picture-card i {
+    color: #999 !important;
+    font-size: 32px !important;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+    margin-top: 8px !important;
+    color: #666 !important;
+}
+
+.ant-select-selection-item {
+    text-overflow: initial !important;
+}
+
+.ant-slider-handle {
+    background-color: #ffeaba !important;
+}
+
+.ant-slider-track {
+    background-color: rgb(170, 106, 48) !important;
+}
+
+.ant-table-row-expand-icon {
+    color: #FBB040 !important;
+    width: 25px !important;
+    height: 25px !important;
+    line-height: 20px !important;
+    border-radius: 50% !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.modal-body-background-transparent .ant-modal-content {
+    background-color: transparent;
+}
+
+.no-padding-modal-body .ant-modal-body {
+    padding: 0px !important;
+}
+
+.xs-padding-modal-body .ant-modal-body {
+    padding: .25em !important;
+}
+
+.sm-padding-modal-body .ant-modal-body {
+    padding: .5em !important;
+}
+
+.md-padding-modal-body .ant-modal-body {
+    padding: 1em !important;
+}
+
+.lg-padding-modal-body .ant-modal-body {
+    padding: 1.5em !important;
+}
+
+.xl-padding-modal-body .ant-modal-body {
+    padding: 3em !important;
+}
+
+.affix-element-show-on-modal .ant-affix {
+    z-index: 1001 !important;
+}
+
+.affix-element-show-on-modal-1 .ant-affix {
+    z-index: 1002 !important;
+}
+
+.show-on-modal-mask .ant-modal-wrap {
+    z-index: 1001 !important;
+}
+
+.card-container>.ant-tabs-card>.ant-tabs-content {
+    height: 100px;
+    background: transparent;
+    color: white;
+}
+
+.card-container>.ant-tabs-card>.ant-tabs-content>.ant-tabs-tabpane {
+    background: transparent;
+    padding: 16px;
+}
+
+.card-container>.ant-tabs-card>.ant-tabs-bar {
+    border-bottom: solid 3px;
+    border-color: #F9A825;
+    margin: 0;
+    width: 100%;
+    height: 70px !important;
+}
+
+.card-container>.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab {
+    border-color: transparent;
+    background: transparent;
+    color: white;
+}
+
+.card-container .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-nav-container {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.card-container>.ant-tabs-card>.ant-tabs-bar .ant-tabs-tab-active {
+    border-color: #F9A825;
+    background: #F9A825;
+    color: white;
+    height: 100%;
+}
+
+.ant-btn-primary {
+    color: #000000;
+    background-color: #FFCC32;
+    border-color: #FFCC32;
+}
+
+.banner-anim-thumb {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+    z-index: 10;
+    /* display: none; */
+    margin-bottom: 10px;
+}
+
+.banner-anim-thumb-default {
+    height: 40px;
+    line-height: 40px;
+}
+
+.show-carousel-dots-inside .BrainhubCarousel__container {
+    position: relative;
+}
+
+.show-carousel-dots-inside .BrainhubCarousel__dots {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.show-carousel-dots-inside .BrainhubCarousel__dots .BrainhubCarousel__dot {
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 6px !important;
+}
+
+.carousel-background-black .BrainhubCarousel__container {
+    background-color: black;
+}
+
+.carousel-custom-arrows .BrainhubCarousel__customArrows {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: rgba(102, 102, 102, 0.3);
+}
+
+.height-100 .BrainhubCarousel__container {
+    height: 100%
+}
+
+.height-100 .BrainhubCarousel {
+    height: 100%
+}
+
+video {
+    outline: none;
+}
+
+.ant-input, .ant-select-selection {
+    border: 1px solid #dedede !important;
+}
+
+.cursor-pointer .ant-input {
+    cursor: pointer;
+}
+
+.round-border-input .ant-input {
+    border-radius: 30px;
+}
+
+.left-round-border-input .ant-input {
+    border-radius: 30px 0px 0px 30px;
+}
+
+.no-border-input .ant-input {
+    border: none !important;
+}
+
+.no-border-input .ant-input .ant-select-selection {
+    border: none !important;
+}
+
+.no-border-input .ant-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.no-border-input .ant-mentions {
+    border: none !important;
+}
+.no-border-input .ant-mentions-focused {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.reaction-popover .ant-popover-inner-content {
+    padding: 5px 16px;
+    color: rgba(0, 0, 0, 0.65);
+    height: 35px;
+}
+
+.card-padding-0 .ant-card-body {
+    padding: 0;
+}
+
+.ant-switch-checked {
+    background-color: #FFCC32;
+}
+
+.ant-pagination-item-active a {
+    color: #FFCC32;
+}
+
+.ant-pagination-item-active {
+    font-weight: 500;
+    background: #fff;
+    border-color: #FFCC32;
+}
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    color: #fff;
+    background: #FFCC32;
+    border-color: #FFCC32;
+}
+
+.round-border-radio-button .ant-radio-button-wrapper:first-child {
+    border-radius: 12px 0px 0px 12px;
+}
+
+.round-border-radio-button .ant-radio-button-wrapper:last-child {
+    border-radius: 0px 12px 12px 0px;
+}
+
+.radio-button-space-around .ant-radio-button-wrapper:not(:first-child)::before{
+    background-color: transparent;
+    border-left :1px;
+}
+
+.radio-button-space-around .ant-radio-button-wrapper{
+    border-left  : 1px solid #FFCC32;
+    border : 1px solid #FFCC32;
+}
+
+.radio-button-space-around .ant-radio-group{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    width : 100%;
+}
+
+.ant-radio-group .round-border-big {
+    border-radius: 15px !important;
+}
+
+
+.collapse-no-header  .ant-collapse-item .ant-collapse-header {
+    padding : 0px;
+}
+.collapse-no-header .ant-collapse-item {
+    border : none !important;
+}
+
+.collapse-body-no-padding .ant-collapse-content-box {
+    padding : 0px;
+}
+
+.collapse-body-padding-top-sm .ant-collapse-content-box {
+    padding-top : 2px;
+}
+
+.collapse-body-overflow-visible .ant-collapse-content {
+    overflow : visible;
+}
+
+.collapse-body-no-padding .ant-collapse-content {
+    border : none
+}
+
+.emoji-mart-small .emoji-mart-scroll {
+    height : 150px;
+}
+
+.emoji-mart-normal .emoji-mart-scroll {
+    height : 300px;
+}
+.emoji-mart-big .emoji-mart-scroll {
+    height : 600px;
+}
+.ReactModal__Overlay--after-open {
+    z-index: 9999 !important;
+}
+
+.no-margin .public-DraftStyleDefault-block{
+    margin : 0px !important;
+}
+.ant-typography{
+    margin-bottom: 0px !important;
+}
+
+.ql-editor{
+    padding: 5px 15px !important;
+}

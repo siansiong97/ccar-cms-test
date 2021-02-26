@@ -1,111 +1,102 @@
 import _ from 'lodash'
 import axios from 'axios';
 import client from '../feathers'
+import { isValidNumber, notEmptyLength, convertToRangeFormat, convertRangeFormatBack, convertFilterRange, objectRemoveEmptyValue } from '../common-function';
 
 const PAGESIZE = 30;
 const distinctArr = (value, index, self) => {
   return self.indexOf(value) === index
 }
 
-export default async function (searchInfo, skip) {
-  // if all undefined, return empty
-  let searchCheck = false
-  Object.keys(searchInfo).map(k=>{
-    if(typeof(searchInfo[k]) === 'string'){
-      searchInfo[k] = searchInfo[k].toLowerCase()
-      searchCheck = true
-    }
-  })
-  if(searchCheck === false){
-    return await axios.get(`${client.io.io.uri}carAdsFilter`,
-      {
-        params: {
-          // match,
-          // businessType: businessType,
-          limit: PAGESIZE + skip,
-          skip: skip,
-        }
-      }
-    )
-    .then((res) => {
-      console.log({res});
-      let data = res.data.modelList
-      let stateArr = []
-      res.data.modelList.map(i => {
-        stateArr = stateArr.concat(i.state)
-      })
-      stateArr = stateArr.filter(distinctArr)
-      return { data, stateArr, products:res.data.data }
-    })
-    .catch((err) => {
-      console.log(err)
-      return null
-    })
+export default async function (data, limit) {
 
-    // return { data:[], stateArr:[] }
-  }else{
-    let skip = 0
-    // remove undefined & null
-    let cloneProds = _.cloneDeep(_.pickBy(searchInfo, _.identity))
-    let filter = {}
-    let filterAnd = []
-
-    // AND year
-    if (cloneProds.year) {
-      filterAnd = filterAnd.concat(
-        { 'year': { $gte: cloneProds.year[0] } },
-        { 'year': { $lte: cloneProds.year[1] } }
-      )
-      delete cloneProds.year
-    }
-
-    // AND price
-    if (cloneProds.price) {
-      filterAnd = filterAnd.concat(
-        { 'price': { $gte: cloneProds.price[0] } },
-        { 'price': { $lte: cloneProds.price[1] } }
-      )
-      delete cloneProds.price
-    }
-
-    // AND mileage
-    if (cloneProds.mileage) {
-      filterAnd = filterAnd.concat(
-        { 'mileageFilter': { $gte: cloneProds.mileage[0] } },
-        { 'mileageFilter': { $lte: cloneProds.mileage[1] } }
-      )
-      delete cloneProds.mileage
-    }
-
-    if (filterAnd.length > 0) {
-      filter['$and'] = filterAnd
-    }
-
-    let match = { $match: { ...cloneProds, ...filter } }
-
-    return await axios.get(`${client.io.io.uri}carAdsFilter`,
-      {
-        params: {
-          match,
-          // businessType: businessType,
-          limit: PAGESIZE + skip,
-          skip: skip,
-        }
-      }
-    )
-    .then((res) => {
-      let data = res.data.modelList
-      let stateArr = []
-      res.data.modelList.map(i => {
-        stateArr = stateArr.concat(i.state)
-      })
-      stateArr = stateArr.filter(distinctArr)
-      return { data, stateArr, products:res.data.data }
-    })
-    .catch((err) => {
-      console.log(err)
-      return null
-    })
+  if (!_.isPlainObject(data)) {
+    data = {};
   }
-  
+
+  if (!_.has(data, ['filterGroup'])) {
+    data.filterGroup = {};
+  }
+
+  if (!_.has(data, ['config'])) {
+    data.config = {
+      page: 1,
+      sorting: {},
+    };
+  }
+
+  if (!isValidNumber(parseInt(limit))) {
+    limit = PAGESIZE;
+  }
+
+  if (!isValidNumber(parseInt(data.config.page))) {
+    data.config.page = 1;
+  }
+
+  if (!_.get(data.config, ['sorting', 'carspec.year']) && !_.get(data.config, ['sorting', 'mileageFilter']) && !_.get(data.config, ['sorting', 'searchPrice'])) {
+    data.config.sorting = {};
+  }
+
+  let andFilter = { $and: [] }
+
+  if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.yearRange)) {
+    data.filterGroup.yearRange = convertToRangeFormat(data.filterGroup.yearRange);
+    data.filterGroup.yearRange = convertFilterRange(data.filterGroup.yearRange, 'carspec.year')
+    if (notEmptyLength(data.filterGroup.yearRange)) {
+      andFilter.$and = [...andFilter.$and, ...data.filterGroup.yearRange]
+      data.filterGroup = Object.assign(data.filterGroup, andFilter)
+    }
+    delete data.filterGroup.yearRange;
+  }
+
+  if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.priceRange)) {
+    data.filterGroup.priceRange = convertToRangeFormat(data.filterGroup.priceRange);
+    data.filterGroup.priceRange = convertFilterRange(data.filterGroup.priceRange, 'searchPrice')
+    if (notEmptyLength(data.filterGroup.priceRange)) {
+      andFilter.$and = [...andFilter.$and, ...data.filterGroup.priceRange]
+      data.filterGroup = Object.assign(data.filterGroup, andFilter)
+    }
+    delete data.filterGroup.priceRange;
+  }
+
+  if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.mileageRange)) {
+    data.filterGroup.mileageRange = convertToRangeFormat(data.filterGroup.mileageRange);
+    data.filterGroup.mileageRange = convertFilterRange(data.filterGroup.mileageRange, 'mileageFilter')
+    if (notEmptyLength(data.filterGroup.mileageRange)) {
+      andFilter.$and = [...andFilter.$and, ...data.filterGroup.mileageRange]
+      data.filterGroup = Object.assign(data.filterGroup, andFilter)
+    }
+    delete data.filterGroup.mileageRange;
+  }
+
+  if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.engineCapacityRange)) {
+    data.filterGroup.engineCapacityRange = convertRangeFormatBack(data.filterGroup.engineCapacityRange);
+    data.filterGroup.engineCapacityRange = convertFilterRange(data.filterGroup.engineCapacityRange, 'carspec.engineCapacity')
+    if (notEmptyLength(data.filterGroup.engineCapacityRange)) {
+      andFilter.$and = [...andFilter.$and, ...data.filterGroup.engineCapacityRange]
+      data.filterGroup = Object.assign(data.filterGroup, andFilter)
+    }
+    delete data.filterGroup.engineCapacityRange;
+  }
+
+  data.filterGroup = objectRemoveEmptyValue(data.filterGroup);
+  let match = { $match: { ...data.filterGroup } }
+  console.log(JSON.stringify(match));
+  console.log(JSON.stringify(data.config));
+  return await axios.get(`${client.io.io.uri}carAdsFilterV3`,
+    {
+      params: {
+        match,
+        sorting: data.config.sorting,
+        limit: limit,
+        skip: (data.config.page - 1) * limit,
+      }
+    }
+  ).then((res) => {
+    return res.data;
+  })
+    .catch((err) => {
+      return {};
+    })
+
 }

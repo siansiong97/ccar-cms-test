@@ -89,7 +89,6 @@ export async function getServerSideProps({req,res}) {
   let json = await product.json();
   // const dealer = await fetch(`https://api.ccar.my/users/${id}`);
   // let json2 = await dealer.json();
-  // console.log({json2});
   const company = await fetch(`https://api.ccar.my/companys/${json.companyId}`);
   let json3 = await company.json();
 
