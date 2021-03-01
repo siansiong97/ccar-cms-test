@@ -302,7 +302,8 @@ const GridProductList = (props) => {
 
                                         <div className={_renderLayout(v)}>
                                             <div className="wrap-product-ads-img">
-                                                <Link href={'/viewCar/' + v._id} target="_self">
+                                                <Link passHref  href={'/viewCar/' + v._id}>
+                                                    <a>
                                                     <React.Fragment>
                                                         <div className="overlay-condition">
                                                             {_renderCondition(v)}
@@ -323,6 +324,7 @@ const GridProductList = (props) => {
 
                                                         </div>
                                                     </React.Fragment>
+                                                    </a>
                                                 </Link>
                                                 <span className="text-align-right gridTopRight">
                                                     {props.topRight ? props.topRight(v) : null}</span>
@@ -334,7 +336,7 @@ const GridProductList = (props) => {
                                             </div>
                                             <div className="wrap-product-ads-text">
                                                 <div className="wrap-product-ads-title">
-                                                    <Link href={'/viewCar/' + v._id} target="_self"><div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div></Link>
+                                                    <Link passHref  href={'/viewCar/' + v._id} target="_self"><div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div></Link>
                                                 </div>
 
                                                 <div className="wrap-product-ads-title-p text-overflow-break">

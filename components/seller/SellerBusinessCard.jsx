@@ -1,7 +1,7 @@
 import { Col, Form, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import UserAvatar from '../general/user-avatar';
+import UserAvatar from '../general/UserAvatar';
 import { withRouter } from 'next/dist/client/router';
 
 

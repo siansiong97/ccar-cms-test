@@ -45,13 +45,13 @@ const CarMarketPage = (props) => {
         config: false,
     });
 
-    useEffect(() => { 
-    
+    useEffect(() => {
+
         setInitRan({
             filterGroup: true,
-            config : true,
+            config: true,
         })
-    } , [])
+    }, [])
 
     useEffect(() => {
         console.log(initRan);
@@ -65,8 +65,8 @@ const CarMarketPage = (props) => {
 
         if (initRan.filterGroup && initRan.config) {
             props.setProductListLoading(true);
-            if(window){
-                window.scroll(0,0)
+            if (window) {
+                window.scroll(0, 0)
             }
             console.log(currentFilterGroup);
             console.log(mainConfig);
@@ -243,213 +243,211 @@ const CarMarketPage = (props) => {
     }
 
     return (
-        <ReduxPersistWrapper cookie={props.cookie}>
-            <LayoutV2>
-                <div className="section">
-                    <div className="container">
-                        <Spin indicator={antIcon} spinning={spinning} indicator={
-                            <img src="/loading.gif" style={{ width: 100, height: 100, position: 'sticky', position: '-webkit-sticky', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto' }} />
-                        }>
-                            <Row gutter={[{ xs: 8, sm: 8, md: 15, lg: 15, xl: 15 }, 16]}>
-                                <Col className="gutter-row" xs={24} sm={24} md={24} lg={18} xl={18}>
-                                    <div className="flex-justify-space-between flex-items-align-center">
-                                        <span className='d-inline-block ' >
-                                            <Breadcrumb>
-                                                <Breadcrumb.Item>
-                                                    <Link href="/">Home</Link>
-                                                </Breadcrumb.Item>
-                                                <Breadcrumb.Item>
-                                                    <Link href={convertParameterToProductListUrl()} >Product List</Link>
-                                                </Breadcrumb.Item>
-                                            </Breadcrumb>
-                                        </span>
-                                        <span className='d-inline-block ' >
-                                            <Radio.Group onChange={(e) => { setView(e.target.value) }} value={view} className="wrap-gridView-btn" style={{ float: 'right' }}>
-                                                <Tooltip title="List View"><Radio.Button value="listView"><BarsOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
-                                                <Tooltip title="Grid View"><Radio.Button value="gridView"><AppstoreOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
-                                            </Radio.Group>
-                                        </span>
-                                    </div>
+        <LayoutV2>
+            <div className="section">
+                <div className="container">
+                    <Spin indicator={antIcon} spinning={spinning} indicator={
+                        <img src="/loading.gif" style={{ width: 100, height: 100, position: 'sticky', position: '-webkit-sticky', top: 0, bottom: 0, left: 0, right: 0, margin: 'auto' }} />
+                    }>
+                        <Row gutter={[{ xs: 8, sm: 8, md: 15, lg: 15, xl: 15 }, 16]}>
+                            <Col className="gutter-row" xs={24} sm={24} md={24} lg={18} xl={18}>
+                                <div className="flex-justify-space-between flex-items-align-center">
+                                    <span className='d-inline-block ' >
+                                        <Breadcrumb>
+                                            <Breadcrumb.Item>
+                                                <Link passHref href="/">Home</Link>
+                                            </Breadcrumb.Item>
+                                            <Breadcrumb.Item>
+                                                <Link passHref href={convertParameterToProductListUrl()} >Product List</Link>
+                                            </Breadcrumb.Item>
+                                        </Breadcrumb>
+                                    </span>
+                                    <span className='d-inline-block ' >
+                                        <Radio.Group onChange={(e) => { setView(e.target.value) }} value={view} className="wrap-gridView-btn" style={{ float: 'right' }}>
+                                            <Tooltip title="List View"><Radio.Button value="listView"><BarsOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
+                                            <Tooltip title="Grid View"><Radio.Button value="gridView"><AppstoreOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
+                                        </Radio.Group>
+                                    </span>
+                                </div>
 
-                                    <div className="thin-border round-border-light padding-sm margin-top-md">
-                                        <Row gutter={[10, 10]}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className="flex-justify-space-between">
-                                                    <span className='d-inline-block h6' >
-                                                        <span>{total} </span>
-                                                        <span>{_.capitalize(_.get(getCarBrand(_.get(currentFilterGroup, ['make'])), ['value']) || '')} </span>
-                                                        <span>{_.capitalize(_.get(currentFilterGroup, ['model']) || '')} </span>
-                                                        <span>Cars in CarMarket </span>
+                                <div className="thin-border round-border-light padding-sm margin-top-md">
+                                    <Row gutter={[10, 10]}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <div className="flex-justify-space-between">
+                                                <span className='d-inline-block h6' >
+                                                    <span>{total} </span>
+                                                    <span>{_.capitalize(_.get(getCarBrand(_.get(currentFilterGroup, ['make'])), ['value']) || '')} </span>
+                                                    <span>{_.capitalize(_.get(currentFilterGroup, ['model']) || '')} </span>
+                                                    <span>Cars in CarMarket </span>
+                                                </span>
+                                                <span className='flex-items-align-center flex-justify-space-around ' >
+                                                    <span className='flex-items-align-center margin-right-md' >
+                                                        <span className="margin-right-md" >
+                                                            Reg Card:
+                              </span>
+                                                        <Switch checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
                                                     </span>
-                                                    <span className='flex-items-align-center flex-justify-space-around ' >
-                                                        <span className='flex-items-align-center margin-right-md' >
-                                                            <span className="margin-right-md" >
-                                                                Reg Card:
-                              </span>
-                                                            <Switch checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
-                                                        </span>
 
-                                                        <span className='flex-items-align-center margin-right-md' >
-                                                            <span className="margin-right-md" >
-                                                                Ready Stock:
+                                                    <span className='flex-items-align-center margin-right-md' >
+                                                        <span className="margin-right-md" >
+                                                            Ready Stock:
                               </span>
-                                                            <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
-                                                        </span>
-                                                        <span className='flex-items-align-center margin-right-md' >
-                                                            <span className="margin-right-md" >
-                                                                360&deg; View:
+                                                        <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
+                                                    </span>
+                                                    <span className='flex-items-align-center margin-right-md' >
+                                                        <span className="margin-right-md" >
+                                                            360&deg; View:
                               </span>
-                                                            <Switch checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
+                                                        <Switch checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </Col>
+
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Divider type="horizontal" style={{ margin: 0 }} />
+                                        </Col>
+
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ marginTop: '-10px', marginBottom: '-10px' }}>
+                                            <div className="flex-justify-space-between flex-items-align-center">
+                                                <span className='d-inline-block' >
+                                                    <Radio.Group
+                                                        className="wrap-businessType-radio"
+                                                        onChange={(e) => { setCurrentFilterGroup({ ...currentFilterGroup, condition: e.target.value }); pushParameterToUrl({ ...currentFilterGroup, condition: _.toLower(e.target.value) }, { ...mainConfig, page: 1 }) }}
+                                                        value={currentFilterGroup.condition ? currentFilterGroup.condition : ''}>
+                                                        <Radio.Button value="">All</Radio.Button>
+                                                        <Radio.Button value="used">Used</Radio.Button>
+                                                        <Radio.Button value="recon">Recon</Radio.Button>
+                                                        <Radio.Button value="new">New</Radio.Button>
+                                                    </Radio.Group>
+                                                </span>
+                                                {/* </Col> */}
+
+                                                {/* <Col span={12}> */}
+                                                <span className="flex-items-align-center flex-justify-space-around">
+                                                    <span className='flex-justify-center flex-items-align-center margin-x-sm' >
+                                                        <span className='d-inline-block '>
+                                                            Year
+                              </span>
+                                                        <span className='flex-justify-center flex-items-align-center'>
+                                                            {
+                                                                _.get(mainConfig, ['sorting', 'carspec.year']) == 1 ?
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': null }, page: 1 }) }}
+                                                                    ></img>
+                                                                    :
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': 1 }, page: 1 }) }} ></img>
+                                                            }
+
+                                                            {
+                                                                _.get(mainConfig, ['sorting', 'carspec.year']) == -1 ?
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': null }, page: 1 }) }}></img>
+                                                                    :
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': -1 }, page: 1 }) }}></img>
+                                                            }
                                                         </span>
                                                     </span>
-                                                </div>
-                                            </Col>
 
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Divider type="horizontal" style={{ margin: 0 }} />
-                                            </Col>
-
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ marginTop: '-10px', marginBottom: '-10px' }}>
-                                                <div className="flex-justify-space-between flex-items-align-center">
-                                                    <span className='d-inline-block' >
-                                                        <Radio.Group
-                                                            className="wrap-businessType-radio"
-                                                            onChange={(e) => { setCurrentFilterGroup({ ...currentFilterGroup, condition: e.target.value }); pushParameterToUrl({ ...currentFilterGroup, condition: _.toLower(e.target.value) }, { ...mainConfig, page: 1 }) }}
-                                                            value={currentFilterGroup.condition ? currentFilterGroup.condition : ''}>
-                                                            <Radio.Button value="">All</Radio.Button>
-                                                            <Radio.Button value="used">Used</Radio.Button>
-                                                            <Radio.Button value="recon">Recon</Radio.Button>
-                                                            <Radio.Button value="new">New</Radio.Button>
-                                                        </Radio.Group>
-                                                    </span>
-                                                    {/* </Col> */}
-
-                                                    {/* <Col span={12}> */}
-                                                    <span className="flex-items-align-center flex-justify-space-around">
-                                                        <span className='flex-justify-center flex-items-align-center margin-x-sm' >
-                                                            <span className='d-inline-block '>
-                                                                Year
-                              </span>
-                                                            <span className='flex-justify-center flex-items-align-center'>
-                                                                {
-                                                                    _.get(mainConfig, ['sorting', 'carspec.year']) == 1 ?
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': null }, page: 1 }) }}
-                                                                        ></img>
-                                                                        :
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': 1 }, page: 1 }) }} ></img>
-                                                                }
-
-                                                                {
-                                                                    _.get(mainConfig, ['sorting', 'carspec.year']) == -1 ?
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': null }, page: 1 }) }}></img>
-                                                                        :
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'carspec.year': -1 }, page: 1 }) }}></img>
-                                                                }
-                                                            </span>
-                                                        </span>
-
-                                                        <span className='flex-justify-center flex-items-align-center margin-x-sm' >
-                                                            <span className='d-inline-block ' >
-                                                                Price
-                              </span>
-                                                            <span className='flex-justify-center flex-items-align-center'>
-                                                                {
-                                                                    _.get(mainConfig, ['sorting', 'searchPrice']) == 1 ?
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': null }, page: 1 }) }}
-                                                                        ></img>
-                                                                        :
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': 1 }, page: 1 }) }} ></img>
-                                                                }
-
-                                                                {
-                                                                    _.get(mainConfig, ['sorting', 'searchPrice']) == -1 ?
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': null }, page: 1 }) }}></img>
-                                                                        :
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': -1 }, page: 1 }) }}></img>
-                                                                }
-                                                            </span>
-                                                        </span>
-
-                                                        <span className='flex-justify-center flex-items-align-center margin-x-sm' >
-                                                            <span className='d-inline-block ' >
-                                                                Mileage
-                              </span>
-                                                            <span className='flex-justify-center flex-items-align-center'>
-                                                                {
-                                                                    _.get(mainConfig, ['sorting', 'mileageFilter']) == 1 ?
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': null }, page: 1 }) }}
-                                                                        ></img>
-                                                                        :
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': 1 }, page: 1 }) }} ></img>
-                                                                }
-
-                                                                {
-                                                                    _.get(mainConfig, ['sorting', 'mileageFilter']) == -1 ?
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': null }, page: 1 }) }}></img>
-                                                                        :
-                                                                        <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': -1 }, page: 1 }) }}></img>
-                                                                }
-                                                            </span>
-                                                        </span>
-
+                                                    <span className='flex-justify-center flex-items-align-center margin-x-sm' >
                                                         <span className='d-inline-block ' >
-                                                            <Tooltip title="Reset Sorting">
-                                                                <Button
-                                                                    style={{
-                                                                        border: 'none',
-                                                                        background: 'none',
-                                                                        color: 'red',
-                                                                        padding: 0,
-                                                                        fontSize: 12,
-                                                                        fontWeight: 500
-                                                                    }} className="w-100 h-100"
-                                                                    onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: {}, page: 1 }) }} >
+                                                            Price
+                              </span>
+                                                        <span className='flex-justify-center flex-items-align-center'>
+                                                            {
+                                                                _.get(mainConfig, ['sorting', 'searchPrice']) == 1 ?
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': null }, page: 1 }) }}
+                                                                    ></img>
+                                                                    :
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': 1 }, page: 1 }) }} ></img>
+                                                            }
 
-                                                                    <Icon type="reload" />
-                                                                </Button>
-                                                            </Tooltip>
+                                                            {
+                                                                _.get(mainConfig, ['sorting', 'searchPrice']) == -1 ?
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': null }, page: 1 }) }}></img>
+                                                                    :
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'searchPrice': -1 }, page: 1 }) }}></img>
+                                                            }
                                                         </span>
                                                     </span>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </div>
 
-                                    <div className="padding-top-md">
-                                        <Row gutter={[5, 10]}>
-                                            <Col xs={0} sm={0} md={24} lg={24} xl={24} className="padding-x-xl">
-                                                <Row gutter={[10, 10]}>
-                                                    <Col xs={{ span: 18, offset: 3 }} sm={{ span: 18, offset: 3 }} md={{ span: 24, offset: 0 }} lg={{ span: 24, offset: 0 }} xl={{ span: 24, offset: 0 }}>
-                                                        {_renderGridView(notEmptyLength(productList) ? productList : [])}
-                                                    </Col>
-                                                </Row>
-                                            </Col>
-                                            <Col style={{ textAlign: 'center' }} xs={0} sm={0} md={24} lg={24} xl={24}>
-                                                <Pagination current={parseInt(mainConfig.page)} pageSize={PAGESIZE} onChange={(page) => { pushParameterToUrl(currentFilterGroup, { ...mainConfig, page: page }) }} total={total} />
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Col>
+                                                    <span className='flex-justify-center flex-items-align-center margin-x-sm' >
+                                                        <span className='d-inline-block ' >
+                                                            Mileage
+                              </span>
+                                                        <span className='flex-justify-center flex-items-align-center'>
+                                                            {
+                                                                _.get(mainConfig, ['sorting', 'mileageFilter']) == 1 ?
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': null }, page: 1 }) }}
+                                                                    ></img>
+                                                                    :
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/low-to-high_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': 1 }, page: 1 }) }} ></img>
+                                                            }
 
-                                <Col className="gutter-row" xs={0} sm={0} md={0} lg={6} xl={6} >
-                                    <div className='padding-x-sm'>
-                                        <Affix offsetTop={(props.app.menuHeight || 0) + 20} className={`${props.productsList.isFilterModalOpen ? 'affix-element-show-on-modal' : ''}`}>
-                                            <ProductListFilterForm
-                                                initFilterGroup={currentFilterGroup}
-                                                onChange={(data) => {
-                                                    setCurrentFilterGroup({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false });
-                                                    pushParameterToUrl({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false }, { ...mainConfig, page: 1 })
-                                                }}
-                                                availableFilterOption={notEmptyLength(availableFilterOption) ? availableFilterOption : {}} />
-                                        </Affix>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Spin>
-                    </div>
+                                                            {
+                                                                _.get(mainConfig, ['sorting', 'mileageFilter']) == -1 ?
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': null }, page: 1 }) }}></img>
+                                                                    :
+                                                                    <img style={{ width: '50px', height: '50px' }} src="/assets/General/sorting/high-to-low_default.png" className="cursor-pointer" onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: { ...mainConfig.sorting, 'mileageFilter': -1 }, page: 1 }) }}></img>
+                                                            }
+                                                        </span>
+                                                    </span>
+
+                                                    <span className='d-inline-block ' >
+                                                        <Tooltip title="Reset Sorting">
+                                                            <Button
+                                                                style={{
+                                                                    border: 'none',
+                                                                    background: 'none',
+                                                                    color: 'red',
+                                                                    padding: 0,
+                                                                    fontSize: 12,
+                                                                    fontWeight: 500
+                                                                }} className="w-100 h-100"
+                                                                onClick={(e) => { pushParameterToUrl(currentFilterGroup, { sorting: {}, page: 1 }) }} >
+
+                                                                <Icon type="reload" />
+                                                            </Button>
+                                                        </Tooltip>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+
+                                <div className="padding-top-md">
+                                    <Row gutter={[5, 10]}>
+                                        <Col xs={0} sm={0} md={24} lg={24} xl={24} className="padding-x-xl">
+                                            <Row gutter={[10, 10]}>
+                                                <Col xs={{ span: 18, offset: 3 }} sm={{ span: 18, offset: 3 }} md={{ span: 24, offset: 0 }} lg={{ span: 24, offset: 0 }} xl={{ span: 24, offset: 0 }}>
+                                                    {_renderGridView(notEmptyLength(productList) ? productList : [])}
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                        <Col style={{ textAlign: 'center' }} xs={0} sm={0} md={24} lg={24} xl={24}>
+                                            <Pagination current={parseInt(mainConfig.page)} pageSize={PAGESIZE} onChange={(page) => { pushParameterToUrl(currentFilterGroup, { ...mainConfig, page: page }) }} total={total} />
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Col>
+
+                            <Col className="gutter-row" xs={0} sm={0} md={0} lg={6} xl={6} >
+                                <div className='padding-x-sm'>
+                                    <Affix offsetTop={(props.app.menuHeight || 0) + 20} className={`${props.productsList.isFilterModalOpen ? 'affix-element-show-on-modal' : ''}`}>
+                                        <ProductListFilterForm
+                                            initFilterGroup={currentFilterGroup}
+                                            onChange={(data) => {
+                                                setCurrentFilterGroup({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false });
+                                                pushParameterToUrl({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false }, { ...mainConfig, page: 1 })
+                                            }}
+                                            availableFilterOption={notEmptyLength(availableFilterOption) ? availableFilterOption : {}} />
+                                    </Affix>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Spin>
                 </div>
-            </LayoutV2>
-        </ReduxPersistWrapper>
+            </div>
+        </LayoutV2>
     )
 }
 

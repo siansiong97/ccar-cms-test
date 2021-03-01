@@ -88,7 +88,7 @@ const ProductList = (props) => {
     if (notEmptyLength(v.carUrl)) {
       if (v.currentImg != null && v.currentImg < v.carUrl.length) {
         return (
-          <Link href={'/viewCar/' + v._id} target="_blank">
+          <Link passHref  href={'/viewCar/' + v._id} target="_blank">
             <React.Fragment>
               <div className="wrap-product-ads-img-horizontal">
                 <img src={v.carUrl[v.currentImg].url} className="head-product-ads-img" />
@@ -98,7 +98,7 @@ const ProductList = (props) => {
         )
       } else {
         return (
-          <Link href={'/viewCar/' + v._id} target="_blank">
+          <Link passHref  href={'/viewCar/' + v._id} target="_blank">
             <React.Fragment>
               <div className="wrap-product-ads-img-horizontal">
                 <div className="overlay">
@@ -113,7 +113,7 @@ const ProductList = (props) => {
       }
     } else {
       return (
-        <Link href={'/viewCar/' + v._id} target="_blank">
+        <Link passHref  href={'/viewCar/' + v._id} target="_blank">
           <React.Fragment>
             <div className="wrap-product-ads-img-horizontal">
               <div className="overlay-condition">
@@ -596,7 +596,7 @@ const ProductList = (props) => {
                                                         {_renderCondition(v)}
                                                     </Col> */}
                           <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '10px 10px' }}>
-                            <Link href={'/viewCar/' + v._id} target="_blank">
+                            <Link passHref  href={'/viewCar/' + v._id} target="_blank">
                               <div className="text-truncate-twoline">
                                 <label>
                                   {/* <span style={{ color: '#E3C57D' }}>[ {v.condition} ] </span> */}

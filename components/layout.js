@@ -11,7 +11,7 @@ export default function MainLayout({children}) {
       <Layout>
           <Row justify='center' className="wrapBorderRed" style={{height:'80px', backgroundColor:'#000', paddingTop:'20px'}} gutter={10}>
             <Col span={3} style={{textAlign:"right"}}>
-              <Link href='/'>
+              <Link passHref  href='/'>
                 <a>Home</a>
               </Link>
             </Col>
@@ -19,27 +19,27 @@ export default function MainLayout({children}) {
             <Col offset={0} span={21} style={{backgroundColor:"red"}}>
               <Row className="wrapBorderRed" gutter={10} justify='end'>
                 <Col span={2}>
-                  <Link href='/used-car'>
+                  <Link passHref  href='/used-car'>
                     <a>CarMarket</a>
                   </Link>
                 </Col>
                 <Col span={2}>
-                  <Link href='/used-car'>
+                  <Link passHref  href='/used-car'>
                     <a>All-NewCar</a>
                   </Link>
                 </Col>
                 <Col span={2}>
-                  <Link href='/used-car'>
+                  <Link passHref  href='/used-car'>
                     <a>LIVE</a>
                   </Link>
                 </Col>
                 <Col span={2}>
-                  <Link href='/used-car'>
+                  <Link passHref  href='/used-car'>
                     <a>Menu</a>
                   </Link>
                 </Col>
                 <Col span={2}>
-                  <Link href='/used-car'>
+                  <Link passHref  href='/used-car'>
                     <a>Login</a>
                   </Link>
                 </Col>

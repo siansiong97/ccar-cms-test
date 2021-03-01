@@ -14,13 +14,14 @@ const searchBarRef = React.createRef();
 const Index = (props) => {
 
     return (
-        <CarMarketPage 
-        cookie={props.cookie} 
-        productList={props.productList || {}} 
-        config={props.config || {}}
-        availableOptions={props.availableOptions || {}} 
-        productListTotal={props.productListTotal || 0} 
-        filterGroup={props.filterGroup || {}} />
+        <ReduxPersistWrapper cookie={props.cookie}>
+            <CarMarketPage
+                productList={props.productList || {}}
+                config={props.config || {}}
+                availableOptions={props.availableOptions || {}}
+                productListTotal={props.productListTotal || 0}
+                filterGroup={props.filterGroup || {}} />
+        </ReduxPersistWrapper>
     )
 }
 
@@ -67,7 +68,7 @@ export async function getServerSideProps(context) {
             productListTotal: _.get(carAdsRes, ['total']) || 0,
             filterGroup: _.get(filterObj, ['filterGroup']) || {},
             config: _.get(filterObj, ['config']) || {},
-            availableOptions : brandFilterRes || {},
+            availableOptions: brandFilterRes || {},
         }
     }
 }

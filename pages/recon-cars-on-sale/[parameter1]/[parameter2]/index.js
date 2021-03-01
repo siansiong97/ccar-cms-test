@@ -6,6 +6,7 @@ import carAdsFilter from '../../../../api/carAdsFilter'
 import CarMarketPage from '../../../../components/product-list/page/CarMarketPage'
 import { loading } from '../../../../redux/actions/app-actions'
 import { convertProductRouteParamsToFilterObject } from '../../../../common-function'
+import ReduxPersistWrapper from '../../../../components/general/ReduxPersistWrapper'
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
 const antIcon = <img src="/assets/Ccar-logo.png" style={{ fontSize: 60 }} />;
@@ -14,13 +15,14 @@ const searchBarRef = React.createRef();
 const Index = (props) => {
 
     return (
-        <CarMarketPage 
-        cookie={props.cookie} 
-        productList={props.productList || {}} 
-        config={props.config || {}}
-        availableOptions={props.availableOptions || {}} 
-        productListTotal={props.productListTotal || 0} 
-        filterGroup={props.filterGroup || {}} />
+        <ReduxPersistWrapper cookie={props.cookie}>
+            <CarMarketPage
+                productList={props.productList || {}}
+                config={props.config || {}}
+                availableOptions={props.availableOptions || {}}
+                productListTotal={props.productListTotal || 0}
+                filterGroup={props.filterGroup || {}} />
+        </ReduxPersistWrapper>
     )
 }
 

@@ -316,8 +316,6 @@ const Index = (props) => {
 
           </div>
         </div>
-
-
       </LayoutV2>
     </ReduxPersistWrapper>
   )

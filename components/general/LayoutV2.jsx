@@ -21,7 +21,7 @@ import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
 import Link from 'next/link';
 import CookieConsent, { Cookies } from "react-cookie-consent";
 import LoginModal from '../login/login'
-import UserAvatar from './user-avatar';
+import UserAvatar from './UserAvatar';
 import { withRouter } from 'next/dist/client/router';
 
 
@@ -233,14 +233,14 @@ class LayoutV2 extends React.Component {
 
                                     <Row style={{ color: '#E3C57D' }}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
-                                            {/* <Link style={{ color: 'white' }} to="/"> */}
+                                            {/* <Link passHref  style={{ color: 'white' }} to="/"> */}
                                             <div className="flex-justify-start flex-items-align-center main-footer ">
                                                 CCAR.MY <CopyrightCircleOutlined /> 2020
                                                 </div>
                                             {/* </Link> */}
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            {/* <Link style={{ color: 'white' }} to="/termOfUse" target="_blank"> */}
+                                            {/* <Link passHref  style={{ color: 'white' }} to="/termOfUse" target="_blank"> */}
                                             <div className="flex-justify-end flex-items-align-center main-footer">
                                                 Terms of Use | Privacy Policy
                                                 </div>

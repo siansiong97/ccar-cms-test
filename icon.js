@@ -1,4 +1,5 @@
 export const writePostIcon = '/assets/new-car-screen/create-post.png'
+export const imageNotFoundIcon = '/image-not-found copy.png'
 
 
 
@@ -22,6 +23,7 @@ export const pinIcon = '/assets/car-freak/pin.png';
 export const carspecNotFoundImage = '/coming-soon.png'
 export const flameRed = '/assets/CarListingIcon/Fire-04(NoShadow).gif'
 export const flameRedShadow = '/assets/CarListingIcon/Fire-04.gif'
+export const flame = '/assets/carDetails/flame.gif'
 
 
 
