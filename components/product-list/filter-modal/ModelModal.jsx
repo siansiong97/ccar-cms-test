@@ -7,7 +7,7 @@ import Highlighter from 'react-highlight-words';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/dist/client/router';
 import { formatNumber, isValidNumber, notEmptyLength } from '../../../common-function';
-import Loading from '../../general/loading';
+import Loading from '../../general/Loading';
 
 
 const modelModalSearchRef = React.createRef();

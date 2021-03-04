@@ -10,7 +10,7 @@ import client from '../../feathers';
 import { Form } from '@ant-design/compatible';
 import { withRouter } from 'next/dist/client/router';
 import Scrollbars from 'react-custom-scrollbars';
-import Loading from '../general/loading';
+import Loading from '../general/Loading';
 
 
 

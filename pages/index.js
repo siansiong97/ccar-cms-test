@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react'
-import Head from 'next/head'
-import Layout from '../components/layout'
-import client from '../feathers'
-import carAdsFilter from '../api/carAdsFilter'
-import LayoutV2 from '../components/general/LayoutV2'
-import _ from 'lodash';
-import ReduxPersistWrapper from '../components/general/ReduxPersistWrapper'
 import { Button, Col, Divider, Empty, message, Row } from 'antd'
-import BannerAnim, { Element } from 'rc-banner-anim';
-import GlobalSearchBar from '../components/general/global-search-bar'
-import BrandList from '../components/product-list/brand-list'
+import axios from 'axios'
+import _ from 'lodash'
 import { withRouter } from 'next/dist/client/router'
-import { connect } from 'react-redux';
+import Head from 'next/head'
+import BannerAnim, { Element } from 'rc-banner-anim'
+import { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import { convertParameterToProductListUrl } from '../common-function'
+import GlobalSearchBar from '../components/general/global-search-bar'
+import LayoutV2 from '../components/general/LayoutV2'
+import ReduxPersistWrapper from '../components/general/ReduxPersistWrapper'
 import SocialNewTabs from '../components/news/social-new-tabs'
 import SocialVideoTabs from '../components/news/social-video-tabs'
-import axios from 'axios'
-import { fetchProductsListHome } from '../redux/actions/productsList-actions'
+import BrandList from '../components/product-list/brand-list'
 import GridProductList from '../components/product-list/grid-product-list'
+import client from '../feathers'
+import { fetchProductsListHome } from '../redux/actions/productsList-actions'
 
 const BgElement = Element.BgElement;
 

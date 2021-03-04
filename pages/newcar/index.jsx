@@ -17,15 +17,15 @@ const Index = (props) => {
 }
 
 
-export async function getServerSideProps(context) {
+// export async function getServerSideProps(context) {
 
 
-    return {
-        props: {
-            cookie: _.get(context, ['req', 'headers', 'cookie']),
-        }
-    }
-}
+//     return {
+//         props: {
+//             cookie: _.get(context, ['req', 'headers', 'cookie']),
+//         }
+//     }
+// }
 
 const mapStateToProps = state => ({
     app: state.app,

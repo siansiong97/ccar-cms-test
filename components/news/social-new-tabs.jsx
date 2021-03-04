@@ -9,7 +9,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import { withRouter } from 'next/dist/client/router';
 import { Form } from '@ant-design/compatible';
 import { notEmptyLength, arrayLengthCount } from '../../common-function';
-import Loading from '../general/loading';
+import Loading from '../general/Loading';
 import { SmallDashOutlined } from '@ant-design/icons';
 
 

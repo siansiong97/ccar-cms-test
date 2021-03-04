@@ -10,6 +10,7 @@ const distinctArr = (value, index, self) => {
 
 export default async function (data, limit) {
 
+  console.log('call carAds Filter');
   if (!_.isPlainObject(data)) {
     data = {};
   }

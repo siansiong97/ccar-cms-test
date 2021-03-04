@@ -21,6 +21,7 @@ import LoginModal from '../login/login';
 import GlobalSearchBar from './global-search-bar';
 import UserAvatar from './UserAvatar';
 import { v4 } from 'uuid';
+import Link from 'next/link';
 
 
 
@@ -130,15 +131,19 @@ class LayoutV2 extends React.Component {
                                 {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
-                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path) }}>
-                                                <div className="flex-justify-start flex-items-align-center">
-                                                    <span className='d-inline-block margin-x-sm'>
-                                                        {menu.icon}
-                                                    </span>
-                                                    <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
-                                                        {menu.text}
-                                                    </span>
-                                                </div>
+                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
+                                                <Link href={menu.path} shallow={true} prefetch >
+                                                    <a>
+                                                        <div className="flex-justify-start flex-items-align-center">
+                                                            <span className='d-inline-block margin-x-sm'>
+                                                                {menu.icon}
+                                                            </span>
+                                                            <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
+                                                                {menu.text}
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                </Link>
                                             </Menu.Item>
                                         )
                                     })
@@ -415,9 +420,14 @@ class LayoutV2 extends React.Component {
                                     <Row type="flex" align="middle" className='padding-x-md' >
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
-                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }} onClick={(e) => { self.props.router.push('/') }}>
-                                                    <img alt="ccar" className="fill-parent absolute-center" src={cnyLogo2} />
-                                                </span>
+
+                                                <Link href={`/`} shallow={true} prefetch>
+                                                    <a>
+                                                        <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
+                                                            <img alt="ccar" className="fill-parent absolute-center" src={cnyLogo2} />
+                                                        </span>
+                                                    </a>
+                                                </Link>
                                                 {
                                                     this.props.hideSearchBar ?
                                                         null
@@ -435,9 +445,13 @@ class LayoutV2 extends React.Component {
                                                     notEmptyLength(outterMenu) ?
                                                         _.map(outterMenu, function (menu, i) {
                                                             return (
-                                                                <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' onClick={(e) => { self.props.router.push(menu.path, menu.path) }}>
-                                                                    {menu.text}
-                                                                </span>
+                                                                <Link href={menu.path} shallow={true} prefetch>
+                                                                    <a>
+                                                                        <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
+                                                                            {menu.text}
+                                                                        </span>
+                                                                    </a>
+                                                                </Link>
                                                             )
                                                         })
                                                         :
@@ -449,10 +463,14 @@ class LayoutV2 extends React.Component {
                                                             {
                                                                 _.map(innerMenu, function (menu, index) {
                                                                     return (
-                                                                        <Menu.Item key={`inner-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path, menu.path) }}>
-                                                                            <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
-                                                                                {menu.text}
-                                                                            </span>
+                                                                        <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
+                                                                            <Link href={menu.path} shallow={true} prefetch>
+                                                                                <a>
+                                                                                    <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
+                                                                                        {menu.text}
+                                                                                    </span>
+                                                                                </a>
+                                                                            </Link>
                                                                         </Menu.Item>
                                                                     )
                                                                 })

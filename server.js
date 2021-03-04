@@ -9,26 +9,6 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
   const server = express()
 
-  server.get('/', (req, res) => {
-    return app.render(req, res, '/', req.query)
-  })
-
-  server.get('/used-cars/:pid', (req, res) => {
-    return app.render(req, res, '/used-cars/:pid', req.query)
-  })
-
-  server.get('/used-cars/:pid/:title', (req, res) => {
-    return app.render(req, res, '/used-cars/:pid/:title', req.query)
-  })
-
-  server.get('/viewCar/:id', (req, res) => {
-    return app.render(req, res, '/viewCar/:id', req.query)
-  })
-
-  // server.get('/b', (req, res) => {
-  //   return app.render(req, res, '/b', req.query)
-  // })
-
   server.all('*', (req, res) => {
     return handle(req, res)
   })

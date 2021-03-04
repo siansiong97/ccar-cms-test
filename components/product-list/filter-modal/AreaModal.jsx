@@ -7,7 +7,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import Highlighter from 'react-highlight-words';
 import { connect } from 'react-redux';
 import { formatNumber, isValidNumber, notEmptyLength  } from '../../../common-function';
-import Loading from '../../general/loading';
+import Loading from '../../general/Loading';
 
 
 const areaModalSearchRef = React.createRef();

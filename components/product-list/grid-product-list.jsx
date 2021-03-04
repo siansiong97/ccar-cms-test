@@ -14,7 +14,7 @@ import { calMonth, formatMoney, renderMileageRange } from '../../functionContent
 import AddCompareProductButton from '../general/add-compare-product-button';
 import Car360ViewButton from '../general/car-360-view-button';
 import { flameRed } from '../../icon';
-import Loading from '../general/loading';
+import Loading from '../general/Loading';
 import WhatsAppButton from '../general/whatapps-button';
 import ContactList from '../general/contactList';
 import RegisterCard from '../general/registerCard';
