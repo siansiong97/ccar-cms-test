@@ -1,5 +1,7 @@
 export const LOADING = 'LOADING';
 
+export const SET_INITED_REDUX = 'SET_INITED_REDUX';
+
 export const ADVANCE_MODE = 'ADVANCE_MODE';
 export const LOGIN_MODE = 'LOGIN_MODE';
 export const REGISTER_MODE = 'REGISTER_MODE';
@@ -440,6 +442,15 @@ export function setNotificationToken(data){
   return (dispatch) => {
     dispatch({
       type: SET_NOTIFICATION_TOKEN,
+      data,
+    })
+  }
+}
+
+export function setInitedRedux(data){
+  return (dispatch) => {
+    dispatch({
+      type: SET_INITED_REDUX,
       data,
     })
   }

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Input, InputNumber, Button, Switch, Radio, message, Icon, Card, Avatar, Select, Modal, Rate, Dropdown, Menu, Divider } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import { withRouter } from 'next/dist/client/router';
-import { connect } from 'react-redux';
+import { Button, Form, message } from 'antd';
 import _ from 'lodash';
-import { notEmptyLength } from '../../profile/common-function';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
 import client from '../../../feathers';
-import { loading, loginMode } from '../../../actions/app-actions';
+
 
 
 const PinCommentButton = (props) => {

@@ -1,12 +1,12 @@
-import { Avatar, Form, Tooltip, message, Button } from 'antd';
+import { Button, Form, message } from 'antd';
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'next/dist/client/router';
-import { ccarLogo } from '../../../userProfile/config';
-import { loading } from '../../../../actions/app-actions';
-import { isValidNumber, toSnakeCase, objectRemoveEmptyValue, notEmptyLength } from '../../../profile/common-function';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import client from '../../../../feathers';
+import { loading } from '../../../../redux/actions/app-actions';
+import { notEmptyLength, objectRemoveEmptyValue, toSnakeCase } from '../../../../common-function';
+
 
 const eventActions = [
     {

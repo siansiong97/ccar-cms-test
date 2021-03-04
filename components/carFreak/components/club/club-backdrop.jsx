@@ -1,13 +1,10 @@
-import { Avatar, Form, Tooltip } from 'antd';
-import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { Form } from 'antd';
 import { withRouter } from 'next/dist/client/router';
-import { ccarLogo } from '../../../userProfile/config';
-import { loading } from '../../../../actions/app-actions';
-import { isValidNumber } from '../../../profile/common-function';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { clubNonMember } from '../../../../icon';
-import { validateViewType, clubProfileViewTypes } from '../../config';
+import { clubProfileViewTypes, validateViewType } from '../../config';
+import { loading } from '../../../../redux/actions/app-actions';
 
 
 const ClubBackdrop = (props) => {

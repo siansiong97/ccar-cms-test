@@ -23,7 +23,7 @@ import Post from './post';
 import PostModal from './modal-Post';
 import PostCommentModal from './modal-Post-comment';
 import Carousel, { Dots, slidesToShowPlugin, arrowsPlugin } from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
+
 const banner = 'hands-on-wheel.jpg'
 const ads = '20-Car-Dealership-Promotion-Ideas.jpg'
 const { Search } = Input;
@@ -198,7 +198,7 @@ const CarFreakIndex = (props) => {
                     chatId: v._id,
                     type: type
                 }, {
-                headers: { 'Authorization': client.settings.accessToken },
+                headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },
             }).then((res) => {
                 let result = res.data
 
@@ -250,7 +250,7 @@ const CarFreakIndex = (props) => {
                     chatId: v._id,
                     type: type
                 }, {
-                headers: { 'Authorization': client.settings.accessToken },
+                headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },
             }).then((res) => {
                 let result = res.data
 

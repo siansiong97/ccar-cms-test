@@ -1,20 +1,18 @@
-import { Form, Input, Modal, Row, Col, message, Upload, Avatar, Button, Radio, DatePicker, Select, Divider, Icon } from 'antd';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { useEffect } from 'react';
-import _ from 'lodash';
+import { Button, Col, DatePicker, Divider, Form, Input, message, Modal, Radio, Row, Upload } from 'antd';
 import axios from 'axios';
-import { v4 } from 'uuid';
-import ClubAvatar from './club/club-avatar';
-import client from '../../../feathers';
-import Loading from '../../commonComponent/loading';
-import UserAvatar from './user-avatar';
-import { getUserName } from '../../profile/common-function';
-import { loading, loginMode } from '../../../actions/app-actions';
-import { setUser } from '../../../actions/user-actions';
-import { uploadPhoto } from '../../../icon';
+import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { v4 } from 'uuid';
+import client from '../../../feathers';
+import { uploadPhoto } from '../../../icon';
+import ClubAvatar from './club/club-avatar';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import { setUser } from '../../../redux/actions/user-actions';
+import UserAvatar from '../../general/UserAvatar';
+import { getUserName } from '../../../common-function';
 
 
 
@@ -148,7 +146,7 @@ const WriteEventModal = (props) => {
                     formData
                     , {
                         headers: {
-                            'Authorization': client.settings.accessToken,
+                            'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                             'Content-Type': 'multipart/form-data',
                         }
                     }
@@ -211,7 +209,7 @@ const WriteEventModal = (props) => {
 
     function updateEvent(id, data) {
         console.log('update');
-  
+
         if (id && _.isPlainObject(data) && !_.isEmpty(data)) {
             client.authenticate()
                 .then((res) => {
@@ -254,143 +252,142 @@ const WriteEventModal = (props) => {
                 bodyStyle={{ backgroundColor: 'white' }}
             >
                 <Form layout="vertical">
-                    <Loading spinning={isLoading}>
 
-                        <Row gutter={[10, 10]}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="flex-justify-space-between flex-items-align-start margin-bottom-md">
-                                    <span className='d-inline-block' >
-                                        <div className="flex-justify-start flex-items-align-center">
-                                            {
-                                                props.type == 'club' ?
-                                                    <ClubAvatar data={creator} size={50} className="margin-right-md" />
-                                                    :
-                                                    <UserAvatar data={creator} size={50} className="margin-right-md" />
-                                            }
-                                            <span className='d-inline-block' >
-                                                <div className="subtitle1 text-truncate black">
-                                                    {
-                                                        props.type == 'club' ?
-                                                            _.get(creator, ['clubName'])
-                                                            :
-                                                            getUserName(creator, 'fullName') || ''
-                                                    }
+                    <Row gutter={[10, 10]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="flex-justify-space-between flex-items-align-start margin-bottom-md">
+                                <span className='d-inline-block' >
+                                    <div className="flex-justify-start flex-items-align-center">
+                                        {
+                                            props.type == 'club' ?
+                                                <ClubAvatar data={creator} size={50} className="margin-right-md" />
+                                                :
+                                                <UserAvatar data={creator} size={50} className="margin-right-md" />
+                                        }
+                                        <span className='d-inline-block' >
+                                            <div className="subtitle1 text-truncate black">
+                                                {
+                                                    props.type == 'club' ?
+                                                        _.get(creator, ['clubName'])
+                                                        :
+                                                        getUserName(creator, 'fullName') || ''
+                                                }
+                                            </div>
+                                            <div className="headline text-truncate font-weight-light">
+                                                Host
                                                 </div>
-                                                <div className="headline text-truncate font-weight-light">
-                                                    Host
-                                                </div>
-                                            </span>
-                                        </div>
-                                    </span>
+                                        </span>
+                                    </div>
+                                </span>
 
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item style={{ margin: 0 }} className="radio-button-space-around" >
-                                    {getFieldDecorator('scope', {
-                                        initialValue: props.editMode ? _.get(props.data, ['scope']) : 'public',
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(
-                                        <Radio.Group buttonStyle="solid" disabled={editMode} >
-                                            <Radio.Button value="public" className="padding-x-lg margin-x-md round-border-big text-align-center border-ccar-button-yellow" style={{ width: "40%" }}>
-                                                <span className="h7" >
-                                                    Public
-                                                </span>
-                                            </Radio.Button>
-                                            <Radio.Button value="private" className="padding-x-lg margin-x-md round-border-big text-align-center border-ccar-button-yellow" style={{ width: "40%" }}>
-                                                <span className="h7" >
-                                                    Private
-                                                </span>
-                                            </Radio.Button>
-                                        </Radio.Group>
-                                    )}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Event Name
                             </div>
-                                <Form.Item style={{ margin: 0 }} >
-                                    {getFieldDecorator('name', {
-                                        initialValue: _.get(props.data, ['name']),
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(<Input placeholder="Event Name" />)}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Event Date
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item style={{ margin: 0 }} className="radio-button-space-around" >
+                                {getFieldDecorator('scope', {
+                                    initialValue: props.editMode ? _.get(props.data, ['scope']) : 'public',
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(
+                                    <Radio.Group buttonStyle="solid" disabled={editMode} >
+                                        <Radio.Button value="public" className="padding-x-lg margin-x-md round-border-big text-align-center border-ccar-button-yellow" style={{ width: "40%" }}>
+                                            <span className="h7" >
+                                                Public
+                                                </span>
+                                        </Radio.Button>
+                                        <Radio.Button value="private" className="padding-x-lg margin-x-md round-border-big text-align-center border-ccar-button-yellow" style={{ width: "40%" }}>
+                                            <span className="h7" >
+                                                Private
+                                                </span>
+                                        </Radio.Button>
+                                    </Radio.Group>
+                                )}
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Event Name
+                            </div>
+                            <Form.Item style={{ margin: 0 }} >
+                                {getFieldDecorator('name', {
+                                    initialValue: _.get(props.data, ['name']),
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(<Input placeholder="Event Name" />)}
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Event Date
                                 </div>
-                                <Form.Item style={{ margin: 0 }} >
-                                    {getFieldDecorator('dateRange', {
-                                        initialValue: props.editMode ? [moment(_.get(props.data, ['startAt'])), moment(_.get(props.data, ['endAt']))] : [],
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(<DatePicker.RangePicker disabledDate={(current) => {
-                                        return current < moment();
-                                    }} showTime style={{ width: '100%' }} />)}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Location
+                            <Form.Item style={{ margin: 0 }} >
+                                {getFieldDecorator('dateRange', {
+                                    initialValue: props.editMode ? [moment(_.get(props.data, ['startAt'])), moment(_.get(props.data, ['endAt']))] : [],
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(<DatePicker.RangePicker disabledDate={(current) => {
+                                    return current < moment();
+                                }} showTime style={{ width: '100%' }} />)}
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Location
                                 </div>
-                                <Form.Item style={{ margin: 0 }}>
-                                    {getFieldDecorator('location', {
-                                        initialValue: _.get(props.data, ['location']),
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(<TextArea rows={2} placeholder="Please enter event location (maximum 1000 characters)" maxLength={1000} />)}
-                                </Form.Item>
-                            </Col>
+                            <Form.Item style={{ margin: 0 }}>
+                                {getFieldDecorator('location', {
+                                    initialValue: _.get(props.data, ['location']),
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(<TextArea rows={2} placeholder="Please enter event location (maximum 1000 characters)" maxLength={1000} />)}
+                            </Form.Item>
+                        </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Description
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Description
                                 </div>
-                                <Form.Item style={{ margin: 0 }}>
-                                    {getFieldDecorator('description', {
-                                        initialValue: _.get(props.data, ['description']),
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(<TextArea rows={4} placeholder="Please enter event description (maximum 1000 characters)" maxLength={1000} />)}
-                                </Form.Item>
-                                <div className="caption grey font-weight-light">
-                                    Provide more information about your event so that guests know what to expect.
+                            <Form.Item style={{ margin: 0 }}>
+                                {getFieldDecorator('description', {
+                                    initialValue: _.get(props.data, ['description']),
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(<TextArea rows={4} placeholder="Please enter event description (maximum 1000 characters)" maxLength={1000} />)}
+                            </Form.Item>
+                            <div className="caption grey font-weight-light">
+                                Provide more information about your event so that guests know what to expect.
                                 </div>
-                            </Col>
-                            <Divider style={{ margin: 0 }} type="horizontal" />
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Additional Details
+                        </Col>
+                        <Divider style={{ margin: 0 }} type="horizontal" />
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Additional Details
                                 </div>
-                                <div className="thin-border cursor-pointer relative-wrapper">
-                                    <Upload accept="image/*" showUploadList={false} onChange={(v) => { handlePreview(v.file); setUploadImage(v.file) }} multiple={false}
-                                    >
-                                        <div className="flex-justify-center flex-items-align-center " style={{ borderRadius: '2px', height: 150 }}>
-                                            {
-                                                uploadImagePreview ?
-                                                    <img src={uploadImagePreview} className=" absolute-center-img-no-stretch fill-parent" />
-                                                    :
-                                                    <React.Fragment>
-                                                        <img src={uploadPhoto} style={{ width: 100, height: 70 }} className='absolute-center' />
-                                                        <div className="flex-justify-center flex-items-align-center grey subtitle1 absolute-center" style={{ paddingTop: 70 + 20 }}>
-                                                            POST / UPLOAD PHOTO
+                            <div className="thin-border cursor-pointer relative-wrapper">
+                                <Upload accept="image/*" showUploadList={false} onChange={(v) => { handlePreview(v.file); setUploadImage(v.file) }} multiple={false}
+                                >
+                                    <div className="flex-justify-center flex-items-align-center " style={{ borderRadius: '2px', height: 150 }}>
+                                        {
+                                            uploadImagePreview ?
+                                                <img src={uploadImagePreview} className=" absolute-center-img-no-stretch fill-parent" />
+                                                :
+                                                <React.Fragment>
+                                                    <img src={uploadPhoto} style={{ width: 100, height: 70 }} className='absolute-center' />
+                                                    <div className="flex-justify-center flex-items-align-center grey subtitle1 absolute-center" style={{ paddingTop: 70 + 20 }}>
+                                                        POST / UPLOAD PHOTO
                                                         </div>
-                                                    </React.Fragment>
+                                                </React.Fragment>
 
-                                            }
-                                        </div>
-                                    </Upload>
-                                </div>
-                            </Col>
-
-
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="width-100">
-                                    <Button block disabled={isLoading} className=" background-ccar-button-yellow" onClick={(e) => { handleSubmit() }}>Submit</Button>
-                                </div>
-                            </Col>
+                                        }
+                                    </div>
+                                </Upload>
+                            </div>
+                        </Col>
 
 
-                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="width-100">
+                                <Button block disabled={isLoading} className=" background-ccar-button-yellow" onClick={(e) => { handleSubmit() }}>Submit</Button>
+                            </div>
+                        </Col>
+
+
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="headline margin-bottom-sm">
                                 Description
                             </div>
@@ -401,8 +398,7 @@ const WriteEventModal = (props) => {
                             </Form.Item>
                         </Col> */}
 
-                        </Row>
-                    </Loading>
+                    </Row>
                 </Form>
             </Modal>
 

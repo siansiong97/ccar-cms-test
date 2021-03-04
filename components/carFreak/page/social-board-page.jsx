@@ -1,23 +1,20 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Button, Col, Icon, Input, message as AntMessages, Row, message, Empty } from 'antd';
+import { Button, Col, Empty, Icon, Input, message, Row } from 'antd';
 import _ from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import client from '../../../feathers';
-import LayoutV2 from '../../Layout-V2';
-import { arrayLengthCount, notEmptyLength } from '../../profile/common-function';
-import SocialBoardBox from '../components/social-board-box';
-import CarFreakBox from '../components/car-freak-box';
-import WritePostModal from '../components/write-post-modal';
-import { getDataUrlFromFile } from 'browser-image-compression';
-import { carFreakGlobalSearch } from '../config';
-import { loginMode } from '../../../actions/app-actions';
-import { v4 } from 'uuid';
-import { fetchCarFreakPosts, fetchEditedPost } from '../../../actions/carfreak.action';
-import SocialBoardCard from '../components/social-board-card';
+import { useMediaQuery } from 'react-responsive';
 import TrendingSocialBoardBox from '../components/trending-social-board-box';
-import { useMediaQuery } from 'react-responsive'
+import { carFreakGlobalSearch } from '../config';
+import { loginMode } from '../../../redux/actions/app-actions';
+import { fetchCarFreakPosts, fetchEditedPost } from '../../../redux/actions/carfreak.action';
+import client from '../../../feathers';
+import LayoutV2 from '../../general/LayoutV2';
+import { arrayLengthCount, notEmptyLength } from '../../../common-function';
 import CarFreakLayout from '../components/car-freak-layout';
+import SocialBoardCard from '../components/social-board-card';
+import WritePostModal from '../components/write-post-modal';
+import { withRouter } from 'next/router';
+
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -393,4 +390,4 @@ const mapDispatchToProps = {
     fetchEditedPost,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SocialBoardPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SocialBoardPage));

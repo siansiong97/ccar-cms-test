@@ -1,24 +1,21 @@
-import { Form, Typography, Dropdown, Menu, Popconfirm, Icon, Input, message, Collapse, Divider } from 'antd';
+import { Collapse, Dropdown, Form, Icon, Menu, message, Popconfirm } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import ShowMoreText from 'react-show-more-text';
-import { loading, loginMode } from '../../../actions/app-actions';
-import { notEmptyLength, objectRemoveEmptyValue, formatNumber, getUserName, getObjectId, getPlural } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
 import { v4 } from 'uuid';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
 import client from '../../../feathers';
-import ClickOutsideDetectWrapper from '../../commonComponent/click-outside-detect-wrapper';
+import { chatRestrictTime, getTagString } from '../config';
 import LikePostButton from './like-post-button';
-import { chatRestrictTime, parseTagStringToArray, getTagString } from '../config';
-import ReplyBox from './reply-box';
 import ReplyBox1 from './reply-box-1';
-import TagInputParse from './tag-input-parse';
 import SocialInput from './social-input';
-import ParseTag from '../../commonComponent/parse-tag';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import { getObjectId, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
+import UserAvatar from '../../general/UserAvatar';
+import ParseTag from '../../general/ParseTag';
+
+
 
 const defaultHeight = 'auto';
 const headerHeight = 100;
@@ -274,9 +271,11 @@ const CommentBox1 = (props) => {
                         <div className="width-100" style={{ padding: 0 }}>
                             <span className="margin-right-sm small-text">{moment(comment.createdAt).fromNow()}</span>
                             <LikePostButton className="margin-right-sm" likeOn="message"
+                                autoHandle
                                 messageId={_.get(comment, ['_id'])} onClick={(actived) => {
                                     setTotalLike(actived ? totalLike + 1 : totalLike - 1)
                                 }}
+
                                 activeButton={
                                     <span className="small-text blue font-weight-light cursor-pointer">Liked</span>
                                 }

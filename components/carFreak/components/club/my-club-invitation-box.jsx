@@ -1,18 +1,17 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Col, Form, Row, Card, Button, message } from 'antd';
+
+import { Button, Card, Col, Form, message, Row } from 'antd';
+import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { notEmptyLength, getUserName } from '../../../profile/common-function';
-import { imageNotFound } from '../../../userProfile/config';
-import OtherClubsBox from './other-clubs-box';
-import moment from 'moment';
-import JoinClubButton from './join-club-button';
-import { convertNameString } from '../../config';
-import axios from 'axios';
+import { notEmptyLength } from '../../../../common-function';
 import client from '../../../../feathers';
+import { convertNameString } from '../../config';
 import ClubAvatar from './club-avatar';
+import JoinClubButton from './join-club-button';
+import OtherClubsBox from './other-clubs-box';
 
 
 const MyClubInvitationBox = (props) => {

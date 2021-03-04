@@ -2,7 +2,7 @@ import {
     STEPS_PROPS_CURRENT,
     FORM_ONE
 } from '../actions/register-actions';
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash';
 
@@ -22,7 +22,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
       reducer: 'register',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
     switch (action.type) {
         case STEPS_PROPS_CURRENT:

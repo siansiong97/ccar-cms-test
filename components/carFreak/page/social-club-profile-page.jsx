@@ -1,26 +1,22 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Button, Col, Empty, Form, Icon, message, Row, Divider, Card } from 'antd';
+
+import { Card, Col, Divider, Form, message, Row } from 'antd';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
+import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { withRouter } from 'next/dist/client/router';
 import client from '../../../feathers';
-import LayoutV2 from '../../Layout-V2';
-import { isValidNumber, notEmptyLength, arrayLengthCount } from '../../profile/common-function';
 import CarFreakLayout from '../components/car-freak-layout';
-import WriteClubModal from '../components/club/write-club-modal';
-import { carFreakGlobalSearch, getViewType } from '../config';
-import { imageNotFound } from '../../userProfile/config';
-import ClubInviteModal from '../components/club/club-invite-modal';
-import JoinClubButton from '../components/club/join-club-button';
-import ClubProfolioBanner from '../components/club/club-profolio-banner';
-import Scrollbars from 'react-custom-scrollbars';
-import ClubMemberBox from '../components/club/club-member-box';
-import OtherClubsBox from '../components/club/other-clubs-box';
-import ClubEventBox from '../components/club/club-event-box';
 import ClubDiscussionBox from '../components/club/club-discussion-box';
-import queryString from 'query-string';
+import ClubEventBox from '../components/club/club-event-box';
+import ClubMemberBox from '../components/club/club-member-box';
+import ClubProfolioBanner from '../components/club/club-profolio-banner';
+import OtherClubsBox from '../components/club/other-clubs-box';
+import { carFreakGlobalSearch, getViewType } from '../config';
+import LayoutV2 from '../../general/LayoutV2';
+
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -69,7 +65,7 @@ const SocialClubProfilePage = (props) => {
     const [clubJoin, setClubJoin] = useState({});
 
     useEffect(() => {
-        let query = queryString.parse(props.location.search);
+        let query = props.router.query;
         if (!query) {
             query = {};
         }
@@ -77,27 +73,27 @@ const SocialClubProfilePage = (props) => {
         setTabKey(_.get(_.find(tabs, function (tab) {
             return tab.value == query.tab;
         }), ['value']) || 'discussions');
-    }, [])
+    }, [props.router.query])
 
     useEffect(() => {
         getClub()
-    }, [props.match.params.id])
+    }, [props.router.query.id])
 
     useEffect(() => {
 
         getClubJoin();
 
-    }, [props.user.authenticated, props.match.params.id])
+    }, [props.user.authenticated, props.router.query.id])
 
 
     function getClubJoin() {
 
-        if (props.match.params.id && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id'])) {
+        if (props.router.query.id && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id'])) {
             client.service('clubjoin').find({
                 query: {
                     $limit: 1,
                     $skip: 0,
-                    clubId: props.match.params.id,
+                    clubId: props.router.query.id,
                     userId: _.get(props.user, ['info', 'user', '_id']),
                 }
             }).then(res => {
@@ -111,12 +107,12 @@ const SocialClubProfilePage = (props) => {
 
     function getClub() {
 
-        if (props.match.params.id) {
+        if (props.router.query.id) {
             client.service('clubs').find({
                 query: {
                     $limit: 1,
                     $skip: 0,
-                    _id: props.match.params.id,
+                    _id: props.router.query.id,
                     $populate: 'userId'
                 }
             }).then(res => {

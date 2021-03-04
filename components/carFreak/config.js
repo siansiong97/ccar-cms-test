@@ -1,6 +1,7 @@
 
 import _ from 'lodash';
 import { v4 } from 'uuid';
+import { findIndexesOfString, getObjectId, checkObjectId, getUserName } from '../../common-function';
 
 export const chatRestrictTime = 2000;
 export const carFreakGlobalSearch = ['carFreak', 'socialBoard', 'club', 'dealer', 'people'];
@@ -180,10 +181,10 @@ export function getAliasCodeFromText(text) {
                     position: position,
                     value: `${item.type == 'tag' ? tagPrefixHashValue : hashTagPrefixHashValue}${item.value || ''}${seperatorHashValue}${item.id || ''}${item.type == 'tag' ? tagSuffixHashValue : hashTagSuffixHashValue}`,
                     prefix: item.type == 'tag' ? tagPrefix : hashTagPrefix,
-                    endPosition : position + item.value.length - 1,
+                    endPosition: position + item.value.length - 1,
                     name: item.value,
                     id: item.id,
-                    createdAt : new Date().getTime(),
+                    createdAt: new Date().getTime(),
                 });
             }
         })

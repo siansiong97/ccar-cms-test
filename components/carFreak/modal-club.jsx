@@ -153,7 +153,7 @@ const PostModal = (props) => {
                                 formData
                                 , {
                                     headers: {
-                                        'Authorization': client.settings.accessToken,
+                                        'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                                         'Content-Type': 'multipart/form-data',
                                     }
                                 }

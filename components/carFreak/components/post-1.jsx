@@ -1,30 +1,24 @@
-import { Col, Divider, Empty, Form, Icon, Input, message, Row, Dropdown, Menu, Popconfirm } from 'antd';
+import { Col, Divider, Empty, Form, Icon, message, Row } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import ShowMoreText from 'react-show-more-text';
 import { v4 } from 'uuid';
-import { loading } from '../../../actions/app-actions';
+import { arrayLengthCount, formatNumber, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
 import client from '../../../feathers';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import LightBoxCarousel from '../../commonComponent/light-box-carousel';
-import ScrollLoadWrapper from '../../commonComponent/scroll-load-wrapper';
+import { loading } from '../../../redux/actions/app-actions';
+import LightBoxCarousel from '../../general/LightBoxCarousel';
+import ParseTag from '../../general/ParseTag';
+import ScrollLoadWrapper from '../../general/ScrollLoadWrapper';
+import UserAvatar from '../../general/UserAvatar';
 import { commentIcon } from '../../live/config';
-import { arrayLengthCount, formatNumber, notEmptyLength, objectRemoveEmptyValue, getPlural, getUserName } from '../../profile/common-function';
 import { chatRestrictTime } from '../config';
 import CommentBox1 from './comment-box-1';
 import LikePostButton from './like-post-button';
-import UserAvatar from './user-avatar';
-import ParseTag from '../../commonComponent/parse-tag';
-import FollowButton from '../../commonComponent/follow-button';
-import ReportButton from '../../commonComponent/report-button';
-import ShareButtonDialog from '../../commonComponent/share-button-dialog';
-import SocialInput from './social-input';
 import PostMenu from './post-menu';
+import SocialInput from './social-input';
 
-var pluralize = require('pluralize')
 
 const defaultHeight = '70vh';
 const postCommentRef = React.createRef();

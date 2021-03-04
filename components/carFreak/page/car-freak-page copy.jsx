@@ -1,4 +1,4 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Button, Col, Empty, Form, Icon, message, Radio, Row, Tooltip } from 'antd';
 import RadioGroup from 'antd/lib/radio/group';
 import _ from 'lodash';

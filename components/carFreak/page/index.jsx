@@ -1,4 +1,4 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Button, Col, Icon, Input, message as AntMessages, Row, message } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
@@ -44,7 +44,7 @@ const CarFreakIndex = (props) => {
     }, [])
 
     useEffect(() => {
-        props.history.replace(tabKey == 'socialBoard' ? '/social-board' : '/car-freaks')
+        props.router.replace(tabKey == 'socialBoard' ? '/social-board' : '/car-freaks')
     }, [tabKey])
 
 

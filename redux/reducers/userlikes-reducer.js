@@ -7,7 +7,7 @@ import {
   REMOVE_LIKE_MSG,
 } from '../actions/userlikes-actions';
 import _ from "lodash"
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
@@ -28,7 +28,7 @@ export default function (state = INITIAL_STATE, action) {
       reducer: 'userlikes',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
   if (typeof state === 'undefined') {
     return {}

@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Input, message, Icon, Modal, Tooltip, Upload, Spin, Button } from 'antd';
-import { withRouter } from 'next/dist/client/router';
-import { connect } from 'react-redux';
-import {
-    loading, loginMode
-} from '../../../actions/app-actions';
-import { setUser } from '../../../actions/user-actions';
-import _, { isEmpty, set } from 'lodash';
-import client from '../../../feathers'
-import { ReactSortable } from "react-sortablejs";
-import { watermark } from '../../../assets/images';
+import { Col, Form, Icon, Input, message, Modal, Row, Spin, Tooltip, Upload } from 'antd';
 import axios from 'axios';
 import Compress from "browser-image-compression";
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import { notEmptyLength } from '../../profile/common-function';
-import { writePostIcon } from '../../../icon';
-import SocialInput from './social-input';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { ReactSortable } from "react-sortablejs";
 import { v4 } from 'uuid';
+import client from '../../../feathers';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import SocialInput from './social-input';
+import { setUser } from '../../../redux/actions/user-actions';
+import { notEmptyLength } from '../../../common-function';
 const { TextArea } = Input;
+
 
 const titleInputRef = React.createRef();
 const contentInputRef = React.createRef();
 const IMAGE_LIMIT = 10;
 const WritePostModal = (props) => {
 
-    var img2 = new Image();
-    img2.src = watermark
 
     const [newPostModal, setNewPostModal] = useState(false);
     const [imageList, setImageList] = useState([]);
@@ -173,7 +167,7 @@ const WritePostModal = (props) => {
                             formData
                             , {
                                 headers: {
-                                    'Authorization': client.settings.accessToken,
+                                    'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                                     'Content-Type': 'multipart/form-data',
                                 }
                             }

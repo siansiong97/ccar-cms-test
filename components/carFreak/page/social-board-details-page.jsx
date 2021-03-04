@@ -1,16 +1,17 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Col, Input, message, Row } from 'antd';
 import _ from 'lodash';
+import { withRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loading } from '../../../actions/app-actions';
+import { notEmptyLength } from '../../../common-function';
 import client from '../../../feathers';
-import LayoutV2 from '../../Layout-V2';
-import { notEmptyLength } from '../../profile/common-function';
-import TrendingSocialBoardBox from '../components/trending-social-board-box';
-import SocialBoardDetailsBox from '../components/social-board-details-box';
-import { carFreakGlobalSearch } from '../config';
+import { loading } from '../../../redux/actions/app-actions';
+import LayoutV2 from '../../general/LayoutV2';
 import CarFreakLayout from '../components/car-freak-layout';
+import SocialBoardDetailsBox from '../components/social-board-details-box';
+import TrendingSocialBoardBox from '../components/trending-social-board-box';
+import { carFreakGlobalSearch } from '../config';
 
 
 
@@ -25,16 +26,16 @@ const SocialBoardDetailsPage = (props) => {
 
     useEffect(() => {
         getPost();
-    }, [props.match.params.id])
+    }, [props.router.query.id])
 
     function getPost() {
 
-        if (_.get(props, ['match', 'params', 'id'])) {
+        if (_.get(props, ['router', 'query', 'id'])) {
             props.loading(true);
             client.service('chats')
                 .find({
                     query: {
-                        _id: props.match.params.id,
+                        _id: props.router.query.id,
                         chatType: 'socialboard',
                         $populate: 'userId',
                         $limit: 1,
@@ -59,18 +60,18 @@ const SocialBoardDetailsPage = (props) => {
             <div className="section">
                 <div className="container">
                     <CarFreakLayout>
-                    <Row gutter={[10, 10]}>
-                        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                            <SocialBoardDetailsBox data={post} />
-                        </Col>
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                            <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
-                                if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                    props.router.push(`/social-board/${data._id}`)
-                                }
-                            }} />
-                        </Col>
-                    </Row>
+                        <Row gutter={[10, 10]}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <SocialBoardDetailsBox data={post} />
+                            </Col>
+                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
+                                    if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
+                                        props.router.push(`/social-board/${data._id}`)
+                                    }
+                                }} />
+                            </Col>
+                        </Row>
                     </CarFreakLayout>
                 </div>
             </div>
@@ -89,4 +90,4 @@ const mapDispatchToProps = {
     loading
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SocialBoardDetailsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SocialBoardDetailsPage));

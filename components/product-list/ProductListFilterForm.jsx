@@ -208,7 +208,7 @@ const ProductsListFilterForm = (props) => {
             promises.push(
                 axios.get(`${client.io.io.uri}brandFilterTotalV3`, {
                     params: { filterType: modal },
-                    headers: { 'Authorization': client.settings.accessToken }
+                    headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] }
                 })
             )
         })

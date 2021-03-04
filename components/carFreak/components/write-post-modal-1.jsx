@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Input, message, Icon, Modal, Tooltip, Upload, Spin, Button, Avatar, Radio } from 'antd';
-import { withRouter } from 'next/dist/client/router';
-import { connect } from 'react-redux';
-import {
-    loading, loginMode
-} from '../../../actions/app-actions';
-import { setUser } from '../../../actions/user-actions';
-import _, { isEmpty, set } from 'lodash';
-import client from '../../../feathers'
-import { ReactSortable } from "react-sortablejs";
-import { watermark } from '../../../assets/images';
+import { Col, Form, Icon, Input, message, Modal, Radio, Row, Spin, Tooltip, Upload } from 'antd';
+import RadioGroup from 'antd/lib/radio/group';
 import axios from 'axios';
 import Compress from "browser-image-compression";
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import { notEmptyLength, getUserName } from '../../profile/common-function';
-import { writePostIcon } from '../../../icon';
-import UserAvatar from './user-avatar';
-import RadioGroup from 'antd/lib/radio/group';
-import SocialInput from './social-input';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { ReactSortable } from "react-sortablejs";
 import { v4 } from 'uuid';
+import client from '../../../feathers';
+import SocialInput from './social-input';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import { setUser } from '../../../redux/actions/user-actions';
+import {  getUserName, notEmptyLength  } from '../../../common-function';
+import UserAvatar from '../../general/UserAvatar';
+
 const { TextArea } = Input;
 
 
@@ -28,8 +24,6 @@ const contentInputRef = React.createRef();
 const IMAGE_LIMIT = 10;
 const WritePostModal1 = (props) => {
 
-    var img2 = new Image();
-    img2.src = watermark
 
     const [visible, setVisible] = useState(false);
     const [imageList, setImageList] = useState([]);
@@ -170,7 +164,7 @@ const WritePostModal1 = (props) => {
                             formData
                             , {
                                 headers: {
-                                    'Authorization': client.settings.accessToken,
+                                    'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                                     'Content-Type': 'multipart/form-data',
                                 }
                             }

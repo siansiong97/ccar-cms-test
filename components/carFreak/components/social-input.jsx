@@ -1,24 +1,20 @@
-import { Avatar, Form, Tooltip, Icon, Input, Mentions, Empty, message, Typography, Button } from 'antd';
+import { Empty, Form, Icon, message } from 'antd';
+import axios from 'axios';
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'next/dist/client/router';
-import { loading } from '../../../actions/app-actions';
-import { darkThemeColorList } from '../../../params/darkThemeColorList';
-import { isValidNumber, getUserName, arrayLengthCount } from '../../profile/common-function';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import client from '../../../feathers';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import { tagPrefix, hashTagPrefix, tagPrefixHashValue, hashTagPrefixHashValue, tagSuffixHashValue, hashTagSuffixHashValue, seperatorHashValue, parseTagStringToPlainString, parseToTagString, getAliasCodeFromText } from '../config';
-import axios from 'axios';
-import { Editor } from 'react-draft-wysiwyg';
-import { convertToRaw, EditorState } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
-import Immutable from 'immutable'
-import ReactQuill from 'react-quill'; // ES6
-import ScrollLoadWrapper from '../../commonComponent/scroll-load-wrapper';
-import UserAvatar from './user-avatar';
-import ClickOutsideDetectWrapper from '../../commonComponent/click-outside-detect-wrapper';
+import { loading } from '../../../redux/actions/app-actions';
+import ClickOutsideDetectWrapper from '../../general/ClickOutsideDetectWrapper';
+import EmojiPickerButton from '../../general/EmojiPickerButton';
+import ScrollLoadWrapper from '../../general/ScrollLoadWrapper';
+import { getAliasCodeFromText, hashTagPrefix, hashTagPrefixHashValue, hashTagSuffixHashValue, parseTagStringToPlainString, parseToTagString, seperatorHashValue, tagPrefix, tagPrefixHashValue, tagSuffixHashValue } from '../config';
+import { arrayLengthCount, getUserName, isValidNumber } from '../../../common-function';
+import UserAvatar from '../../general/UserAvatar';
+
+
 
 let uid = v4();
 let ref = {}
@@ -27,6 +23,7 @@ let typingTimeout;
 let checkSearchTimeout;
 let checkHashTagTimeout;
 const PAGE_SIZE = 20;
+let ReactQuill;
 const SocialInput = (props) => {
 
     const [text, setText] = useState('');
@@ -46,7 +43,12 @@ const SocialInput = (props) => {
     const [startWatching, setStartWatching] = useState(false);
 
     useEffect(() => {
-        console.log('hashTagActived', hashTagActived);
+        if (document) {
+            ReactQuill = require('react-quill');
+        }
+    }, [])
+
+    useEffect(() => {
         if (!hashTagActived && hashTagValue && hashTagActiveTriggerPosition != null) {
             handleAddAliasCode(`#${hashTagValue}`, '$_id', '#', hashTagActiveTriggerPosition);
             setHashTagValue('');
@@ -67,18 +69,20 @@ const SocialInput = (props) => {
     }, [props.editMode])
 
     useEffect(() => {
-        if (editMode && props.text) {
+        if (editMode && props.text && ReactQuill) {
             let newText = parseTagStringToPlainString(props.text);
             let quill = props.inputRef || ref[uid];
-            let editor = quill.current.getEditor();
-            if (editor && quill) {
-                editor.setText(newText, 'silence');
+            if (quill.current) {
+                let editor = quill.current.getEditor();
+                if (editor && quill) {
+                    editor.setText(newText, 'silent');
+                }
+                let newAliasCode = getAliasCodeFromText(props.text);
+                setText(newText);
+                setAliasCode(newAliasCode);
             }
-            let newAliasCode = getAliasCodeFromText(props.text);
-            setText(newText);
-            setAliasCode(newAliasCode);
         }
-    }, [editMode, props.text])
+    }, [editMode, props.text, ReactQuill])
 
 
     useEffect(() => {
@@ -108,7 +112,6 @@ const SocialInput = (props) => {
 
     useEffect(() => {
         updateAliasText();
-        console.log(aliasCode);
     }, [aliasCode])
 
     useEffect(() => {
@@ -116,34 +119,33 @@ const SocialInput = (props) => {
             props.onChange(text, parseToTagString(text, aliasCode));
         }
 
-        //cursor placing problem
-        // if(props.maxLength){
-        // let quill = props.inputRef || ref[uid];
-        // let editor = quill.current.getEditor();
-        // let text = editor.getText();
-        // text = text.substring(0,props.maxLength) //maxlength on pass in
-        // console.log(text);
-        // editor.setText(text);
-        // }
-
         setStartWatching(true);
     }, [text, aliasCode])
 
+
     function reset() {
 
-        let quill = props.inputRef || ref[uid];
-        let editor = quill.current.getEditor();
-        if (editor && quill) {
-            editor.deleteText(0, text.length, 'user')
+        if (ReactQuill) {
+            let quill = props.inputRef || ref[uid];
+            if (quill.current) {
+                let editor = quill.current.getEditor();
+                if (editor && quill) {
+                    editor.setText("");
+                }
+                setText('');
+                setAliasCode([]);
+                setSuggestList([]);
+            }
         }
-        setText('');
-        setAliasCode([]);
-        setSuggestList([]);
     }
 
     function handleSubmit() {
-        if (props.onSubmit && text) {
-            let finalText = parseToTagString(text, aliasCode)
+        let finalText = text;
+        if (props.excludeEnter) {
+            finalText = finalText.replace(/\n/g, "");
+        }
+        if (props.onSubmit && finalText) {
+            finalText = parseToTagString(finalText, aliasCode)
             reset();
             props.onSubmit(finalText);
         }
@@ -210,28 +212,49 @@ const SocialInput = (props) => {
     function handleChange(content, delta, source, editor) {
 
         let newText = editor.getText();
+        let action = _.get(delta, ['ops', arrayLengthCount(_.get(delta, ['ops'])) == 2 ? 1 : 0]);
+        let position = arrayLengthCount(_.get(delta, ['ops'])) == 2 ? _.get(delta, ['ops', 0, 'retain']) || 0 : 0;
         if (isValidNumber(parseInt(props.maxLength))) {
-            if (newText.length > parseInt(props.maxLength)) {
+            if (newText.length > parseInt(props.maxLength) && ReactQuill) {
                 let quill = props.inputRef || ref[uid];
-                let editor = quill.current.getEditor();
-                if (editor && quill) {
-                    quill.current.focus();
-                    let currentCursor = editor.getSelection().index || 0;
-                    editor.setText(text, 'silence');
-                    editor.setSelection(currentCursor);
+                if (quill.current) {
+                    let editor = quill.current.getEditor();
+                    if (editor && quill) {
+                        quill.current.focus();
+                        let currentCursor = editor.getSelection().index || 0;
+                        editor.setText(text, 'silent');
+                        editor.setSelection(currentCursor);
+                    }
                 }
 
                 return;
             }
         }
 
-        if (props.excludeEnter) {
-            newText = newText.replace(/\n/g, "");
+        console.log('isEnter', _.get(action, ['insert']) == '\n');
+        if (props.excludeEnter && _.get(action, ['insert']) == '\n') {
+            newText = newText.replace(/\n/g, ""); 
+            console.log(newText);
+            if (ReactQuill) {
+                let quill = props.inputRef || ref[uid];
+                if (quill.current) {
+                    let editor = quill.current.getEditor();
+                    if (editor && quill) {
+                        quill.current.focus();
+                        let currentCursor = editor.getSelection().index || 0;
+                        editor.setText(newText, 'silent');
+                        setTimeout(() => {
+                        editor.setSelection(currentCursor);
+                        }, 10);
+                    }
+                }
+
+                return;
+            }
         }
+
         setText(newText);
 
-        let action = _.get(delta, ['ops', arrayLengthCount(_.get(delta, ['ops'])) == 2 ? 1 : 0]);
-        let position = arrayLengthCount(_.get(delta, ['ops'])) == 2 ? _.get(delta, ['ops', 0, 'retain']) || 0 : 0;
         if (_.isPlainObject(action) && !_.isEmpty(action)) {
 
             if (_.has(action, 'delete')) {
@@ -243,33 +266,41 @@ const SocialInput = (props) => {
     }
 
     function handleAddText(input, tagging) {
-        let quill = props.inputRef || ref[uid];
-        let editor = quill.current.getEditor();
-        if (editor && quill) {
-            quill.current.focus();
-            let currentCursor = editor.getSelection().index || 0;
-            editor.insertText(currentCursor, input);
+        if (ReactQuill) {
+            let quill = props.inputRef || ref[uid];
+            if (quill.current) {
+                let editor = quill.current.getEditor();
+                if (editor && quill) {
+                    quill.current.focus();
+                    let currentCursor = editor.getSelection().index || 0;
+                    editor.insertText(currentCursor, input);
+                }
+            }
         }
     }
 
     function handleAddTag(input, aliasPosition, searchWord) {
-        let quill = props.inputRef || ref[uid];
-        let editor = quill.current.getEditor();
-        if (editor && quill) {
-            let preText = text.substr(0, aliasPosition);
-            let postText = text.substr(aliasPosition + 1 + searchWord.length);
-            let newText = preText + postText;
-            editor.setText(newText, 'user');
+        if (ReactQuill) {
+            let quill = props.inputRef || ref[uid];
+            if (quill.current) {
+                let editor = quill.current.getEditor();
+                if (editor && quill) {
+                    let preText = text.substr(0, aliasPosition);
+                    let postText = text.substr(aliasPosition + 1 + searchWord.length);
+                    let newText = preText + postText;
+                    editor.setText(newText, 'user');
 
-            editor.insertText(aliasPosition, input, {
-                bold: true,
-                color: '#2196F3',
-            })
-            editor.insertText(aliasPosition + input.length, ' ', {
-                'bold': false,
-                color: '#616161'
-            })
-            editor.setSelection(aliasPosition + input.length + 1)
+                    editor.insertText(aliasPosition, input, {
+                        bold: true,
+                        color: '#2196F3',
+                    })
+                    editor.insertText(aliasPosition + input.length, ' ', {
+                        'bold': false,
+                        color: '#616161'
+                    })
+                    editor.setSelection(aliasPosition + input.length + 1)
+                }
+            }
         }
 
     }
@@ -297,33 +328,38 @@ const SocialInput = (props) => {
 
     function handleDeleteAliasCode(position, action) {
 
-        let newAliasCode = _.unionBy(_.sortBy(_.reverse(_.sortBy(_.cloneDeep(aliasCode) || [], ['createdAt'])), ['position']), [], 'position');
-        //need update back position after delete things
+        if (ReactQuill) {
+            let newAliasCode = _.unionBy(_.sortBy(_.reverse(_.sortBy(_.cloneDeep(aliasCode) || [], ['createdAt'])), ['position']), [], 'position');
+            //need update back position after delete things
 
-        let effectedAliasCode = _.filter(newAliasCode, function (aliasCode) {
-            return aliasCode.position >= position || (position >= aliasCode.position && position <= aliasCode.endPosition);
-        })
+            let effectedAliasCode = _.filter(newAliasCode, function (aliasCode) {
+                return aliasCode.position >= position || (position >= aliasCode.position && position <= aliasCode.endPosition);
+            })
 
 
-        let quill = props.inputRef || ref[uid];
-        let editor = quill.current.getEditor();
-        let currentText = '';
-        if (editor && quill) {
-            currentText = editor.getText();
-        }
+            let quill = props.inputRef || ref[uid];
+            if (quill.current) {
+                let editor = quill.current.getEditor();
+                let currentText = '';
+                if (editor && quill) {
+                    currentText = editor.getText();
+                }
 
-        newAliasCode = _.map(newAliasCode, function (code) {
-            if (code.position > position) {
-                code.position -= 1;
+                newAliasCode = _.map(newAliasCode, function (code) {
+                    if (code.position > position) {
+                        code.position -= 1;
+                    }
+                    return code;
+                })
+
+                let codeStr = parseToTagString(currentText, newAliasCode);
+                newAliasCode = getAliasCodeFromText(codeStr);
+
+                if (!_.isEqual(newAliasCode, aliasCode)) {
+                    setAliasCode(newAliasCode);
+                }
+
             }
-            return code;
-        })
-
-        let codeStr = parseToTagString(currentText, newAliasCode);
-        newAliasCode = getAliasCodeFromText(codeStr);
-
-        if (!_.isEqual(newAliasCode, aliasCode)) {
-            setAliasCode(newAliasCode);
         }
 
     }
@@ -331,34 +367,38 @@ const SocialInput = (props) => {
 
     function updateAliasText() {
 
-        let quill = props.inputRef || ref[uid];
-        quill = quill.current.getEditor();
-        quill.formatText(0, text.length, {
-            'bold': false,
-            color: '#616161'
-        }, 'silence')
-        //Update format
-        //If dont want the sudden color flash need to loop through each word
-        _.forEach(aliasCode, function (code) {
-            let name = code.name;
-            let position = code.position;
+        if (ReactQuill) {
+            let quill = props.inputRef || ref[uid];
+            if (quill.current) {
+                quill = quill.current.getEditor();
+                quill.formatText(0, text.length, {
+                    'bold': false,
+                    color: '#616161'
+                }, 'silent')
+                //Update format
+                //If dont want the sudden color flash need to loop through each word
+                _.forEach(aliasCode, function (code) {
+                    let name = code.name;
+                    let position = code.position;
 
-            if (name && isValidNumber(position)) {
-                name = name.split('');
-                _.forEach(name, function (char) {
-                    if (char == text[position]) {
-                        quill.formatText(position, 1, {
-                            bold: true,
-                            color: code.prefix == hashTagPrefix ? 'black' : '#2196F3',
+                    if (name && isValidNumber(position)) {
+                        name = name.split('');
+                        _.forEach(name, function (char) {
+                            if (char == text[position]) {
+                                quill.formatText(position, 1, {
+                                    bold: true,
+                                    color: code.prefix == hashTagPrefix ? 'black' : '#2196F3',
+                                })
+                            } else {
+                                return false;
+                            }
+                            position++;
                         })
-                    } else {
-                        return false;
                     }
-                    position++;
+
                 })
             }
-
-        })
+        }
 
     }
 
@@ -378,10 +418,7 @@ const SocialInput = (props) => {
         if (currentPosition > 0) {
             let canSearch = false;
             _.forEach(_.reverse(_.range(0, currentPosition)), function (i) {
-                console.log(text[i]);
-                console.log('searchMode', searchMode);
                 if ((text[i] == ' ' && !searchMode)) {
-                    console.log('here');
                     return false;
                 }
 
@@ -416,109 +453,112 @@ const SocialInput = (props) => {
         }
     }
 
-
-    return (
-        <React.Fragment>
-            <ClickOutsideDetectWrapper
-                onClickedOutside={() => {
-                    if (props.clickOutsideSubmit) {
-                        handleSubmit();
-                    }
-                }}
-                className={`no-border-input thin-border round-border-big background-white padding-sm flex-justify-start relative-wrapper flex-items-align-center ${props.className || ''}`}
-                style={{ ...props.style }}
-                id={uid}
-            >
-                <ReactQuill
-                    theme={null}
-                    placeholder={props.placeholder || "What's on your mind?"}
-                    className="width-90 grey-darken-3"
-                    style={{ height: props.height || 30 }}
-                    ref={props.inputRef || ref[uid]}
-                    onChange={(content, delta, source, editor) => { handleChange(content, delta, source, editor) }}
-                    onChangeSelection={(range, source, editor) => {
-                        checkCanSearch(range, editor);
-                        // checkHashTag(range, editor);
-                    }}
-                    onKeyUp={(e) => {
-
-                        //Enter Hit
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
+    if (ReactQuill) {
+        return (
+            <React.Fragment>
+                <ClickOutsideDetectWrapper
+                    onClickedOutside={() => {
+                        if (props.clickOutsideSubmit) {
                             handleSubmit();
                         }
+                    }}
+                    className={`no-border-input thin-border round-border-big background-white padding-sm flex-justify-start relative-wrapper flex-items-align-center ${props.className || ''}`}
+                    style={{ ...props.style }}
+                    id={uid}
+                >
+                    <ReactQuill
+                        theme={null}
+                        placeholder={props.placeholder || "What's on your mind?"}
+                        className="width-90 grey-darken-3"
+                        style={{ height: props.height || 30 }}
+                        ref={props.inputRef || ref[uid]}
+                        onChange={(content, delta, source, editor) => { handleChange(content, delta, source, editor) }}
+                        onChangeSelection={(range, source, editor) => {
+                            checkCanSearch(range, editor);
+                            // checkHashTag(range, editor);
+                        }}
+                        onKeyUp={(e) => {
 
-                    }}
-                >
-                </ReactQuill>
-                <EmojiPickerButton
-                    onSelect={(emoji) => {
-                        handleAddText(emoji.native)
-                    }}
-                    position={props.emojiPosition}
-                >
-                    <Icon type="smile" className='cursor-pointer grey margin-right-sm margin-top-xs flex-items-no-shrink' style={{ fontSize: '17px' }} />
-                </EmojiPickerButton>
-                {
-                    // searchMode && _.isArray(_.get(suggestList, [prefix])) && !_.isEmpty(_.get(suggestList, [prefix])) ?
-                    searchMode ?
-                        <div className="round-border thin-border background-white " style={props.placement == 'bottom' ? { position: 'absolute', bottom: -210, right: 0, left: 0, zIndex: 99999, margin: 'auto' } : { position: 'absolute', top: -210, right: 0, left: 0, zIndex: 99999, margin: 'auto' }}>
-                            <ScrollLoadWrapper autoHeight autoHeightMax={200} autoHeightMin={200} style={{ width: '100%' }} >
-                                {
-                                    _.isArray(_.get(suggestList, [prefix])) && !_.isEmpty(_.get(suggestList, [prefix])) ?
-                                        (suggestList[prefix] || []).map(value => (
-                                            <div className="padding-sm flex-justify-start flex-items-align-center cursor-pointer hover-background-yellow-accent-1"
-                                                onClick={(e) => {
-                                                    if (prefix == tagPrefix) {
-                                                        setSearchMode(false);
-                                                        handleAddTag(getUserName(value, 'freakId') || '', activeTriggerPosition, searchWord);
-                                                        handleAddAliasCode(getUserName(value, 'freakId'), value._id, prefix, activeTriggerPosition)
-                                                    } else if (prefix == hashTagPrefix) {
-                                                        setHashTagValue('');
-                                                        setHashTagActived(false);
-                                                        setHashTagActiveTriggerPosition(null);
-                                                        handleAddTag(_.get(value, ['tag']) || '', hashTagActiveTriggerPosition, `#${hashTagValue}`);
-                                                        handleAddAliasCode(_.get(value, ['tag']), '$_id', prefix, hashTagActiveTriggerPosition)
-                                                    }
-                                                }}>
-                                                {
-                                                    prefix == tagPrefix ?
-                                                        <React.Fragment>
-                                                            <UserAvatar data={value} size={50} className="margin-right-md" />
-                                                            <span className='d-inline-block' >
-                                                                <div className="headline font-weight-black text-truncate">
-                                                                    {getUserName(value, 'freakId') || ''}
-                                                                </div>
-                                                                <div className="headline text-truncate">
-                                                                    {getUserName(value, 'fullName') || ''}
-                                                                </div>
-                                                            </span>
-                                                        </React.Fragment>
-                                                        :
-                                                        prefix == hashTagPrefix ?
-                                                            <div className='headline font-weight-black text-truncate' >
-                                                                {
-                                                                    _.get(value, ['tag'])
-                                                                }
-                                                            </div>
+                            //Enter Hit
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                handleSubmit();
+                            }
+
+                        }}
+                    >
+                    </ReactQuill>
+                    <EmojiPickerButton
+                        onSelect={(emoji) => {
+                            handleAddText(emoji.native)
+                        }}
+                        position={props.emojiPosition}
+                    >
+                        <Icon type="smile" className='cursor-pointer grey margin-right-sm margin-top-xs flex-items-no-shrink' style={{ fontSize: '17px' }} />
+                    </EmojiPickerButton>
+                    {
+                        // searchMode && _.isArray(_.get(suggestList, [prefix])) && !_.isEmpty(_.get(suggestList, [prefix])) ?
+                        searchMode ?
+                            <div className="round-border thin-border background-white " style={props.placement == 'bottom' ? { position: 'absolute', bottom: -210, right: 0, left: 0, zIndex: 99999, margin: 'auto' } : { position: 'absolute', top: -210, right: 0, left: 0, zIndex: 99999, margin: 'auto' }}>
+                                <ScrollLoadWrapper autoHeight autoHeightMax={200} autoHeightMin={200} style={{ width: '100%' }} >
+                                    {
+                                        _.isArray(_.get(suggestList, [prefix])) && !_.isEmpty(_.get(suggestList, [prefix])) ?
+                                            (suggestList[prefix] || []).map(value => (
+                                                <div className="padding-sm flex-justify-start flex-items-align-center cursor-pointer hover-background-yellow-accent-1"
+                                                    onClick={(e) => {
+                                                        if (prefix == tagPrefix) {
+                                                            setSearchMode(false);
+                                                            handleAddTag(getUserName(value, 'freakId') || '', activeTriggerPosition, searchWord);
+                                                            handleAddAliasCode(getUserName(value, 'freakId'), value._id, prefix, activeTriggerPosition)
+                                                        } else if (prefix == hashTagPrefix) {
+                                                            setHashTagValue('');
+                                                            setHashTagActived(false);
+                                                            setHashTagActiveTriggerPosition(null);
+                                                            handleAddTag(_.get(value, ['tag']) || '', hashTagActiveTriggerPosition, `#${hashTagValue}`);
+                                                            handleAddAliasCode(_.get(value, ['tag']), '$_id', prefix, hashTagActiveTriggerPosition)
+                                                        }
+                                                    }}>
+                                                    {
+                                                        prefix == tagPrefix ?
+                                                            <React.Fragment>
+                                                                <UserAvatar data={value} size={50} className="margin-right-md" />
+                                                                <span className='d-inline-block' >
+                                                                    <div className="headline font-weight-black text-truncate">
+                                                                        {getUserName(value, 'freakId') || ''}
+                                                                    </div>
+                                                                    <div className="headline text-truncate">
+                                                                        {getUserName(value, 'fullName') || ''}
+                                                                    </div>
+                                                                </span>
+                                                            </React.Fragment>
                                                             :
-                                                            null
-                                                }
+                                                            prefix == hashTagPrefix ?
+                                                                <div className='headline font-weight-black text-truncate' >
+                                                                    {
+                                                                        _.get(value, ['tag'])
+                                                                    }
+                                                                </div>
+                                                                :
+                                                                null
+                                                    }
+                                                </div>
+                                            ))
+                                            :
+                                            <div className="flex-justify-center flex-items-align-center padding-md">
+                                                <Empty description={isLoading ? 'Getting data...' : 'No Result'}></Empty>
                                             </div>
-                                        ))
-                                        :
-                                        <div className="flex-justify-center flex-items-align-center padding-md">
-                                            <Empty description={isLoading ? 'Getting data...' : 'No Result'}></Empty>
-                                        </div>
-                                }
-                            </ScrollLoadWrapper>
-                        </div>
-                        :
-                        null
-                }
-            </ClickOutsideDetectWrapper>
-        </React.Fragment>
-    );
+                                    }
+                                </ScrollLoadWrapper>
+                            </div>
+                            :
+                            null
+                    }
+                </ClickOutsideDetectWrapper>
+            </React.Fragment>
+        );
+    } else {
+        return null;
+    }
 }
 
 

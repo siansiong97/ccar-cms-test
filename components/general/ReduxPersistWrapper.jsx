@@ -1,12 +1,9 @@
 import { } from 'antd';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
-import Lightbox from 'react-image-lightbox';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form } from '@ant-design/compatible';
-import { isValidNumber, getCookiePersistStates } from '../../common-function';
-import { dynamicDispatch } from '../../redux/config';
+import { setInitedRedux } from '../../redux/actions/app-actions';
+import { dynamicDispatch, getLocalStoragePersistStates } from '../../redux/config';
 
 
 const ReduxPersistWrapper = (props) => {
@@ -14,10 +11,12 @@ const ReduxPersistWrapper = (props) => {
 
     useEffect(() => {
         if (props.cookie) {
-            let cookiePersistStates = getCookiePersistStates(props.cookie);
-            _.forEach(cookiePersistStates, function(cookiePersistState) { 
-              props.dynamicDispatch(_.get(cookiePersistState, ['persistObj', 'action']), _.get(cookiePersistState, ['data']))
+            let persistStates = getLocalStoragePersistStates();
+            console.log(persistStates);
+            _.forEach(persistStates, function (persistState) {
+                props.dynamicDispatch(_.get(persistState, ['persistObj', 'action']), _.get(persistState, ['data']))
             })
+            props.setInitedRedux(true);
         }
 
     }, [props.cookie])
@@ -41,5 +40,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     dynamicDispatch: dynamicDispatch,
+    setInitedRedux: setInitedRedux,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxPersistWrapper);

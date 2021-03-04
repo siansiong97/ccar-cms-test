@@ -1,19 +1,16 @@
-import Carousel from '@brainhubeu/react-carousel';
-import { Dropdown, Empty, Form, Icon, Menu, Popconfirm, message } from 'antd';
+import { Form } from 'antd';
 import _ from 'lodash';
+import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { isValidNumber, notEmptyLength, objectRemoveEmptyValue, getUserName } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
-import LikePostButton from './like-post-button';
-import { loading } from '../../../actions/app-actions';
-import moment from 'moment';
-import ReportButton from '../../commonComponent/report-button';
-import FollowButton from '../../commonComponent/follow-button';
-import ShareButtonDialog from '../../commonComponent/share-button-dialog';
-import ParseTag from '../../commonComponent/parse-tag';
+import { getUserName, isValidNumber, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
+import { loading } from '../../../redux/actions/app-actions';
+import ParseTag from '../../general/ParseTag';
+import UserAvatar from '../../general/UserAvatar';
 import PostMenu from './post-menu';
+
+
 
 const defaultHeight = 'auto';
 

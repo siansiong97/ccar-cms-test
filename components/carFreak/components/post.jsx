@@ -1,26 +1,20 @@
-import Carousel from '@brainhubeu/react-carousel';
-import { Dropdown, Empty, Form, Icon, Menu, Popconfirm, message } from 'antd';
-import { BookOutlined, BookFilled } from '@ant-design/icons';
+import { Empty, Form } from 'antd';
 import _ from 'lodash';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { isValidNumber, notEmptyLength, objectRemoveEmptyValue, getPlural, formatNumber } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
-import LikePostButton from './like-post-button';
-import { loading } from '../../../actions/app-actions';
+import { calendarIcon, carFreakLikeGreyIcon, carFreakLikeIcon } from '../../../icon';
 import { commentIcon } from '../../live/config';
-import FollowButton from '../../commonComponent/follow-button';
-import ReportButton from '../../commonComponent/report-button';
-import { v4 } from 'uuid';
-import ShareButtonDialog from '../../commonComponent/share-button-dialog';
-import client from '../../../feathers';
-import { carFreakLikeGreyIcon, carFreakLikeIcon, calendarIcon } from '../../../icon';
-import ParseTag from '../../commonComponent/parse-tag';
 import ClubAvatar from './club/club-avatar';
-import moment from 'moment';
-import SavePostButton from './save-post-button';
+import LikePostButton from './like-post-button';
 import PostMenu from './post-menu';
+import { withRouter } from 'next/router';
+import ParseTag from '../../general/ParseTag';
+import UserAvatar from '../../general/UserAvatar';
+import { formatNumber, getPlural, isValidNumber, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
+import { loading } from '../../../redux/actions/app-actions';
+
+
 const defaultHeight = 450;
 const headerHeight = 100;
 const imageHeight = 200;

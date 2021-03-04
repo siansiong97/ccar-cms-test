@@ -22,7 +22,7 @@ import {
   FETCH_NEW_CAR_FILTER_GROUP,
   RESET_NEW_CAR_FILTER_GROUP,
 } from '../actions/newcars-actions';
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
@@ -68,7 +68,7 @@ export default function (state = INITIAL_STATE, action) {
       reducer: 'newCars',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
   switch (action.type) {
     case FETCH_NEWS:

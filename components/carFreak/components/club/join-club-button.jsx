@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, Input, InputNumber, Button, Switch, Radio, message, Icon, Card, Avatar, Select, Modal, Rate, Dropdown, Menu, Divider } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import { withRouter } from 'next/dist/client/router';
-import { connect } from 'react-redux';
-import _ from 'lodash';
-import { loading, loginMode } from '../../../../actions/app-actions';
-import { setUser } from '../../../../actions/user-actions';
-import client from '../../../../feathers';
+import { Button, Form, Icon, message } from 'antd';
 import axios from 'axios';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import client from '../../../../feathers';
+import { loading, loginMode } from '../../../../redux/actions/app-actions';
+import { setUser } from '../../../../redux/actions/user-actions';
 
 
 

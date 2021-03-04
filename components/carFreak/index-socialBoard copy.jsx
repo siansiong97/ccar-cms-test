@@ -14,7 +14,7 @@ import { notEmptyLength } from '../profile/common-function';
 import PostModal from './modal-Post';
 import PostCommentModal from './modal-SocialBoardPostComment';
 import Carousel, { Dots, slidesToShowPlugin, arrowsPlugin } from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import moment from "moment";
 import { ReactSortable } from "react-sortablejs";
 

@@ -1,16 +1,13 @@
-import { Dropdown, Form, Icon, Input, Menu, Popconfirm, message } from 'antd';
-import "emoji-mart/css/emoji-mart.css";
+import { BookFilled, BookOutlined } from '@ant-design/icons';
+import { Dropdown, Form, Icon, Menu, message, Popconfirm } from 'antd';
 import _ from "lodash";
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { withRouter } from 'next/dist/client/router';
-import { loading, loginMode } from '../../../actions/app-actions';
 import SavePostButton from './save-post-button';
-import FollowButton from '../../commonComponent/follow-button';
-import ReportButton from '../../commonComponent/report-button';
-import ShareButtonDialog from '../../commonComponent/share-button-dialog';
-import { BookOutlined, BookFilled } from '@ant-design/icons';
+import FollowButton from '../../profile/FollowButton';
+import ShareButtonDialog from '../../general/ShareButtonDialog';
+import ReportButton from '../../general/ReportButton';
 
 
 
@@ -135,7 +132,5 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    loading: loading,
-    loginMode,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(PostMenu)));

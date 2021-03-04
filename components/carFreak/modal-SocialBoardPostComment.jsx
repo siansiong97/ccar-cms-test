@@ -11,7 +11,6 @@ import _, { set } from 'lodash';
 import client from '../../feathers'
 import { Carousel } from 'react-responsive-carousel';
 import ReactDOM from 'react-dom';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import moment from "moment";
 import EmojiPickerButton from '../commonComponent/emoji-picker-button';
 import axios from 'axios';

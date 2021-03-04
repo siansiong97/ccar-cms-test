@@ -1,22 +1,19 @@
-import { Button, Col, Empty, Form, Icon, Input, message, Modal, Radio, Row } from 'antd';
+import { Button, Col, Empty, Form, Icon, message, Modal, Row } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { loading } from '../../../../actions/app-actions';
-import { setUser } from '../../../../actions/user-actions';
 import client from '../../../../feathers';
-import UserAvatar from '../user-avatar';
-import ScrollLoadWrapper from '../../../commonComponent/scroll-load-wrapper';
-import FollowButton from '../../../commonComponent/follow-button';
-import { arrayLengthCount, isValidNumber, getUserName } from '../../../profile/common-function';
-import { isDealer } from '../../../userProfile/config';
-import InviteButton from '../../../commonComponent/invite-button';
-import moment from 'moment';
 import { convertNameString } from '../../config';
-import JoinClubButton from './join-club-button';
 import ClubApprovalButton from './club-approval-button';
+import { loading } from '../../../../redux/actions/app-actions';
+import { setUser } from '../../../../redux/actions/user-actions';
+import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
+import { arrayLengthCount, getUserName, isValidNumber } from '../../../../common-function';
+import UserAvatar from '../../../general/UserAvatar';
+
 
 const PAGE_SIZE = 12;
 const TYPING_TIMEOUT = 500;

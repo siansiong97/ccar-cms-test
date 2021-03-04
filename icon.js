@@ -43,6 +43,11 @@ export const cnyLogo2 = '/ccar cny 2.svg';
 
 //Profile
 export const defaultProfileBackground = '/assets/profile/1280x450.png';
+export const phone = "/assets/sellerProfile/phone.png"
+export const email = "/assets/sellerProfile/email.png"
+export const help = "/assets/sellerProfile/help.png"
+export const address = "/assets/sellerProfile/address-home.png"
+export const location = "/assets/sellerProfile/Location@3x.png"
 
 
 //FAQ

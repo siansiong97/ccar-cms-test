@@ -1,22 +1,21 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Button, Col, Empty, Form, Row, Typography, message, Dropdown, Menu, Popconfirm, Icon } from 'antd';
+
+import { Button, Col, Empty, Form, Icon, message, Row } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
 import client from '../../../feathers';
 import { writePostIcon } from '../../../icon';
-import { notEmptyLength, getUserName, arrayLengthCount, sortByDateDesc } from '../../profile/common-function';
 import CommentBox from './comment-box';
-import UserAvatar from './user-avatar';
 import CommentModal from './comment-modal';
-import FollowButton from '../../commonComponent/follow-button';
-import ReportButton from '../../commonComponent/report-button';
-import ShareButtonDialog from '../../commonComponent/share-button-dialog';
-import WritePostModal from './write-post-modal';
-import ParseTag from '../../commonComponent/parse-tag';
 import PostMenu from './post-menu';
+import WritePostModal from './write-post-modal';
+import UserAvatar from '../../general/UserAvatar';
+import { arrayLengthCount, getUserName, notEmptyLength, sortByDateDesc, getObjectId } from '../../../common-function';
+import ParseTag from '../../general/ParseTag';
+
+
 
 const messagePageSize = 10
 const SocialBoardDetailsBox = (props) => {
@@ -100,8 +99,6 @@ const SocialBoardDetailsBox = (props) => {
             return
         }
 
-        console.log('ids');
-        console.log(ids);
         let query = {
             _id: {
                 $in: ids || [],
@@ -290,7 +287,7 @@ const SocialBoardDetailsBox = (props) => {
                                         <CommentBox
                                             data={v}
                                             pinnedComments={pinnedComments}
-                                            pinnable={true}
+                                            pinnable={getObjectId(_.get(post, ['userId'])) && _.get(props.user, ['info', 'user', '_id']) == getObjectId(_.get(post, ['userId']))}
                                             theme="pin"
                                             onEditClick={(data) => {
                                                 if (_.isPlainObject(data) && !_.isEmpty(data)) {
@@ -323,7 +320,7 @@ const SocialBoardDetailsBox = (props) => {
                                         <CommentBox
                                             data={v}
                                             pinnedComments={pinnedComments}
-                                            pinnable={arrayLengthCount(pinnedCommentIds) < 3}
+                                            pinnable={arrayLengthCount(pinnedCommentIds) < 3 && getObjectId(_.get(post, ['userId'])) && _.get(props.user, ['info', 'user', '_id']) == getObjectId(_.get(post, ['userId']))}
                                             onEditClick={(data) => {
                                                 if (_.isPlainObject(data) && !_.isEmpty(data)) {
                                                     setSelectedComment(data);
@@ -344,11 +341,14 @@ const SocialBoardDetailsBox = (props) => {
                                 )
                             })
                             :
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="width-100 padding-md background-white">
-                                    <Empty description="No comment yet..." />
-                                </div>
-                            </Col>
+                            notEmptyLength(pinnedComments) ?
+                                null
+                                :
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <div className="width-100 padding-md background-white">
+                                        <Empty description="No comment yet..." />
+                                    </div>
+                                </Col>
 
                     }
 

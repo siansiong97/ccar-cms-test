@@ -6,6 +6,7 @@ import LightBoxGallery from './light-box-gallery';
 import { loading } from '../../redux/actions/app-actions';
 import { isValidNumber } from '../../common-function';
 import { darkThemeColorList } from '../../params/darkThemeColorList';
+import { withRouter } from 'next/router';
 
 
 const UserAvatar = (props) => {
@@ -121,4 +122,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     loading: loading,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(UserAvatar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserAvatar));

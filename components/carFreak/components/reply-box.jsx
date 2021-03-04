@@ -1,26 +1,21 @@
-import Carousel from '@brainhubeu/react-carousel';
-import { Dropdown, Empty, Form, Icon, Menu, Popconfirm, Row, Col, Button, Collapse, Input, message as AntMessage, message } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
+import { Button, Col, Dropdown, Form, Icon, Menu, message, Popconfirm, Row } from 'antd';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { isValidNumber, notEmptyLength, objectRemoveEmptyValue, formatNumber, getUserName, getObjectId } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
-import LikePostButton from './like-post-button';
-import { loading, loginMode } from '../../../actions/app-actions';
 import moment from 'moment';
-import { writePostIcon } from '../../../icon';
-import ShowMoreText from 'react-show-more-text';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
 import Scrollbars from 'react-custom-scrollbars';
-import LightBoxGallery from '../../commonComponent/light-box-gallery';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import ScrollLoadWrapper from '../../commonComponent/scroll-load-wrapper';
-import { chatRestrictTime } from '../config';
+import { connect } from 'react-redux';
 import client from '../../../feathers';
-import ClickOutsideDetectWrapper from '../../commonComponent/click-outside-detect-wrapper';
-import ParseTag from '../../commonComponent/parse-tag';
+import LikePostButton from './like-post-button';
 import SocialInput from './social-input';
+import UserAvatar from '../../general/UserAvatar';
+import { formatNumber, getObjectId, getUserName, notEmptyLength, objectRemoveEmptyValue  } from '../../../common-function';
+import LightBoxGallery from '../../general/light-box-gallery';
+import ParseTag from '../../general/ParseTag';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+
+
 
 const defaultHeight = 'auto';
 const headerHeight = 100;

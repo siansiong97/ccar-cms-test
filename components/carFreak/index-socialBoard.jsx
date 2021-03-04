@@ -1,5 +1,5 @@
 import Carousel from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Button, Col, Divider, Dropdown, Icon, Input, Menu, message as AntMessages, message, Popconfirm, Row, Spin, Pagination } from 'antd';
 import axios from 'axios';
 import _, { add, isEmpty } from 'lodash';
@@ -434,7 +434,7 @@ const SocialBoardIndex = (props) => {
                     messageId: v._id,
                     type: type,
                 }, {
-                headers: { 'Authorization': client.settings.accessToken },
+                headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },
             }).then((res) => {
                 let result = res.data
 

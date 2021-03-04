@@ -10,8 +10,9 @@ const socket = io('http://localhost:3030/');   // local/
 const client = feathers();
 
 client.configure(socketio(socket),{pingTimeOut:60000});
-client.configure(authentication({
-  // storage: window.localStorage
-}));
+// client.configure(authentication({
+//   // storage: window.localStorage
+// }));
+client.configure(authentication());
 
 export default client;

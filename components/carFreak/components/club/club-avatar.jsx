@@ -3,10 +3,10 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/dist/client/router';
-import { ccarLogo } from '../../../userProfile/config';
-import { loading } from '../../../../actions/app-actions';
-import { isValidNumber } from '../../../profile/common-function';
-import LightBoxGallery from '../../../commonComponent/light-box-gallery';
+import { isValidNumber } from '../../../../common-function';
+import { loading } from '../../../../redux/actions/app-actions';
+import LightBoxGallery from '../../../general/light-box-gallery';
+import { ccarLogo } from '../../../profile/config';
 
 
 const ClubAvatar = (props) => {
@@ -30,7 +30,7 @@ const ClubAvatar = (props) => {
                     }
                 }}
             >
-                <LightBoxGallery images={_.compact([_.get(props.data , ['clubAvatar'])])}>
+                <LightBoxGallery images={_.compact([_.get(props.data, ['clubAvatar'])])}>
                     {
                         (data, setCurrentIndex, setVisible) => {
                             return (

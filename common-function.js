@@ -2,6 +2,7 @@ import { isInteger } from "lodash";
 import _ from 'lodash';
 import queryString from 'query-string';
 import cookie from 'cookie';
+import localStorage from 'local-storage';
 import { statePersistActions } from "./redux/config";
 
 var moment = require('moment');
@@ -1350,33 +1351,6 @@ export function getObjectId(data, col) {
     } else {
         return data;
     }
-}
-
-
-export function getCookiePersistStates(cookieData) {
-
-    cookieData = cookie.parse(cookieData) || {};
-    let cookiePersistStates = [];
-
-    _.forEach(statePersistActions, function (statePersistAction) {
-        if (cookieData[statePersistAction['action']]) {
-            cookieData[statePersistAction['action']] = JSON.parse(cookieData[statePersistAction['action']]);
-            try {
-                cookiePersistStates.push({
-                    persistObj: statePersistAction,
-                    data: _.get(cookieData[statePersistAction['action']], ['data']),
-                    reducer: _.get(cookieData[statePersistAction['action']], ['reducer']),
-                    createdAt: new Date(_.get(cookieData[statePersistAction['action']], ['createdAt'])).getTime(),
-                })
-            } catch (error) {
-
-            }
-        }
-    })
-
-    cookiePersistStates = _.sortBy(cookiePersistStates, ['reducer', 'createdAt']);
-    return cookiePersistStates || [];
-
 }
 
 

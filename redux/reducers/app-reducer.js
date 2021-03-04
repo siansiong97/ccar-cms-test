@@ -52,15 +52,17 @@ import {
 
   SET_MENU_HEIGHT,
   SET_NOTIFICATION_TOKEN,
+  SET_INITED_REDUX,
 } from '../actions/app-actions';
 
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
   notificationToken: null,
 
+  initedRedux: false,
   loading: false,
   advanceMode: false,
   loginMode: false,
@@ -132,11 +134,11 @@ export default function (state = INITIAL_STATE, action) {
   if (needPersist) {
     let persistObj = getPersistObj(_.get(action, ['type']));
     let persistData = {
-      data : action.payload,
+      data: action.payload,
       reducer: 'app',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
   switch (action.type) {
     case LOADING:
@@ -427,6 +429,11 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         notificationToken: action.data
+      };
+    case SET_INITED_REDUX:
+      return {
+        ...state,
+        initedRedux: action.data
       };
     default:
       return state

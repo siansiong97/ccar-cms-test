@@ -1,18 +1,16 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Col, Form, Row, Button, Dropdown, Menu, Popconfirm, Icon } from 'antd';
+
+import { Col, Dropdown, Form, Icon, Menu, Popconfirm, Row } from 'antd';
 import _ from 'lodash';
+import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { notEmptyLength, getUserName, checkObjectId } from '../../../profile/common-function';
-import { imageNotFound } from '../../../userProfile/config';
-import moment from 'moment';
-import UserAvatar from '../user-avatar';
-import ShareButtonDialog from '../../../commonComponent/share-button-dialog';
-import FollowButton from '../../../commonComponent/follow-button';
-import EventJoinActionButtons from './event-join-action-buttons';
-import EventAttendanceBox from './event-attendance-box';
 import ShowMoreText from 'react-show-more-text';
+import EventAttendanceBox from './event-attendance-box';
+import EventJoinActionButtons from './event-join-action-buttons';
+import UserAvatar from '../../../general/UserAvatar';
+import { checkObjectId, getUserName } from '../../../../common-function';
+import ShareButtonDialog from '../../../general/ShareButtonDialog';
 
 
 const defaultHeight = 200;

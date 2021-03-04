@@ -1,7 +1,7 @@
 
 import moment from 'moment'
 import { SET_POST_MODAL_LIKE_REFRESH_ID, FETCH_CAR_FREAK_POSTS, FETCH_EDITED_POST } from '../actions/carfreak.action';
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash';
 
@@ -22,7 +22,7 @@ export default function (state = INITIAL_STATE, action) {
       reducer: 'carfreak',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
     switch (action.type) {
         case SET_POST_MODAL_LIKE_REFRESH_ID:

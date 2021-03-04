@@ -1,19 +1,18 @@
-import { Form, Input, Modal, Row, Col, message, Upload, Avatar, Button } from 'antd';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { useEffect } from 'react';
-import UserAvatar from '../user-avatar';
-import { getUserName } from '../../../profile/common-function';
-import _ from 'lodash';
-import { loading, loginMode } from '../../../../actions/app-actions';
-import { setUser } from '../../../../actions/user-actions';
-import client from '../../../../feathers';
+import { Avatar, Button, Col, Form, Input, message, Modal, Row, Upload } from 'antd';
 import axios from 'axios';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import Loading from '../../../commonComponent/loading';
 import ClubInviteModal from './club-invite-modal';
+import { loading, loginMode } from '../../../../redux/actions/app-actions';
+import { setUser } from '../../../../redux/actions/user-actions';
+import client from '../../../../feathers';
+import UserAvatar from '../../../general/UserAvatar';
+import { getUserName } from '../../../../common-function';
 const { TextArea } = Input;
+
 
 const profileImage = "/assets/profile/profile-image.png";
 
@@ -118,7 +117,7 @@ const WriteClubModal = (props) => {
                     formData
                     , {
                         headers: {
-                            'Authorization': client.settings.accessToken,
+                            'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                             'Content-Type': 'multipart/form-data',
                         }
                     }
@@ -127,7 +126,7 @@ const WriteClubModal = (props) => {
                     if (!editMode) {
                         createClub({ ...values, clubAvatar: _.get(fileList, [0, 'url']) })
                     } else {
-                        updateClub(_.get(club , ['_id']), { ...values, clubAvatar: _.get(fileList, [0, 'url']) })
+                        updateClub(_.get(club, ['_id']), { ...values, clubAvatar: _.get(fileList, [0, 'url']) })
                     }
                 })
                     .catch((err) => {
@@ -138,7 +137,7 @@ const WriteClubModal = (props) => {
                     })
             } else {
                 if (editMode) {
-                    updateClub(_.get(club , ['_id']), values)
+                    updateClub(_.get(club, ['_id']), values)
                 }
             }
         })
@@ -150,7 +149,7 @@ const WriteClubModal = (props) => {
             client.authenticate()
                 .then((res) => {
                     client.service('clubs')
-                        .create({ ...data, userId : _.get(res , ['user', '_id'])})
+                        .create({ ...data, userId: _.get(res, ['user', '_id']) })
                         .then((res) => {
                             setIsLoading(false);
                             setClub(res)
@@ -186,7 +185,7 @@ const WriteClubModal = (props) => {
             client.authenticate()
                 .then((res) => {
                     client.service('clubs')
-                        .patch(id, {...data, userId : _.get(res , ['user', '_id'])})
+                        .patch(id, { ...data, userId: _.get(res, ['user', '_id']) })
                         .then((res) => {
                             setIsLoading(false);
                             setClub(res)
@@ -223,76 +222,74 @@ const WriteClubModal = (props) => {
                 bodyStyle={{ backgroundColor: 'white' }}
             >
                 <Form layout="vertical">
-                    <Loading spinning={isLoading}>
-
-                        <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="flex-justify-space-between flex-items-align-start">
-                                    <span className='d-inline-block' >
-                                        <div className="flex-justify-start flex-items-align-center">
-                                            <UserAvatar data={_.get(props.user, ['info', 'user'])} size={50} className="margin-right-md" />
-                                            <span className='d-inline-block' >
-                                                <div className="headline text-truncate black">
-                                                    {getUserName(_.get(props.user, ['info', 'user']), 'fullName') || ''}
-                                                </div>
-                                                <div className="caption text-truncate font-weight-light">
-                                                    Admin
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="flex-justify-space-between flex-items-align-start">
+                                <span className='d-inline-block' >
+                                    <div className="flex-justify-start flex-items-align-center">
+                                        <UserAvatar data={_.get(props.user, ['info', 'user'])} size={50} className="margin-right-md" />
+                                        <span className='d-inline-block' >
+                                            <div className="headline text-truncate black">
+                                                {getUserName(_.get(props.user, ['info', 'user']), 'fullName') || ''}
+                                            </div>
+                                            <div className="caption text-truncate font-weight-light">
+                                                Admin
                                     </div>
-                                            </span>
-                                        </div>
-                                    </span>
+                                        </span>
+                                    </div>
+                                </span>
 
-                                    <span className='d-inline-block' >
+                                <span className='d-inline-block' >
 
-                                        <div style={{ 'position': 'relative', textAlign: 'center' }} className="margin-md">
+                                    <div style={{ 'position': 'relative', textAlign: 'center' }} className="margin-md">
 
-                                            <Upload {...props} showUploadList={false} accept="image/*" onChange={(v) => { handlePreview(v.file); setUploadImage(v.file) }} multiple={false}>
-                                                <Avatar size={50} src={uploadImagePreview} className='cursor-pointer'></Avatar>
+                                        <Upload {...props} showUploadList={false} accept="image/*" onChange={(v) => { handlePreview(v.file); setUploadImage(v.file) }} multiple={false}>
+                                            <Avatar size={50} src={uploadImagePreview} className='cursor-pointer'></Avatar>
 
-                                                <Avatar size={30} src={profileImage} style={{ 'position': 'absolute', top: 0, bottom: 0, right: 0, left: 0, margin: 'auto' }} className="padding-xs cursor-pointer" />
+                                            <Avatar size={30} src={profileImage} style={{ 'position': 'absolute', top: 0, bottom: 0, right: 0, left: 0, margin: 'auto' }} className="padding-xs cursor-pointer" />
 
-                                            </Upload>
-                                        </div>
+                                        </Upload>
+                                    </div>
 
-                                        <div style={{ textAlign: 'center' }}>
+                                    <div style={{ textAlign: 'center' }}>
 
-                                            <h5 className="font-weight-thin">File size: Max 1MB</h5>
-                                            <h5 className="font-weight-thin">File Extension: JPEG, PNG</h5>
-                                        </div>
-                                    </span>
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Club Name
+                                        <h5 className="font-weight-thin">File size: Max 1MB</h5>
+                                        <h5 className="font-weight-thin">File Extension: JPEG, PNG</h5>
+                                    </div>
+                                </span>
                             </div>
-                                <Form.Item style={{ margin: 0 }} >
-                                    {getFieldDecorator('clubName', {
-                                        initialValue: _.get(props.data, ['clubName']),
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(<Input placeholder="Club Name" />)}
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="headline margin-bottom-sm">
-                                    Bio
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Club Name
                             </div>
-                                <Form.Item style={{ margin: 0 }}>
-                                    {getFieldDecorator('clubBio', {
-                                        initialValue: _.get(props.data, ['clubBio']),
-                                        rules: [{ required: true, message: 'Please input.' }],
-                                    })(<TextArea rows={4} placeholder="Please enter your bio (maximum 1000 characters)" maxLength={1000} />)}
-                                </Form.Item>
-                            </Col>
+                            <Form.Item style={{ margin: 0 }} >
+                                {getFieldDecorator('clubName', {
+                                    initialValue: _.get(props.data, ['clubName']),
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(<Input placeholder="Club Name" />)}
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Bio
+                            </div>
+                            <Form.Item style={{ margin: 0 }}>
+                                {getFieldDecorator('clubBio', {
+                                    initialValue: _.get(props.data, ['clubBio']),
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(<TextArea rows={4} placeholder="Please enter your bio (maximum 1000 characters)" maxLength={1000} />)}
+                            </Form.Item>
+                        </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <div className="width-100">
-                                    <Button block disabled={isLoading} className=" background-ccar-button-yellow" onClick={(e) => { handleSubmit() }}>Submit</Button>
-                                </div>
-                            </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="width-100">
+                                <Button block disabled={isLoading} className=" background-ccar-button-yellow" onClick={(e) => { handleSubmit() }}>Submit</Button>
+                            </div>
+                        </Col>
 
 
-                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="headline margin-bottom-sm">
                                 Description
                             </div>
@@ -303,8 +300,7 @@ const WriteClubModal = (props) => {
                             </Form.Item>
                         </Col> */}
 
-                        </Row>
-                    </Loading>
+                    </Row>
                 </Form>
             </Modal>
 

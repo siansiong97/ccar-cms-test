@@ -1,7 +1,7 @@
 import _, { upperFirst } from 'lodash'
 import moment from 'moment'
 import { FETCH_CLIENT_SOCKET_IO, CLEAR_CLIENT_SOCKET_IO } from '../actions/live-action';
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
@@ -19,7 +19,7 @@ export default function (state = INITIAL_STATE, action) {
       reducer: 'live',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
     switch (action.type) {
         case FETCH_CLIENT_SOCKET_IO:

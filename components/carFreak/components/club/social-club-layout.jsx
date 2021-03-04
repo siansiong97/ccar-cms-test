@@ -1,10 +1,11 @@
-import { Button, Col, Form, Icon, Row, message } from 'antd';
+import { Button, Col, Form, Icon, message, Row } from 'antd';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { loading, loginMode } from '../../../../actions/app-actions';
 import WriteClubModal from './write-club-modal';
-import _ from 'lodash';
+import { loading, loginMode } from '../../../../redux/actions/app-actions';
+
 
 const SocialClubLayout = (props) => {
 
@@ -49,7 +50,7 @@ const SocialClubLayout = (props) => {
                         </span>
                         <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'myClub' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black border-bottom-black'}`} onClick={(e) => {
                             handleChange('myClub');
-                            if(!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id']) ){
+                            if (!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) {
                                 message.error('Please Login First!')
                                 props.loginMode(true);
                             }
@@ -58,7 +59,7 @@ const SocialClubLayout = (props) => {
                         </span>
                         <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'myClubInvitation' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black border-bottom-black'}`} onClick={(e) => {
                             handleChange('myClubInvitation');
-                            if(!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id']) ){
+                            if (!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) {
                                 message.error('Please Login First!')
                                 props.loginMode(true);
                             }
@@ -86,7 +87,7 @@ const SocialClubLayout = (props) => {
                 editMode={editMode}
                 onCreate={(res) => {
                     if (_.isPlainObject(res) && !_.isEmpty(res)) {
-                        if(props.onCreate){
+                        if (props.onCreate) {
                             props.onCreate(res);
                         }
                     }

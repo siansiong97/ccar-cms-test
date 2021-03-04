@@ -1,24 +1,19 @@
-import { Avatar, Form, Tooltip, Row, Col, Divider, Button, Icon, message, Popconfirm, Empty } from 'antd';
+import { Button, Col, Empty, Form, Icon, message, Row } from 'antd';
 import _ from 'lodash';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'next/dist/client/router';
-import { ccarLogo } from '../../../userProfile/config';
-import { loading } from '../../../../actions/app-actions';
-import { isValidNumber, getUserName, arrayLengthCount, notEmptyLength } from '../../../profile/common-function';
-import ScrollLoadWrapper from '../../../commonComponent/scroll-load-wrapper';
-import UserAvatar from '../user-avatar';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import client from '../../../../feathers';
-import moment from 'moment';
-import FollowButton from '../../../commonComponent/follow-button';
-import WritePostModal1 from '../write-post-modal-1';
-import PostCollapse from '../post-collapse';
-import WindowScrollLoadWrapper from '../../../commonComponent/window-scroll-load-wrapper';
-import ClubBackdrop from './club-backdrop';
 import { validateViewType } from '../../config';
 import EventPost from '../event-post';
+import PostCollapse from '../post-collapse';
 import WriteEventModal from '../write-event-modal';
+import WritePostModal1 from '../write-post-modal-1';
+import ClubBackdrop from './club-backdrop';
+import { loading } from '../../../../redux/actions/app-actions';
+import WindowScrollLoadWrapper from '../../../general/WindowScrollLoadWrapper';
+import { arrayLengthCount } from '../../../../common-function';
+
 
 const PAGE_SIZE = 10;
 const BOX_HEIGHT = 300;
@@ -61,6 +56,7 @@ const ClubDiscussionBox = (props) => {
 
     const [viewType, setViewType] = useState('non-member');
 
+    const [userChatLikes, setUserChatLikes] = useState([]);
 
     useEffect(() => {
         setViewType(validateViewType(props.viewType))
@@ -68,17 +64,40 @@ const ClubDiscussionBox = (props) => {
 
 
     useEffect(() => {
+        getUserChatLikes(_.map(posts, '_id'))
+    }, [props.user.authenticated])
+
+    useEffect(() => {
         setClubId(props.clubId || '')
     }, [props.clubId])
 
     useEffect(() => {
         setPosts([]);
+        setUserChatLikes([]);
         getPosts(0)
     }, [clubId, tabKey])
 
     useEffect(() => {
         getPosts((postPage - 1) * PAGE_SIZE);
     }, [postPage])
+
+    function getUserChatLikes(ids, concat) {
+
+        if (_.isArray(ids) && !_.isEmpty(ids) && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id'])) {
+            client.service('chatlikes')
+                .find({
+                    query: {
+                        chatId: {
+                            $in: ids || [],
+                        },
+                        userId: _.get(props.user, ['info', 'user', '_id'])
+                    }
+                })
+                .then((res) => {
+                    setUserChatLikes(concat ? _.concat(userChatLikes, res.data) : res.data)
+                })
+        }
+    }
 
     function getPosts(skip) {
         skip = skip || 0
@@ -138,7 +157,7 @@ const ClubDiscussionBox = (props) => {
                     setPosts(newData);
                     setPostTotal(res.total);
                     setIsLoading(false);
-
+                    getUserChatLikes(_.map(_.get(res, ['data']), '_id'), true)
 
                 })
         }
@@ -210,19 +229,22 @@ const ClubDiscussionBox = (props) => {
                                                 <div className="margin-bottom-md">
                                                     {
                                                         _.get(post, ['chatType']) == 'event' ?
-                                                            <EventPost manualControl data={post} onEditClick={(data) => {
-                                                                if (_.isPlainObject(data) && !_.isEmpty(data)) {
-                                                                    setSelectedPost(data);
-                                                                    setEventEditMode(true);
-                                                                    setWriteEventVisible(true);
-                                                                }
-                                                            }}
+                                                            <EventPost manualControl data={post}
+                                                                postLike={_.find(userChatLikes, { chatId: post._id })}
+                                                                onEditClick={(data) => {
+                                                                    if (_.isPlainObject(data) && !_.isEmpty(data)) {
+                                                                        setSelectedPost(data);
+                                                                        setEventEditMode(true);
+                                                                        setWriteEventVisible(true);
+                                                                    }
+                                                                }}
 
                                                                 onRemoveClick={(data) => {
                                                                     confirmDeleteEvent(data)
                                                                 }} />
                                                             :
                                                             <PostCollapse data={post}
+                                                                postLike={_.find(userChatLikes, { chatId: post._id })}
                                                                 onEditClick={(data) => {
                                                                     if (_.isPlainObject(data) && !_.isEmpty(data)) {
                                                                         setWritePostEditMode(true);

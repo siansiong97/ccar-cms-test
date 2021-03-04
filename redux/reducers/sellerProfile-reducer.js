@@ -1,7 +1,7 @@
 import { 
     UPDATE_SELLER_PROFILE
  } from "../actions/sellerProfile-actions";
- import Cookie from 'js-cookie';
+ import localStorage from 'local-storage';
  import { checkIsNeedPersist, getPersistObj } from '../config';
  import _ from 'lodash'
 
@@ -22,7 +22,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
       reducer: 'sellerProfile',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
     switch (action.type) {
         case UPDATE_SELLER_PROFILE:

@@ -1,4 +1,4 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Col, Empty, Form, message, Row, Icon } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';

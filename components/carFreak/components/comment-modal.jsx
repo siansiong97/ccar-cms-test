@@ -2,16 +2,19 @@ import { Col, Form, Icon, Input, message, Modal, Row, Spin, Tooltip, Upload } fr
 import axios from 'axios';
 import Compress from "browser-image-compression";
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
 import { ReactSortable } from "react-sortablejs";
-import { loading, loginMode } from '../../../actions/app-actions';
-import { setUser } from '../../../actions/user-actions';
-import client from '../../../feathers';
-import { notEmptyLength } from '../../profile/common-function';
-import SocialInput from './social-input';
 import { v4 } from 'uuid';
+import { notEmptyLength } from '../../../common-function';
+import client from '../../../feathers';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import { setUser } from '../../../redux/actions/user-actions';
+import SocialInput from './social-input';
+
+
+
 const { TextArea } = Input;
 
 
@@ -38,9 +41,9 @@ const CommentModal = (props) => {
         </div>
     );
 
-    useEffect(() => { 
+    useEffect(() => {
 
-        if(!visible){
+        if (!visible) {
             form.resetFields();
             setText('');
             setResetIndicator(v4())
@@ -48,14 +51,14 @@ const CommentModal = (props) => {
             setImageList([]);
             setPreviewImage('');
         }
-    
-    } , [visible])
 
-    useEffect(() => { 
-    
+    }, [visible])
+
+    useEffect(() => {
+
         console.log('text')
         console.log(text)
-    } , [text])
+    }, [text])
 
 
     useEffect(() => {
@@ -200,7 +203,7 @@ const CommentModal = (props) => {
                                 formData
                                 , {
                                     headers: {
-                                        'Authorization': client.settings.accessToken,
+                                        'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                                         'Content-Type': 'multipart/form-data',
                                     }
                                 }
@@ -439,16 +442,16 @@ const CommentModal = (props) => {
 
                         <Form.Item >
                             <SocialInput
-                            height={100}
-                            editMode={props.editMode == 'edit' ? true : false}
-                            text={props.editMode == 'edit' ? editRecord.message : '' }
-                            placeholder="Please enter your comment (maximum 1000 characters)"
-                            className="flex-items-align-start"
-                            onChange={(text, finalText) => {
-                                setText(finalText);
-                            }}
-                            excludeEnter
-                            resetIndicator={resetIndicator}
+                                height={100}
+                                editMode={props.editMode == 'edit' ? true : false}
+                                text={props.editMode == 'edit' ? editRecord.message : ''}
+                                placeholder="Please enter your comment (maximum 1000 characters)"
+                                className="flex-items-align-start"
+                                onChange={(text, finalText) => {
+                                    setText(finalText);
+                                }}
+                                excludeEnter
+                                resetIndicator={resetIndicator}
                             >
 
                             </SocialInput>

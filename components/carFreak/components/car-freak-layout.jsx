@@ -1,10 +1,11 @@
 import { Form, Row, Col, message } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { loading, loginMode } from '../../../actions/app-actions';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
+import { withRouter } from 'next/router';
+import { loginMode, loading } from '../../../redux/actions/app-actions';
+
 
 const CarFreakLayout = (props) => {
 
@@ -12,7 +13,7 @@ const CarFreakLayout = (props) => {
 
     useEffect(() => {
 
-        let pathname = _.get(props.location, ['pathname']) || '';
+        let pathname = _.get(props.router, ['asPath']) || '';
         pathname = pathname.split('/') || [];
         pathname = pathname[1];
 
@@ -32,7 +33,7 @@ const CarFreakLayout = (props) => {
                 break;
         }
 
-    }, [])
+    }, [props.router.asPath])
 
     return (
         <React.Fragment>

@@ -1,21 +1,22 @@
-import { Form, Button, Row, Col, Icon, Upload, message } from 'antd';
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import ClubAvatar from './club-avatar';
-import { loading } from '../../../../actions/app-actions';
-import _ from 'lodash';
-import { formatNumber, notEmptyLength } from '../../../profile/common-function';
-import Scrollbars from 'react-custom-scrollbars';
-import WriteClubModal from './write-club-modal';
-import client from '../../../../feathers';
-import { v4 } from 'uuid';
+import { Button, Col, Form, Icon, message, Row, Upload } from 'antd';
 import axios from 'axios';
-import ClubInviteModal from './club-invite-modal';
-import ShareButtonDialog from '../../../commonComponent/share-button-dialog';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import Scrollbars from 'react-custom-scrollbars';
+import { connect } from 'react-redux';
+import { v4 } from 'uuid';
+import client from '../../../../feathers';
+import { clubProfileViewTypes, validateViewType } from '../../config';
 import ClubApprovalModal from './club-approval-modal';
-import { validateViewType, clubProfileViewTypes } from '../../config';
+import ClubAvatar from './club-avatar';
+import ClubInviteModal from './club-invite-modal';
 import JoinClubButton from './join-club-button';
+import WriteClubModal from './write-club-modal';
+import { loading } from '../../../../redux/actions/app-actions';
+import ShareButtonDialog from '../../../general/ShareButtonDialog';
+import { formatNumber, notEmptyLength  } from '../../../../common-function';
+
 
 const defaultHeight = 400;
 
@@ -54,7 +55,7 @@ const ClubProfolioBanner = (props) => {
                     formData
                     , {
                         headers: {
-                            'Authorization': client.settings.accessToken,
+                            'Authorization': client.settings.storage.storage.storage['feathers-jwt'],
                             'Content-Type': 'multipart/form-data',
                         }
                     }

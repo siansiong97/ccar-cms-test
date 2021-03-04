@@ -1,18 +1,18 @@
-import { Button, Col, Empty, Form, Icon, Input, message, Modal, Radio, Row } from 'antd';
+import { Col, Empty, Form, Icon, Input, message, Modal, Row } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { loading } from '../../../../actions/app-actions';
-import { setUser } from '../../../../actions/user-actions';
 import client from '../../../../feathers';
-import UserAvatar from '../user-avatar';
-import ScrollLoadWrapper from '../../../commonComponent/scroll-load-wrapper';
-import FollowButton from '../../../commonComponent/follow-button';
-import { arrayLengthCount, isValidNumber, getUserName } from '../../../profile/common-function';
-import { isDealer } from '../../../userProfile/config';
-import InviteButton from '../../../commonComponent/invite-button';
+import { loading } from '../../../../redux/actions/app-actions';
+import { setUser } from '../../../../redux/actions/user-actions';
+import InviteButton from '../../../general/InviteButton';
+import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
+import { isDealer } from '../../../profile/config';
+import { arrayLengthCount, getUserName, isValidNumber } from '../../../../common-function';
+import UserAvatar from '../../../general/UserAvatar';
+
 
 const PAGE_SIZE = 12;
 const TYPING_TIMEOUT = 500;
@@ -42,29 +42,29 @@ const ClubInviteModal = (props) => {
 
     useEffect(() => {
 
-        if(userPage == 1){
+        if (userPage == 1) {
             getUserList(props.clubId, props.userId, (userPage - 1) * PAGE_SIZE);
-        }else{
+        } else {
             setUserPage(1);
         }
 
     }, [filterGroup])
 
 
-    useEffect(() => { 
+    useEffect(() => {
 
-        if(typingTimeout){
+        if (typingTimeout) {
             clearTimeout(typingTimeout);
         }
 
         setTypingTimeout(
             setTimeout(() => {
-                setFilterGroup(filterGroup => {return {...filterGroup, keyword : searchWord}})
+                setFilterGroup(filterGroup => { return { ...filterGroup, keyword: searchWord } })
             }, TYPING_TIMEOUT)
         )
-    
-    } , [searchWord])
-    
+
+    }, [searchWord])
+
 
     useEffect(() => {
 
@@ -140,7 +140,7 @@ const ClubInviteModal = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className="width-100 thin-border round-border-big no-border-input padding-sm">
-                        <Input size="small" value={searchWord} onChange={(e) => {setSearchWord(e.target.value)}} placeholder="Search..." suffix={<Icon type="search"></Icon>} ></Input>
+                        <Input size="small" value={searchWord} onChange={(e) => { setSearchWord(e.target.value) }} placeholder="Search..." suffix={<Icon type="search"></Icon>} ></Input>
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -158,7 +158,7 @@ const ClubInviteModal = (props) => {
                                                 return (
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                         <div className="flex-justify-space-between flex-items-align-center">
-                                                            <span className='d-inline-block' style={{ maxWidth : '80%' }} >
+                                                            <span className='d-inline-block' style={{ maxWidth: '80%' }} >
                                                                 <UserAvatar
                                                                     data={user}
                                                                     size={50}
@@ -189,7 +189,7 @@ const ClubInviteModal = (props) => {
                                                             </span>
                                                             <span className='d-inline-block' >
                                                                 <div className="flex-justify-end flex-items-align-center">
-                                                                    <InviteButton notify type="club" clubId={props.clubId} invitedBy={_.get(props.user, ['info', 'user', '_id'])} invitee={_.get(user , ['_id'])} />
+                                                                    <InviteButton notify type="club" clubId={props.clubId} invitedBy={_.get(props.user, ['info', 'user', '_id'])} invitee={_.get(user, ['_id'])} />
                                                                 </div>
                                                             </span>
                                                         </div>

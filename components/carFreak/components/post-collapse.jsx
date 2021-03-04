@@ -1,28 +1,22 @@
-import { Form, Typography, Dropdown, Menu, Popconfirm, Icon, Input, message, Collapse, Divider, Row, Col } from 'antd';
+import { Col, Collapse, Dropdown, Form, Icon, Menu, message, Popconfirm, Row } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import ShowMoreText from 'react-show-more-text';
-import { loading, loginMode } from '../../../actions/app-actions';
-import { notEmptyLength, objectRemoveEmptyValue, formatNumber, getUserName, getPlural } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
 import { v4 } from 'uuid';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
+import { formatNumber, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
 import client from '../../../feathers';
-import ClickOutsideDetectWrapper from '../../commonComponent/click-outside-detect-wrapper';
-import LikePostButton from './like-post-button';
-import { chatRestrictTime, parseTagStringToArray } from '../config';
-import ReplyBox from './reply-box';
-import ReplyBox1 from './reply-box-1';
-import TagInputParse from './tag-input-parse';
-import SocialInput from './social-input';
-import CommentBox from './comment-box';
+import { carFreakLikeGreyIcon, carFreakLikeIcon } from '../../../icon';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import ParseTag from '../../general/ParseTag';
+import UserAvatar from '../../general/UserAvatar';
+import { chatRestrictTime } from '../config';
 import CommentBox1 from './comment-box-1';
-import LightBoxCarousel from '../../commonComponent/light-box-carousel';
-import { carFreakLikeIcon, carFreakLikeGreyIcon } from '../../../icon';
-import ParseTag from '../../commonComponent/parse-tag';
+import LikePostButton from './like-post-button';
+import SocialInput from './social-input';
+import LightBoxCarousel from '../../general/LightBoxCarousel';
+
 
 
 const defaultHeight = 'auto';
@@ -290,6 +284,7 @@ const PostCollapse = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="fill-parent flex-justify-start flex-items-align-center cursor-pointer">
                             <LikePostButton
+                                postLike={props.postLike}
                                 chatId={_.get(post, ['_id'])}
                                 likeOn="chat"
                                 onClick={(actived) => {

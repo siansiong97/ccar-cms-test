@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Row, Col, Card, Button, Tabs, Empty, message, Modal, Icon, Input, Avatar, Pagination, Spin, Table, Switch, Form, Tooltip, Upload, Divider, Breadcrumb, Image } from 'antd';
 import LayoutV2 from '../Layout-V2';
 import Carousel, { Dots, slidesToShowPlugin, arrowsPlugin } from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import moment from "moment";
 import Gallery from "react-photo-gallery";
 import { ReactSortable } from "react-sortablejs";

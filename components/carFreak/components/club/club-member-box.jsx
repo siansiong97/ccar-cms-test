@@ -1,19 +1,18 @@
-import { Avatar, Form, Tooltip, Row, Col, Divider, Button, Icon, message, Popconfirm } from 'antd';
+import { Button, Col, Divider, Form, Icon, message, Popconfirm, Row } from 'antd';
 import _ from 'lodash';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { ccarLogo } from '../../../userProfile/config';
-import { loading } from '../../../../actions/app-actions';
-import { isValidNumber, getUserName, arrayLengthCount } from '../../../profile/common-function';
-import ScrollLoadWrapper from '../../../commonComponent/scroll-load-wrapper';
-import UserAvatar from '../user-avatar';
-import { useEffect } from 'react';
-import client from '../../../../feathers';
 import moment from 'moment';
-import FollowButton from '../../../commonComponent/follow-button';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import client from '../../../../feathers';
+import { clubProfileViewTypes, validateViewType } from '../../config';
 import ClubBackdrop from './club-backdrop';
-import { validateViewType, clubProfileViewTypes } from '../../config';
+import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
+import { arrayLengthCount, getUserName, isValidNumber } from '../../../../common-function';
+import UserAvatar from '../../../general/UserAvatar';
+import FollowButton from '../../../profile/FollowButton';
+import { loading } from '../../../../redux/actions/app-actions';
+
 
 const PAGE_SIZE = 10;
 const BOX_HEIGHT = 300;

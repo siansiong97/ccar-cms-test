@@ -1,30 +1,30 @@
 
-import React from 'react';
-import Head from 'next/head'
-import client from '../../feathers'
-import carAdsFilter from '../../api/carAdsFilter'
-import { convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
-import { checkEnv } from '../../functionContent';
-import { UserOutlined, MenuOutlined, CopyrightCircleOutlined } from '@ant-design/icons';
-import { Helmet } from "react-helmet";
+import { CaretUpOutlined, CopyrightCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row } from 'antd';
 import _ from 'lodash';
-import { Affix, AutoComplete, Avatar, Badge, Button, Col, Divider, Drawer, Dropdown, Icon, Input, Layout, Menu, message, Row, Tabs } from 'antd'
-import { cnyLogo2 } from '../../icon';
-import GlobalSearchBar from './global-search-bar';
-import { useMediaQuery } from 'react-responsive';
+import { withRouter } from 'next/dist/client/router';
+import React from 'react';
+import CookieConsent, { Cookies } from "react-cookie-consent";
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
-import { loading, loginMode, registerMode, updateActiveMenu, quickSearchProductsList, setApplyYear, setApplyMileage, setApplyPrice, setMenuHeight, setNotificationToken } from '../../redux/actions/app-actions';
-import { logoutSuccessful, setUser } from '../../redux/actions/user-actions';
-import { fetchCompareCarLimit, clearProductFilterOptions } from '../../redux/actions/productsList-actions';
+import { convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
+import client from '../../feathers';
+import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
+import { cnyLogo2 } from '../../icon';
+import { loading, loginMode, quickSearchProductsList, registerMode, setApplyMileage, setApplyPrice, setApplyYear, setMenuHeight, setNotificationToken, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
-import Link from 'next/link';
-import CookieConsent, { Cookies } from "react-cookie-consent";
-import LoginModal from '../login/login'
+import { clearProductFilterOptions, fetchCompareCarLimit } from '../../redux/actions/productsList-actions';
+import { logoutSuccessful, setUser } from '../../redux/actions/user-actions';
+import CompareFloatingButton from '../compare/CompareFloatingButton';
+import LoginModal from '../login/login';
+import GlobalSearchBar from './global-search-bar';
 import UserAvatar from './UserAvatar';
-import { withRouter } from 'next/dist/client/router';
+import { v4 } from 'uuid';
 
 
+
+var frontUrl = checkEnvReturnWebAdmin(client.io.io.uri)
 var currentEnv = checkEnv(client.io.io.uri)
 class LayoutV2 extends React.Component {
 
@@ -83,7 +83,35 @@ class LayoutV2 extends React.Component {
         }
 
     }
+    componentDidUpdate(prevProps, prevState) {
 
+        if (prevProps.scrollRange != this.props.scrollRange) {
+            this.setState({
+                scrollRange: this.props.scrollRange,
+            })
+        }
+
+        if (!_.isEqual(prevState.window, this.state.window)) {
+            this.state.window.addEventListener('scroll', this.handleScroll, { passive: true });
+
+            return () => {
+                this.state.window.removeEventListener('scroll', this.handleScroll);
+            };
+        }
+    }
+
+    handleScroll = (e) => {
+        this.setState({
+            scrollY: window.scrollY,
+        })
+        let scrollBarHeight = window.innerHeight * (window.innerHeight / document.body.offsetHeight);
+        if (window.scrollY + scrollBarHeight + this.state.scrollRange >= document.body.scrollHeight) {
+            if (this.props.onScrolledBottom) {
+                this.props.onScrolledBottom();
+            }
+        }
+
+    };
     _renderUser = (profileMenu) => {
         let self = this;
         if (_.get(this.props, ['user', 'authenticated'])) {
@@ -233,14 +261,14 @@ class LayoutV2 extends React.Component {
 
                                     <Row style={{ color: '#E3C57D' }}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
-                                            {/* <Link passHref  style={{ color: 'white' }} to="/"> */}
+                                            {/* <Link passHref  style={{ color: 'white' }} href="/"> */}
                                             <div className="flex-justify-start flex-items-align-center main-footer ">
                                                 CCAR.MY <CopyrightCircleOutlined /> 2020
                                                 </div>
                                             {/* </Link> */}
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            {/* <Link passHref  style={{ color: 'white' }} to="/termOfUse" target="_blank"> */}
+                                            {/* <Link passHref  style={{ color: 'white' }} href="/termOfUse" target="_blank"> */}
                                             <div className="flex-justify-end flex-items-align-center main-footer">
                                                 Terms of Use | Privacy Policy
                                                 </div>
@@ -407,7 +435,7 @@ class LayoutV2 extends React.Component {
                                                     notEmptyLength(outterMenu) ?
                                                         _.map(outterMenu, function (menu, i) {
                                                             return (
-                                                                <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' onClick={(e) => { self.props.router.push(menu.path) }}>
+                                                                <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' onClick={(e) => { self.props.router.push(menu.path, menu.path) }}>
                                                                     {menu.text}
                                                                 </span>
                                                             )
@@ -421,7 +449,7 @@ class LayoutV2 extends React.Component {
                                                             {
                                                                 _.map(innerMenu, function (menu, index) {
                                                                     return (
-                                                                        <Menu.Item key={`inner-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path) }}>
+                                                                        <Menu.Item key={`inner-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path, menu.path) }}>
                                                                             <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
                                                                                 {menu.text}
                                                                             </span>
@@ -499,7 +527,7 @@ class LayoutV2 extends React.Component {
                                 null
                                 :
                                 <Affix offsetBottom={20} className='affix-element-show-on-modal-1'>
-                                    {/* <Compare /> */}
+                                    <CompareFloatingButton />
                                 </Affix>
                         }
                     </span>
@@ -516,7 +544,7 @@ class LayoutV2 extends React.Component {
                     buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
                     expires={365}
                     onAccept={() => {
-                        Cookies.set('consent', uuidv4())
+                        Cookies.set('consent', v4())
                     }}
                     acceptOnScroll={true}
                 >

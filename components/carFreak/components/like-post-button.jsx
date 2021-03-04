@@ -1,16 +1,12 @@
-import { Form, Icon, message } from 'antd';
+import { Form, message } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import {
-    loading,
-    loginMode
-} from '../../../actions/app-actions';
 import client from '../../../feathers';
-import { notEmptyLength, getPlural } from '../../profile/common-function';
-import { carFreakLikeIcon, carFreakLikeGreyIcon } from '../../../icon';
+import { carFreakLikeGreyIcon, carFreakLikeIcon } from '../../../icon';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
 
 
 
@@ -45,6 +41,31 @@ const LikePostButton = (props) => {
 
     useEffect(() => {
     }, [isActived])
+
+    useEffect(() => {
+        if (props.autoHandle && likeOn) {
+            getPostLike()
+        }
+    }, [props.autoHandle, likeOn])
+
+
+    function getPostLike() {
+        if (props[`${likeOn}Id`] && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) ) {
+            let query = {};
+            query.likeOn = likeOn
+            query[`${likeOn}Id`] = props[`${likeOn}Id`]
+            query.userId = _.get(props.user, ['info', 'user', '_id'])
+            client.service('chatlikes').find({
+            query: {
+                ...query
+            }
+            }).then(res => {
+                setPostLike(_.get(res, ['data', 0]) || {})
+            }).catch(err => {
+            message.error(err.message)
+            });
+        }
+    }
 
 
 
@@ -98,7 +119,7 @@ const LikePostButton = (props) => {
                     axios.post(`${client.io.io.uri}updateLike`,
                         query
                         , {
-                            headers: { 'Authorization': client.settings.accessToken },
+                            headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },
                         }).then((res) => {
                             if (props.onSuccessUpdate) {
                                 props.onSuccessUpdate(actived, _.get(res, ['data']));

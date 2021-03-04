@@ -1,13 +1,14 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Col, Form, Row } from 'antd';
+
+import { Form } from 'antd';
+import axios from 'axios';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { notEmptyLength } from '../../../profile/common-function';
-import { imageNotFound } from '../../../userProfile/config';
-import axios from 'axios';
 import client from '../../../../feathers';
+import { notEmptyLength } from '../../../../common-function';
+import { imageNotFound } from '../../../profile/config';
+
 
 const PAGE_SIZE = 3;
 

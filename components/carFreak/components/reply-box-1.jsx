@@ -1,34 +1,21 @@
-import { Form, Typography, Dropdown, Menu, Popconfirm, Icon, Input, message, Collapse, Divider } from 'antd';
+import { Dropdown, Form, Icon, Menu, message, Popconfirm } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import ShowMoreText from 'react-show-more-text';
-import { loading, loginMode } from '../../../actions/app-actions';
-import { notEmptyLength, objectRemoveEmptyValue, formatNumber, getPlural, getUserName, getObjectId } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
 import { v4 } from 'uuid';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
 import client from '../../../feathers';
-import ClickOutsideDetectWrapper from '../../commonComponent/click-outside-detect-wrapper';
 import LikePostButton from './like-post-button';
-import { chatRestrictTime } from '../config';
-import ReplyBox from './reply-box';
 import SocialInput from './social-input';
-import ParseTag from '../../commonComponent/parse-tag';
+import UserAvatar from '../../general/UserAvatar';
+import { formatNumber, getObjectId, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue  } from '../../../common-function';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import ParseTag from '../../general/ParseTag';
 
-const defaultHeight = 'auto';
-const headerHeight = 100;
-const imageHeight = 200;
-const titleHeight = 40;
-const footerHeight = 100;
-const actionHeight = 40;
+
 
 let uid = v4();
-
-const PAGE_SIZE = 6;
-const commentInputRef = React.createRef();
 
 const ReplyBox1 = (props) => {
 

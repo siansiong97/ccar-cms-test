@@ -1,4 +1,4 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Button, Col, Dropdown, Icon, Input, Menu, message as AntMessages, message, Popconfirm, Popover, Row, Spin } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
@@ -230,7 +230,7 @@ const CarFreakIndex = (props) => {
                     chatId: v._id,
                     type: type
                 }, {
-                headers: { 'Authorization': client.settings.accessToken },
+                headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },
             }).then((res) => {
                 let result = res.data
 
@@ -279,7 +279,7 @@ const CarFreakIndex = (props) => {
                     chatId: v._id,
                     type: type
                 }, {
-                headers: { 'Authorization': client.settings.accessToken },
+                headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },
             }).then((res) => {
                 let result = res.data
 

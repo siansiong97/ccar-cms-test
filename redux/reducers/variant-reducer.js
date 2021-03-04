@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import moment from 'moment'
 import { FETCH_VARIANT, CLEAR_VARIANT } from '../actions/variant-action';
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 
 
@@ -20,7 +20,7 @@ export default function (state = INITIAL_STATE, action) {
         reducer: 'variant',
         createdAt: new Date(),
       }
-      Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+      localStorage.set(_.get(persistObj, ['action']), persistData);
     }
     switch (action.type) {
         case FETCH_VARIANT:

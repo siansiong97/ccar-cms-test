@@ -1,22 +1,22 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Button, Col, Empty, Form, Icon, message, Row } from 'antd';
+
+import { Empty, Form, Icon } from 'antd';
+import axios from 'axios';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { withRouter } from 'next/dist/client/router';
-import client from '../../../feathers';
-import LayoutV2 from '../../Layout-V2';
-import { isValidNumber, notEmptyLength, arrayLengthCount } from '../../profile/common-function';
 import CarFreakLayout from '../components/car-freak-layout';
-import WriteClubModal from '../components/club/write-club-modal';
-import { carFreakGlobalSearch } from '../config';
-import { imageNotFound } from '../../userProfile/config';
-import SocialClubLayout from '../components/club/social-club-layout';
 import AllClubBox from '../components/club/all-club-box';
 import MyClubBox from '../components/club/my-club-box';
-import axios from 'axios';
 import MyClubInvitationBox from '../components/club/my-club-invitation-box';
+import SocialClubLayout from '../components/club/social-club-layout';
+import { carFreakGlobalSearch } from '../config';
+import client from '../../../feathers';
+import LayoutV2 from '../../general/LayoutV2';
+import { isValidNumber, notEmptyLength } from '../../../common-function';
+
+
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })

@@ -133,7 +133,7 @@ export async function getServerSideProps({ req, res }) {
       carInfo: carInfo || {},
       // dealerInfo:json2,
       companyInfo: _.get(carInfo, ['companyId']) || {},
-      cookie: _.get(context, ['req', 'headers', 'cookie']),
+      cookie: _.get(req, ['headers', 'cookie']),
     }
   };
 }

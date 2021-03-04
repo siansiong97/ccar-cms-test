@@ -1,14 +1,15 @@
-import { Avatar, Form, Tooltip, message, Button } from 'antd';
-import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { ccarLogo } from '../../../userProfile/config';
-import { loading } from '../../../../actions/app-actions';
-import { isValidNumber, toSnakeCase, objectRemoveEmptyValue, notEmptyLength, formatNumber, arrayLengthCount, checkObjectId } from '../../../profile/common-function';
-import client from '../../../../feathers';
+import { Form, message } from 'antd';
 import axios from 'axios';
-import UserAvatar from '../user-avatar';
+import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import client from '../../../../feathers';
+import UserAvatar from '../../../general/UserAvatar';
+import { arrayLengthCount, checkObjectId, formatNumber, isValidNumber, notEmptyLength, toSnakeCase } from '../../../../common-function';
+import { loading } from '../../../../redux/actions/app-actions';
+
+
 
 const defaultActions = ['going', 'maybe', 'notInterest'];
 

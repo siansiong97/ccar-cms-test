@@ -1,28 +1,25 @@
-import Carousel from '@brainhubeu/react-carousel';
-import { Dropdown, Empty, Form, Icon, Menu, Popconfirm, Row, Col, Button, Collapse, Input, message as AntMessage, Divider } from 'antd';
 import { MessageOutlined } from '@ant-design/icons';
+import { Button, Col, Collapse, Divider, Dropdown, Form, Icon, Menu, message as AntMessage, Popconfirm, Row } from 'antd';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { isValidNumber, notEmptyLength, objectRemoveEmptyValue, formatNumber, getUserName, getObjectId, getPlural } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
-import LikePostButton from './like-post-button';
-import { loading, loginMode } from '../../../actions/app-actions';
 import moment from 'moment';
-import { writePostIcon, pinIcon } from '../../../icon';
-import ShowMoreText from 'react-show-more-text';
+import { withRouter } from 'next/dist/client/router';
+import React, { useEffect, useState } from 'react';
 import Scrollbars from 'react-custom-scrollbars';
-import LightBoxGallery from '../../commonComponent/light-box-gallery';
-import CommentBox1 from './comment-box-1';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import ScrollLoadWrapper from '../../commonComponent/scroll-load-wrapper';
-import { chatRestrictTime, getTagString } from '../config';
+import { connect } from 'react-redux';
+import { formatNumber, getObjectId, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
 import client from '../../../feathers';
-import ReplyBox from './reply-box';
-import ParseTag from '../../commonComponent/parse-tag';
-import SocialInput from './social-input';
+import { pinIcon } from '../../../icon';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import LightBoxGallery from '../../general/light-box-gallery';
+import ParseTag from '../../general/ParseTag';
+import UserAvatar from '../../general/UserAvatar';
+import { chatRestrictTime, getTagString } from '../config';
+import LikePostButton from './like-post-button';
 import PinCommentButton from './pin-comment-button';
+import ReplyBox from './reply-box';
+import SocialInput from './social-input';
+
+
 
 const defaultHeight = 'auto';
 const headerHeight = 100;

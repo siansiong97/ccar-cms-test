@@ -1,4 +1,4 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Input, Row, Col, Divider, Button, message, Empty, Icon } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';

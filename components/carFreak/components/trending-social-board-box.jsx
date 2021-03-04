@@ -1,13 +1,14 @@
-import '@brainhubeu/react-carousel/lib/style.css';
+
 import { Col, Empty, message, Row } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import client from '../../../feathers';
-import { notEmptyLength, getUserName } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
-import ParseTag from '../../commonComponent/parse-tag';
+import ParseTag from '../../general/ParseTag';
+import UserAvatar from '../../general/UserAvatar';
+import { getUserName, notEmptyLength  } from '../../../common-function';
+import { withRouter } from 'next/router';
 
 
 
@@ -133,4 +134,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrendingSocialBoardBox);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TrendingSocialBoardBox));

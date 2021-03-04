@@ -1,5 +1,5 @@
 import { UPDATE_SOCKET_INFO, DELETE_SOCKET_INFO } from '../actions/socketRefresh-actions';
-import Cookie from 'js-cookie';
+import localStorage from 'local-storage';
 import { checkIsNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash'
 
@@ -17,7 +17,7 @@ export default function (state = INITIAL_STATE, action) {
       reducer: 'socketRefresh',
       createdAt: new Date(),
     }
-    Cookie.set(_.get(persistObj, ['action']), JSON.stringify(persistData));
+    localStorage.set(_.get(persistObj, ['action']), persistData);
   }
   switch (action.type) {
     case UPDATE_SOCKET_INFO:

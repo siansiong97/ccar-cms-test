@@ -1,15 +1,14 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Col, Form, Row, Card, Empty } from 'antd';
+
+import { Card, Col, Empty, Form, Row } from 'antd';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { notEmptyLength, isValidNumber, arrayLengthCount } from '../../../profile/common-function';
-import { imageNotFound } from '../../../userProfile/config';
-import OtherClubsBox from './other-clubs-box';
+import { arrayLengthCount, isValidNumber, notEmptyLength } from '../../../../common-function';
 import client from '../../../../feathers';
-import ScrollLoadWrapper from '../../../commonComponent/scroll-load-wrapper';
-
+import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
+import { imageNotFound } from '../../../profile/config';
+import OtherClubsBox from './other-clubs-box';
 
 const PAGE_SIZE = 30;
 

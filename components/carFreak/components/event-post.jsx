@@ -1,31 +1,23 @@
-import { Form, Typography, Dropdown, Menu, Popconfirm, Icon, Input, message, Collapse, Divider, Row, Col } from 'antd';
+import { Col, Collapse, Dropdown, Form, Icon, Input, Menu, message, Popconfirm, Row } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import ShowMoreText from 'react-show-more-text';
-import { loading, loginMode } from '../../../actions/app-actions';
-import { notEmptyLength, objectRemoveEmptyValue, formatNumber, getUserName, getPlural, getObjectId } from '../../profile/common-function';
-import UserAvatar from './user-avatar';
 import { v4 } from 'uuid';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
 import client from '../../../feathers';
-import ClickOutsideDetectWrapper from '../../commonComponent/click-outside-detect-wrapper';
-import LikePostButton from './like-post-button';
-import { chatRestrictTime, parseTagStringToArray } from '../config';
-import ReplyBox from './reply-box';
-import ReplyBox1 from './reply-box-1';
-import TagInputParse from './tag-input-parse';
-import SocialInput from './social-input';
-import CommentBox from './comment-box';
-import CommentBox1 from './comment-box-1';
-import LightBoxCarousel from '../../commonComponent/light-box-carousel';
-import { carFreakLikeIcon, carFreakLikeGreyIcon, calendarIcon } from '../../../icon';
-import ParseTag from '../../commonComponent/parse-tag';
-import EventDetailsBox from './club/event-details-box';
+import { calendarIcon, carFreakLikeGreyIcon, carFreakLikeIcon } from '../../../icon';
+import { chatRestrictTime } from '../config';
 import ClubAvatar from './club/club-avatar';
+import EventDetailsBox from './club/event-details-box';
+import CommentBox1 from './comment-box-1';
+import LikePostButton from './like-post-button';
 import WriteEventModal from './write-event-modal';
+import UserAvatar from '../../general/UserAvatar';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import { formatNumber, getObjectId, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
+import EmojiPickerButton from '../../general/EmojiPickerButton';
+
 
 
 const defaultHeight = 'auto';
@@ -191,7 +183,7 @@ const EventPost = (props) => {
     //Event should not be removed after enable event details page
     function confirmDelete(v) {
         if (v._id) {
-            if(_.get(v , ['chatType']) == 'event'){
+            if (_.get(v, ['chatType']) == 'event') {
                 confirmDeleteEvent(v);
             }
             client.service('chats')
@@ -214,7 +206,7 @@ const EventPost = (props) => {
         if (v._id && _.get(v, ['eventId', '_id'])) {
             client.service('events')
                 .remove(_.get(v, ['eventId', '_id'])).then((res) => {
-                    
+
                 }).catch((err) => {
                     console.log('Unable to delete Event.');
                 })
@@ -302,7 +294,7 @@ const EventPost = (props) => {
                                                                 onConfirm={(e) => {
                                                                     if (props.onRemoveClick && props.manualControl) {
                                                                         props.onRemoveClick(post);
-                                                                    }else{
+                                                                    } else {
                                                                         confirmDelete(post);
                                                                     }
                                                                 }}
@@ -329,6 +321,7 @@ const EventPost = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="fill-parent flex-justify-start flex-items-align-center cursor-pointer">
                             <LikePostButton
+                                postLike={props.postLike}
                                 chatId={_.get(post, ['_id'])}
                                 likeOn="chat"
                                 onClick={(actived) => {

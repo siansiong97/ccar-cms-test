@@ -1,32 +1,26 @@
-import Carousel from '@brainhubeu/react-carousel';
-import { Col, Dropdown, Empty, Form, Icon, Input, Menu, message as AntMessage, Modal, Popconfirm, Row } from 'antd';
-import "emoji-mart/css/emoji-mart.css";
+import { CloseOutlined } from '@ant-design/icons';
+import { Col, Dropdown, Empty, Form, Icon, Input, Menu, message as AntMessage, Modal, Row } from 'antd';
 import _ from "lodash";
 import moment from "moment";
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { withRouter, Link } from 'next/dist/client/router';
-import { formatNumber, notEmptyLength, arrayLengthCount, getPlural, getUserName } from '../../profile/common-function';
+import { arrayLengthCount, formatNumber, getPlural, getUserName, notEmptyLength } from '../../../common-function';
 import client from '../../../feathers';
-import ScrollLoadWrapper from '../../commonComponent/scroll-load-wrapper';
-import UserAvatar from './user-avatar';
-
-import ShowMoreText from 'react-show-more-text';
-import LikePostButton from './like-post-button';
+import { carFreakLikeGreyIcon, carFreakLikeIcon } from '../../../icon';
+import { loading, loginMode } from '../../../redux/actions/app-actions';
+import LightBoxCarousel from '../../general/LightBoxCarousel';
+import ParseTag from '../../general/ParseTag';
+import ScrollLoadWrapper from '../../general/ScrollLoadWrapper';
+import UserAvatar from '../../general/UserAvatar';
 import { commentIcon } from '../../live/config';
-import { imageNotFound } from '../../userProfile/config';
-import EmojiPickerButton from '../../commonComponent/emoji-picker-button';
-import { loading, loginMode } from '../../../actions/app-actions';
-import { CloseOutlined } from '@ant-design/icons';
-import { v4 } from 'uuid';
-import CommentBox1 from './comment-box-1';
 import { chatRestrictTime } from '../config';
-import LightBoxCarousel from '../../commonComponent/light-box-carousel';
-import Pluralize from 'react-pluralize'
-import { carFreakLikeIcon, carFreakLikeGreyIcon } from '../../../icon';
+import CommentBox1 from './comment-box-1';
+import LikePostButton from './like-post-button';
 import SocialInput from './social-input';
-import ParseTag from '../../commonComponent/parse-tag';
+import { withRouter } from 'next/router';
+import Link from 'next/link';
+
+
 
 const messagePageSize = 6;
 const { TextArea } = Input;
@@ -244,7 +238,7 @@ const PostModal = (props) => {
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item key={_.get(post, ['_id']) + 'goToPost'}>
-                                        <Link passHref  to={`/car-freaks/${_.get(post, ['_id'])}`}>
+                                        <Link passHref  href={`/car-freaks/${_.get(post, ['_id'])}`}>
                                             <span>Go To Post</span>
                                         </Link>
                                     </Menu.Item>

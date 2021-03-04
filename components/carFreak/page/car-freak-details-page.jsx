@@ -1,18 +1,18 @@
-import '@brainhubeu/react-carousel/lib/style.css';
-import { Col, Input, message, Row, Empty, Icon } from 'antd';
+
+import { Col, Empty, Icon, message, Row } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { loading } from '../../../actions/app-actions';
-import client from '../../../feathers';
-import LayoutV2 from '../../Layout-V2';
-import { notEmptyLength, isValidNumber } from '../../profile/common-function';
-import TrendingSocialBoardBox from '../components/trending-social-board-box';
-import SocialBoardDetailsBox from '../components/social-board-details-box';
-import Post1 from '../components/post-1';
 import Post from '../components/post';
-import { carFreakGlobalSearch } from '../config';
+import Post1 from '../components/post-1';
 import WritePostModal from '../components/write-post-modal';
+import { carFreakGlobalSearch } from '../config';
+import client from '../../../feathers';
+import LayoutV2 from '../../general/LayoutV2';
+import { isValidNumber, notEmptyLength } from '../../../common-function';
+import { loading } from '../../../redux/actions/app-actions';
+import { withRouter } from 'next/router';
+
 
 const PAGE_SIZE = 36;
 
@@ -31,7 +31,7 @@ const CarFreakDetailsPage = (props) => {
     useEffect(() => {
         window.scrollTo(0, 0)
         getPost();
-    }, [props.match.params.id])
+    }, [props.router.query.id])
 
     useEffect(() => {
 
@@ -48,13 +48,15 @@ const CarFreakDetailsPage = (props) => {
     }, [otherPostPage])
 
     function getPost() {
+        console.log(props.router.query);
 
-        if (_.get(props, ['match', 'params', 'id'])) {
+        if (_.get(props, ['router', 'query', 'id'])) {
+            console.log(_.get(props, ['router', 'query', 'id']));
             props.loading(true);
             client.service('chats')
                 .find({
                     query: {
-                        _id: props.match.params.id,
+                        _id: props.router.query.id,
                         chatType: 'carfreaks',
                         $populate: 'userId',
                         $limit: 1,
@@ -231,4 +233,4 @@ const mapDispatchToProps = {
     loading
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CarFreakDetailsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CarFreakDetailsPage));

@@ -2,7 +2,7 @@ import Carousel from '@brainhubeu/react-carousel';
 import { Button, Col, Icon, Input, message, Modal, Pagination, Row, Spin } from 'antd';
 import _ from 'lodash';
 // import Carousel, { Dots, slidesToShowPlugin, arrowsPlugin } from '@brainhubeu/react-carousel';
-// import '@brainhubeu/react-carousel/lib/style.css';
+// 
 import moment from "moment";
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
