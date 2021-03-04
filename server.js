@@ -25,11 +25,6 @@ app.prepare().then(() => {
     return app.render(req, res, '/viewCar/:id', req.query)
   })
 
-
-  server.get('/live/:id', (req, res) => {
-    return app.render(req, res, '/live/:id', req.query)
-  })
-
   // server.get('/b', (req, res) => {
   //   return app.render(req, res, '/b', req.query)
   // })

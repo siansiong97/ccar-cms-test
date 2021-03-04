@@ -75,7 +75,7 @@ const HashTagPage = (props) => {
         } else {
             setPostPage(1);
         }
-    }, [props.match.params.id, tabKey])
+    }, [props.router.query.id, tabKey])
 
     useEffect(() => {
         getData((postPage - 1) * PAGE_SIZE);
@@ -84,7 +84,7 @@ const HashTagPage = (props) => {
     useEffect(() => {
         client.service('hashtaggroup').find({
             query: {
-                hashTagId: props.match.params.id,
+                hashTagId: props.router.query.id,
                 $limit: 1,
                 $populate: [
                     {
@@ -99,11 +99,11 @@ const HashTagPage = (props) => {
         }).catch(err => {
             console.log(err);
         });
-    }, [props.match.params.id])
+    }, [props.router.query.id])
 
     function getData(skip) {
 
-        if (props.match.params.id) {
+        if (props.router.query.id) {
 
             if (!isValidNumber(parseInt(skip))) {
                 skip = 0;
@@ -113,7 +113,7 @@ const HashTagPage = (props) => {
 
 
             let query = {
-                hashTagId: props.match.params.id,
+                hashTagId: props.router.query.id,
                 type: 'chat',
                 'chat.chatType': tabKey,
                 $limit: PAGE_SIZE,

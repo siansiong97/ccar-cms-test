@@ -57,7 +57,7 @@ const PhotoTab = (props) => {
 
         
         client.service('clubs')
-            .get(props.props.match.params.id)
+            .get(props.props.router.query.id)
             .then((res) => {
                 let result = _.cloneDeep(res)
                 if (result.mediaList) {
@@ -214,7 +214,7 @@ const PhotoTab = (props) => {
                             axios.post(`${client.io.io.uri}updateClubPhoto`,
                                 {
 
-                                    clubId: props.props.match.params.id,
+                                    clubId: props.props.router.query.id,
                                     fileList: fileList,
                                 }, {
                                 headers: { 'Authorization': client.settings.storage.storage.storage['feathers-jwt'] },

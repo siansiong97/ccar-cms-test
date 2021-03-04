@@ -38,7 +38,7 @@ const CarFreakClubIndex = (props) => {
     function getData() {
         setClubs({})
         client.service('clubs')
-            .get(props.match.params.id)
+            .get(props.router.query.id)
             .then((res) => {
                 setClubs(res)
             }).catch((err) => {

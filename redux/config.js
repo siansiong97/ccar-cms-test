@@ -4,6 +4,8 @@ import { LOGIN_SUCCESSFUL, LOGOUT_SUCCESSFUL, loginSuccessful, logoutSuccessful,
 import _ from 'lodash';
 import { FETCH_COMPARE_LIMIT, FETCH_PRODUCTSLIST_HOME, ADD_COMPARE__PRODUCT_ID, PATCH_COMPARE_PRODUCT_IDS, CLEAR_COMPARE_PRODUCT_IDS, REMOVE_COMPARE_PRODUCT_ID } from './actions/productsList-actions';
 import localStorage from 'local-storage';
+import { FETCH_CLIENT_SOCKET_IO, CLEAR_CLIENT_SOCKET_IO } from './actions/live-action';
+import { UPDATE_SOCKET_INFO, DELETE_SOCKET_INFO } from './actions/socketRefresh-actions';
 
 export const statePersistActions = [
   {
@@ -29,6 +31,18 @@ export const statePersistActions = [
   },
   {
     action : REMOVE_COMPARE_PRODUCT_ID,
+  },
+  {
+    action : FETCH_CLIENT_SOCKET_IO,
+  },
+  {
+    action : CLEAR_CLIENT_SOCKET_IO,
+  },
+  {
+    action : UPDATE_SOCKET_INFO,
+  },
+  {
+    action : DELETE_SOCKET_INFO,
   },
 ];
 

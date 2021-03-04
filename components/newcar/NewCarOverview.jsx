@@ -315,7 +315,7 @@ const NewCarOverview = (props) => {
                                     handleError={(e) => { message.error(e.message) }} />
                             </Col> */}
                                 <Col style={{ padding: '5px' }} xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    {/* <Link href={`/newcar/details/${props.match.params.make}/${props.match.params.model}/specs`}>
+                                    {/* <Link href={`/newcar/details/${props.router.query.make}/${props.router.query.model}/specs`}>
                                     <Button style={{ width: '100%' }}>
                                         <p style={{ textTransform: 'capitalize', marginTop: '5px' }}> View {carDetails ? carDetails.make + ' ' + carDetails.model : ''} Specification </p>
                                     </Button>
