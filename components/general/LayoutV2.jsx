@@ -132,7 +132,7 @@ class LayoutV2 extends React.Component {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
                                             <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
-                                                <Link href={menu.path} shallow={true} prefetch >
+                                                <Link href={menu.path}   >
                                                     <a>
                                                         <div className="flex-justify-start flex-items-align-center">
                                                             <span className='d-inline-block margin-x-sm'>
@@ -395,22 +395,6 @@ class LayoutV2 extends React.Component {
 
         return (
             <Layout>
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    {/* <!-- Primary Meta Tags --> */}
-                    <title>CCAR.MY | #1 Car Social Platform</title>
-                    <link rel="canonical" href="https://ccar.my" />
-                    <meta name="title" content="CCAR.MY || #1 Car Social Platform" />
-                    <meta name="description" content="Search for  new & used cars ! Find cars for sale, car prices, car discuss, car news & more at ccar.my " />
-
-                    {/* <!-- Open Graph / Facebook --> */}
-                    <meta property="og:type" content="website" />
-                    <meta property="og:url" content="https://ccar.my" />
-                    <meta property="og:image" itemprop="image" content="https://ccar.my/logo192.png" />
-                    <meta property="og:title" content="CCAR.MY | #1 Car Social Platform" />
-                    <meta property="og:description" content="Search for  new & used cars ! Find cars for sale, car prices, car discuss, car news & more at ccar.my " />
-
-                </Helmet>
 
                 <div className="relative-wrapper">
                     <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
@@ -421,7 +405,7 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
 
-                                                <Link href={`/`} shallow={true} prefetch>
+                                                <Link href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
                                                             <img alt="ccar" className="fill-parent absolute-center" src={cnyLogo2} />
@@ -445,7 +429,7 @@ class LayoutV2 extends React.Component {
                                                     notEmptyLength(outterMenu) ?
                                                         _.map(outterMenu, function (menu, i) {
                                                             return (
-                                                                <Link href={menu.path} shallow={true} prefetch>
+                                                                <Link href={menu.path}  >
                                                                     <a>
                                                                         <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
                                                                             {menu.text}
@@ -464,7 +448,7 @@ class LayoutV2 extends React.Component {
                                                                 _.map(innerMenu, function (menu, index) {
                                                                     return (
                                                                         <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
-                                                                            <Link href={menu.path} shallow={true} prefetch>
+                                                                            <Link href={menu.path}  >
                                                                                 <a>
                                                                                     <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
                                                                                         {menu.text}
