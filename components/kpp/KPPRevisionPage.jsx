@@ -62,7 +62,7 @@ const KPPRevision = (props) => {
         props.updateActiveMenu('11');
 
         if (!props.router.query.group || !props.router.query.language) {
-            props.router.push('/kpp', undefined, { shallow: true });
+            props.router.push('/kpp', undefined, { shallow : false });
             message.error('Invalid Revision Paper');
         }
 

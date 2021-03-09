@@ -172,7 +172,7 @@ const CarFreakDetailsPage = (props) => {
                                                             hideAction
                                                             onRedirectToPost={() => {
                                                                 if (_.isPlainObject(otherPost) && !_.isEmpty(otherPost) && _.get(otherPost, ['_id'])) {
-                                                                    props.router.push(`/car-freaks/${otherPost._id}`, undefined, { shallow: true })
+                                                                    props.router.push(`/car-freaks/${otherPost._id}`, undefined, { shallow : false })
                                                                 }
                                                             }}
                                                         />

@@ -238,7 +238,7 @@ const PostModal = (props) => {
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item key={_.get(post, ['_id']) + 'goToPost'}>
-                                        <Link shallow prefetch passHref href={`/car-freaks/${_.get(post, ['_id'])}`}>
+                                        <Link shallow={false} prefetch passHref href={`/car-freaks/${_.get(post, ['_id'])}`}>
                                             <a>
                                                 <span>Go To Post</span>
                                             </a>

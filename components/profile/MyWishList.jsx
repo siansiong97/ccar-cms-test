@@ -156,7 +156,7 @@ const WishListPage = (props) => {
         } else {
             return (
                 <Col span={24} style={{ 'text-align': 'center' }} className="padding-xl">
-                    <Link shallow prefetch href={convertParameterToProductListUrl()}>
+                    <Link shallow={false} prefetch href={convertParameterToProductListUrl()}>
                         <a>
                             <Avatar src={addVehiclesIcon} className="margin-bottom-sm padding-lg" size={200} />
                             <div className="font-weight-normal subtitle1" style={{ color: 'black' }}>Ops, you haven't added any wishlist yet</div>

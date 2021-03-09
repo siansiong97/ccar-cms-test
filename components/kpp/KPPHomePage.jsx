@@ -69,10 +69,10 @@ const KPPIndex = (props) => {
                 setShowBmRevisionModal(true);
                 break;
             case 2:
-                props.router.push('/kpp/kpp-en', undefined, { shallow: true });
+                props.router.push('/kpp/kpp-en', undefined, { shallow : false });
                 break;
             case 3:
-                props.router.push('/kpp/kpp-bm', undefined, { shallow: true });
+                props.router.push('/kpp/kpp-bm', undefined, { shallow : false });
                 break;
 
             default:
@@ -155,7 +155,7 @@ const KPPIndex = (props) => {
                                 <Row style={{ marginBottom: '6px' }}>
                                     <Col span={24} style={{ textAlign: 'center' }}>
                                         <p style={{ color: '#ffffff', marginBottom: '2px' }}> English KPP Test Paper </p>
-                                        <Link shallow prefetch href={'/kpp/kpp-en'} >
+                                        <Link shallow={false} prefetch href={'/kpp/kpp-en'} >
                                             <a>
                                                 <Button style={{ marginLeft: '-11px', width: '129px' }} type="primary"> KPP Test (EN) </Button>
                                             </a>
@@ -165,7 +165,7 @@ const KPPIndex = (props) => {
                                 <Row style={{ marginBottom: '6px' }}>
                                     <Col span={24} style={{ textAlign: 'center' }}>
                                         <p style={{ color: '#ffffff', marginBottom: '2px' }}> Kertas Ujian KPP Bahasa Melayu </p>
-                                        <Link shallow prefetch href={'/kpp/kpp-bm'} >
+                                        <Link shallow={false} prefetch href={'/kpp/kpp-bm'} >
                                             <a>
                                                 <Button style={{ marginLeft: '-12px' }} type="primary"> Ujian Kpp (BM) </Button>
                                             </a>
@@ -256,17 +256,17 @@ const KPPIndex = (props) => {
 
                             <Col xs={0} sm={0} md={24} lg={24} xl={24}>
                                 <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Link shallow prefetch href={'/kpp/kpp-revision/0/en'} >
+                                    <Link shallow={false} prefetch href={'/kpp/kpp-revision/0/en'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section A</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow prefetch href={'/kpp/kpp-revision/1/en'} >
+                                    <Link shallow={false} prefetch href={'/kpp/kpp-revision/1/en'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section B</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow prefetch href={'/kpp/kpp-revision/2/en'} >
+                                    <Link shallow={false} prefetch href={'/kpp/kpp-revision/2/en'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section C</Button>
                                         </a>
@@ -274,17 +274,17 @@ const KPPIndex = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <Link shallow prefetch href={'/kpp/kpp-revision/0/en'} >
+                                <Link shallow={false} prefetch href={'/kpp/kpp-revision/0/en'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Section A</Button>
                                     </div>
                                 </Link>
-                                <Link shallow prefetch href={'/kpp/kpp-revision/1/en'} >
+                                <Link shallow={false} prefetch href={'/kpp/kpp-revision/1/en'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Section B</Button>
                                     </div>
                                 </Link>
-                                <Link shallow prefetch href={'/kpp/kpp-revision/2/en'} >
+                                <Link shallow={false} prefetch href={'/kpp/kpp-revision/2/en'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section C</Button>
                                     </div>
@@ -321,17 +321,17 @@ const KPPIndex = (props) => {
 
                             <Col xs={0} sm={0} md={24} lg={24} xl={24}>
                                 <div className='flex-justify-space-around flex-items-align-center padding-top-md flex-wrap'>
-                                    <Link shallow prefetch href={'/kpp/kpp-revision/0/bm'} >
+                                    <Link shallow={false} prefetch href={'/kpp/kpp-revision/0/bm'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian A</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow prefetch href={'/kpp/kpp-revision/1/bm'} >
+                                    <Link shallow={false} prefetch href={'/kpp/kpp-revision/1/bm'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian B</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow prefetch href={'/kpp/kpp-revision/2/bm'} >
+                                    <Link shallow={false} prefetch href={'/kpp/kpp-revision/2/bm'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian C</Button>
                                         </a>
@@ -339,17 +339,17 @@ const KPPIndex = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <Link shallow prefetch href={'/kpp/kpp-revision/0/bm'} >
+                                <Link shallow={false} prefetch href={'/kpp/kpp-revision/0/bm'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian A</Button>
                                     </div>
                                 </Link>
-                                <Link shallow prefetch href={'/kpp/kpp-revision/1/bm'} >
+                                <Link shallow={false} prefetch href={'/kpp/kpp-revision/1/bm'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian B</Button>
                                     </div>
                                 </Link>
-                                <Link shallow prefetch href={'/kpp/kpp-revision/2/bm'} >
+                                <Link shallow={false} prefetch href={'/kpp/kpp-revision/2/bm'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Bahagian C</Button>
                                     </div>

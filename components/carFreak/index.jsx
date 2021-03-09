@@ -402,13 +402,13 @@ const CarFreakIndex = (props) => {
                         <Row className="margin-bottom-md">
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="width-100 flex-items-align-center flex-justify-start">
-                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/car-freaks' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/car-freaks', '/car-freaks', {shallow : true}) }} >
+                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/car-freaks' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/car-freaks', '/car-freaks', { shallow : false }) }} >
                                         CarFreaks
                                 </span>
                                     <span className='d-inline-block cursor-pointer margin-x-sm black' >
                                         |
                                 </span>
-                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/social-board' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/social-board','/social-board', {shallow : true}) }}>
+                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/social-board' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/social-board','/social-board', { shallow : false }) }}>
                                         Social Board
                                 </span>
                                 </div>

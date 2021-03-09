@@ -839,7 +839,7 @@ class ViewCarDetailsPage extends React.Component {
           <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <Breadcrumb>
               <Breadcrumb.Item>
-                <Link shallow prefetch  href="/">
+                <Link shallow={false} prefetch  href="/">
                   <a>
                     Home
                   </a>

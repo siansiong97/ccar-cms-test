@@ -333,22 +333,22 @@ class Maker extends React.Component {
                         <div className="container">
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/" passHref>
+                                    <Link shallow={false} prefetch href="/" passHref>
                                         <a>Home</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/newcar" passHref>
+                                    <Link shallow={false} prefetch href="/newcar" passHref>
                                         <a>New Car</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/newcar/filter" passHref>
+                                    <Link shallow={false} prefetch href="/newcar/filter" passHref>
                                         <a>Filter</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/newcar/maker" passHref>
+                                    <Link shallow={false} prefetch href="/newcar/maker" passHref>
                                         <a>
                                             {_.capitalize(_.get(this.props, ['router', 'query', 'id']) || '')}
                                         </a>

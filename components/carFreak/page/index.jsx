@@ -155,7 +155,7 @@ const CarFreakIndex = (props) => {
                                             data={socialBoards}
                                             redirectToSocialBoard={(data) => {
                                                 if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
+                                                    props.router.push(`/social-board/${data._id}`, undefined, { shallow : false })
                                                 }
                                             }}
                                             onCreatePost={(data) => {

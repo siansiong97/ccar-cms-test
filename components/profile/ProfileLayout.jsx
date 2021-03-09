@@ -103,7 +103,7 @@ const ProfileLayout = (props) => {
             case 'wishlists':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/wishlists`}>
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details/wishlists`}>
                             <a>My Wishlist</a>
                         </Link>
                     </Breadcrumb.Item>
@@ -112,7 +112,7 @@ const ProfileLayout = (props) => {
             case 'address-book':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}>
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}>
                             <a>
                                 My Address Book
                                 </a>
@@ -123,13 +123,13 @@ const ProfileLayout = (props) => {
             case 'address-book-create':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> 
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> 
                             <a>
                                 My Address Book
                                 </a></Link>
                     </Breadcrumb.Item>,
                     <Breadcrumb.Item>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book-create`}>
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book-create`}>
                             <a>
                                 Add Address
                                 </a></Link>
@@ -139,13 +139,13 @@ const ProfileLayout = (props) => {
             case 'address-book-edit':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> 
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> 
                             <a>
                                 My Address Book
                                 </a></Link>
                     </Breadcrumb.Item>,
                     <Breadcrumb.Item>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
                             <a>
                                 Edit Address
                                 </a></Link>
@@ -156,7 +156,7 @@ const ProfileLayout = (props) => {
             default:
                 setNavItems([
                     <Breadcrumb.Item key='editprofile'>
-                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details`}>
+                        <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}/details`}>
                             <a>
                                 Edit Profile
                             </a>
@@ -230,14 +230,14 @@ const ProfileLayout = (props) => {
                     <div className="container">
                         <Breadcrumb>
                             <Breadcrumb.Item>
-                                <Link shallow prefetch href="/">
+                                <Link shallow={false} prefetch href="/">
                                     <a>
                                         Home
                                     </a>
                                 </Link>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}`}>
+                                <Link shallow={false} prefetch href={`/profile/${_.get(profile, ['_id'])}`}>
                                     <a>
                                         Profile
                                     </a>

@@ -204,7 +204,7 @@ class Filter extends React.Component {
         if (_.isPlainObject(mergeObj) && !_.isEmpty(mergeObj)) {
             path += `?${queryStringifyNestedObject(mergeObj)}`;
         }
-        this.props.router.push(path, path, { shallow: true });
+        this.props.router.push(path, path, { shallow : false });
     }
 
     getDataFromUrl() {
@@ -1078,7 +1078,7 @@ class Filter extends React.Component {
                     list.push(
                         <React.Fragment>
                             <Col xs={24} sm={24} md={8} lg={6} xl={6} key={i}>
-                                <Link shallow prefetch href={`/newcar/details/${item.make + '/' + item.model}`} >
+                                <Link shallow={false} prefetch href={`/newcar/details/${item.make + '/' + item.model}`} >
                                     <a>
                                         <div className="newcars-uniqBy-model">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
@@ -1114,7 +1114,7 @@ class Filter extends React.Component {
                     list.push(
                         <React.Fragment>
                             <Col xs={24} sm={24} md={8} lg={6} xl={6} key={i}>
-                                <Link shallow prefetch href={`/newcar/details/${item.make + '/' + item.model}`} >
+                                <Link shallow={false} prefetch href={`/newcar/details/${item.make + '/' + item.model}`} >
                                     <a>
                                         <div className="newcars-uniqBy-model">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
@@ -1184,21 +1184,21 @@ class Filter extends React.Component {
                         <div className="container" id="filter-top" >
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/">
+                                    <Link shallow={false} prefetch href="/">
                                         <a>
                                             Home
                                             </a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/newcar">
+                                    <Link shallow={false} prefetch href="/newcar">
                                         <a>
                                             New Car
                                         </a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow prefetch href="/newcar/filter">
+                                    <Link shallow={false} prefetch href="/newcar/filter">
                                         <a>
                                             Filter
                                         </a></Link>

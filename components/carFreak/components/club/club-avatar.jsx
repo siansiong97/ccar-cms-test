@@ -26,7 +26,7 @@ const ClubAvatar = (props) => {
                         if (props.onRedirect) {
                             props.onRedirect()
                         }
-                        props.router.push(`/social-club/${props.data._id}`, undefined, {shallow : true})
+                        props.router.push(`/social-club/${props.data._id}`, undefined, { shallow : false })
                     }
                 }}
             >

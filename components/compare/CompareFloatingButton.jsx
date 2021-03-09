@@ -161,7 +161,7 @@ const CompareFloatingButton = (props) => {
 
             <Row style={{ margin: 10 }}>
               <Col span={24} style={{ textAlign: 'center' }}>
-                <Link shallow prefetch href={'/compare'} >
+                <Link shallow={false} prefetch href={'/compare'} >
                   <a>
                     <Button
                       style={{ fontWeight: 'bold' }}

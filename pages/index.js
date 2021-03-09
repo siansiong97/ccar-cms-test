@@ -37,13 +37,13 @@ const Index = (props) => {
   const _renderCarouselWeb = () => {
 
     return (
-      <BannerAnim prefixCls="banner-user-web" autoPlay>
+      <BannerAnim type="across" prefixCls="banner-user-web" autoPlay>
         <Element
           prefixCls="banner-user-elem"
           key="web0"
         >
           <BgElement
-            key="bg"
+            id="banner-1"
             className="bg"
             style={{
               backgroundImage: 'url(/banner/ccar-cny-web-banner.png)',
@@ -60,7 +60,7 @@ const Index = (props) => {
         >
           <BgElement
             onClick={(e) => { window.location = 'https://ccar.my/banner/duit-duit-giveaway.pdf' }}
-            key="bg"
+            id="banner-2"
             className="bg"
             style={{
               backgroundImage: 'url(/banner/duit-duit-3.jpg)',
@@ -95,8 +95,9 @@ const Index = (props) => {
           key="web2"
         >
           <BgElement
-            key="webbg"
+            id="banner-3"
             className="bg"
+            videoResize
           />
           <video playsInline autoPlay muted loop style={{
             // overflow: 'hidden', right: videoPosition 
@@ -117,8 +118,9 @@ const Index = (props) => {
           key="web3"
         >
           <BgElement
-            key="webbg"
+            id="banner-4"
             className="bg"
+            videoResize
           />
           <video playsInline autoPlay muted loop style={{
             // overflow: 'hidden', right: videoPosition  

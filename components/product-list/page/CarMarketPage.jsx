@@ -32,6 +32,7 @@ const CarMarketPage = (props) => {
     const [mainConfig, setMainConfig] = useState(props.config || {
         page: 1,
         sorting: {},
+        view: 'gridView',
     })
     const [view, setView] = useState('gridView')
     const [currentFilterGroup, setCurrentFilterGroup] = useState(props.filterGroup || {})
@@ -54,7 +55,6 @@ const CarMarketPage = (props) => {
     }, [])
 
     useEffect(() => {
-        console.log(initRan);
         if (initRan.filterGroup && initRan.config) {
             getUrlData();
         }
@@ -68,8 +68,6 @@ const CarMarketPage = (props) => {
             if (window) {
                 window.scroll(0, 0)
             }
-            console.log(currentFilterGroup);
-            console.log(mainConfig);
             carAdsFilter({
                 filterGroup: currentFilterGroup,
                 config: mainConfig
@@ -102,7 +100,6 @@ const CarMarketPage = (props) => {
                 return { productAdsId: v.productAdsId }
             });
 
-            console.log(inputProductList);
             if (_.isEmpty(inputProductList) === false) {
                 axios.post(`${client.io.io.uri}processImpression`,
                     {
@@ -131,7 +128,7 @@ const CarMarketPage = (props) => {
             asPath = asPath.join('/')
             setProductList([]);
             props.setProductListLoading(true);
-            props.router.push(asPath, path, { shallow: true })
+            props.router.push(asPath, path, { shallow: false })
         } catch (error) {
 
         }
@@ -139,6 +136,7 @@ const CarMarketPage = (props) => {
     }
 
     function getUrlData() {
+        console.log('config', 'gETuRLdATA');
         try {
             let querySearch = props.router.asPath.split('?')[1];
             let query = queryString.parse(querySearch);
@@ -146,11 +144,13 @@ const CarMarketPage = (props) => {
                 query = {};
             }
 
+            console.log('config', {query});
             let filterGroup = query.data ? JSON.parse(query.data) : {};
             let sorting = query.sorting ? JSON.parse(query.sorting) : {};
             let config = {
                 page: query.page,
-                sorting: sorting
+                sorting: sorting,
+                view: query.view,
             }
 
             if (!isValidNumber(parseInt(config.page))) {
@@ -160,6 +160,10 @@ const CarMarketPage = (props) => {
             if (!_.get(config, ['sorting', 'carspec.year']) && !_.get(config, ['sorting', 'mileageFilter']) && !_.get(config, ['sorting', 'searchPrice'])) {
                 config.sorting = {};
             }
+            if (_.get(config, ['view']) != 'gridView' && _.get(config, ['view']) != 'listView') {
+                config.view = 'gridView';
+            }
+            console.log('config', {config});
             setMainConfig(config);
 
 
@@ -192,13 +196,13 @@ const CarMarketPage = (props) => {
             });
 
         } catch (error) {
-            console.log(error);
+            console.log('error', error);
         }
     }
 
     const _renderGridView = (data) => {
         if (notEmptyLength(data)) {
-            if (view == 'gridView') {
+            if (mainConfig.view == 'gridView') {
                 return (
                     <GridProductList data={data} xs={24} sm={12} md={12} lg={8} xl={8} loading={_.get(props.productsList, ['productListLoading'])} />
                 )
@@ -255,19 +259,19 @@ const CarMarketPage = (props) => {
                                     <span className='d-inline-block ' >
                                         <Breadcrumb>
                                             <Breadcrumb.Item>
-                                                <Link shallow prefetch passHref href="/">
+                                                <Link shallow={false} prefetch passHref href="/">
                                                     <a>Home</a>
                                                 </Link>
                                             </Breadcrumb.Item>
                                             <Breadcrumb.Item>
-                                                <Link shallow prefetch passHref href={convertParameterToProductListUrl()} >
+                                                <Link shallow={false} prefetch passHref href={convertParameterToProductListUrl()} >
                                                     <a>Product List</a>
                                                 </Link>
                                             </Breadcrumb.Item>
                                         </Breadcrumb>
                                     </span>
                                     <span className='d-inline-block ' >
-                                        <Radio.Group onChange={(e) => { setView(e.target.value) }} value={view} className="wrap-gridView-btn" style={{ float: 'right' }}>
+                                        <Radio.Group onChange={(e) => { pushParameterToUrl(currentFilterGroup, { ...mainConfig, view: e.target.value }) }} value={_.get(mainConfig, 'view') || 'gridView'} className="wrap-gridView-btn" style={{ float: 'right' }}>
                                             <Tooltip title="List View"><Radio.Button value="listView"><BarsOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
                                             <Tooltip title="Grid View"><Radio.Button value="gridView"><AppstoreOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
                                         </Radio.Group>

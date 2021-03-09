@@ -148,7 +148,7 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myClubs, function (club) {
                                                     return (
-                                                        <Link shallow prefetch href={`/social-club/${club._id}`} >
+                                                        <Link shallow={false} prefetch href={`/social-club/${club._id}`} >
                                                             <a>
                                                                 <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }}>
                                                                     <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
@@ -185,7 +185,7 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myJoinedClubs, function (club) {
                                                     return (
-                                                        <Link shallow prefetch href={`/social-club/${club._id}`} >
+                                                        <Link shallow={false} prefetch href={`/social-club/${club._id}`} >
                                                             <a>
                                                                 <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }} >
                                                                     <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />

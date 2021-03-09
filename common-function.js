@@ -1052,12 +1052,17 @@ export function objectRemoveEmptyValue(value) {
 export function convertProductRouteParamsToFilterObject(routeParams) {
 
     let { parameter1, parameter2, parameter3 } = routeParams;
-    let { sorting, page, } = routeParams;
+    let { sorting, page, view } = routeParams;
     let mergeObj = _.pick(routeParams, availableFilters) || {};
 
     if (!isValidNumber(parseInt(page))) {
         page = 1;
     }
+
+    if (view != 'gridView' && view != 'listView') {
+        view = 'gridView';
+    }
+
 
     if (!_.get(sorting, ['carspec.year']) && !_.get(sorting, ['mileageFilter']) && !_.get(sorting, ['searchPrice'])) {
         sorting = {};
@@ -1068,20 +1073,21 @@ export function convertProductRouteParamsToFilterObject(routeParams) {
         },
         config: {
             page: page,
-            sorting: sorting
+            sorting: sorting,
+            view : view
         },
     };
 
-    if(finalData.filterGroup.priceRange){
+    if (finalData.filterGroup.priceRange) {
         finalData.filterGroup.priceRange = convertRangeFormatBack(finalData.filterGroup.priceRange);
     }
-    if(finalData.filterGroup.yearRange){
+    if (finalData.filterGroup.yearRange) {
         finalData.filterGroup.yearRange = convertRangeFormatBack(finalData.filterGroup.yearRange);
     }
-    if(finalData.filterGroup.mileageRange){
+    if (finalData.filterGroup.mileageRange) {
         finalData.filterGroup.mileageRange = convertRangeFormatBack(finalData.filterGroup.mileageRange);
     }
-    if(finalData.filterGroup.engineCapactityRange){
+    if (finalData.filterGroup.engineCapactityRange) {
         finalData.filterGroup.engineCapactityRange = convertRangeFormatBack(finalData.filterGroup.engineCapactityRange);
     }
 
@@ -1119,15 +1125,19 @@ export function convertParameterToProductListUrl(data, config) {
     let mergeObj = objectRemoveEmptyValue(data);
     let basePath = '';
 
-    if (!notEmptyLength(config)) {
+    if (!_.isPlainObject(config) || _.isEmpty(config)) {
         config = {
             page: 1,
             sorting: {},
+            view: 'gridView'
         }
     }
 
     if (!isValidNumber(parseInt(config.page))) {
         config.page = 1;
+    }
+    if (config.view != 'gridView' && config.view != 'listView') {
+        config.view = 'gridView';
     }
 
     if (!_.isPlainObject(objectRemoveEmptyValue(config.sorting)) && _.isEmpty(objectRemoveEmptyValue(config.sorting)) && (!_.get(config, ['sorting', 'carspec.year']) && !_.get(config, ['sorting', 'mileageFilter']) && !_.get(config, ['sorting', 'searchPrice']))) {
@@ -1185,10 +1195,10 @@ export function convertParameterToProductListUrl(data, config) {
         delete mergeObj.make;
         delete mergeObj.model;
         delete mergeObj.state;
-        return `${path}?page=${config.page}${_.isPlainObject(config.sorting) && !_.isEmpty(config.sorting) ? `&${queryStringifyNestedObject(config.sorting, 'sorting')}` : ''}${notEmptyLength(mergeObj) ? `&${queryStringifyNestedObject(mergeObj)}` : ''}`;
+        return `${path}?view=${config.view}&page=${config.page}${_.isPlainObject(config.sorting) && !_.isEmpty(config.sorting) ? `&${queryStringifyNestedObject(config.sorting, 'sorting')}` : ''}${notEmptyLength(mergeObj) ? `&${queryStringifyNestedObject(mergeObj)}` : ''}`;
 
     } else {
-        return `/cars-on-sale/malaysia?page=${config.page}${_.isPlainObject(config.sorting) && !_.isEmpty(config.sorting) ? `&${queryStringifyNestedObject(config.sorting, 'sorting')}` : ''}`;
+        return `/cars-on-sale/malaysia?view=${config.view}&page=${config.page}${_.isPlainObject(config.sorting) && !_.isEmpty(config.sorting) ? `&${queryStringifyNestedObject(config.sorting, 'sorting')}` : ''}`;
     }
 }
 

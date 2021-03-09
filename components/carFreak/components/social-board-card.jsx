@@ -46,7 +46,7 @@ const SocialBoardCard = (props) => {
         }
 
         if (props.redirectPost && _.isPlainObject(post) && !_.isEmpty(post)) {
-            props.router.push(`/social-board/${_.get(post, ['_id'])}`, undefined ,{shallow :true});
+            props.router.push(`/social-board/${_.get(post, ['_id'])}`, undefined ,{ shallow : false });
         }
     }
 
