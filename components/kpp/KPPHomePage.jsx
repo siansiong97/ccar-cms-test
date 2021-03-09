@@ -10,6 +10,7 @@ import { notEmptyLength } from '../../common-function';
 import { updateActiveMenu } from '../../redux/actions/app-actions';
 import CustomTabs from '../general/CustomTabs';
 import { withRouter } from 'next/router';
+import Link from 'next/link';
 
 
 
@@ -28,7 +29,7 @@ const KPPIndex = (props) => {
         props.updateActiveMenu('11');
         // setLoading(true)
         getQuestions();
-        
+
     }, [])
 
     const getQuestions = () => {
@@ -68,10 +69,10 @@ const KPPIndex = (props) => {
                 setShowBmRevisionModal(true);
                 break;
             case 2:
-                props.router.push('/kpp/kpp-en');
+                props.router.push('/kpp/kpp-en', undefined, { shallow: true });
                 break;
             case 3:
-                props.router.push('/kpp/kpp-bm');
+                props.router.push('/kpp/kpp-bm', undefined, { shallow: true });
                 break;
 
             default:
@@ -130,47 +131,46 @@ const KPPIndex = (props) => {
                                         tabContainerClassName="flex-justify-space-between flex-items-align-stretch border-bottom-ccar-yellow"
                                         tabClassName="cursor-pointer"
                                         tabStyle={{ width: '33.33%', height: '70px' }}
-                                        handleChange={(index) => {  setTabIndex(index) }}
+                                        handleChange={(index) => { setTabIndex(index) }}
                                         className="width-90" />
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <Row style={{marginBottom:'6px'}}>
-                                    <Col span={24} style={{textAlign:'center'}} >
-                                    <p style={{color:'#ffffff', marginBottom:'2px'}}> Come with questions and answers to help you study effectively </p>
-                                    <Button onClick={(e) => {setShowEnRevisionModal(true)}} style={{marginLeft:'-11px', width:'129px'}} type="primary"> Revision </Button>
+                                <Row style={{ marginBottom: '6px' }}>
+                                    <Col span={24} style={{ textAlign: 'center' }} >
+                                        <p style={{ color: '#ffffff', marginBottom: '2px' }}> Come with questions and answers to help you study effectively </p>
+                                        <Button onClick={(e) => { setShowEnRevisionModal(true) }} style={{ marginLeft: '-11px', width: '129px' }} type="primary"> Revision </Button>
                                     </Col>
                                     {/* <Col span={6}>
                                     <Button onClick={(e) => {setShowEnRevisionModal(true)}} style={{marginLeft:'-11px', width:'129px'}} type="primary"> Revision </Button>
                                     </Col> */}
                                 </Row>
-                                <Row style={{marginBottom:'6px'}}>
-                                    <Col span={24} style={{textAlign:'center'}}>
-                                    <p style={{color:'#ffffff', marginBottom:'2px'}}> Lengkap dengan soalan dan jawapan untuk membantu anda belajar dengan lebih efektif </p>
-                                    <Button onClick={(e) => {setShowBmRevisionModal(true)}} type="primary" style={{marginLeft:'-11px', width:'129px'}}> Ulang Kaji </Button>
+                                <Row style={{ marginBottom: '6px' }}>
+                                    <Col span={24} style={{ textAlign: 'center' }}>
+                                        <p style={{ color: '#ffffff', marginBottom: '2px' }}> Lengkap dengan soalan dan jawapan untuk membantu anda belajar dengan lebih efektif </p>
+                                        <Button onClick={(e) => { setShowBmRevisionModal(true) }} type="primary" style={{ marginLeft: '-11px', width: '129px' }}> Ulang Kaji </Button>
                                     </Col>
-                                    {/* <Col span={6}>
-                                    <Button onClick={(e) => {setShowBmRevisionModal(true)}} type="primary" style={{marginLeft:'-11px', width:'129px'}}> Ulang Kaji </Button>
-                                    </Col> */}
                                 </Row>
-                                <Divider style={{marginTop:'10px', marginBottom:'10px', color:'#ffffff'}}/>
-                                <Row style={{marginBottom:'6px'}}>
-                                    <Col span={24} style={{textAlign:'center'}}>
-                                    <p style={{color:'#ffffff', marginBottom:'2px'}}> English KPP Test Paper </p>
-                                    <Button onClick={(e) => {props.router.push('/kpp/kpp-en')}} style={{marginLeft:'-11px', width:'129px'}} type="primary"> KPP Test (EN) </Button>
+                                <Divider style={{ marginTop: '10px', marginBottom: '10px', color: '#ffffff' }} />
+                                <Row style={{ marginBottom: '6px' }}>
+                                    <Col span={24} style={{ textAlign: 'center' }}>
+                                        <p style={{ color: '#ffffff', marginBottom: '2px' }}> English KPP Test Paper </p>
+                                        <Link shallow prefetch href={'/kpp/kpp-en'} >
+                                            <a>
+                                                <Button style={{ marginLeft: '-11px', width: '129px' }} type="primary"> KPP Test (EN) </Button>
+                                            </a>
+                                        </Link>
                                     </Col>
-                                    {/* <Col span={6}>
-                                    <Button onClick={(e) => {props.router.push('/kpp/kpp-en')}} style={{marginLeft:'-11px', width:'129px', marginTop:'-6px'}} type="primary"> KPP Test (EN) </Button>
-                                    </Col> */}
                                 </Row>
-                                <Row style={{marginBottom:'6px'}}>
-                                    <Col span={24} style={{textAlign:'center'}}>
-                                    <p style={{color:'#ffffff', marginBottom:'2px'}}> Kertas Ujian KPP Bahasa Melayu </p>
-                                    <Button onClick={(e) => {props.router.push('/kpp/kpp-bm')}} style={{marginLeft:'-12px'}} type="primary"> Ujian Kpp (BM) </Button>
+                                <Row style={{ marginBottom: '6px' }}>
+                                    <Col span={24} style={{ textAlign: 'center' }}>
+                                        <p style={{ color: '#ffffff', marginBottom: '2px' }}> Kertas Ujian KPP Bahasa Melayu </p>
+                                        <Link shallow prefetch href={'/kpp/kpp-bm'} >
+                                            <a>
+                                                <Button style={{ marginLeft: '-12px' }} type="primary"> Ujian Kpp (BM) </Button>
+                                            </a>
+                                        </Link>
                                     </Col>
-                                    {/* <Col span={6}>
-                                    <Button onClick={(e) => {props.router.push('/kpp/kpp-bm')}} style={{marginLeft:'-12px'}} type="primary"> Ujian Kpp (BM) </Button>
-                                    </Col> */}
                                 </Row>
                             </Col>
 
@@ -196,7 +196,7 @@ const KPPIndex = (props) => {
                             <span className='d-inline-block headline black padding-x-sm' >
                                 Quiz
                         </span>
-                            <span className='d-inline-block padding-x-sm cursor-pointer' onClick={(e) => {getQuestions()}} >
+                            <span className='d-inline-block padding-x-sm cursor-pointer' onClick={(e) => { getQuestions() }} >
                                 <Icon type="redo" className='red' />
                             </span>
                         </div>
@@ -216,11 +216,11 @@ const KPPIndex = (props) => {
             <LayoutV2>
                 <div className='section'>
                     <div className='container'>
-                        <Row type="flex" justify="center"  gutter={[10, 0]}>
+                        <Row type="flex" justify="center" gutter={[10, 0]}>
                             <Col className='margin-bottom-md ' xs={24} sm={24} md={24} lg={18} xl={18}>
                                 {_renderBanner()}
                             </Col>
-                            <Col xs={{span:24, offsetTop:'10px'}} sm={{span:24, offsetTop:'10px'}} md={{span:24, offsetTop:'0px'}} lg={{span:6, offsetTop:'0px'}} xl={{span:6, offsetTop:'0px'}}>
+                            <Col xs={{ span: 24, offsetTop: '10px' }} sm={{ span: 24, offsetTop: '10px' }} md={{ span: 24, offsetTop: '0px' }} lg={{ span: 6, offsetTop: '0px' }} xl={{ span: 6, offsetTop: '0px' }}>
                                 {_renderQuestion(questions[0])}
                                 <div className='margin-top-md relative-wrapper' style={{ height: '160px' }}>
                                     <img src={ads} className='fill-parent absolute-center'></img>
@@ -256,21 +256,39 @@ const KPPIndex = (props) => {
 
                             <Col xs={0} sm={0} md={24} lg={24} xl={24}>
                                 <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/0/en') }}>Section A</Button>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/1/en') }}>Section B</Button>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/2/en') }}>Section C</Button>
+                                    <Link shallow prefetch href={'/kpp/kpp-revision/0/en'} >
+                                        <a>
+                                            <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section A</Button>
+                                        </a>
+                                    </Link>
+                                    <Link shallow prefetch href={'/kpp/kpp-revision/1/en'} >
+                                        <a>
+                                            <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section B</Button>
+                                        </a>
+                                    </Link>
+                                    <Link shallow prefetch href={'/kpp/kpp-revision/2/en'} >
+                                        <a>
+                                            <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section C</Button>
+                                        </a>
+                                    </Link>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/0/en') }}>Section A</Button>
-                                </div>
-                                <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/1/en') }}>Section B</Button>
-                                </div>
-                                <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/2/en') }}>Section C</Button>
-                                </div>
+                                <Link shallow prefetch href={'/kpp/kpp-revision/0/en'} >
+                                    <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
+                                        <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Section A</Button>
+                                    </div>
+                                </Link>
+                                <Link shallow prefetch href={'/kpp/kpp-revision/1/en'} >
+                                    <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
+                                        <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Section B</Button>
+                                    </div>
+                                </Link>
+                                <Link shallow prefetch href={'/kpp/kpp-revision/2/en'} >
+                                    <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
+                                        <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section C</Button>
+                                    </div>
+                                </Link>
                             </Col>
 
                         </Row>
@@ -303,21 +321,39 @@ const KPPIndex = (props) => {
 
                             <Col xs={0} sm={0} md={24} lg={24} xl={24}>
                                 <div className='flex-justify-space-around flex-items-align-center padding-top-md flex-wrap'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/0/bm') }}>Bahagian A</Button>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/1/bm') }}>Bahagian B</Button>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/2/bm') }}>Bahagian C</Button>
+                                    <Link shallow prefetch href={'/kpp/kpp-revision/0/bm'} >
+                                        <a>
+                                            <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian A</Button>
+                                        </a>
+                                    </Link>
+                                    <Link shallow prefetch href={'/kpp/kpp-revision/1/bm'} >
+                                        <a>
+                                            <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian B</Button>
+                                        </a>
+                                    </Link>
+                                    <Link shallow prefetch href={'/kpp/kpp-revision/2/bm'} >
+                                        <a>
+                                            <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian C</Button>
+                                        </a>
+                                    </Link>
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/0/bm') }}>Bahagian A</Button>
-                                </div>
-                                <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/1/bm') }}>Bahagian B</Button>
-                                </div>
-                                <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' onClick={(e) => { props.router.push('/kpp/kpp-revision/2/bm') }}>Bahagian C</Button>
-                                </div>
+                                <Link shallow prefetch href={'/kpp/kpp-revision/0/bm'} >
+                                    <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
+                                        <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian A</Button>
+                                    </div>
+                                </Link>
+                                <Link shallow prefetch href={'/kpp/kpp-revision/1/bm'} >
+                                    <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
+                                        <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian B</Button>
+                                    </div>
+                                </Link>
+                                <Link shallow prefetch href={'/kpp/kpp-revision/2/bm'} >
+                                    <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
+                                        <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Bahagian C</Button>
+                                    </div>
+                                </Link>
                             </Col>
 
                         </Row>

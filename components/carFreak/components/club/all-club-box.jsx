@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { notEmptyLength } from '../../../../common-function';
 import { imageNotFound } from '../../../profile/config';
+import Link from 'next/link';
 
 
 
@@ -31,36 +32,36 @@ const AllClubBox = (props) => {
                                     if (i === 0) {
                                         return (
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                                <div className="width-100 relative-wrapper cursor-pointer" style={{ height: 400 }} onClick={() => {
-                                                    if (_.get(v, ['_id'])) {
-                                                        props.router.push(`/social-club/${v._id}`)
-                                                    }
-                                                }}>
-                                                    <img src={_.get(v, ['clubAvatar']) || imageNotFound} className="fill-parent absolute-center img-cover" ></img>
-                                                    <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
-                                                        <span className='d-inline-block white h6 text-truncate-threeline' >
-                                                            {_.get(v, ['clubName']) || ''}
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                                <Link shallow prefetch href={`/social-club/${v._id}`} >
+                                                    <a>
+                                                        <div className="width-100 relative-wrapper cursor-pointer" style={{ height: 400 }}>
+                                                            <img src={_.get(v, ['clubAvatar']) || imageNotFound} className="fill-parent absolute-center img-cover" ></img>
+                                                            <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
+                                                                <span className='d-inline-block white h6 text-truncate-threeline' >
+                                                                    {_.get(v, ['clubName']) || ''}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </Link>
                                             </Col>
 
                                         )
                                     }
                                     return (
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                            <div className="width-100 relative-wrapper cursor-pointer" style={{ height: 200 }} onClick={() => {
-                                                if (_.get(v, ['_id'])) {
-                                                    props.router.push(`/social-club/${v._id}`)
-                                                }
-                                            }}>
-                                                <img src={_.get(v, ['clubAvatar']) || imageNotFound} className="fill-parent absolute-center img-cover" ></img>
-                                                <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
-                                                    <span className='d-inline-block white h6 text-truncate-threeline' >
-                                                        {_.get(v, ['clubName']) || ''}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <Link shallow prefetch href={`/social-club/${v._id}`}>
+                                                <a>
+                                                    <div className="width-100 relative-wrapper cursor-pointer" style={{ height: 200 }}>
+                                                        <img src={_.get(v, ['clubAvatar']) || imageNotFound} className="fill-parent absolute-center img-cover" ></img>
+                                                        <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
+                                                            <span className='d-inline-block white h6 text-truncate-threeline' >
+                                                                {_.get(v, ['clubName']) || ''}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </Link>
                                         </Col>
                                     )
                                 })

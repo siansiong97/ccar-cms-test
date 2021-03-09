@@ -10,7 +10,7 @@ import { withRouter } from 'next/router';
 
 
 const UserAvatar = (props) => {
-    
+
     const [tooltipVisible, setTooltipVisible] = useState(false);
 
 
@@ -26,7 +26,7 @@ const UserAvatar = (props) => {
                         if (props.onRedirect) {
                             props.onRedirect()
                         }
-                        props.router.push(`/profile/${props.data._id}`)
+                        props.router.push(`/profile/${props.data._id}`, undefined, { shallow: true })
                     }
                 }}
             >
@@ -59,7 +59,7 @@ const UserAvatar = (props) => {
                                                     darkThemeColorList[_.toString(props.data.name ? props.data.name : `${props.data.firstName ? props.data.firstName : ''} ${props.data.lastName ? props.data.lastName : props.data.lastName}`).length % darkThemeColorList.length].code, verticalAlign: 'middle'
                                             }
                                             :
-                                            {} }>
+                                            {}}>
                                         {
                                             !props.data ?
                                                 null

@@ -9,6 +9,8 @@ import client from '../../../../feathers';
 import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
 import { imageNotFound } from '../../../profile/config';
 import OtherClubsBox from './other-clubs-box';
+import Link from 'next/link';
+
 
 const PAGE_SIZE = 30;
 
@@ -146,18 +148,18 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myClubs, function (club) {
                                                     return (
-                                                        <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }} onClick={() => {
-                                                            if (_.get(club, ['_id'])) {
-                                                                props.router.push(`/social-club/${club._id}`)
-                                                            }
-                                                        }}>
-                                                            <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
-                                                            <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
-                                                                <span className='d-inline-block white h6 text-truncate-threeline' >
-                                                                    {_.get(club, ['clubName']) || ''}
+                                                        <Link shallow prefetch href={`/social-club/${club._id}`} >
+                                                            <a>
+                                                                <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }}>
+                                                                    <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
+                                                                    <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
+                                                                        <span className='d-inline-block white h6 text-truncate-threeline' >
+                                                                            {_.get(club, ['clubName']) || ''}
+                                                                        </span>
+                                                                    </div>
                                                                 </span>
-                                                            </div>
-                                                        </span>
+                                                            </a>
+                                                        </Link>
                                                     )
                                                 })
                                             }
@@ -183,18 +185,18 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myJoinedClubs, function (club) {
                                                     return (
-                                                        <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }} onClick={() => {
-                                                            if (_.get(club, ['_id'])) {
-                                                                props.router.push(`/social-club/${club._id}`)
-                                                            }
-                                                        }}>
-                                                            <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
-                                                            <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
-                                                                <span className='d-inline-block white h6 text-truncate-threeline' >
-                                                                    {_.get(club, ['clubName']) || ''}
+                                                        <Link shallow prefetch href={`/social-club/${club._id}`} >
+                                                            <a>
+                                                                <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }} >
+                                                                    <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
+                                                                    <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
+                                                                        <span className='d-inline-block white h6 text-truncate-threeline' >
+                                                                            {_.get(club, ['clubName']) || ''}
+                                                                        </span>
+                                                                    </div>
                                                                 </span>
-                                                            </div>
-                                                        </span>
+                                                            </a>
+                                                        </Link>
                                                     )
                                                 })
                                             }

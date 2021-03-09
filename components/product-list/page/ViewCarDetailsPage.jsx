@@ -68,7 +68,6 @@ const Default = ({ children }) => {
   const isNotMobile = useMediaQuery({ minWidth: 768 })
   return isNotMobile ? children : null
 }
-const reviewContainerRef = React.createRef();
 
 
 class ViewCarDetailsPage extends React.Component {
@@ -840,7 +839,11 @@ class ViewCarDetailsPage extends React.Component {
           <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <Breadcrumb>
               <Breadcrumb.Item>
-                <Link passHref  href="/">Home</Link>
+                <Link shallow prefetch  href="/">
+                  <a>
+                    Home
+                  </a>
+                </Link>
               </Breadcrumb.Item>
               <Breadcrumb.Item>
                 <span className='cursor-pointer' onClick={() => this.breadcrumbSearchCondition(this.state.productDetails.condition)}>Products List</span>
@@ -1002,58 +1005,7 @@ class ViewCarDetailsPage extends React.Component {
               </Col>
 
               <Col className="gutter-row" xs={24} sm={24} md={0} lg={6} xl={6} style={{ paddingLeft: '10px', paddingRight: '10px' }} >
-                <div ref={reviewContainerRef} className="fill-parent" >
-                  {/* <Card
-                    title="Seller Info"
-                    size="small"
-                    className="keyDetails-card"
-                    extra={<Button> <img src="/assets/General/car-showroom.png" style={{width:'10%'}} /> </Button>}
-                    style={{ width: '100%', marginTop: 10 }}
-                  >
-                    <div style={{ background: 'initial' }}>
-                      <Row gutter={[10, 20]}>
-                        <Col span={24}>
-                          <SellerBusinessCard data={this.state.productDetails.companys} data1={this.state.productDetails.createdBy} />
-                          <CompanyRating data={{ company :  this.state.productDetails.companys, rating : 1.5}}
-                                                        title={(title) => {
-                                                            return <div className="headline   font-weight-bold text-align-center text-truncate">
-                                                                {title}
-                                                            </div>
-                                                        }}
-                                                        rate={(rate) => {
-                                                            return <div className="text-align-center">
-                                                                <Rate value={roundToHalf(rate)} allowHalf disabled />
-                                                            </div>
-                                                        }}
-                                                        avatar={(avatar) => {
-                                                            return <div className="fill-parent flex-justify-center flex-items-align-center padding-right-sm">
-                                                                <Avatar style={{ width: '100%', height: '100%', maxWidth: '100px', maxHeight: '100px', minWidth: '30px', minHeight: '30px' }} src={avatar} />
-                                                            </div>
-                                                        }} />
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                          <WhatsAppButton mobileNumber={this.state.productDetails} />
-                        </Col>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                          <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />
-                        </Col>
-                        <FollowButton type="company"
-                                                    companyId={!this.state.productDetails.companys || !this.state.productDetails.companys._id ? null : this.state.productDetails.companys._id}
-                                                    followerId={this.props.user.authenticated ? this.props.user.info.user._id : null}
-                                                    handleError={(e) => { message.error(e.message) }}
-                                                    handleSuccess={(e) => { message.success(e.type === 'unfollow' ? 'Unfollowed successful' : 'Followed successful') }} 
-                                                    followingButton={
-                                                        () => (
-                                                            <span style={{ color: 'black' }}>
-                                                                <Icon type="check" style={{ color: '#F57F17' }} className="margin-right-xs" />
-                                                                Following
-                                                            </span>
-                                                        )
-                                                    }
-                                                    className="margin-right-md" style={{ color: 'black' }} />
-                      </Row>
-                    </div>
-                  </Card> */}
+                <div  className="fill-parent" >
 
                   <div className="background-white padding-sm thin-border">
                     <Row>

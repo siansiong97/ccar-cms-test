@@ -79,7 +79,7 @@ const SocialBoardBox = (props) => {
                                                 <SocialBoardCard data={post}
                                                     onRedirectToPost={(data) => {
                                                         if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                                            props.router.push(`/social-board/${data._id}`)
+                                                            props.router.push(`/social-board/${data._id}`, undefined ,{shallow :true})
                                                         }
                                                     }}
                                                     onEditClick={(post) => {

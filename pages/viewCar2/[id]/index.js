@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import LayoutV2 from '../../../components/general/LayoutV2';
+import client from '../../../feathers';
+import _ from 'lodash'
 
 function useWindowSize() {
     const [windowSize, setWindowSize] = useState({
@@ -77,18 +79,20 @@ export default App
 
 export async function getServerSideProps({ req, res }) {
     const { id } = req.params
-    const product = await fetch(`https://uat2-api.ccar.my/product-ads/${id}`);
-    let json = await product.json();
+    let product = await client.service('product-ads').find({
+        query: {
+            _id: id,
+            $populate : ['companyId']
+        }
+    })
+    product = _.get(product, ['data', 0]) || {};
     // const dealer = await fetch(`https://api.ccar.my/users/${id}`);
     // let json2 = await dealer.json();
-    const company = await fetch(`https://uat2-api.ccar.my/companys/${json.companyId}`);
-    let json3 = await company.json();
-
     return {
         props: {
-            carInfo: json,
+            carInfo: product,
             // dealerInfo:json2,
-            companyInfo: json3,
+            companyInfo: product.companyId,
         }
     };
 }

@@ -152,7 +152,7 @@ const CarFreakDetailsPage = (props) => {
                                 onRemoveClick={(post) => {
                                     confirmDelete(post)
                                 }}
-                                />
+                            />
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="width-100 flex-items-align-center flex-justify-start h5 font-weight-bold black">
@@ -172,7 +172,7 @@ const CarFreakDetailsPage = (props) => {
                                                             hideAction
                                                             onRedirectToPost={() => {
                                                                 if (_.isPlainObject(otherPost) && !_.isEmpty(otherPost) && _.get(otherPost, ['_id'])) {
-                                                                    props.router.push(`/car-freaks/${otherPost._id}`)
+                                                                    props.router.push(`/car-freaks/${otherPost._id}`, undefined, { shallow: true })
                                                                 }
                                                             }}
                                                         />

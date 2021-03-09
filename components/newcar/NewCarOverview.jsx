@@ -315,7 +315,7 @@ const NewCarOverview = (props) => {
                                     handleError={(e) => { message.error(e.message) }} />
                             </Col> */}
                                 <Col style={{ padding: '5px' }} xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    {/* <Link href={`/newcar/details/${props.router.query.make}/${props.router.query.model}/specs`}>
+                                    {/* <Link shallow prefetch href={`/newcar/details/${props.router.query.make}/${props.router.query.model}/specs`}>
                                     <Button style={{ width: '100%' }}>
                                         <p style={{ textTransform: 'capitalize', marginTop: '5px' }}> View {carDetails ? carDetails.make + ' ' + carDetails.model : ''} Specification </p>
                                     </Button>
@@ -577,20 +577,22 @@ const NewCarOverview = (props) => {
                     {peerComp.map((item, idx) => {
                         return (
                             <Col key={'keyDetails' + idx} xs={12} sm={12} md={6} lg={6} xl={6} >
-                                <Link href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
-                                    <div className="newcars-uniqBy-model cursor-pointer">
-                                        <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
-                                        <div className="newcars-wrap-p">
-                                            <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
-                                            <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 500 }}>
-                                                {
-                                                    !item.minPrice && !item.maxPrice ?
-                                                        'TBC'
-                                                        :
-                                                        `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
-                                                }</p>
+                                <Link shallow prefetch href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                                    <a>
+                                        <div className="newcars-uniqBy-model cursor-pointer">
+                                            <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
+                                            <div className="newcars-wrap-p">
+                                                <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
+                                                <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 500 }}>
+                                                    {
+                                                        !item.minPrice && !item.maxPrice ?
+                                                            'TBC'
+                                                            :
+                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
+                                                    }</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </Link>
                             </Col>
                         )

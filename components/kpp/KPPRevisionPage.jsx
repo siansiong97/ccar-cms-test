@@ -16,19 +16,19 @@ import { withRouter } from 'next/router';
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
     return isDesktop ? children : null
-  }
-  const Tablet = ({ children }) => {
+}
+const Tablet = ({ children }) => {
     const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
     return isTablet ? children : null
-  }
-  const Mobile = ({ children }) => {
+}
+const Mobile = ({ children }) => {
     const isMobile = useMediaQuery({ maxWidth: 767 })
     return isMobile ? children : null
-  }
-  const Default = ({ children }) => {
+}
+const Default = ({ children }) => {
     const isNotMobile = useMediaQuery({ minWidth: 768 })
     return isNotMobile ? children : null
-  }
+}
 
 const PAGE_SIZE = 10;
 const adsImg = '/live-ads.png'
@@ -62,7 +62,7 @@ const KPPRevision = (props) => {
         props.updateActiveMenu('11');
 
         if (!props.router.query.group || !props.router.query.language) {
-            props.router.push('/kpp');
+            props.router.push('/kpp', undefined, { shallow: true });
             message.error('Invalid Revision Paper');
         }
 
@@ -148,11 +148,11 @@ const KPPRevision = (props) => {
                             <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                 <Row>
                                     <Col span={24}>
-                                    <div className='width-100 flex-justify-space-between flex-items-align-center margin-bottom-sm'>
-                                    <span className='d-inline-block h5 black' >
-                                    {_.upperCase(props.router.query.language) == 'BM' ? 'Kertas Ulangkaji' : 'Revision'} - {_.upperCase(props.router.query.language)} - {_.upperCase(props.router.query.language) == 'BM' ? 'Bahagian' : 'Section'} {String.fromCharCode(65 + parseInt(props.router.query.group))}
-                                    </span>
-                                    {/* <span className='d-inline-block' >
+                                        <div className='width-100 flex-justify-space-between flex-items-align-center margin-bottom-sm'>
+                                            <span className='d-inline-block h5 black' >
+                                                {_.upperCase(props.router.query.language) == 'BM' ? 'Kertas Ulangkaji' : 'Revision'} - {_.upperCase(props.router.query.language)} - {_.upperCase(props.router.query.language) == 'BM' ? 'Bahagian' : 'Section'} {String.fromCharCode(65 + parseInt(props.router.query.group))}
+                                            </span>
+                                            {/* <span className='d-inline-block' >
                                         <Popconfirm
                                             title="Are you sure reset all the answer? This action cannot be rollback."
                                             onConfirm={resetPaper}
@@ -163,99 +163,99 @@ const KPPRevision = (props) => {
                                             <Button icon="redo" className='padding-x-md'>Reset</Button>
                                         </Popconfirm>
                                     </span> */}
-                                    </div>
-                                <Desktop>
-                                    <div className='background-white padding-lg'>
-                                        {_.upperCase(props.router.query.language) == 'BM' ? 
-                                    <QuestionList
-                                        questions={notEmptyLength(questions) ? questions : []}
-                                        index={(page - 1) * PAGE_SIZE}
-                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
-                                        handleChange={(questions) => { questionsTouched(questions) }}
-                                        showCorrectAfterAnswer
-                                        language= "BM"
-                                    />
-                                    :
-                                    <QuestionList
-                                        questions={notEmptyLength(questions) ? questions : []}
-                                        index={(page - 1) * PAGE_SIZE}
-                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
-                                        handleChange={(questions) => { questionsTouched(questions) }}
-                                        showCorrectAfterAnswer
-                                        language= "EN"
-                                    />
-                                }
-                                </div>
-                                </Desktop>
-                                <Tablet>
-                                <div className='background-white'>
-                                {_.upperCase(props.router.query.language) == 'BM' ? 
-                                    <QuestionList
-                                        questions={notEmptyLength(questions) ? questions : []}
-                                        index={(page - 1) * PAGE_SIZE}
-                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
-                                        handleChange={(questions) => { questionsTouched(questions) }}
-                                        showCorrectAfterAnswer
-                                        language= "BM"
-                                    />
-                                    :
-                                    <QuestionList
-                                        questions={notEmptyLength(questions) ? questions : []}
-                                        index={(page - 1) * PAGE_SIZE}
-                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
-                                        handleChange={(questions) => { questionsTouched(questions) }}
-                                        showCorrectAfterAnswer
-                                        language= "EN"
-                                    />
-                                }
-                                </div>
-                                </Tablet>
-                                <Mobile>
-                                <div className='background-white padding-lg'>
-                                {_.upperCase(props.router.query.language) == 'BM' ? 
-                                    <QuestionList
-                                        questions={notEmptyLength(questions) ? questions : []}
-                                        index={(page - 1) * PAGE_SIZE}
-                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
-                                        handleChange={(questions) => { questionsTouched(questions) }}
-                                        showCorrectAfterAnswer
-                                        language= "BM"
-                                    />
-                                    :
-                                    <QuestionList
-                                        questions={notEmptyLength(questions) ? questions : []}
-                                        index={(page - 1) * PAGE_SIZE}
-                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
-                                        handleChange={(questions) => { questionsTouched(questions) }}
-                                        showCorrectAfterAnswer
-                                        language= "EN"
-                                    />
-                                }
-                                </div>
-                                </Mobile>
-                                
+                                        </div>
+                                        <Desktop>
+                                            <div className='background-white padding-lg'>
+                                                {_.upperCase(props.router.query.language) == 'BM' ?
+                                                    <QuestionList
+                                                        questions={notEmptyLength(questions) ? questions : []}
+                                                        index={(page - 1) * PAGE_SIZE}
+                                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
+                                                        handleChange={(questions) => { questionsTouched(questions) }}
+                                                        showCorrectAfterAnswer
+                                                        language="BM"
+                                                    />
+                                                    :
+                                                    <QuestionList
+                                                        questions={notEmptyLength(questions) ? questions : []}
+                                                        index={(page - 1) * PAGE_SIZE}
+                                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
+                                                        handleChange={(questions) => { questionsTouched(questions) }}
+                                                        showCorrectAfterAnswer
+                                                        language="EN"
+                                                    />
+                                                }
+                                            </div>
+                                        </Desktop>
+                                        <Tablet>
+                                            <div className='background-white'>
+                                                {_.upperCase(props.router.query.language) == 'BM' ?
+                                                    <QuestionList
+                                                        questions={notEmptyLength(questions) ? questions : []}
+                                                        index={(page - 1) * PAGE_SIZE}
+                                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
+                                                        handleChange={(questions) => { questionsTouched(questions) }}
+                                                        showCorrectAfterAnswer
+                                                        language="BM"
+                                                    />
+                                                    :
+                                                    <QuestionList
+                                                        questions={notEmptyLength(questions) ? questions : []}
+                                                        index={(page - 1) * PAGE_SIZE}
+                                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
+                                                        handleChange={(questions) => { questionsTouched(questions) }}
+                                                        showCorrectAfterAnswer
+                                                        language="EN"
+                                                    />
+                                                }
+                                            </div>
+                                        </Tablet>
+                                        <Mobile>
+                                            <div className='background-white padding-lg'>
+                                                {_.upperCase(props.router.query.language) == 'BM' ?
+                                                    <QuestionList
+                                                        questions={notEmptyLength(questions) ? questions : []}
+                                                        index={(page - 1) * PAGE_SIZE}
+                                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
+                                                        handleChange={(questions) => { questionsTouched(questions) }}
+                                                        showCorrectAfterAnswer
+                                                        language="BM"
+                                                    />
+                                                    :
+                                                    <QuestionList
+                                                        questions={notEmptyLength(questions) ? questions : []}
+                                                        index={(page - 1) * PAGE_SIZE}
+                                                        itemClassName="margin-bottom-md box-shadow-thin round-border border-white"
+                                                        handleChange={(questions) => { questionsTouched(questions) }}
+                                                        showCorrectAfterAnswer
+                                                        language="EN"
+                                                    />
+                                                }
+                                            </div>
+                                        </Mobile>
+
                                     </Col>
                                     <Col xs={24} sm={24} md={20} lg={20} xl={20}>
-                                <div className='width-100 flex-justify-center flex-items-align-center'>
-                                    <Pagination current={page} total={total} onChange={(page) => { setPage(page); window.scroll(0, 0) }} showQuickJumper />
-                                </div>
-                            </Col>
-                        </Row>  
+                                        <div className='width-100 flex-justify-center flex-items-align-center'>
+                                            <Pagination current={page} total={total} onChange={(page) => { setPage(page); window.scroll(0, 0) }} showQuickJumper />
+                                        </div>
+                                    </Col>
+                                </Row>
                             </Col>
                             <Col xs={0} sm={0} md={4} lg={4} xl={4}>
                                 <Row>
                                     <Col span={24}>
-                                        <img style={{width:'100%'}} src={adsImg}></img>
+                                        <img style={{ width: '100%' }} src={adsImg}></img>
                                         <div className="advertisement-overlay">
-                                            <a href="/newcar" style={{color:'rgba(0,0,0,0.65'}}> <p> Ads <Icon type="info-circle" /> </p>  </a>
+                                            <a href="/newcar" style={{ color: 'rgba(0,0,0,0.65' }}> <p> Ads <Icon type="info-circle" /> </p>  </a>
                                         </div>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col span={24}>
-                                        <img style={{width:'100%', marginTop:'10px'}} src={adsImg2}></img>
+                                        <img style={{ width: '100%', marginTop: '10px' }} src={adsImg2}></img>
                                         <div className="advertisement-overlay">
-                                            <a href="/newcar" style={{color:'rgba(0,0,0,0.65'}}> <p> Ads <Icon type="info-circle" /> </p>  </a>
+                                            <a href="/newcar" style={{ color: 'rgba(0,0,0,0.65' }}> <p> Ads <Icon type="info-circle" /> </p>  </a>
                                         </div>
                                     </Col>
                                 </Row>

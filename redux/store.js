@@ -15,20 +15,6 @@ import user from '../redux/reducers/user-reducer'
 import userlikes from '../redux/reducers/userlikes-reducer'
 import variant from '../redux/reducers/variant-reducer'
 
-// import AppReducer from './app-reducer';
-// import UserReducer from './user-reducer';
-// import SocketRefreshReducer from './socketRefresh-reducer';
-// import ProductsListReducer from './productsList-reducer';
-// import RegisterReducer from './register-reducer';
-// import NewCarsReducer from './newcars-reducer';
-// import CarPlatesListReducer from './carPlatesList-reducer';
-// import SellerProfileReducer from './sellerProfile-reducer';
-// import kppReducer from './kpp-reducer';
-// import liveReducer from './live-reducer';
-// import variantReducer from './variant-reducer';
-// import userlikesReducer from './userlikes-reducer';
-// import carfreakReducer from './carfreak-reducer';
-
 
 
 const bindMiddleware = (middleware) => {
@@ -75,3 +61,5 @@ const initStore = () => {
 
 
 export const wrapper = createWrapper(initStore)
+
+export const store = initStore();

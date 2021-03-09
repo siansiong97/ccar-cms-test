@@ -160,7 +160,7 @@ const SocialBoardPage = (props) => {
                                                         <SocialBoardCard data={post}
                                                             onRedirectToPost={(data) => {
                                                                 if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                                                    props.router.push(`/social-board/${data._id}`)
+                                                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
                                                                 }
                                                             }}
                                                             onEditClick={(post) => {
@@ -191,7 +191,7 @@ const SocialBoardPage = (props) => {
                         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                             <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
                                 if (_.isPlainObject(data) && !_.isEmpty(data) && data._id) {
-                                    props.router.push(`/social-board/${data._id}`)
+                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
                                 }
                             }} />
                         </Col>
@@ -233,7 +233,7 @@ const SocialBoardPage = (props) => {
                                                         <SocialBoardCard data={post}
                                                             onRedirectToPost={(data) => {
                                                                 if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                                                    props.router.push(`/social-board/${data._id}`)
+                                                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
                                                                 }
                                                             }}
                                                             onEditClick={(post) => {
@@ -264,7 +264,7 @@ const SocialBoardPage = (props) => {
                         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                             <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
                                 if (_.isPlainObject(data) && !_.isEmpty(data) && data._id) {
-                                    props.router.push(`/social-board/${data._id}`)
+                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
                                 }
                             }} />
                         </Col>
@@ -306,7 +306,7 @@ const SocialBoardPage = (props) => {
                                                         <SocialBoardCard data={post}
                                                             onRedirectToPost={(data) => {
                                                                 if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                                                    props.router.push(`/social-board/${data._id}`)
+                                                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
                                                                 }
                                                             }}
                                                             onEditClick={(post) => {
@@ -337,7 +337,7 @@ const SocialBoardPage = (props) => {
                         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
                             <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
                                 if (_.isPlainObject(data) && !_.isEmpty(data) && data._id) {
-                                    props.router.push(`/social-board/${data._id}`)
+                                    props.router.push(`/social-board/${data._id}`, undefined, {shallow : true})
                                 }
                             }} />
                         </Col>

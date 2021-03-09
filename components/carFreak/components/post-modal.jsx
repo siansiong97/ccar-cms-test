@@ -118,8 +118,8 @@ const PostModal = (props) => {
                                 message: text,
                             })
                             .then((res1) => {
-                                if(props.onUpdatePost){
-                                    props.onUpdatePost({...post, totalReply : messageTotal + 1})
+                                if (props.onUpdatePost) {
+                                    props.onUpdatePost({ ...post, totalReply: messageTotal + 1 })
                                 }
                                 setMessage('');
                                 setCanSendMessage(false);
@@ -238,8 +238,10 @@ const PostModal = (props) => {
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item key={_.get(post, ['_id']) + 'goToPost'}>
-                                        <Link passHref  href={`/car-freaks/${_.get(post, ['_id'])}`}>
-                                            <span>Go To Post</span>
+                                        <Link shallow prefetch passHref href={`/car-freaks/${_.get(post, ['_id'])}`}>
+                                            <a>
+                                                <span>Go To Post</span>
+                                            </a>
                                         </Link>
                                     </Menu.Item>
                                 </Menu>
@@ -258,7 +260,7 @@ const PostModal = (props) => {
                                     <UserAvatar redirectProfile data={_.get(post, ['userId'])} size={50} />
                                     <div className="padding-left-md">
                                         <div className="subtitle1 font-weight-bold black">
-                                            { `${getUserName(_.get(post, ['userId']), 'freakId')}`}
+                                            {`${getUserName(_.get(post, ['userId']), 'freakId')}`}
                                         </div>
                                         <div className="headline grey">
                                             {`posted at ${moment(_.get(post, ['createdAt'])).fromNow()}`}

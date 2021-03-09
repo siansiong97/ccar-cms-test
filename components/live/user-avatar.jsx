@@ -78,7 +78,7 @@ const UserAvatar = (props) => {
                         if (props.onRedirect) {
                             props.onRedirect()
                         }
-                        props.router.push(`/profile/${props.data._id}`)
+                        props.router.push(`/profile/${props.data._id}`, undefined, {shallow : true})
                     }
                 }}
             >

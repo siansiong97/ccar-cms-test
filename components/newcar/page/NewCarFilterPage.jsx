@@ -204,7 +204,7 @@ class Filter extends React.Component {
         if (_.isPlainObject(mergeObj) && !_.isEmpty(mergeObj)) {
             path += `?${queryStringifyNestedObject(mergeObj)}`;
         }
-        this.props.router.push(path);
+        this.props.router.push(path, path, { shallow: true });
     }
 
     getDataFromUrl() {
@@ -1078,24 +1078,26 @@ class Filter extends React.Component {
                     list.push(
                         <React.Fragment>
                             <Col xs={24} sm={24} md={8} lg={6} xl={6} key={i}>
-                                <Link href={`/newcar/details/${item.make + '/' + item.model}`} >
-                                    <div className="newcars-uniqBy-model">
-                                        <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
-                                        <div className="newcars-wrap-p">
-                                            <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
-                                            <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
-                                                {
-                                                    !item.minPrice && !item.maxPrice ?
-                                                        'TBC'
-                                                        :
-                                                        item.minPrice == item.maxPrice ?
-                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                                <Link shallow prefetch href={`/newcar/details/${item.make + '/' + item.model}`} >
+                                    <a>
+                                        <div className="newcars-uniqBy-model">
+                                            <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
+                                            <div className="newcars-wrap-p">
+                                                <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
+                                                <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
+                                                    {
+                                                        !item.minPrice && !item.maxPrice ?
+                                                            'TBC'
                                                             :
-                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
-                                                }
-                                            </p>
+                                                            item.minPrice == item.maxPrice ?
+                                                                `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                                                                :
+                                                                `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
+                                                    }
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </Link>
                                 {/* <div style={{ padding: '0 26px', position: 'relative', zIndex: 2, width: '100%', bottom: -2 }}>
                                     <Collapse onChange={(e) => this.getRowKey(item, i)} className="collapse-variants" activeKey={this.state.activeKey}>
@@ -1112,24 +1114,27 @@ class Filter extends React.Component {
                     list.push(
                         <React.Fragment>
                             <Col xs={24} sm={24} md={8} lg={6} xl={6} key={i}>
-                                <Link href={`/newcar/details/${item.make + '/' + item.model}`} >
-                                    <div className="newcars-uniqBy-model">
-                                        <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
-                                        <div className="newcars-wrap-p">
-                                            <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
-                                            <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
-                                                {
-                                                    !item.minPrice && !item.maxPrice ?
-                                                        'TBC'
-                                                        :
-                                                        item.minPrice == item.maxPrice ?
-                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                                <Link shallow prefetch href={`/newcar/details/${item.make + '/' + item.model}`} >
+                                    <a>
+                                        <div className="newcars-uniqBy-model">
+                                            <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
+                                            <div className="newcars-wrap-p">
+                                                <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
+                                                <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
+                                                    {
+                                                        !item.minPrice && !item.maxPrice ?
+                                                            'TBC'
                                                             :
-                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
-                                                }
-                                            </p>
+                                                            item.minPrice == item.maxPrice ?
+                                                                `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                                                                :
+                                                                `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
+                                                    }
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+
+                                    </a>
                                 </Link>
                                 {/* <div style={{ padding: '0 26px', position: 'relative', zIndex: 2, width: '100%', bottom: -2 }}>
                                     <Collapse onChange={(e) => this.getRowKey(item, i)} className="collapse-variants" activeKey={this.state.activeKey}>
@@ -1179,13 +1184,24 @@ class Filter extends React.Component {
                         <div className="container" id="filter-top" >
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link href="/">Home</Link>
+                                    <Link shallow prefetch href="/">
+                                        <a>
+                                            Home
+                                            </a>
+                                    </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link href="/newCar">New Car</Link>
+                                    <Link shallow prefetch href="/newcar">
+                                        <a>
+                                            New Car
+                                        </a>
+                                    </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link href="/newcar/filter">Filter</Link>
+                                    <Link shallow prefetch href="/newcar/filter">
+                                        <a>
+                                            Filter
+                                        </a></Link>
                                 </Breadcrumb.Item>
                             </Breadcrumb>
                             <Row gutter={[20, 20]}>

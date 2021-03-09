@@ -103,34 +103,52 @@ const ProfileLayout = (props) => {
             case 'wishlists':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link href={`/profile/${_.get(profile, ['_id'])}/details/wishlists`}> My Wishlist</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/wishlists`}>
+                            <a>My Wishlist</a>
+                        </Link>
                     </Breadcrumb.Item>
                 ])
                 break;
             case 'address-book':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> My Address Book</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}>
+                            <a>
+                                My Address Book
+                                </a>
+                        </Link>
                     </Breadcrumb.Item>
                 ])
                 break;
             case 'address-book-create':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> My Address Book</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> 
+                            <a>
+                                My Address Book
+                                </a></Link>
                     </Breadcrumb.Item>,
                     <Breadcrumb.Item>
-                        <Link href={`/profile/${_.get(profile, ['_id'])}/details/address-book-create`}> Add Address</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book-create`}>
+                            <a>
+                                Add Address
+                                </a></Link>
                     </Breadcrumb.Item>
                 ])
                 break;
             case 'address-book-edit':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> My Address Book</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}> 
+                            <a>
+                                My Address Book
+                                </a></Link>
                     </Breadcrumb.Item>,
                     <Breadcrumb.Item>
-                        <Link href={`/profile/${_.get(profile, ['_id'])}/details/address-book-edit/${props.router.query.address_id || ''}`}> Edit Address</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
+                            <a>
+                                Edit Address
+                                </a></Link>
                     </Breadcrumb.Item>
                 ])
                 break;
@@ -138,7 +156,11 @@ const ProfileLayout = (props) => {
             default:
                 setNavItems([
                     <Breadcrumb.Item key='editprofile'>
-                        <Link  href={`/profile/${_.get(profile, ['_id'])}/details`}>Edit Profile</Link>
+                        <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}/details`}>
+                            <a>
+                                Edit Profile
+                            </a>
+                        </Link>
                     </Breadcrumb.Item>
                 ])
                 break;
@@ -180,13 +202,13 @@ const ProfileLayout = (props) => {
 
         return menuItems.map((item, index) => {
             return (
-                <a key={'path'+index} onClick={() => {
+                <a key={'path' + index} onClick={() => {
                     if (_.get(profile, ['_id'])) {
                         let path = item.path.replace(':id', profile._id);
                         props.router.push(path);
                     }
                 }}>
-                    <Row key={'row'+index} type="flex" justify="start" gutter={[0, 30]} className="padding-left-md" key={index} >
+                    <Row key={'row' + index} type="flex" justify="start" gutter={[0, 30]} className="padding-left-md" key={index} >
                         <Col span={24}>
                             <h4 className="text-truncate">
                                 {step === item.name ?
@@ -208,10 +230,18 @@ const ProfileLayout = (props) => {
                     <div className="container">
                         <Breadcrumb>
                             <Breadcrumb.Item>
-                                <Link href="/">Home</Link>
+                                <Link shallow prefetch href="/">
+                                    <a>
+                                        Home
+                                    </a>
+                                </Link>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <Link href={`/profile/${_.get(profile, ['_id'])}`}>Profile</Link>
+                                <Link shallow prefetch href={`/profile/${_.get(profile, ['_id'])}`}>
+                                    <a>
+                                        Profile
+                                    </a>
+                                </Link>
                                 {/* <a onClick={(e) => { setStep('dashboard') }}>Profile</a> */}
                             </Breadcrumb.Item>
                             {
@@ -285,7 +315,7 @@ const ProfileLayout = (props) => {
                                     </Col> */}
                                     <Col span={24}>
                                         <div className="round-border thin-border padding-sm">
-                                            <Row type="flex"   justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
+                                            <Row type="flex" justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
                                                 if (_.get(profile, ['_id'])) {
                                                     props.router.push(`/profile/${profile._id}/details`);
                                                 }

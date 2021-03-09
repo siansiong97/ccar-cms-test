@@ -302,28 +302,28 @@ const GridProductList = (props) => {
 
                                         <div className={_renderLayout(v)}>
                                             <div className="wrap-product-ads-img">
-                                                <Link passHref  href={'/viewCar/' + v._id}>
+                                                <Link shallow prefetch passHref href={'/viewCar/' + v._id}>
                                                     <a>
-                                                    <React.Fragment>
-                                                        <div className="overlay-condition">
-                                                            {_renderCondition(v)}
-                                                        </div>
-                                                        <div className="overlay-state">
-                                                            {_renderState(v)}
-                                                        </div>
-                                                        <div className="overlay-price">
-                                                            {_renderImage(v)}
-                                                            {_renderPrice(v)}
-                                                        </div>
-                                                        <div>
-                                                            {
-                                                                notEmptyLength(v.carUrl)
-                                                                    ? <img src={v.carUrl[0].url} style={{ maxInlineSize: '-webkit-fill-available' }} className="head-product-ads-img" key={0} />
-                                                                    : <img src={'/image-not-found.png'} className="head-product-ads-img" key={-1} />
-                                                            }
+                                                        <React.Fragment>
+                                                            <div className="overlay-condition">
+                                                                {_renderCondition(v)}
+                                                            </div>
+                                                            <div className="overlay-state">
+                                                                {_renderState(v)}
+                                                            </div>
+                                                            <div className="overlay-price">
+                                                                {_renderImage(v)}
+                                                                {_renderPrice(v)}
+                                                            </div>
+                                                            <div>
+                                                                {
+                                                                    notEmptyLength(v.carUrl)
+                                                                        ? <img src={v.carUrl[0].url} style={{ maxInlineSize: '-webkit-fill-available' }} className="head-product-ads-img" key={0} />
+                                                                        : <img src={'/image-not-found.png'} className="head-product-ads-img" key={-1} />
+                                                                }
 
-                                                        </div>
-                                                    </React.Fragment>
+                                                            </div>
+                                                        </React.Fragment>
                                                     </a>
                                                 </Link>
                                                 <span className="text-align-right gridTopRight">
@@ -336,7 +336,11 @@ const GridProductList = (props) => {
                                             </div>
                                             <div className="wrap-product-ads-text">
                                                 <div className="wrap-product-ads-title">
-                                                    <Link passHref  href={'/viewCar/' + v._id} target="_self"><div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div></Link>
+                                                    <Link shallow prefetch passHref href={'/viewCar/' + v._id} target="_self">
+                                                        <a>
+                                                            <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
+                                                        </a>
+                                                    </Link>
                                                 </div>
 
                                                 <div className="wrap-product-ads-title-p text-overflow-break">

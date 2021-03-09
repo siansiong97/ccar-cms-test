@@ -121,13 +121,15 @@ const BrandFiltering = (props) => {
                                     {item.data.map(function (row2, childIndex) {
                                         return (
                                             <Menu.Item className={props.selected == _.toLower(row2.value) ? 'brandpics background-yellow-lighten-5' : "brandpics"} id={parentsIndex + '' + childIndex} key={parentsIndex + '' + childIndex}>
-                                                <Link href={`/newcar/maker/${_.toLower(row2.value)}`} passHref>
-                                                    <div className={props.selected == _.toLower(row2.value) ? 'flex-items-align-center cursor-pointer ccar-yellow' : 'flex-items-align-center cursor-pointer'}
-                                                    // onClick={(e) => { onSelect(row2.value) }}
-                                                    >
-                                                        <img src={row2.icon} />
-                                                        {row2.value}
-                                                    </div>
+                                                <Link shallow prefetch href={`/newcar/maker/${_.toLower(row2.value)}`} passHref>
+                                                    <a>
+                                                        <div className={props.selected == _.toLower(row2.value) ? 'flex-items-align-center cursor-pointer ccar-yellow' : 'flex-items-align-center cursor-pointer'}
+                                                        // onClick={(e) => { onSelect(row2.value) }}
+                                                        >
+                                                            <img src={row2.icon} />
+                                                            {row2.value}
+                                                        </div>
+                                                    </a>
                                                 </Link>
                                             </Menu.Item>
                                         )
@@ -136,7 +138,7 @@ const BrandFiltering = (props) => {
                                 </Menu.ItemGroup>
                             )
                         })
-                    }
+                        }
                     </Menu>
                     {/* </InfiniteScroll> */}
                 </div>

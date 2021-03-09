@@ -63,7 +63,7 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
-            cookie: _.get(context, ['req', 'headers', 'cookie']),
+            cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
             productList: _.get(carAdsRes, ['data']) || [],
             productListTotal: _.get(carAdsRes, ['total']) || 0,
             filterGroup: _.get(filterObj, ['filterGroup']) || {},

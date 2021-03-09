@@ -25,9 +25,10 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
 
 
+    console.log('car freak server side');
     return {
         props: {
-            cookie: _.get(context, ['req', 'headers', 'cookie']),
+            cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
         }
     }
 }

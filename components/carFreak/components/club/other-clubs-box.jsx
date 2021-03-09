@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import client from '../../../../feathers';
 import { notEmptyLength } from '../../../../common-function';
 import { imageNotFound } from '../../../profile/config';
+import Link from 'next/link';
 
 
 const PAGE_SIZE = 3;
@@ -57,11 +58,10 @@ const OtherClubsBox = (props) => {
                             {
                                 _.map(clubs, function (club) {
                                     return (
-                                        <span className='d-inline-block relative-wrapper flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: '100%', overflow: 'hidden' }} onClick={() => {
-                                            if (_.get(club, ['_id'])) {
-                                                props.router.push(`/social-club/${club._id}`)
-                                            }
-                                        }} >
+                                        <Link shallow prefetch href={`/social-club/${club._id}`} > 
+                                        <a>
+                                        
+                                        <span className='d-inline-block relative-wrapper flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: '100%', overflow: 'hidden' }}>
                                             <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
                                             <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
                                                 <span className='d-inline-block white h6 text-truncate-threeline' >
@@ -69,6 +69,8 @@ const OtherClubsBox = (props) => {
                                                 </span>
                                             </div>
                                         </span>
+                                        </a>
+                                        </Link>
                                     )
                                 })
                             }

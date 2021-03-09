@@ -417,24 +417,27 @@ class NewCarVersion3 extends React.Component {
                     return (
                         <Col xs={{ span: 22, offset: 1 }} sm={{ span: 22, offset: 1 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }} xl={{ span: 6, offset: 0 }} key={i}>
 
-                            <Link href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
-                                <div className="newcars-uniqBy-model cursor-pointer" style={{ height : 320 }} >
-                                    <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
-                                    <div className="newcars-wrap-p">
-                                        <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
-                                        <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
-                                            {
-                                                !item.minPrice && !item.maxPrice ?
-                                                    'TBC'
-                                                    :
-                                                    item.minPrice == item.maxPrice ?
-                                                        `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                            <Link shallow prefetch href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                                <a>
+                                    <div className="newcars-uniqBy-model cursor-pointer" style={{ height: 320 }} >
+                                        <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
+                                        <div className="newcars-wrap-p">
+                                            <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
+                                            <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
+                                                {
+                                                    !item.minPrice && !item.maxPrice ?
+                                                        'TBC'
                                                         :
-                                                        `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
-                                            }
-                                        </p>
+                                                        item.minPrice == item.maxPrice ?
+                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                                                            :
+                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
+                                                }
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+
+                                </a>
                             </Link>
                             {/* <div className="car-tab">
                   <img src={item.uri} style={{ width: "100%", padding:'10px'}} />
@@ -780,11 +783,13 @@ class NewCarVersion3 extends React.Component {
                         data.map(function (item) {
                             return (
                                 <Col xs={4} sm={4} md={2} lg={2} xl={2} className="col-centered" style={{ margin: '0px 10px' }}>
-                                    <Link href={`/newcar/maker/${_.toLower(item.value)}`} passHref>
-                                        <div className="wrap-newCar-brand cursor-pointer" onClick={(e) => { self.filterByBrand(item.value); }}>
-                                            <img src={getCarBrandsIcon(_.toLower(item.value))} className="type w-100" />
-                                            <p>{_.capitalize(item.value)}</p>
-                                        </div>
+                                    <Link shallow prefetch href={`/newcar/maker/${_.toLower(item.value)}`} passHref>
+                                        <a>
+                                            <div className="wrap-newCar-brand cursor-pointer" onClick={(e) => { self.filterByBrand(item.value); }}>
+                                                <img src={getCarBrandsIcon(_.toLower(item.value))} className="type w-100" />
+                                                <p>{_.capitalize(item.value)}</p>
+                                            </div>
+                                        </a>
                                     </Link>
                                 </Col>
                             )
@@ -792,11 +797,11 @@ class NewCarVersion3 extends React.Component {
                     }
                     <Col xs={4} sm={4} md={2} lg={2} xl={2} className="col-centered" style={{ margin: '0px 10px' }}>
                         <div className="wrap-newCar-brand">
-                            <Link href={'/newcar/filter'} passHref >
-                                <React.Fragment>
+                            <Link shallow prefetch href={'/newcar/filter'} passHref >
+                                <a>
                                     <img src="/assets/add file.png" style={{ width: '70%' }} className="type" />
                                     <p>More</p>
-                                </React.Fragment>
+                                </a>
                             </Link>
                         </div>
                     </Col>
@@ -876,14 +881,12 @@ class NewCarVersion3 extends React.Component {
                             <Row className="background-white margin-right-xl margin-left-xl ">
                                 <Col className="gutter-row" span={24} className="margin-bottom-sm margin-top-sm text-align-center yellow-divider">
                                     <Divider> <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} > All NEW CARS</span> </Divider>
-                                    {/* <span style={{float:'right', marginRight:'10px'}}> <Link href={'/newcar/filter'}>See More</Link> </span> */}
+                                    {/* <span style={{float:'right', marginRight:'10px'}}> <Link shallow prefetch href={'/newcar/filter'}>See More</Link> </span> */}
                                 </Col>
                                 <Col span={24}>
                                     <div className="brand-header">
-                                        {/* <div className="faen1">
-                    <Link href={'/newcar/filter'} >See More</Link>
-                  </div> */}
-                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link href={'/newcar/filter'} passHref>See More</Link>}>
+                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow prefetch href={'/newcar/filter'} passHref>
+                                            <a>See More</a></Link>}>
                                             {/* <TabPane tab="Popular Cars" key="1">
                     <Row>
                       {this.renderFilterCarsTabs()}

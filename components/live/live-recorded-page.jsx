@@ -306,7 +306,7 @@ class LiveRecordedPage extends React.Component {
                                                 data={recordedLive}
                                                 className='cursor-pointer box-shadow-light'
                                                 onClick={(e) => {
-                                                  self.props.router.push(`/live/${recordedLive._id}/recorded`)
+                                                  self.props.router.push(`/live/${recordedLive._id}/recorded`, undefined, {shallow : true})
                                                 }}
                                                 stream={recordedLive.videoUrl ? recordedLive.videoUrl : null} />
                                             </Col>

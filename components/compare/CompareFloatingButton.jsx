@@ -130,7 +130,7 @@ const CompareFloatingButton = (props) => {
             bordered={true}
             extra={<Button onClick={() => { props.clearCompareProductIds(); toggle(); }}> Clear All</Button>}
           >
-            <Scrollbars style={{ width : '100%' ,maxWidth : window.innerWidth * 0.7 }} autoHide autoHeight autoHeightMax='70vh'>
+            <Scrollbars style={{ width: '100%', maxWidth: window.innerWidth * 0.7 }} autoHide autoHeight autoHeightMax='70vh'>
               {
                 notEmptyLength(productList) ?
                   <React.Fragment>
@@ -161,11 +161,14 @@ const CompareFloatingButton = (props) => {
 
             <Row style={{ margin: 10 }}>
               <Col span={24} style={{ textAlign: 'center' }}>
-                <Button
-                  style={{ fontWeight: 'bold' }}
-                  onClick={() => props.router.push('/compare')}
-                  type="primary"
-                >Confirm & Compare</Button>
+                <Link shallow prefetch href={'/compare'} >
+                  <a>
+                    <Button
+                      style={{ fontWeight: 'bold' }}
+                      type="primary"
+                    >Confirm & Compare</Button>
+                  </a>
+                </Link>
               </Col>
             </Row>
           </Card>

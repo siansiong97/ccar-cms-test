@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
     console.log(context.req);
     return {
         props: {
-            cookie: _.get(context, ['req', 'headers', 'cookie']),
+            cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
         }
     }
 }

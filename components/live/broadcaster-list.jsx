@@ -8,7 +8,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import client from '../../feathers';
 import UserAvatar from './user-avatarCCARLive';
-import {  isValidNumber, notEmptyLength, objectRemoveEmptyValue, viewPort  } from '../../common-function';
+import { isValidNumber, notEmptyLength, objectRemoveEmptyValue, viewPort } from '../../common-function';
 import { withRouter } from 'next/router';
 import { loading } from '../../redux/actions/app-actions';
 import { setUser } from '../../redux/actions/user-actions';
@@ -208,10 +208,10 @@ const BroadcasterList = (props) => {
                                                 })
                                                 if (!selectedActiveBroadcaster || !selectedActiveBroadcaster.dealerSocketId) {
                                                     // props.router.push(`/live-streamer/${broadcaster._id}`)
-                                                } 
+                                                }
                                                 else {
                                                     //donar it manages the routes
-                                                    props.router.push(`/live/${selectedActiveBroadcaster.dealerSocketId}`)
+                                                    props.router.push(`/live/${selectedActiveBroadcaster.dealerSocketId}`, undefined, { shallow: true })
                                                 }
                                             }}>
                                                 <UserAvatar

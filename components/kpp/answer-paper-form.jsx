@@ -11,6 +11,7 @@ import SocialShareButton from '../general/SocialShareButton';
 import { withRouter } from 'next/router';
 import { loading } from '../../redux/actions/app-actions';
 import { setUser } from '../../redux/actions/user-actions';
+import Link from 'next/link';
 
 
 const ANSWERS_PER_COL = 10;
@@ -343,7 +344,11 @@ const AnswerPaperForm = (props) => {
                                 <div className='flex-justify-center width-100 flex-items-align-center margin-bottom-lg'>
                                     {/* <Button className='padding-x-md border-ccar-yellow background-white black margin-x-sm' style={{ minWidth: '100px' }} onClick={(e) => { window.location.reload(); }}> {_.upperCase(props.language) == 'BM' ? 'Saya mahu ujian semula' : 'I want retest'} </Button> */}
                                     <Button className='padding-x-md border-ccar-yellow background-ccar-yellow white margin-x-sm' style={{ minWidth: '100px' }} onClick={(e) => { setModalVisible(false) }}> {_.upperCase(props.language) == 'BM' ? 'Ya' : 'Yes'} </Button>
-                                    <Button className='padding-x-md border-ccar-yellow background-white black margin-x-sm' style={{ minWidth: '100px' }} onClick={(e) => { props.router.push('/kpp') }}> {_.upperCase(props.language) == 'BM' ? 'Tidak, kembali ke Laman Utama' : 'Back to Home Page'}  </Button>
+                                    <Link shallow prefetch href={'/kpp'} >
+                                        <a>
+                                            <Button className='padding-x-md border-ccar-yellow background-white black margin-x-sm' style={{ minWidth: '100px' }}> {_.upperCase(props.language) == 'BM' ? 'Tidak, kembali ke Laman Utama' : 'Back to Home Page'}  </Button>
+                                        </a>
+                                    </Link>
                                 </div>
                                 <div className='flex-justify-center flex-items-align-center width-100 text-align-center margin-y-lg'>
                                     <ShareAltOutlined className='margin-right-sm' /> {_.upperCase(props.language) == 'BM' ? 'Kongsi keputusan' : 'Share my result'}
@@ -410,7 +415,7 @@ const AnswerPaperForm = (props) => {
                                                     _.map(col, function (question, colQuestionIndex) {
                                                         return (
                                                             <div className='flex-justify-center flex-items-align-center flex-items-no-shrink width-100 padding-xs margin-y-xs cursor-pointer' onClick={(e) => { scrollToQuestion(colIndex * ANSWERS_PER_COL + colQuestionIndex + 1) }} >
-                                                                <span className='d-inline-block black caption flex-items-no-shrink width-30' style={{marginRight:'7px'}}>
+                                                                <span className='d-inline-block black caption flex-items-no-shrink width-30' style={{ marginRight: '7px' }}>
                                                                     {`${colIndex * ANSWERS_PER_COL + colQuestionIndex + 1}.`}
                                                                 </span>
                                                                 <span className={`d-inline-block flex-justify-center flex-items-align-center flex-items-no-shrink width-60 thin-border border-grey 
@@ -440,12 +445,15 @@ const AnswerPaperForm = (props) => {
                                 onClick={(e) => { handleSubmit() }}
                             > {_.upperCase(props.language) == 'BM' ? 'Hantar' : 'Submit'} </Button>
 
-                            <Button
-                                className='padding-x-xl white font-weight-bold margin-x-sm'
-                                style={{ borderColor: '#B16400', backgroundColor: '#B16400' }}
-                                shape="round"
-                                onClick={(e) => { props.router.push('/kpp') }}
-                            > {_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'} </Button>
+                            <Link shallow prefetch href={'/kpp'} >
+                                <a>
+                                    <Button
+                                        className='padding-x-xl white font-weight-bold margin-x-sm'
+                                        style={{ borderColor: '#B16400', backgroundColor: '#B16400' }}
+                                        shape="round"
+                                    > {_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'} </Button>
+                                </a>
+                            </Link>
                         </div>
                     </Col>
 
@@ -529,7 +537,11 @@ const AnswerPaperForm = (props) => {
                                 </QueueAnim>
                             </div>
                             <div className="white h6 text-align-center margin-x-lg width-100" style={{ position: 'fixed', bottom: 0 }}>
-                                <Button className='margin-md' onClick={(e) => { props.router.push('/kpp') }}>{_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'}</Button>
+                                <Link shallow prefetch href={'/kpp'} >
+                                    <a>
+                                        <Button className='margin-md'>{_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'}</Button>
+                                    </a>
+                                </Link>
                                 <Texty duration={1500} type="right" mode="smooth" display="inline-block">
                                     {_.upperCase(props.language) == 'BM' ? 'Disediakan oleh:' : 'Prepared by:'}
                                 </Texty>
@@ -557,7 +569,11 @@ const AnswerPaperForm = (props) => {
                                 </QueueAnim>
                             </div>
                             <div className="white h6 text-align-center width-100" style={{ position: 'fixed', bottom: 0 }}>
-                                <Button className='margin-md' onClick={(e) => { props.router.push('/kpp') }}>{_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'}</Button>
+                                <Link shallow prefetch href={'/kpp'} > 
+                                <a>
+                                <Button className='margin-md'>{_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'}</Button>
+                                </a>
+                                </Link>
                                 <Texty duration={1500} mode="smooth" display="inline-block">
                                     {_.upperCase(props.language) == 'BM' ? 'Disediakan oleh:' : 'Prepared by:'}
                                 </Texty>

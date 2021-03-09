@@ -3,11 +3,12 @@ import { CaretUpOutlined, CopyrightCircleOutlined, UserOutlined } from '@ant-des
 import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
+import Link from 'next/link';
 import React from 'react';
 import CookieConsent, { Cookies } from "react-cookie-consent";
-import { Helmet } from "react-helmet";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
+import { v4 } from 'uuid';
 import { convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
@@ -20,8 +21,6 @@ import CompareFloatingButton from '../compare/CompareFloatingButton';
 import LoginModal from '../login/login';
 import GlobalSearchBar from './global-search-bar';
 import UserAvatar from './UserAvatar';
-import { v4 } from 'uuid';
-import Link from 'next/link';
 
 
 
@@ -132,7 +131,7 @@ class LayoutV2 extends React.Component {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
                                             <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
-                                                <Link href={menu.path}   >
+                                                <Link shallow prefetch href={menu.path}   >
                                                     <a>
                                                         <div className="flex-justify-start flex-items-align-center">
                                                             <span className='d-inline-block margin-x-sm'>
@@ -266,14 +265,14 @@ class LayoutV2 extends React.Component {
 
                                     <Row style={{ color: '#E3C57D' }}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
-                                            {/* <Link passHref  style={{ color: 'white' }} href="/"> */}
+                                            {/* <Link shallow prefetch passHref  style={{ color: 'white' }} href="/"> */}
                                             <div className="flex-justify-start flex-items-align-center main-footer ">
                                                 CCAR.MY <CopyrightCircleOutlined /> 2020
                                                 </div>
                                             {/* </Link> */}
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            {/* <Link passHref  style={{ color: 'white' }} href="/termOfUse" target="_blank"> */}
+                                            {/* <Link shallow prefetch passHref  style={{ color: 'white' }} href="/termOfUse" target="_blank"> */}
                                             <div className="flex-justify-end flex-items-align-center main-footer">
                                                 Terms of Use | Privacy Policy
                                                 </div>
@@ -405,7 +404,7 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
 
-                                                <Link href={`/`}  >
+                                                <Link shallow prefetch href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
                                                             <img alt="ccar" className="fill-parent absolute-center" src={cnyLogo2} />
@@ -429,7 +428,7 @@ class LayoutV2 extends React.Component {
                                                     notEmptyLength(outterMenu) ?
                                                         _.map(outterMenu, function (menu, i) {
                                                             return (
-                                                                <Link href={menu.path}  >
+                                                                <Link shallow prefetch href={menu.path}  >
                                                                     <a>
                                                                         <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
                                                                             {menu.text}
@@ -448,7 +447,7 @@ class LayoutV2 extends React.Component {
                                                                 _.map(innerMenu, function (menu, index) {
                                                                     return (
                                                                         <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
-                                                                            <Link href={menu.path}  >
+                                                                            <Link shallow prefetch href={menu.path}  >
                                                                                 <a>
                                                                                     <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
                                                                                         {menu.text}

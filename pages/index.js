@@ -16,6 +16,7 @@ import BrandList from '../components/product-list/brand-list'
 import GridProductList from '../components/product-list/grid-product-list'
 import client from '../feathers'
 import { fetchProductsListHome } from '../redux/actions/productsList-actions'
+import useSWR from 'swr'
 
 const BgElement = Element.BgElement;
 
@@ -25,13 +26,13 @@ const Index = (props) => {
   const [quickFilterType, setQuickFilterType] = useState('carMarket');
   const [brandList, setBrandList] = useState(props.brands || []);
 
-  useEffect(() => { 
+  useEffect(() => {
 
-    if(_.isArray(props.productLists) && !_.isEmpty(props.productLists)){
+    if (_.isArray(props.productLists) && !_.isEmpty(props.productLists)) {
       props.fetchProductsListHome(props.productLists);
     }
-  
-  } , [])
+
+  }, [])
 
   const _renderCarouselWeb = () => {
 
@@ -222,17 +223,6 @@ const Index = (props) => {
   return (
     <ReduxPersistWrapper cookie={props.cookie}>
       <LayoutV2>
-        <Head>
-          <title>CCAR SOCIAL HOME</title>
-          {/* <link rel="icon" href="/logo.png" /> */}
-          <meta name="og:title" content="CCAR SOCIAL HOME" key="title" />
-          {/* <meta name="description" content="hello" />
-        <meta property="og:type" content="website" />
-        <meta name="og:description" property="og:description" content="desc" />
-        <meta property="og:site_name" content="ccar social" />
-        <meta property="og:url" content="" />  
-        <meta property="og:image" content="" />   */}
-        </Head>
 
         <Row>
           <Col xs={24} sm={24} md={0} lg={24} xl={24} >
@@ -302,7 +292,7 @@ const Index = (props) => {
                   <Col className="gutter-row" span={24} className="margin-bottom-sm margin-top-sm text-align-center yellow-divider">
                     <Divider > <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} >Social Videos</span> </Divider>
                   </Col>
-                  <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ overflowX: 'auto' }} >
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <SocialVideoTabs />
                   </Col>
                   <Col xs={24} sm={24} md={24} lg={24} xl={24} className="margin-top-md margin-bottom-md text-align-center">
@@ -330,16 +320,16 @@ export async function getServerSideProps(context) {
 
   let brands = _.isArray(_.get(brandRes, ['data', 'uniqueInfo', 'makeList'])) && !_.isEmpty(_.get(brandRes, ['data', 'uniqueInfo', 'makeList'])) ? _.get(brandRes, ['data', 'uniqueInfo', 'makeList']) : [];
   brands = _.reverse(_.sortBy(brands, ['count', 'value']));
-  brands = _.map(brands, 'value')
+  brands = _.map(brands, 'value').slice(10)
 
   let kingAdsRes = await axios.get(`${client.io.io.uri}displayKingAds`)
   kingAdsRes = _.get(kingAdsRes, ['data']) || [];
 
   return {
     props: {
-      cookie: _.get(context, ['req', 'headers', 'cookie']),
-      brands : brands,
-      productLists : kingAdsRes,
+      cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
+      brands: brands,
+      productLists: kingAdsRes,
     }
   }
 }
@@ -352,6 +342,6 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
-  fetchProductsListHome : fetchProductsListHome,
+  fetchProductsListHome: fetchProductsListHome,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Index))

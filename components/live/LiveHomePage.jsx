@@ -17,6 +17,7 @@ import BroadcasterList from './broadcaster-list';
 import { getStreamUrl } from './config';
 import LiveBoxPreview1 from './live-box-preview-1';
 import { withRouter } from 'next/router';
+import Link from 'next/link';
 
 LayoutV2
 TweenOne.plugins.push(BezierPlugin);
@@ -515,16 +516,19 @@ class LiveIndex extends React.Component {
           return (
             <React.Fragment>
               <Col xs={24} sm={24} md={24} lg={12} xl={12} >
-                <LiveBoxPreview1
-                  data={broadcaster}
-                  key={`live-box-${broadcaster.dealerSocketId}`}
-                  className='cursor-pointer'
-                  onClick={(e) => { self.props.router.push(`/live/${broadcaster.dealerSocketId}`) }}
-                  videoRef={_.get(self, ['state', 'peerConnections', _.get(broadcaster, ['dealerSocketId']), 'videoRef'])}
+                <Link shallow prefetch href={`/live/${broadcaster.dealerSocketId}`} >
+                  <a>
+                    <LiveBoxPreview1
+                      data={broadcaster}
+                      key={`live-box-${broadcaster.dealerSocketId}`}
+                      className='cursor-pointer'
+                      videoRef={_.get(self, ['state', 'peerConnections', _.get(broadcaster, ['dealerSocketId']), 'videoRef'])}
 
-                  dealerSocketId={broadcaster.dealerSocketId}
-                  sharedSocket={self.activeSocket}
-                />
+                      dealerSocketId={broadcaster.dealerSocketId}
+                      sharedSocket={self.activeSocket}
+                    />
+                  </a>
+                </Link>
               </Col>
             </React.Fragment>
           )

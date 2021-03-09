@@ -323,7 +323,7 @@ const CarFreakIndex = (props) => {
                                     <Col span={12} ><span style={{ fontSize: '20px' }}>CarFreaks</span></Col>
                                     <Col span={12} style={{ textAlign: 'right', }}>
                                         <span style={{ fontSize: '16px', marginRight: '10px' }}>CarFreaks</span>
-                                        <span style={{ fontSize: '16px', marginRight: '10px', cursor: 'pointer', textDecoration: 'underline' }} onClick={(e) => { props.router.push('/social-board') }}  >Social Board</span>
+                                        <span style={{ fontSize: '16px', marginRight: '10px', cursor: 'pointer', textDecoration: 'underline' }} onClick={(e) => { props.router.push('/social-board', '/social-board', { shallow : true}) }}  >Social Board</span>
                                         {/* <span style={{ fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }} onClick={(e) => { props.router.push('/social-club') }}>Club</span> */}
                                     </Col>
                                 </Row>

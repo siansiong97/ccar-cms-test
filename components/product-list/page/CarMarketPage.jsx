@@ -255,10 +255,14 @@ const CarMarketPage = (props) => {
                                     <span className='d-inline-block ' >
                                         <Breadcrumb>
                                             <Breadcrumb.Item>
-                                                <Link passHref href="/">Home</Link>
+                                                <Link shallow prefetch passHref href="/">
+                                                    <a>Home</a>
+                                                </Link>
                                             </Breadcrumb.Item>
                                             <Breadcrumb.Item>
-                                                <Link passHref href={convertParameterToProductListUrl()} >Product List</Link>
+                                                <Link shallow prefetch passHref href={convertParameterToProductListUrl()} >
+                                                    <a>Product List</a>
+                                                </Link>
                                             </Breadcrumb.Item>
                                         </Breadcrumb>
                                     </span>

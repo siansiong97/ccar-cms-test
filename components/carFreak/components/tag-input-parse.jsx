@@ -7,6 +7,7 @@ import { loading } from '../../../actions/app-actions';
 import { darkThemeColorList } from '../../../params/darkThemeColorList';
 import { isValidNumber } from '../../profile/common-function';
 import { parseTagStringToArray } from '../config';
+import Link from 'next/link';
 
 
 const TagInputParse = (props) => {
@@ -28,13 +29,13 @@ const TagInputParse = (props) => {
         if (_.isArray(textArr) && !_.isEmpty(textArr)) {
             textArr = _.map(textArr, function (v) {
                 if (v.type == 'tag') {
-                    return <span className="font-weight-bold blue cursor-pointer" onClick={() => {
-                        if (v.id) {
-                            props.router.push(`/profile/${v.id}`)
-                        }
-                    }}>
-                        {v.value}
-                    </span>
+                    return <Link shallow prefetch href={`/profile/${v.id}`}>
+                    <a>
+                        <span className="font-weight-bold blue cursor-pointer">
+                            {v.value}
+                        </span>
+                    </a>
+                    </Link>
                 }
 
                 return v.value;
@@ -46,7 +47,7 @@ const TagInputParse = (props) => {
     }
 
     return <React.Fragment>
-     {content} 
+        {content}
     </React.Fragment>;
 }
 

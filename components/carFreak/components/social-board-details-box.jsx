@@ -144,7 +144,7 @@ const SocialBoardDetailsBox = (props) => {
             client.service('chats')
                 .remove(v._id).then((res) => {
                     message.success('Record Deleted')
-                    props.router.push('/social-board')
+                    props.router.push('/social-board', undefined ,{shallow :true})
                 }).catch((err) => {
                     console.log('Unable to delete Chat.');
                 })

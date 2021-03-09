@@ -402,14 +402,13 @@ const CarFreakIndex = (props) => {
                         <Row className="margin-bottom-md">
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="width-100 flex-items-align-center flex-justify-start">
-                                    {/* <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-normal h6 ${tabKey == 'news' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { setTabKey('news') }} > */}
-                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/car-freaks' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/car-freaks') }} >
+                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/car-freaks' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/car-freaks', '/car-freaks', {shallow : true}) }} >
                                         CarFreaks
                                 </span>
                                     <span className='d-inline-block cursor-pointer margin-x-sm black' >
                                         |
                                 </span>
-                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/social-board' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/social-board') }}>
+                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-bold h6 black ${props.location.pathname == '/social-board' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { props.router.push('/social-board','/social-board', {shallow : true}) }}>
                                         Social Board
                                 </span>
                                 </div>
@@ -417,34 +416,6 @@ const CarFreakIndex = (props) => {
                         </Row>
                         <div className="containerCarFreak">
                             <div style={{ backgroundColor: 'transparent', borderRadius: '12px', }}>
-                                {/* <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', height:'600px' }} */}
-                                {/* <div className="padding-x-sm padding-y-xs" >
-                                <Row align="middle" style={{ marginTop: '5px', marginBottom: '10px' }}>
-                                    <Col span={12} ><span style={{ fontSize: '20px' }}>CarFreaks</span></Col>
-                                    <Col span={12} style={{ textAlign: 'right', }}>
-                                        <span style={{ fontSize: '16px', marginRight: '10px' }}>CarFreaks</span>
-                                        <span style={{ fontSize: '16px', marginRight: '10px', cursor: 'pointer', textDecoration: 'underline' }} onClick={(e) => { props.router.push('/social-board') }}  >Social Board</span>
-                                        <span style={{ fontSize: '16px', textDecoration: 'underline', cursor: 'pointer' }} onClick={(e) => { props.router.push('/social-club') }}>Club</span>
-                                    </Col>
-                                </Row>
-                                <Row gutter={12}>
-                                    <Col xs={11} sm={11} md={11} lg={11} xl={11} style={{ textAlign: 'left' }}>
-                                        <Search
-                                            placeholder="Search"
-                                            allowClear
-                                            style={{ width: 200 }}
-                                            onChange={(e) => setSearchTitle(e.target.value)}
-                                        />
-                                    </Col>
-                                    <Col xs={{ span: 12, offset: 1 }} sm={{ span: 12, offset: 1 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }} xl={{ span: 12, offset: 0 }} style={{ textAlign: 'right' }}>
-                                        <Button onClick={(e) => { openNewPost('new') }}  ><Icon type="edit" /> Write a Post</Button>
-                                    </Col>
-                                </Row>
-                            </div>
-                            <br /> */}
-
-                                {/* Discussion/Post */}
-                                {/* <div style={{ padding: '12px 36px 0px 36px', height:'450px', overflowY:'scroll' }}> */}
                                 <div style={{ padding: '12px 36px 12px 36px', overflowY: 'scroll' }}>
                                     <Row gutter={[20, 20]} type="flex">
                                         {

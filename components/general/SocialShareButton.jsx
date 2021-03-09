@@ -107,7 +107,7 @@ const SocialShareButton = (props) => {
             case 'linkedin':
                 return (
                     <LinkedinShareButton edinShareButton url={link} title={title} className='margin-sm flex-justify-center flex-items-align-center round-border'>
-                        <Link passHref edinIcon size={iconSize} round={shape == 'square' ? false : true} />
+                        <Link shallow passHref edinIcon size={iconSize} round={shape == 'square' ? false : true} />
                     </LinkedinShareButton>
                 )
             case 'line':

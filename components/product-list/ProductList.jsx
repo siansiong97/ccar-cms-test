@@ -88,44 +88,50 @@ const ProductList = (props) => {
     if (notEmptyLength(v.carUrl)) {
       if (v.currentImg != null && v.currentImg < v.carUrl.length) {
         return (
-          <Link passHref  href={'/viewCar/' + v._id} target="_blank">
-            <React.Fragment>
-              <div className="wrap-product-ads-img-horizontal">
-                <img src={v.carUrl[v.currentImg].url} className="head-product-ads-img" />
-              </div>
-            </React.Fragment>
+          <Link shallow prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+            <a>
+              <React.Fragment>
+                <div className="wrap-product-ads-img-horizontal">
+                  <img src={v.carUrl[v.currentImg].url} className="head-product-ads-img" />
+                </div>
+              </React.Fragment>
+            </a>
           </Link>
         )
       } else {
         return (
-          <Link passHref  href={'/viewCar/' + v._id} target="_blank">
-            <React.Fragment>
-              <div className="wrap-product-ads-img-horizontal">
-                <div className="overlay">
-                  <img src="/assets/Ccar-logo.png" />
-                </div>
-                <img src={v.carUrl[0].url} className="head-product-ads-img" />
+          <Link shallow prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+            <a>
+              <React.Fragment>
+                <div className="wrap-product-ads-img-horizontal">
+                  <div className="overlay">
+                    <img src="/assets/Ccar-logo.png" />
+                  </div>
+                  <img src={v.carUrl[0].url} className="head-product-ads-img" />
 
-              </div>
-            </React.Fragment>
+                </div>
+              </React.Fragment>
+            </a>
           </Link>
         )
       }
     } else {
       return (
-        <Link passHref  href={'/viewCar/' + v._id} target="_blank">
-          <React.Fragment>
-            <div className="wrap-product-ads-img-horizontal">
-              <div className="overlay-condition">
-                {_renderCondition(v)}
-              </div>
-              <div className="overlay">
-                <img src="/assets/Ccar-logo.png" />
-              </div>
-              <img src={'/image-not-found.png'} className="head-product-ads-img" />
+        <Link shallow prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+          <a>
+            <React.Fragment>
+              <div className="wrap-product-ads-img-horizontal">
+                <div className="overlay-condition">
+                  {_renderCondition(v)}
+                </div>
+                <div className="overlay">
+                  <img src="/assets/Ccar-logo.png" />
+                </div>
+                <img src={'/image-not-found.png'} className="head-product-ads-img" />
 
-            </div>
-          </React.Fragment>
+              </div>
+            </React.Fragment>
+          </a>
         </Link>
       )
     }
@@ -596,20 +602,22 @@ const ProductList = (props) => {
                                                         {_renderCondition(v)}
                                                     </Col> */}
                           <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '10px 10px' }}>
-                            <Link passHref  href={'/viewCar/' + v._id} target="_blank">
-                              <div className="text-truncate-twoline">
-                                <label>
-                                  {/* <span style={{ color: '#E3C57D' }}>[ {v.condition} ] </span> */}
-                                  {v.title}
-                                  {/* {v.carspecsAll ?
+                            <Link shallow prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+                              <a>
+                                <div className="text-truncate-twoline">
+                                  <label>
+                                    {/* <span style={{ color: '#E3C57D' }}>[ {v.condition} ] </span> */}
+                                    {v.title}
+                                    {/* {v.carspecsAll ?
                                   v.carspecsAll.make + ' ' +
                                   v.carspecsAll.model + ' ' +
                                   v.carspecsAll['engine-capacity'] +
                                   ' (' + v.carspecsAll.variant + ') ' +
                                   '-' + v.carspecsAll.year
                                   : ''} */}
-                                </label>
-                              </div>
+                                  </label>
+                                </div>
+                              </a>
                             </Link>
                           </Col>
                         </Row>

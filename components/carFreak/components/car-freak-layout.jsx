@@ -4,12 +4,20 @@ import { connect } from 'react-redux';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { withRouter } from 'next/router';
+import Link from 'next/link';
+
 import { loginMode, loading } from '../../../redux/actions/app-actions';
 
 
 const CarFreakLayout = (props) => {
 
     const [tabKey, setTabKey] = useState('car-freaks')
+
+
+    useEffect(() => {
+
+
+    }, [])
 
     useEffect(() => {
 
@@ -28,8 +36,6 @@ const CarFreakLayout = (props) => {
                 setTabKey('social-club')
                 break;
             default:
-                message.error('Path Not Found!');
-                props.router.push('/');
                 break;
         }
 
@@ -43,15 +49,27 @@ const CarFreakLayout = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="width-100 flex-justify-space-between flex-items-align-center">
                                 <span className="flex-items-align-center flex-justify-start">
-                                    <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} onClick={(e) => { props.router.push('/car-freaks'); }} >
-                                        CarFreaks
+                                    <Link shallow prefetch href={'/car-freaks'}>
+                                        <a>
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
+                                                CarFreaks
+                                            </span>
+                                        </a>
+                                    </Link>
+                                    <Link shallow prefetch href={'/social-board'}>
+                                        <a>
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `}  >
+                                                Social Board
                                     </span>
-                                    <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} onClick={(e) => { props.router.push('/social-board') }}  >
-                                        Social Board
+                                        </a>
+                                    </Link>
+                                    <Link shallow prefetch href={'/social-club'}>
+                                        <a>
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
+                                                CarFreaks Club
                                     </span>
-                                    <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} onClick={(e) => { props.router.push('/social-club') }}  >
-                                        CarFreaks Club
-                                    </span>
+                                        </a>
+                                    </Link>
                                 </span>
                             </div>
                         </Col>
