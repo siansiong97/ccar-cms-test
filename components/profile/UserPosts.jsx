@@ -10,7 +10,7 @@ import {
 } from '../../redux/actions/app-actions';
 import PostModal from '../carFreak/components/post-modal';
 import WritePostModal from '../carFreak/components/write-post-modal';
-import UserPost from './userPost';
+import UserPost from './UserPost';
 
 
 var moment = require('moment');
