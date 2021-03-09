@@ -29,11 +29,12 @@ import { RouterContextProvider } from './hooks/useRouter';
 const WrappedApp = ({ Component, pageProps, router }) => {
 
   let seoData = _.isPlainObject(_.get(pageProps, ['seoData'])) && !_.isEmpty(_.get(pageProps, ['seoData'])) ? _.get(pageProps, ['seoData']) : {};
+  let title = _.get(seoData, ['title']) || 'CCAR.MY | #1 Car Social Platform'
 
   return (
     <React.Fragment>
       <NextSeo
-        title={seoData.title}
+        title={title}
         description={seoData.description}
         canonical={seoData.canonical}
         openGraph={_.isPlainObject(seoData.openGraph) && !_.isEmpty(seoData.openGraph) ? seoData.openGraph : {}}

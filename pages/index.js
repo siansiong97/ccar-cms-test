@@ -46,24 +46,7 @@ const Index = (props) => {
             id="banner-1"
             className="bg"
             style={{
-              backgroundImage: 'url(/banner/ccar-cny-web-banner.png)',
-              backgroundSize: 'fit',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              maxInlineSize: '-webkit-fill-available'
-            }}
-          />
-        </Element>
-        <Element
-          prefixCls="banner-user-elem"
-          key="web1"
-        >
-          <BgElement
-            onClick={(e) => { window.location = 'https://ccar.my/banner/duit-duit-giveaway.pdf' }}
-            id="banner-2"
-            className="bg"
-            style={{
-              backgroundImage: 'url(/banner/duit-duit-3.jpg)',
+              backgroundImage: 'url(/banner/CCAR-Website-Banner-TBH-March-2021-2.jpg)',
               backgroundSize: 'fit',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',

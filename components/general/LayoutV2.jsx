@@ -1,6 +1,6 @@
 
-import { CaretUpOutlined, CopyrightCircleOutlined, UserOutlined } from '@ant-design/icons';
-import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row } from 'antd';
+import { CaretUpOutlined } from '@ant-design/icons';
+import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
@@ -21,13 +21,12 @@ import CompareFloatingButton from '../compare/CompareFloatingButton';
 import LoginModal from '../login/login';
 import GlobalSearchBar from './global-search-bar';
 import UserAvatar from './UserAvatar';
-
+import axios from 'axios';
 
 
 var frontUrl = checkEnvReturnWebAdmin(client.io.io.uri)
 var currentEnv = checkEnv(client.io.io.uri)
 class LayoutV2 extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -54,6 +53,19 @@ class LayoutV2 extends React.Component {
     }
 
 
+    handleExpiredToken = () => {
+        if (_.get(this.props, ['user', 'authenticated'])) {
+            client.authenticate().then(res => {
+                this.props.setUser(res.user);
+            }).catch(err => {
+                this.props.history.push('/logout');
+                this.props.loginMode(true);
+                message.error('Your authentication session is expired. Please login again.');
+
+            });
+        }
+    }
+
     componentDidMount() {
         if (typeof window != 'undefined') {
             this.setState({
@@ -62,6 +74,7 @@ class LayoutV2 extends React.Component {
         }
 
         window.scrollTo(0, 0);
+        this.handleExpiredToken();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -82,7 +95,28 @@ class LayoutV2 extends React.Component {
             })
         }
 
+        axios.get(`${client.io.io.uri}getCmsParameters`).then(res => {
+            if (notEmptyLength(res.data.data)) {
+                let self = this;
+                _.forEach(res.data.data, function (item) {
+                    switch (item.table) {
+                        case 'compareNewCar':
+                            // self.props.fetchCompareNewCarLimit(-1);
+                            break;
+                        case 'compareLimit':
+                            self.props.fetchCompareCarLimit(isValidNumber(parseInt(_.get(item, ['compareLimit']))) ? parseInt(_.get(item, ['compareLimit'])) : 5);
+                            break;
+
+                        default:
+                            break;
+                    }
+                })
+            }
+        }).catch(err => {
+            // message.error(err.message)
+        });
     }
+
     componentDidUpdate(prevProps, prevState) {
 
         if (prevProps.scrollRange != this.props.scrollRange) {
@@ -99,7 +133,6 @@ class LayoutV2 extends React.Component {
             };
         }
     }
-
     handleScroll = (e) => {
         this.setState({
             scrollY: window.scrollY,
@@ -205,7 +238,7 @@ class LayoutV2 extends React.Component {
                                 </Col>
 
                                 <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                    {/* <Row gutter={10} onClick={() => { self.props.router.push('/') }} style={{ cursor: 'pointer' }}>
+                                    {/* <Row gutter={10} onClick={() => { this.props.history.push('/') }} style={{ cursor: 'pointer' }}>
                                         <Col className="footer-col-logo-center col-centered" xs={6} sm={2} md={2} lg={2} xl={2}>
                                             <div className="wrap-footer-title-logo">
                                             <div className="wrap-logo">
@@ -267,7 +300,7 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
                                             {/* <Link shallow={false} prefetch passHref  style={{ color: 'white' }} href="/"> */}
                                             <div className="flex-justify-start flex-items-align-center main-footer ">
-                                                CCAR.MY <CopyrightCircleOutlined /> 2020
+                                                    CCAR.MY <Icon type="copyright" /> 2020
                                                 </div>
                                             {/* </Link> */}
                                         </Col>
@@ -371,7 +404,7 @@ class LayoutV2 extends React.Component {
         let profileMenu = [
             {
                 icon: <span className='flex-items-align-center flex-justify-center avatar background-grey-darken-3' style={{ width: '20px', height: '20px' }} >
-                    <UserOutlined style={{ fontSize: '12px', color: 'white' }} />
+                    <Icon type="user" style={{ fontSize: '12px', color: 'white' }} />
                 </span>,
                 text: 'Profile',
                 path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}`
@@ -407,7 +440,7 @@ class LayoutV2 extends React.Component {
                                                 <Link shallow={false} prefetch href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
-                                                            <img alt="ccar" className="fill-parent absolute-center" src={cnyLogo2} />
+                                                            <img alt="ccar" className="fill-parent absolute-center" src={"/assets/Artboard-3-2.svg"} />
                                                         </span>
                                                     </a>
                                                 </Link>
@@ -553,11 +586,9 @@ class LayoutV2 extends React.Component {
 
                     </CookieConsent>
             </Layout>
-
         )
     }
 }
-
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         loading: loading,
