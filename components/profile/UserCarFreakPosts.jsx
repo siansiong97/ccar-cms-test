@@ -8,7 +8,7 @@ import client from '../../feathers';
 import { loading } from '../../redux/actions/app-actions';
 import { updateSellerProfile } from '../../redux/actions/sellerProfile-actions';
 import WindowScrollLoadWrapper from '../general/WindowScrollLoadWrapper';
-import UserPosts from './userPosts';
+import UserPosts from './UserPosts';
 import InfiniteScrollWrapper from '../general/InfiniteScrollWrapper';
 
 
@@ -55,7 +55,6 @@ const UserCarFreakPosts = (props) => {
     }, [posts, postTotal, postLoading])
 
     useEffect(() => {
-        console.log(postPage);
         getPosts((postPage - 1) * POSTSIZE);
     }, [postPage])
 

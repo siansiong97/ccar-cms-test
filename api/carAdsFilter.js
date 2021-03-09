@@ -10,7 +10,6 @@ const distinctArr = (value, index, self) => {
 
 export default async function (data, limit) {
 
-  console.log('call carAds Filter');
   if (!_.isPlainObject(data)) {
     data = {};
   }
@@ -82,8 +81,6 @@ export default async function (data, limit) {
 
   data.filterGroup = objectRemoveEmptyValue(data.filterGroup);
   let match = { $match: { ...data.filterGroup } }
-  console.log(JSON.stringify(match));
-  console.log(JSON.stringify(data.config));
   return await axios.get(`${client.io.io.uri}carAdsFilterV3`,
     {
       params: {

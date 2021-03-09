@@ -70,7 +70,6 @@ const WriteEventModal = (props) => {
         if (visible) {
             if ((!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) && visible) {
                 message.error('Please Login First!');
-                console.log('here');
                 props.loginMode(true);
                 closeModal();
             }
@@ -208,7 +207,6 @@ const WriteEventModal = (props) => {
     }
 
     function updateEvent(id, data) {
-        console.log('update');
 
         if (id && _.isPlainObject(data) && !_.isEmpty(data)) {
             client.authenticate()

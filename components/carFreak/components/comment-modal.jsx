@@ -56,8 +56,6 @@ const CommentModal = (props) => {
 
     useEffect(() => {
 
-        console.log('text')
-        console.log(text)
     }, [text])
 
 

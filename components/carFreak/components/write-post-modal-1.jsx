@@ -61,7 +61,6 @@ const WritePostModal1 = (props) => {
 
     useEffect(() => {
         if ((!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) && props.visible) {
-            console.log('vabrawbrbwabwbaw');
             props.loginMode(true);
             message.error('Please login first');
             setVisible(false)

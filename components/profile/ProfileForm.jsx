@@ -277,12 +277,10 @@ const ProfileForm = (props) => {
                                 }
 
                                 Promise.all(uploadPromiseArr).then((res) => {
-                                    console.log(res[0]);
                                     let finalData = _.cloneDeep(userForm) || {};
                                     if(_.get(res , [0, 0, 'url'])){
                                         finalData.avatar = res[0][0].url;
                                     }
-                                    console.log(finalData);
                                     updateUser(finalData)
                                 })
                             })
@@ -308,7 +306,6 @@ const ProfileForm = (props) => {
 
     function updateUser(userForm) {
         if (_.get(userForm, ['_id'])) {
-            console.log(userForm);
             props.loading(true);
             client.authenticate()
                 .then((res) => {

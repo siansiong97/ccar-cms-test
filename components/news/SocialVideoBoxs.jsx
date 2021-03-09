@@ -22,7 +22,6 @@ const SocialVideoBoxs = (props) => {
 
     useEffect(() => {
         opts.playerVars.origin = window.location.host;
-        console.log(opts.playerVars.origin);
     }, [])
 
     useEffect(() => {

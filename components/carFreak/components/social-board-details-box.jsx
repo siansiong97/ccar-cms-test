@@ -36,7 +36,6 @@ const SocialBoardDetailsBox = (props) => {
         setMessages([]);
         if (_.isPlainObject(props.data) && !_.isEmpty(props.data)) {
             setPost(props.data);
-            console.log(props.data);
         } else {
             setPost({});
         }
@@ -116,8 +115,6 @@ const SocialBoardDetailsBox = (props) => {
                 }
             }
         ).then((res) => {
-            console.log('pinned comment');
-            console.log(res);
             setPinnedComments(_.isArray(res.data) && notEmptyLength(res.data) ? res.data : []);
 
         })

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import client from '../../feathers';
-import UserPosts from './userPosts';
+import UserPosts from './UserPosts';
 import { arrayLengthCount, notEmptyLength } from '../../common-function';
 import WindowScrollLoadWrapper from '../general/WindowScrollLoadWrapper';
 import { loading } from '../../redux/actions/app-actions';

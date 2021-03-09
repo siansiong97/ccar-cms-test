@@ -119,15 +119,12 @@ const SearchIndex = (props) => {
                 }
             }
 
-            console.log(query);
             setIsLoading(true);
             client.service('chats').find({
                 query: {
                     ...query,
                 }
             }).then(res => {
-                console.log('res');
-                console.log(res);
                 setIsLoading(false);
                 let newData = [];
                 newData = _.cloneDeep(posts);
@@ -251,8 +248,6 @@ const SearchIndex = (props) => {
                 notify
                 onUpdatePost={(data) => {
                     if (_.isPlainObject(data) && !_.isEmpty(data)) {
-                        console.log(data);
-                        console.log(posts);
                         let newPosts = _.map(posts, function (item) {
                             return item._id == _.get(data, ['_id']) ? data : item;
                         });

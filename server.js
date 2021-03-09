@@ -16,7 +16,6 @@ app.prepare().then(() => {
   })
 
   server.get('/viewCar/:id', (req, res) => {
-    console.log( `/viewCar/${_.get(req, 'params.id') || ''}`);
     return app.render(req, res, `/viewCar/${_.get(req, 'params.id') || ''}`, req.query)
   })
 

@@ -150,8 +150,6 @@ const UserCarOnSale = (props) => {
             }
             props.loading(true);
             let match = { $match: { ...objectRemoveEmptyValue(filterGroup), 'createdBy': _.get(profile, ['_id']) } }
-            console.log(match);
-            console.log(sorting);
             axios.get(`${client.io.io.uri}carAdsFilterV3`,
                 {
                     params: {

@@ -356,7 +356,6 @@ const PostCollapse = (props) => {
                                         excludeEnter
                                         emojiPosition={{ bottom: 0, right: 33 }}
                                         onSubmit={(text) => {
-                                            console.log('handle submit');
                                             handleSubmit(text);
                                         }}
                                         autoFocus={true}

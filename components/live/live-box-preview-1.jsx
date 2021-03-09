@@ -16,7 +16,6 @@ TweenOne.plugins.push(BezierPlugin);
 const defaultHeight = 400;
 
 const LiveBoxPreview1 = (props) => {
-    console.log('deutsch preview', props);
     // props.data.dealerDisplayName
     const [videoLoading, setVideoLoading] = useState(false);
     const [pictureUrl, setPictureUrl] = useState(false);
@@ -49,8 +48,6 @@ const LiveBoxPreview1 = (props) => {
             let  { connectedUsers, dealerSocketId } = data.dealerSocketId
             if (dealerSocketId === props.dealerSocketId) {
               //by odin it is this
-              console.log("wotan numberOfViews is ran with");
-              console.log(data);
               setNumberOfCurrentlyConnectedClients(connectedUsers);
             }
         }

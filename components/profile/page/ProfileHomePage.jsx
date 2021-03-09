@@ -48,12 +48,9 @@ const ProfileHomePage = (props) => {
     }, [props.router.query.id])
 
     useEffect(() => {
-        console.log('isOwn', isOwn);
     }, [isOwn])
 
     useEffect(() => {
-        console.log(_.get(props.user, ['authenticated']));
-        console.log(_.get(props.user, ['info', 'user', '_id']));
         setIsOwn(_.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']))
     }, [props.user.authenticated, props.user.info.user._id, profile])
 

@@ -165,8 +165,6 @@ class LiveIndex extends React.Component {
   newSocketConfig = (socket) => {
     socket.on("pushAllBroadcaster", (broadcasters) => {
 
-      console.log('broadcasters');
-      console.log(broadcasters);
       let broadcastersArr = Object.entries(broadcasters);
 
 
@@ -212,8 +210,6 @@ class LiveIndex extends React.Component {
     this.activeSocket.removeEventListener('pushAllBroadcaster')
     this.activeSocket.on("pushAllBroadcaster", (broadcasters) => {
 
-      console.log('broadcasters');
-      console.log(broadcasters);
       let broadcastersArr = Object.entries(broadcasters);
 
 
@@ -224,7 +220,6 @@ class LiveIndex extends React.Component {
           broadcaster[1].avatar = broadcaster[1].dealerAvatar;
           broadcaster[1].dealerSocketId = broadcaster[0];
           broadcaster[1].dealerVideoThumbnailUrl = `${getStreamUrl(client.io.io.uri)}/dealerVideoThumbnails/${broadcaster[0]}.png`
-          console.log(broadcaster[1].dealerVideoThumbnailUrl);
           return broadcaster[1];
         })
       } else {
@@ -291,7 +286,6 @@ class LiveIndex extends React.Component {
     try {
 
       let peerConnections = Object.entries(this.state.peerConnections);
-      console.log('peerConnections', { data: this.state.peerConnections });
       //Broadcasters
       let newIds = _.compact(_.map(_.cloneDeep(this.state.broadcasters), function (broadcaster) {
         return broadcaster.dealerSocketId;
@@ -408,11 +402,9 @@ class LiveIndex extends React.Component {
   //cleared
   setBroadcasterStream = (dealerSocketId, stream) => {
     try {
-      console.log('setStream');
       let peerConnections = this.state.peerConnections;
       let self = this;
       if (!!peerConnections[dealerSocketId] && _.get(peerConnections, [dealerSocketId, 'videoRef', 'current']) && stream) {
-        console.log(peerConnections[dealerSocketId].videoRef.current);
         peerConnections[dealerSocketId].videoRef.current.srcObject = stream;
         peerConnections[dealerSocketId].stream = stream;
         this.setState({
@@ -508,7 +500,6 @@ class LiveIndex extends React.Component {
 
   _renderTopLives = () => {
     let self = this;
-    console.log('selbst');
 
     if (notEmptyLength(this.state.broadcasters)) {
       return (

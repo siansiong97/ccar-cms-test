@@ -231,10 +231,8 @@ const SocialInput = (props) => {
             }
         }
 
-        console.log('isEnter', _.get(action, ['insert']) == '\n');
         if (props.excludeEnter && _.get(action, ['insert']) == '\n') {
             newText = newText.replace(/\n/g, ""); 
-            console.log(newText);
             if (ReactQuill) {
                 let quill = props.inputRef || ref[uid];
                 if (quill.current) {

@@ -65,11 +65,6 @@ const UserAvatar = (props) => {
     }
 
     if(props.data.name === "banana Bong" && !props.isBroadcastersList){
-        console.log('dondergod user avatar props', props);
-        console.log('dondergod realStyle calculatedFullName realAvatar', realStyle, calculatedFullName, realAvatar);
-        console.log("dondergod result", !realAvatar && (
-            calculatedFullName
-        ))
     }
     
 

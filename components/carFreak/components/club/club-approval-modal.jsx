@@ -99,7 +99,6 @@ const ClubApprovalModal = (props) => {
                     },
                 }
             }).then(res => {
-                console.log('clubJoin');
       
                 setClubJoins(_.isArray(_.get(res, ['data', 'data'])) && !_.isEmpty(_.get(res, ['data', 'data'])) ? clubJoinPage == 1 ? _.get(res, ['data', 'data']) : _.concat(clubJoins, [_.get(res, ['data', 'data'])]) : clubJoins);
                 setClubJoinTotal(_.get(res, ['total']));

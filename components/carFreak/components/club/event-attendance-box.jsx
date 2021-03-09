@@ -68,7 +68,6 @@ const EventAttendanceBox = (props) => {
                     skip: 0,
                 }
             }).then(res => {
-                console.log('eventjoins');
  
                 setEventJoins(_.isArray(_.get(res, ['data', 'data'])) && !_.isEmpty(_.get(res, ['data', 'data'])) ? _.get(res, ['data', 'data']) : []);
             }).catch(err => {

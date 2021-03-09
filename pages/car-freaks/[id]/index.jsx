@@ -8,7 +8,6 @@ import CarFreakDetailsPage from '../../../components/carFreak/page/car-freak-det
 const searchBarRef = React.createRef();
 const Index = (props) => {
 
-    console.log(props.router.query);
 
     return (
         <ReduxPersistWrapper cookie={props.cookie}>
@@ -26,7 +25,6 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
 
 
-    console.log(context.req);
     return {
         props: {
             cookie: _.get(context, ['req', 'headers', 'cookie']) || null,

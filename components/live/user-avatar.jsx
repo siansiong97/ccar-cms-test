@@ -16,7 +16,6 @@ const UserAvatar = (props) => {
     if(props.data.fullName === "banana Bong"){
         //the broadcaster is passed in to this...
 
-        console.log("wotan user avatar", props.data);
         //src and icon are null...
         //only runs when there is an avatar (props.data.avatar)
         
@@ -32,37 +31,9 @@ const UserAvatar = (props) => {
         // .join(' ')
         // .value();
 
-        console.log("wotan src", !props.data || !props.data.avatar ? null : props.data.avatar);
-        console.log("wotan icon", !props.data || (!props.data.avatar && !props.data.name && !props.data.firstName && !props.data.lastName) ? 'user' : null);
-        console.log("wotan children",
-            !props.data ?
-                null
-                :
-                !props.data.avatar ?
-                    props.data.name ? 
-                        props.data.name //if there is a name it passes this...
-                        :
-                        `${props.data.firstName ? props.data.firstName : ''} ${props.data.lastName ? props.data.lastName : ''}` 
-                    :
-                    null //this is for avatar
-        
-        );
         // check if there is a name
 
 
-        console.log("wotan inside the array", _.toString(props.data.name ? props.data.name : `${props.data.firstName ? props.data.firstName : ''} ${props.data.lastName ? props.data.lastName : props.data.lastName}`).length % darkThemeColorList.length);
-        
-        console.log("wotan style", !props.data || !props.data.avatar ?
-        {
-            //donar
-            backgroundColor: !props.data || (!props.data.name && !props.data.firstName && !props.data.lastName) ?
-                "#F89F27"
-                :
-                //this is ran
-                darkThemeColorList[_.toString(props.data.name ? props.data.name : `${props.data.firstName ? props.data.firstName : ''} ${props.data.lastName ? props.data.lastName : props.data.lastName}`).length % darkThemeColorList.length].code, verticalAlign: 'middle'
-        }
-        :
-        {});
     }
 
 

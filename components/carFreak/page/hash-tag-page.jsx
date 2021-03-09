@@ -285,8 +285,6 @@ const HashTagPage = (props) => {
                 notify
                 onUpdatePost={(data) => {
                     if (_.isPlainObject(data) && !_.isEmpty(data)) {
-                        console.log(data);
-                        console.log(posts);
                         let newPosts = _.map(posts, function (item) {
                             return item._id == _.get(data, ['_id']) ? data : item;
                         });

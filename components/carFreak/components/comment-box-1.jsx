@@ -128,7 +128,6 @@ const CommentBox1 = (props) => {
                         message: text,
                     })
                     .then((res1) => {
-                        console.log('updated');
                         if (props.onUpdate) {
                             res1.userId = res.user;
                             props.onUpdate(res1);

@@ -116,8 +116,6 @@ const GlobalSearchBar = (props) => {
                     }
                 }).then(res => {
                     let dataSource = [];
-                    console.log('global search');
-                    console.log(res);
 
                     _.forEach(searchTypes, function (v) {
                         if (_.isArray(_.get(res, ['data', 'result', v.value, 'data'])) && !_.isEmpty(_.get(res, ['data', 'result', v.value, 'data']))) {

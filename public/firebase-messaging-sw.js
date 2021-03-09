@@ -29,7 +29,6 @@ messaging.setBackgroundMessageHandler(function(payload) {
                }
           })
           .then(() => {
-               console.log('new message');
                return registration.showNotification("my notification title");
           })
           .catch((err)=>{

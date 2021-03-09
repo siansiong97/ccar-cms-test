@@ -1,11 +1,8 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 const UsedCarsDetail = (props) => {
-  console.log('12131233212',{props});
   const {title, imageUrl} = props
   const router = useRouter()
-  // const { pid, title } = router.query
-  // console.log(router.query);
   let contentDesc =  "-happy 567 works!"
   return (
     <>
@@ -37,8 +34,6 @@ export default UsedCarsDetail
 
 export async function getServerSideProps({req,res}) {
   const { pid, title } = req 
-  console.log({req});
-  console.log({pid, title});
   // const res = await fetch(`https://restcountries.eu/rest/v2/name/${id}`);
   // const country = await res.json();
   // let result = JSON.stringify(req)

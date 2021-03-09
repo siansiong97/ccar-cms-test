@@ -22,7 +22,6 @@ const FollowButton = (props) => {
 
     function init() {
         if (!_.isEmpty(props.followerId) && !_.isEmpty(props[props.type + 'Id'])) {
-            console.log('check follows');
             let query = {};
             query[props.type + 'Id'] = props[props.type + 'Id'];
             query.type = props.type;

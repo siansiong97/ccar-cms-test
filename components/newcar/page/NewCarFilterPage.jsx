@@ -266,8 +266,6 @@ class Filter extends React.Component {
 
         this.props.loading(true)
 
-        console.log('match');
-        console.log(filterGroup);
         axios.get(`${client.io.io.uri}priceRangeSearchNew`,
             {
                 params: {

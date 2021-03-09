@@ -282,11 +282,7 @@ const CarFreakPage = (props) => {
                             </Col>
                             <InfiniteScroll
                                 loadMore={() => {
-                                    console.log('here');
-                                    console.log(chatPage);
-                                    console.log(totalChat);
                                     if (chatPage * PAGE_SIZE < totalChat) {
-                                        console.log('load');
                                         setHasMore(false);
                                         setChatPage(chatPage + 1);
                                     }

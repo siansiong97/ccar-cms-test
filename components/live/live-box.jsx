@@ -56,7 +56,6 @@ const LiveBox = (props) => {
 
   useEffect(() => {
 
-    console.log(commentText);
   }, [commentText])
 
   useEffect(() => {
@@ -487,7 +486,7 @@ const LiveBox = (props) => {
                               placeholder="Say something..."
                               value={commentText}
                               maxLength={80}
-                              onChange={(e) => {console.log('change', e.target.value); setCommentText(e.target.value) }}
+                              onChange={(e) => { setCommentText(e.target.value) }}
                               onPressEnter={(e) => {
                                 pushUserChat();
                               }}

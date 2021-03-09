@@ -45,8 +45,6 @@ class LivePage extends React.Component {
     }
     this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp))
     .catch(x => {
-        console.log('perp caught 1')
-        console.log(x)
     })
   }
   
@@ -59,8 +57,6 @@ class LivePage extends React.Component {
     if(!!data.candidate){
         this.peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate))
         .catch(x => {
-            console.log('perp caught 2')
-            console.log(x)
         })
     }
   }
@@ -223,8 +219,6 @@ class LivePage extends React.Component {
           })
           .then(sdp => {
               this.peerConnection.setLocalDescription(sdp);
-              console.log('is it this one');
-              console.log(this.props.dealerSocketId);
               this.sendToPeer('clientRequestVideoWithDealerSocketId', { sdp, dealerSocketId: this.props.dealerSocketId });
           }).catch(x => {
               console.log(x);

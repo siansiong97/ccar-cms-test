@@ -59,8 +59,6 @@ class LivePage extends React.Component {
 
   renderContent = () => {
 
-    console.log('this.state.broadcaster');
-    console.log(this.state.broadcaster);
     if (this.state.loading || _.isEmpty(this.state.broadcaster)) {
       if (this.state.loading) {
         return (
@@ -374,15 +372,11 @@ class LivePage extends React.Component {
       //if its the first push, set the broadcaster as well
       this.setState((x) => {
         //this condition means its the first boot
-      console.log('x.loading', x.loading);
         if (x.loading) {
           const newDealerId = this.props.router.query.id;
           let selectedBroadcaster = _.find(broadcastersArr, function (broadcaster) {
             return broadcaster.dealerSocketId == newDealerId;
           });
-          console.log('selectedBroadcaster');
-          console.log(selectedBroadcaster);
-          console.log(newDealerId);
           return {
             activeBroadcasters: broadcastersArr,
             broadcaster: (_.isEmpty(selectedBroadcaster)) ? {} : selectedBroadcaster,

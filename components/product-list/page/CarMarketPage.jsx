@@ -136,7 +136,6 @@ const CarMarketPage = (props) => {
     }
 
     function getUrlData() {
-        console.log('config', 'gETuRLdATA');
         try {
             let querySearch = props.router.asPath.split('?')[1];
             let query = queryString.parse(querySearch);
@@ -144,7 +143,6 @@ const CarMarketPage = (props) => {
                 query = {};
             }
 
-            console.log('config', {query});
             let filterGroup = query.data ? JSON.parse(query.data) : {};
             let sorting = query.sorting ? JSON.parse(query.sorting) : {};
             let config = {
@@ -163,7 +161,6 @@ const CarMarketPage = (props) => {
             if (_.get(config, ['view']) != 'gridView' && _.get(config, ['view']) != 'listView') {
                 config.view = 'gridView';
             }
-            console.log('config', {config});
             setMainConfig(config);
 
 

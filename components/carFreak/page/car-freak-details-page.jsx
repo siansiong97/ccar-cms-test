@@ -48,10 +48,8 @@ const CarFreakDetailsPage = (props) => {
     }, [otherPostPage])
 
     function getPost() {
-        console.log(props.router.query);
 
         if (_.get(props, ['router', 'query', 'id'])) {
-            console.log(_.get(props, ['router', 'query', 'id']));
             props.loading(true);
             client.service('chats')
                 .find({

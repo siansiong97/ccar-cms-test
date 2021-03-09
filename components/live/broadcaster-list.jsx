@@ -36,7 +36,6 @@ const BroadcasterList = (props) => {
 
 
 
-    console.log("wotan array of what is passed in ", broadcasters);
 
     useEffect(() => {
         if (_.isArray(props.broadcasters)) {
