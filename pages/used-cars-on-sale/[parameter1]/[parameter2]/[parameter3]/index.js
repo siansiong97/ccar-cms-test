@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
     promises.push(brandFilterTotal(modals, filterObj));
 
     let [carAdsRes, brandFilterRes] = await Promise.all(promises)
-
+    let seoData = getCarMarketSeoData(_.get(filterObj, 'filterGroup') || {}, _.get(carAdsRes, 'total') || 0);
     return {
         props: {
             cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
@@ -70,6 +70,9 @@ export async function getServerSideProps(context) {
             filterGroup: _.get(filterObj, ['filterGroup']) || {},
             config: _.get(filterObj, ['config']) || {},
             availableOptions : brandFilterRes || {},
+            seoData : {
+                ...seoData,
+            }
         }
     }
 }

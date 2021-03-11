@@ -11,6 +11,7 @@ import EventJoinActionButtons from './event-join-action-buttons';
 import UserAvatar from '../../../general/UserAvatar';
 import { checkObjectId, getUserName } from '../../../../common-function';
 import ShareButtonDialog from '../../../general/ShareButtonDialog';
+import client from '../../../../feathers';
 
 
 const defaultHeight = 200;
@@ -18,6 +19,7 @@ const defaultHeight = 200;
 const EventDetailsBox = (props) => {
 
     const [event, setEvent] = useState({})
+    const [eventPost, setEventPost] = useState({})
     const [height, setHeight] = useState(defaultHeight)
 
 
@@ -25,10 +27,29 @@ const EventDetailsBox = (props) => {
         setEvent(_.isPlainObject(props.data) && !_.isEmpty(props.data) ? props.data : {});
     }, [props.data])
 
+    useEffect(() => {
+        getEventPost()
+    }, [event])
+
     function redirectEvent(data) {
         // if(_.isPlainObject(data) && !_.isEmpty(data) && _.get(data , ['_id'])){
         //     props.router.push(`/event/${_.get(data, ['_id'])}`)
         // }
+    }
+
+    function getEventPost() {
+        if (_.isPlainObject(event) && !_.isEmpty(event) && _.get(event, ['_id'])) {
+            client.service('chats')
+                .find({
+                    query: {
+                        eventId: _.get(event, ['_id']),
+                        chatType: 'event',
+                        $limit: 1,
+                    }
+                }).then(res => {
+                    setEventPost(_.get(res, ['data', 0]) || {});
+                })
+        }
     }
 
     return (
@@ -185,7 +206,7 @@ const EventDetailsBox = (props) => {
                     null
             } */}
                                 <Menu.Item>
-                                    <ShareButtonDialog link={`/car-freaks/${_.get(event, ['_id'])}`}>
+                                    <ShareButtonDialog link={`/event-post/${_.get(eventPost, ['_id'])}`}>
                                         <span>Share Link</span>
                                     </ShareButtonDialog>
                                 </Menu.Item>

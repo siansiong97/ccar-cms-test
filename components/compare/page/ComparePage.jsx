@@ -12,6 +12,7 @@ import { clearCompareProductIds, filteredCompareData, removeCompareProductId, up
 import client from '../../../feathers';
 import { convertParameterToProductListUrl, notEmptyLength } from '../../../common-function';
 import CarspecsCompareTable from '../CarspecsCompareTable';
+import Link from 'next/link';
 
 
 const Desktop = ({ children }) => {

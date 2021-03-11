@@ -29,7 +29,7 @@ const HideReviewButton = (props) => {
                         .then((res) => {
                             props.loading(false);
                             client.service('rating').patch(data._id, {
-                                hideBy: data.concat([{ userId: props.user.info.user._id }])
+                                hideBy: data.hideBy.concat([{ userId: props.user.info.user._id }])
                             }).then((res) => {
                                 message.success('You hide the review.');
                                 if (props.handleSuccess) {

@@ -112,7 +112,7 @@ const PostMenu = (props) => {
                         null
                 }
                 <Menu.Item key={_.get(post, ['_id']) + 'shareBtn'}>
-                    <ShareButtonDialog link={`/car-freaks/${_.get(post, ['_id'])}`}>
+                    <ShareButtonDialog link={`/${_.get(post, ['chatType']) == 'event' ? 'event-post' : _.get(post, ['chatType']) == 'socialboard' ? 'social-board' :  'car-freaks'}/${_.get(post, ['_id'])}`}>
                         <span>Share Link</span>
                     </ShareButtonDialog>
                 </Menu.Item>

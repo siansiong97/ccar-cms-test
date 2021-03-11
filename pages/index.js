@@ -2,7 +2,6 @@ import { Button, Col, Divider, Empty, message, Row } from 'antd'
 import axios from 'axios'
 import _ from 'lodash'
 import { withRouter } from 'next/dist/client/router'
-import Head from 'next/head'
 import BannerAnim, { Element } from 'rc-banner-anim'
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
@@ -16,7 +15,6 @@ import BrandList from '../components/product-list/brand-list'
 import GridProductList from '../components/product-list/grid-product-list'
 import client from '../feathers'
 import { fetchProductsListHome } from '../redux/actions/productsList-actions'
-import useSWR from 'swr'
 
 const BgElement = Element.BgElement;
 
@@ -315,6 +313,9 @@ export async function getServerSideProps(context) {
       cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
       brands: brands,
       productLists: kingAdsRes,
+      seoData : {
+        description : ''
+      }
     }
   }
 }

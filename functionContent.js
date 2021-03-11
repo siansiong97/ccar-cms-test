@@ -151,19 +151,19 @@ export function checkEnvReturnWebAdmin(url) {
 
 export function checkEnvReturnCmsUrl(url) {
   
-  let frontEndUrl ='https://uat2ssr.ccar.my/'
+  let frontEndUrl ='https://uat2ssr.ccar.my'
 
   if (url==='http://localhost:3030/')
   {
-    frontEndUrl = 'http://localhost:3011/'
+    frontEndUrl = 'http://localhost:3011'
   }
   else if (url==='https://uat2-api.ccar.my/')
   {
-    frontEndUrl = 'https://uat2ssr.ccar.my/'
+    frontEndUrl = 'https://uat2ssr.ccar.my'
   }
   else if (url==='https://api.ccar.my/')
   {
-    frontEndUrl = 'https://ssr.ccar.my/'
+    frontEndUrl = 'https://ccar.my'
   }
   return  frontEndUrl
 

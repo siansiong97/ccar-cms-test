@@ -21,6 +21,7 @@ import UserCarOnSale from './UserCarOnSale';
 import UserReceivedReview from './UserReceivedReview';
 import UserSavedCarFreakPosts from './UserSavedCarFreakPosts';
 import UserSocialBoard from './UserSocialBoard';
+import UserSavedSocialBoard from './UserSavedSocialBoard';
 
 
 
@@ -130,6 +131,19 @@ const DealerProfile = (props) => {
                                 <TabPane tab="Saved CarFreaks" key="4">
                                     <Col xs={18} sm={18} md={18} lg={18} xl={18}>
                                         <UserSavedCarFreakPosts data={profile} className="margin-y-lg" />
+                                    </Col>
+                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        {_renderDealerDetailsBox()}
+                                    </Col>
+                                </TabPane>
+                                :
+                                null
+                        }
+                        {
+                            _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']) ?
+                                <TabPane tab="Saved Social Board" key="5">
+                                    <Col xs={18} sm={18} md={18} lg={18} xl={18}>
+                                        <UserSavedSocialBoard data={profile} className="margin-y-lg" />
                                     </Col>
                                     <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                         {_renderDealerDetailsBox()}

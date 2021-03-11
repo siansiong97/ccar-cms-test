@@ -5,13 +5,13 @@ import { loading, loginMode } from '../../redux/actions/app-actions';
 import { loginSuccessful, logoutSuccessful } from '../../redux/actions/user-actions';
 import client from '../../feathers';
 import { withRouter } from 'next/router';
+import localStorage from 'local-storage'
 
 const Logout = (props) => {
 
     useEffect(() => {
         try {
             localStorage.clear()
-            sessionStorage.clear()
             props.logoutSuccessful();
             client.logout().then((res) => {
                 message.success('Log out successful')

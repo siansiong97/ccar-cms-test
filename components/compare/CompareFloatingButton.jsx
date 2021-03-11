@@ -10,6 +10,8 @@ import client from '../../feathers';
 import { withRouter } from 'next/dist/client/router';
 import { notEmptyLength } from '../../common-function';
 import GridProductList from '../product-list/grid-product-list';
+import Link from 'next/link';
+
 
 const CompareFloatingButton = (props) => {
   const refCompare = useRef();

@@ -13,6 +13,7 @@ import ProfileDetailsBox from './ProfileDetailsBox';
 import UserCarFreakPosts from './UserCarFreakPosts';
 import UserSavedCarFreakPosts from './UserSavedCarFreakPosts';
 import UserSocialBoard from './UserSocialBoard';
+import UserSavedSocialBoard from './UserSavedSocialBoard';
 
 
 
@@ -51,6 +52,14 @@ const UserProfile = (props) => {
                             _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']) ?
                                 <TabPane tab="Saved CarFreaks" key="3">
                                     <UserSavedCarFreakPosts data={profile} className="margin-y-lg" />
+                                </TabPane>
+                                :
+                                null
+                        }
+                        {
+                            _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']) ?
+                                <TabPane tab="Saved Social Board" key="4">
+                                    <UserSavedSocialBoard data={profile} className="margin-y-lg" />
                                 </TabPane>
                                 :
                                 null

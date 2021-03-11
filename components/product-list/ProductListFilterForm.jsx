@@ -83,7 +83,7 @@ const ProductsListFilterForm = (props) => {
     const [fieldThatShowRangeTitle, setFieldThatShowRangeTitle] = useState('year')
     const [isDropDownOpen, setIsDropDownOpen] = useState(false)
     const [collapseFields, setCollapseFields] = useState([])
-    const [containerHeight, setContainerHeight] = useState(500)
+    const [containerHeight, setContainerHeight] = useState(400)
     const [formActualHeight, setFormActualHeight] = useState();
     const [filterGroup, setFilterGroup] = useState({})
     const [origOptions, setOrigOptions] = useState({
@@ -159,29 +159,12 @@ const ProductsListFilterForm = (props) => {
 
     useEffect(() => {
 
+        console.log('filterGroup');
+        console.log(filterGroup);
         if (props.onChange && startWatching) {
             controlModalOpen();
             let data = _.cloneDeep(filterGroup);
             data = objectRemoveEmptyValue(data)
-            if (notEmptyLength(data) && notEmptyLength(data.yearRange)) {
-                //Restruct range format to convert
-                data.yearRange = convertToRangeFormat(data.yearRange)
-            }
-
-            if (notEmptyLength(data) && notEmptyLength(data.priceRange)) {
-                //Restruct range format to convert
-                data.priceRange = convertToRangeFormat(data.priceRange)
-            }
-
-            if (notEmptyLength(data) && notEmptyLength(data.mileageRange)) {
-                //Restruct range format to convert
-                data.mileageRange = convertToRangeFormat(data.mileageRange)
-            }
-
-            if (notEmptyLength(data) && notEmptyLength(data.engineCapacityRange)) {
-                //Restruct range format to convert
-                data.engineCapacityRange = convertToRangeFormat(data.engineCapacityRange)
-            }
             props.onChange(data);
         }
 
@@ -1107,7 +1090,7 @@ const ProductsListFilterForm = (props) => {
 
 
     return (
-        <span className='d-inline-block width-100' ref={containerRef} style={{ ...props.style, marginTop: 45, position: 'relative' }}>
+        <span className='d-inline-block width-100' ref={containerRef} style={{ ...props.style, position: 'relative' }}>
             <Card
                 bordered={false}
                 title="Quick Filter"
@@ -1148,7 +1131,7 @@ const ProductsListFilterForm = (props) => {
                 </div>
             </Card>
 
-            <img src={cnyLionHead} style={{ width: 55, height: 90, position: 'absolute', right: -15, top: -60, }}></img>
+            {/* <img src={cnyLionHead} style={{ width: 55, height: 90, position: 'absolute', right: -15, top: -60, }}></img> */}
 
             <span className='d-inline-block cursor-pointer' style={{ position: 'absolute', right: 18, top: 7, }}>
                 <Tooltip title="Reset Filter">

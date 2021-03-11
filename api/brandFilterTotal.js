@@ -10,6 +10,12 @@ const distinctArr = (value, index, self) => {
 
 export default async function (modal, data) {
 
+    if (!_.has(data, ['filterGroup'])) {
+        data.filterGroup = {};
+    } else {
+        data.filterGroup = _.cloneDeep(data.filterGroup);
+    }
+
     if (_.isArray(modal) && !_.isEmpty(modal)) {
         modal = _.intersection(modal, availableOptions) || [];
     } else if (_.isString(modal)) {
@@ -17,7 +23,7 @@ export default async function (modal, data) {
     } else {
         return {};
     }
-    
+
     let andFilter = { $and: [] }
 
     if (_.isArray(modal) && !_.isEmpty(modal)) {

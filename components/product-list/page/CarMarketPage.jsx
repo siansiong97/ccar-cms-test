@@ -6,7 +6,7 @@ import { withRouter } from 'next/dist/client/router'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { convertParameterToProductListUrl, notEmptyLength, isValidNumber } from '../../../common-function'
+import { convertParameterToProductListUrl, notEmptyLength, isValidNumber, convertRangeFormatBack } from '../../../common-function'
 import LayoutV2 from '../../../components/general/LayoutV2'
 import ReduxPersistWrapper from '../../../components/general/ReduxPersistWrapper'
 import GridProductList from '../../../components/product-list/grid-product-list'
@@ -47,11 +47,12 @@ const CarMarketPage = (props) => {
     });
 
     useEffect(() => {
-
+        console.log(props.filterGroup);
         setInitRan({
             filterGroup: true,
             config: true,
         })
+        
     }, [])
 
     useEffect(() => {
@@ -128,7 +129,7 @@ const CarMarketPage = (props) => {
             asPath = asPath.join('/')
             setProductList([]);
             props.setProductListLoading(true);
-            props.router.push(asPath, path, { shallow: false })
+            props.router.push(asPath, path, {shallow : true})
         } catch (error) {
 
         }
@@ -172,7 +173,6 @@ const CarMarketPage = (props) => {
 
             filterGroup.state = _.isArray(stateArr) && !_.isEmpty(stateArr) ? _.get(stateArr, [1]) || '' : '';
             filterGroup.area = _.isArray(stateArr) && !_.isEmpty(stateArr) ? _.get(stateArr, [2]) || '' : '';
-
 
             if (filterGroup.priceRange) {
                 filterGroup.priceRange = convertRangeFormatBack(filterGroup.priceRange)
@@ -441,6 +441,8 @@ const CarMarketPage = (props) => {
                                         <ProductListFilterForm
                                             initFilterGroup={currentFilterGroup}
                                             onChange={(data) => {
+                                                console.log('data');
+                                                console.log(data);
                                                 setCurrentFilterGroup({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false });
                                                 pushParameterToUrl({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false }, { ...mainConfig, page: 1 })
                                             }}

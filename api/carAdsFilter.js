@@ -16,6 +16,8 @@ export default async function (data, limit) {
 
   if (!_.has(data, ['filterGroup'])) {
     data.filterGroup = {};
+  } else {
+    data.filterGroup = _.cloneDeep(data.filterGroup);
   }
 
   if (!_.has(data, ['config'])) {
@@ -23,6 +25,8 @@ export default async function (data, limit) {
       page: 1,
       sorting: {},
     };
+  } else {
+    data.config = _.cloneDeep(data.config);
   }
 
   if (!isValidNumber(parseInt(limit))) {
@@ -70,7 +74,7 @@ export default async function (data, limit) {
   }
 
   if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.engineCapacityRange)) {
-    data.filterGroup.engineCapacityRange = convertRangeFormatBack(data.filterGroup.engineCapacityRange);
+    data.filterGroup.engineCapacityRange = convertToRangeFormat(data.filterGroup.engineCapacityRange);
     data.filterGroup.engineCapacityRange = convertFilterRange(data.filterGroup.engineCapacityRange, 'carspec.engineCapacity')
     if (notEmptyLength(data.filterGroup.engineCapacityRange)) {
       andFilter.$and = [...andFilter.$and, ...data.filterGroup.engineCapacityRange]

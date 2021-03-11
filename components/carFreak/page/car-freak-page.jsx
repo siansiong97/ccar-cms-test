@@ -280,21 +280,12 @@ const CarFreakPage = (props) => {
                                     </span>
                                 </div>
                             </Col>
-                            <InfiniteScroll
-                                loadMore={() => {
-                                    if (chatPage * PAGE_SIZE < totalChat) {
-                                        setHasMore(false);
-                                        setChatPage(chatPage + 1);
-                                    }
-                                }}
-                                hasMore={hasMore}
-                                useWindow
-                                loader={
-                                    <div className="width-100 flex-justify-center" style={{ height: 50 }}>
-                                        <Icon type="loading" style={{ fontSize: 50 }} />
-                                    </div>
+                            <InfiniteScrollWrapper onScrolledBottom={() => {
+                                if (arrayLengthCount(chats) < totalChat) {
+                                    setChatPage(chatPage + 1)
                                 }
-                                threshold={(htmlWindow.innerHeight || 500) * 0.5}
+                            }}
+                                hasMore={!isLoading && arrayLengthCount(chats) < totalChat}
                             >
                                 {
                                     _.isArray(chats) && notEmptyLength(chats) ?
@@ -345,11 +336,9 @@ const CarFreakPage = (props) => {
                                             )
                                         })
                                         :
-                                        !isLoading ?
-                                            <div className="width-100 flex-items-align-center flex-justify-center background-white" style={{ height: 400 }}><Empty /></div>
-                                            : <div></div>
+                                        <div className="width-100 flex-items-align-center flex-justify-center background-white" style={{ height: 400 }}><Empty /></div>
                                 }
-                            </InfiniteScroll>
+                            </InfiniteScrollWrapper>
                         </Row>
                     </CarFreakLayout>
                 </Desktop>

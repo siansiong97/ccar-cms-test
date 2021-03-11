@@ -5,8 +5,10 @@ import brandFilterTotal from '../../../../../api/brandFilterTotal'
 import carAdsFilter from '../../../../../api/carAdsFilter'
 import CarMarketPage from '../../../../../components/product-list/page/CarMarketPage'
 import { loading } from '../../../../../redux/actions/app-actions'
-import { convertProductRouteParamsToFilterObject } from '../../../../../common-function'
+import { convertProductRouteParamsToFilterObject, formatNumber, getCarMarketSeoData } from '../../../../../common-function'
 import ReduxPersistWrapper from '../../../../../components/general/ReduxPersistWrapper'
+import { getCarBrand } from '../../../../../params/carBrandsList'
+import { getState } from '../../../../../params/stateList'
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
 const antIcon = <img src="/assets/Ccar-logo.png" style={{ fontSize: 60 }} />;
@@ -51,17 +53,20 @@ export async function getServerSideProps(context) {
 
         }
     }
+    console.log(filterObj);
     filterObj = convertProductRouteParamsToFilterObject(filterObj);
+    console.log(filterObj);
     if (_.get(filterObj, ['filterGroup'])) {
         filterObj.filterGroup.condition = '';
     }
 
     let promises = [];
     promises.push(carAdsFilter(_.cloneDeep(filterObj), PAGESIZE));
-    promises.push(brandFilterTotal(modals, filterObj));
+    promises.push(brandFilterTotal(modals, _.cloneDeep(filterObj)));
 
     let [carAdsRes, brandFilterRes] = await Promise.all(promises)
 
+    let seoData = getCarMarketSeoData(_.get(filterObj, 'filterGroup') || {}, _.get(carAdsRes, 'total') || 0);
     return {
         props: {
             cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
@@ -70,6 +75,9 @@ export async function getServerSideProps(context) {
             filterGroup: _.get(filterObj, ['filterGroup']) || {},
             config: _.get(filterObj, ['config']) || {},
             availableOptions: brandFilterRes || {},
+            seoData: {
+                ...seoData,
+            }
         }
     }
 }

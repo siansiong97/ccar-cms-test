@@ -63,10 +63,10 @@ export async function getServerSideProps({ req, res, }) {
         }
 
         let title = _.get(carInfo, ['title']) || null
-        let description = _.get(carInfo, 'description') || null;
+        let description = `${_.get(carInfo, 'companyId.name') || ''} | ${_.get(carInfo, 'description') || ''}` || null;
         let ogDescription = _.get(carInfo, 'user.fullName') + ' | ' + _.get(carInfo, 'companyId.name')
         let imageUrl = (_.get(carInfo, ['carUrl', 0, 'url']) || '').indexOf('.jpg') >= 0 ? _.get(carInfo, ['carUrl', 0, 'url']) : (_.get(carInfo, ['carUrl', 0, 'url']) || '') + '.jpg';
-        let url = `${basePath.substr(0, basePath.length - 1)}${req.url || ''}`;
+        let url = `${basePath}${req.url || ''}`;
         return {
             props: {
                 carInfo: carInfo || {},
@@ -80,14 +80,14 @@ export async function getServerSideProps({ req, res, }) {
                     canonical: url,
                     openGraph: {
                         title: _.get(carInfo, ['title']) || null,
-                        description: ogDescription,
+                        description: description,
                         url: url,
                         type: 'website',
                         site_name: 'CCAR SDN BHD',
                         images: [
                             {
                                 url: imageUrl,
-                                alt: title || 'Car Sample Image',
+                                alt: `${_.get(carInfo, 'carspec.make') || ''} ${_.get(carInfo, 'carspec.model' || '')} image` || 'Car Sample Image',
                             }
                         ]
                     }

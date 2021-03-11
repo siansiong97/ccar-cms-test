@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useTransition, animated } from "react-spring";
-import { useRouter } from "../../pages/hooks/useRouter";
+import { useRouter } from "../../hooks/useRouter";
 
 
 

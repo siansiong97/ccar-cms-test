@@ -3,10 +3,11 @@ import { withRouter } from 'next/dist/client/router'
 import { connect } from 'react-redux'
 import brandFilterTotal from '../../../api/brandFilterTotal'
 import carAdsFilter from '../../../api/carAdsFilter'
-import { convertProductRouteParamsToFilterObject } from '../../../common-function'
+import { convertProductRouteParamsToFilterObject, formatNumber, getCarMarketSeoData } from '../../../common-function'
 import CarMarketPage from '../../../components/product-list/page/CarMarketPage'
 import { loading } from '../../../redux/actions/app-actions'
 import ReduxPersistWrapper from '../../../components/general/ReduxPersistWrapper'
+import { getCarBrand } from '../../../params/carBrandsList'
 
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
@@ -63,6 +64,8 @@ export async function getServerSideProps(context) {
 
     let [carAdsRes, brandFilterRes] = await Promise.all(promises)
 
+    let seoData = getCarMarketSeoData(_.get(filterObj, 'filterGroup') || {}, _.get(carAdsRes, 'total') || 0);
+
     return {
         props: {
             cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
@@ -71,6 +74,9 @@ export async function getServerSideProps(context) {
             filterGroup: _.get(filterObj, ['filterGroup']) || {},
             config: _.get(filterObj, ['config']) || {},
             availableOptions: brandFilterRes || {},
+            seoData: {
+                ...seoData
+            }
         }
     }
 }

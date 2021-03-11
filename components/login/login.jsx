@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Input, Row, Col, Divider, Button, message } from 'antd';
+import { Modal, Input, Row, Col, Divider, Button, message, Icon } from 'antd';
 import { Form } from '@ant-design/compatible';
 import { connect } from 'react-redux';
 import { GoogleLogin } from 'react-google-login';
@@ -121,7 +121,6 @@ class LoginModal extends React.Component {
           backgroundImage: `url(${loginBackground})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
-          height: '300px'
         }} >
 
 
@@ -188,7 +187,7 @@ class LoginModal extends React.Component {
                   </Row>
                 </div>
                 :
-                <div key="dealer-login-form" className='fill-parent'>
+                <div key="dealer-login-form">
                   <Form layout="vertical" onSubmit={this.handleSubmit}>
                     <Row gutter={[0, 10]} className='fill-parent' type="flex" justify="center" align="middle">
                       <Col xs={24} sm={24} md={24} lg={24} xl={24}>

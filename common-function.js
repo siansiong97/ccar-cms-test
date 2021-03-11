@@ -1,9 +1,16 @@
-import { isInteger } from "lodash";
+import { isInteger, range } from "lodash";
 import _ from 'lodash';
 import queryString from 'query-string';
 import cookie from 'cookie';
 import localStorage from 'local-storage';
 import { statePersistActions } from "./redux/config";
+import { getCarBrand } from "./params/carBrandsList";
+import { getState } from "./params/stateList";
+import { getBodyType } from "./params/bodyTypeList";
+import { getFuelType } from "./params/fuelTypeList";
+import { getColor } from "./params/colorList";
+import { checkEnvReturnCmsUrl } from "./functionContent";
+import client from "./feathers";
 
 var moment = require('moment');
 
@@ -975,6 +982,40 @@ export function convertRangeFormatBack(valueArr) {
     }
 }
 
+export function convertRangeFormatToText(formatedRange, valueFormat) {
+
+    function convertValue(value, format) {
+
+        if (format == 'price') {
+            return `RM ${formatNumber(value, null, true, 2, true)}`
+        }
+
+        if (format == 'mileage') {
+            return `${formatNumber(value, null, true, 2, true)} km`
+        }
+
+        if (format == 'engineCapacity') {
+            return `${formatNumber(value, null, true, 2, true)} cc`
+        }
+        return value;
+    }
+    if (_.isArray(formatedRange) && !_.isEmpty(formatedRange)) {
+        let parameter1 = formatedRange[0];
+        let parameter2 = formatedRange[1];
+        let text = '';
+
+        if (parameter2 == defaultRangeBigger) {
+            text = `above ${convertValue(parameter1, valueFormat)}`
+        } else if (parameter2 == defaultRangeSmaller) {
+            text = `below ${convertValue(parameter1, valueFormat)}`
+        } else {
+            text = `between ${convertValue(parameter1, valueFormat)} and ${convertValue(parameter2, valueFormat)}`
+        }
+        return text;
+    } else {
+        return '';
+    }
+}
 
 
 export function convertFilterRange(value, name) {
@@ -1074,7 +1115,7 @@ export function convertProductRouteParamsToFilterObject(routeParams) {
         config: {
             page: page,
             sorting: sorting,
-            view : view
+            view: view
         },
     };
 
@@ -1087,8 +1128,8 @@ export function convertProductRouteParamsToFilterObject(routeParams) {
     if (finalData.filterGroup.mileageRange) {
         finalData.filterGroup.mileageRange = convertRangeFormatBack(finalData.filterGroup.mileageRange);
     }
-    if (finalData.filterGroup.engineCapactityRange) {
-        finalData.filterGroup.engineCapactityRange = convertRangeFormatBack(finalData.filterGroup.engineCapactityRange);
+    if (finalData.filterGroup.engineCapacityRange) {
+        finalData.filterGroup.engineCapacityRange = convertRangeFormatBack(finalData.filterGroup.engineCapacityRange);
     }
 
     if (parameter1 && !parameter2 && !parameter3) {
@@ -1202,6 +1243,66 @@ export function convertParameterToProductListUrl(data, config) {
     }
 }
 
+export function convertParameterToProductListSeoUrl(data) {
+
+    let mergeObj = objectRemoveEmptyValue(data);
+    let basePath = checkEnvReturnCmsUrl(client.io.io.uri);;
+
+
+    if (notEmptyLength(mergeObj)) {
+        mergeObj = _.pick(mergeObj, availableFilters);
+        let condition = mergeObj.condition;
+        let make = mergeObj.make;
+        let model = mergeObj.model;
+        let state = mergeObj.state;
+        let area = mergeObj.area;
+
+
+
+        if (condition && condition != 'cars-on-sale' && condition != 'all') {
+            condition = [_.toLower(condition), 'cars-on-sale'].join('-');
+        } else {
+            condition = 'cars-on-sale';
+        }
+
+        if (state && state != 'malaysia') {
+            if (area && state != 'malaysia') {
+                state = ['malaysia', _.toLower(mergeObj.state), _.toLower(mergeObj.area)].join('_');
+            } else {
+                state = ['malaysia', _.toLower(mergeObj.state)].join('_');
+            }
+        } else {
+            state = 'malaysia';
+        }
+
+
+
+        //Main parameter
+        //Order is important
+        //The first 1 always is condition
+        //The last 1 always is state
+        let mainParameters = [make, model];
+        let path = `${basePath}/${condition}`;
+
+        _.forEach(mainParameters, function (parameter) {
+            if (!parameter) {
+                return false;
+            } else {
+                path += `/${_.toLower(parameter)}`
+            }
+        })
+
+        path += `/${state}`
+        delete mergeObj.condition;
+        delete mergeObj.make;
+        delete mergeObj.model;
+        delete mergeObj.state;
+        return `${path}?${notEmptyLength(mergeObj) ? `&${queryStringifyNestedObject(mergeObj)}` : ''}`;
+
+    } else {
+        return `/cars-on-sale/malaysia`;
+    }
+}
 export function getTopItems(data, rank, col) {
     if (_.isArray(data) && notEmptyLength(data)) {
         if (!isValidNumber(rank)) {
@@ -1361,6 +1462,92 @@ export function getObjectId(data, col) {
     } else {
         return data;
     }
+}
+
+export function getCarMarketSeoData(filterGroup, total) {
+
+    if (!_.isPlainObject(filterGroup)) {
+        filterGroup = {};
+    } else {
+        filterGroup = _.cloneDeep(filterGroup)
+    }
+
+    let title = [];
+    let description = [];
+    let location = [];
+    let rangeFilter = [];
+    let otherFilter = [];
+    if (_.get(filterGroup, 'state') || _.get(filterGroup, 'area')) {
+        location.push(`${_.capitalize(_.get(filterGroup, 'area') || '')}`);
+        location.push(`${_.get(getState(filterGroup.state), 'value') || ''}`);
+    }
+    location.push('Malaysia');
+    location = _.compact(location).join(' ');
+
+    const filterRanges = ['price', 'mileage', 'engineCapacity', 'year'];
+    _.forEach(filterRanges, function (filterRange) {
+        if (filterGroup[filterRange + 'Range']) {
+            rangeFilter.push(`${_.capitalize(toSnakeCase(filterRange, ' '))} ${convertRangeFormatToText(convertToRangeFormat(filterGroup[filterRange + 'Range']), filterRange)}`);
+        }
+    })
+
+    if(filterGroup.bodyType){
+        otherFilter.push(_.capitalize(_.get(getBodyType(filterGroup.bodyType), 'value') || ''));
+    }
+
+    if(filterGroup.fuelType){
+        otherFilter.push(_.capitalize(_.get(getFuelType(filterGroup.fuelType), 'value') || ''));
+    }
+
+    if(filterGroup.color){
+        otherFilter.push(`Color ${_.capitalize(_.get(getColor(filterGroup.color), 'value') || '')}`);
+    }
+
+    if(filterGroup.registrationUrl){
+        otherFilter.push(`With Registration Url`);
+    }
+
+    if(filterGroup.readyStock){
+        otherFilter.push(`Is Ready Stock`);
+    }
+
+    if(filterGroup.car360View){
+        otherFilter.push(`With Car 360 View`);
+    }
+
+    otherFilter = _.concat(otherFilter, rangeFilter).join(', ');
+
+    title.push(`Search ${formatNumber(total) || 0}`);
+    if (filterGroup.title) {
+        title.push(_.capitalize(filterGroup.title));
+        title.push(_.capitalize(filterGroup.title));
+    } else {
+        title.push(`${_.get(getCarBrand(_.get(filterGroup, 'make')), 'value') || ''}`);
+        title.push(`${_.capitalize(_.get(filterGroup, 'model') || '')}`);
+    }
+
+    title.push(_.capitalize(filterGroup.condition || ''));
+    title.push(_.capitalize(filterGroup.transmission || ''));
+    description = _.cloneDeep(title);
+    title.push(`Cars for Sales in ${location} - CCAR.my #1 Car Social Platform.`);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(`Cars for Sales in ${location}${otherFilter ? '.' : ''}`);
+    description.push(otherFilter)
+    description.push('- CCAR.my #1 Car Social Platform.')
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+    let canonical = convertParameterToProductListSeoUrl(filterGroup);
+
+    return {
+        title,
+        description,
+        canonical,
+    }
+
 }
 
 

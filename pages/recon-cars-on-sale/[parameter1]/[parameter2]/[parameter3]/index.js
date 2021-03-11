@@ -5,7 +5,7 @@ import brandFilterTotal from '../../../../../api/brandFilterTotal'
 import carAdsFilter from '../../../../../api/carAdsFilter'
 import CarMarketPage from '../../../../../components/product-list/page/CarMarketPage'
 import { loading } from '../../../../../redux/actions/app-actions'
-import { convertProductRouteParamsToFilterObject } from '../../../../../common-function'
+import { convertProductRouteParamsToFilterObject, getCarMarketSeoData } from '../../../../../common-function'
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
 const antIcon = <img src="/assets/Ccar-logo.png" style={{ fontSize: 60 }} />;
@@ -60,6 +60,7 @@ export async function getServerSideProps(context) {
     promises.push(brandFilterTotal(modals, filterObj));
 
     let [carAdsRes, brandFilterRes] = await Promise.all(promises)
+    let seoData = getCarMarketSeoData(_.get(filterObj, 'filterGroup') || {}, _.get(carAdsRes, 'total') || 0);
 
     return {
         props: {
@@ -69,6 +70,9 @@ export async function getServerSideProps(context) {
             filterGroup: _.get(filterObj, ['filterGroup']) || {},
             config: _.get(filterObj, ['config']) || {},
             availableOptions : brandFilterRes || {},
+            seoData : {
+                ...seoData
+            }
         }
     }
 }

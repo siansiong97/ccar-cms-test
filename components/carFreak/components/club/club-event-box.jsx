@@ -9,7 +9,7 @@ import EventDetailsBox from './event-details-box';
 import { loading } from '../../../../redux/actions/app-actions';
 import WindowScrollLoadWrapper from '../../../general/WindowScrollLoadWrapper';
 import { arrayLengthCount, isValidNumber } from '../../../../common-function';
-import { validateViewType } from '../../config';
+import { validateViewType, clubProfileViewTypes } from '../../config';
 import ClubBackdrop from './club-backdrop';
 
 
@@ -128,9 +128,14 @@ const ClubEventBox = (props) => {
                                 <span className='d-inline-block h7' >
                                     Upcoming Event
                           </span>
-                                <span className='d-inline-block' >
-                                    <Button className="border ccar-button-yellow black" onClick={(e) => { setWriteEventVisible(true) }}>Create Event</Button>
-                                </span>
+                                {
+                                    viewType == clubProfileViewTypes[0] ?
+                                        <span className='d-inline-block' >
+                                            <Button className="border ccar-button-yellow black" onClick={(e) => { setWriteEventVisible(true) }}>Create Event</Button>
+                                        </span>
+                                        :
+                                        null
+                                }
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

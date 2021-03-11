@@ -75,7 +75,7 @@ class ViewCarDetailsPage extends React.Component {
     super(props);
     this.state = {
       currentImg: 0,
-      productDetails:  props.data || { condition: '', companys: {}, carspecsAll: {}, registrationUrl: {} },
+      productDetails: props.data || { condition: '', companys: {}, carspecsAll: {}, registrationUrl: {} },
       show: true,
       contactList: {},
       visible: false,
@@ -85,14 +85,14 @@ class ViewCarDetailsPage extends React.Component {
       },
       scrollYPosition: 0,
       dealerTotalAds: 0,
-      window : {},
+      window: {},
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
     this.setState({
-      window : window,
+      window: window,
     })
   }
 
@@ -459,7 +459,7 @@ class ViewCarDetailsPage extends React.Component {
             <div className="wrap-viewProducts-price">
               <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((addon.discountedPrice ? addon.discountedPrice : 0).toString())}</label>
               <p>RM {formatMoney((calMonth(addon.discountedPrice ? addon.discountedPrice : 0)).toString())}/month</p>
-              <img src={flame} style={{ width: '10%' }} />
+              <img src={flame} style={{ width: '10%' }} alt="CCAR Spicy Deal Flame Icon" />
             </div>
           )
         } else if (addon.addonType === 'spicydeal' && addon.showPrice === 'hide') {
@@ -568,8 +568,8 @@ class ViewCarDetailsPage extends React.Component {
                       {this._renderPriceAffix()}
                     </Col>
                     <Col xs={12} sm={12} md={24} lg={24} xl={24}>
-                      <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
-                      <span style={{ marginBottom: '0px' }}> <img src="/assets/carDetails/Location@3x.png" className="fill-parent" style={{ width: '2%' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.area ? null : this.state.productDetails.companys.area} </span>
+                      <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
+                      <span style={{ marginBottom: '0px' }}> <img src="/assets/carDetails/Location@3x.png" alt="location" className="fill-parent" style={{ width: '2%' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.area ? null : this.state.productDetails.companys.area} </span>
                       {/* <span style={{marginBottom:'0px'}}> <img src="/assets/carDetails/Location@3x.png" className="fill-parent" style={{width:'2%'}}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.state ? null : this.state.productDetails.companys.state} </span> */}
                     </Col>
                   </Row>
@@ -610,7 +610,7 @@ class ViewCarDetailsPage extends React.Component {
                                     type="normal"
                                   >
                                     {/* <WhatsAppOutlined style={{ fontSize: 20, color: 'white' }} /> */}
-                                    <img src="/assets/profile/icon-list/calc.png" style={{ width: 25, height: 25 }} />
+                                    <img src="/assets/profile/icon-list/calc.png" style={{ width: 25, height: 25 }} alt="Car Loan Calculator Icon" />
                                   </Button>
                                 </Tooltip>
                               )
@@ -618,12 +618,12 @@ class ViewCarDetailsPage extends React.Component {
                         </span>
                         <span className="d-inline-block" style={{ width: '50px' }}>
                           <RegisterCard key='register' button={
-                            [<Tooltip key='tooltipsregister' title="Registration Card"><Button type="normal" className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor:  _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/registration-card.png" /></Button></Tooltip>]
+                            [<Tooltip key='tooltipsregister' title="Registration Card"><Button type="normal" className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/registration-card.png" alt=" Registration Card Icon" /></Button></Tooltip>]
                           } registrationUrl={this.state.productDetails.registrationUrl ? this.state.productDetails.registrationUrl : []} />
                         </span>
                         <span className="d-inline-block">
                           <Car360ViewButton id={this.state.productDetails.xmlUrl ? this.state.productDetails._id : null} >
-                            <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} /></Button>
+                            <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon"/></Button>
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
@@ -648,10 +648,10 @@ class ViewCarDetailsPage extends React.Component {
                     <a href={`${!this.state.productDetails || !this.state.productDetails.createdBy || !this.state.productDetails.createdBy._id ? '#' : `/profile/${this.state.productDetails.createdBy._id}`}`} className="grey-darken-2 font-weight-normal">
                       <Row>
                         <Col span={12}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '-5px', marginTop: '5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '-5px', marginTop: '5px' }} alt="artboard"></img>
                         </Col>
                         <Col span={12} style={{ float: 'right' }}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '-5px', marginTop: '5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '-5px', marginTop: '5px' }} alt="artboard"></img>
                         </Col>
                       </Row>
                       <Row >
@@ -661,16 +661,16 @@ class ViewCarDetailsPage extends React.Component {
                           </div>
                         </Col>
                         <Col span={18} style={{ textAlign: 'left', paddingLeft: '15px', paddingTop: '3px' }}>
-                          <p style={{ marginBottom: '0px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}> <img src="/assets/profile/account-info-active.png" className="fill-parent" style={{ width: '10%', marginTop: '-1px' }}></img> {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.namePrefix ? null : this.state.productDetails.createdBy.namePrefix} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.firstName ? null : this.state.productDetails.createdBy.firstName} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.lastName ? null : this.state.productDetails.createdBy.lastName}</p>
+                          <p style={{ marginBottom: '0px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}> <img src="/assets/profile/account-info-active.png" alt="account active" className="fill-parent" style={{ width: '10%', marginTop: '-1px' }}></img> {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.namePrefix ? null : this.state.productDetails.createdBy.namePrefix} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.firstName ? null : this.state.productDetails.createdBy.firstName} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.lastName ? null : this.state.productDetails.createdBy.lastName}</p>
                           <h3 style={{ paddingLeft: '4px' }}> Cars On Sale ({formatNumber(_.get(this.state.productDetails, ['createdBy', 'totalAdsAvailable']), 'auto', true, 0, 0)}) </h3>
                         </Col>
                       </Row>
                       <Row>
                         <Col span={12}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '5px', marginTop: '-5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '5px', marginTop: '-5px' }} alt="artboard"></img>
                         </Col>
                         <Col span={12} style={{ float: 'right' }}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '5px', marginTop: '-5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '5px', marginTop: '-5px' }} alt="artboard"></img>
                         </Col>
                       </Row>
                     </a>
@@ -707,8 +707,8 @@ class ViewCarDetailsPage extends React.Component {
                       {this._renderPriceAffix()}
                     </Col>
                     <Col xs={12} sm={12} md={24} lg={24} xl={24}>
-                      <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
-                      <span style={{ marginBottom: '0px' }}> <img src="/assets/carDetails/Location@3x.png" className="fill-parent" style={{ width: '2%' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.area ? null : this.state.productDetails.companys.area} </span>
+                      <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
+                      <span style={{ marginBottom: '0px' }}> <img src="/assets/carDetails/Location@3x.png" alt="location" className="fill-parent" style={{ width: '2%' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.area ? null : this.state.productDetails.companys.area} </span>
                       {/* <span style={{marginBottom:'0px'}}> <img src="/assets/carDetails/Location@3x.png" className="fill-parent" style={{width:'2%'}}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.state ? null : this.state.productDetails.companys.state} </span> */}
                     </Col>
                   </Row>
@@ -749,7 +749,7 @@ class ViewCarDetailsPage extends React.Component {
                                     type="normal"
                                   >
                                     {/* <WhatsAppOutlined style={{ fontSize: 20, color: 'white' }} /> */}
-                                    <img src="/assets/profile/icon-list/calc.png" style={{ width: 25, height: 25 }} />
+                                    <img src="/assets/profile/icon-list/calc.png" style={{ width: 25, height: 25 }} alt="Car Loan Calculator" />
                                   </Button>
                                 </Tooltip>
                               )
@@ -757,12 +757,12 @@ class ViewCarDetailsPage extends React.Component {
                         </span>
                         <span className="d-inline-block" style={{ width: '50px' }}>
                           <RegisterCard key='register' button={
-                            [<Tooltip key='tooltipsregister' title="Registration Card"><Button type="normal" className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor:  _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/registration-card.png" /></Button></Tooltip>]
+                            [<Tooltip key='tooltipsregister' title="Registration Card"><Button type="normal" className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/registration-card.png" alt="Registration Card Icon" /></Button></Tooltip>]
                           } registrationUrl={this.state.productDetails.registrationUrl ? this.state.productDetails.registrationUrl : []} />
                         </span>
                         <span className="d-inline-block">
                           <Car360ViewButton id={this.state.productDetails.xmlUrl ? this.state.productDetails._id : null} >
-                            <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} /></Button>
+                            <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon" /></Button>
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
@@ -787,10 +787,10 @@ class ViewCarDetailsPage extends React.Component {
                     <a href={`${!this.state.productDetails || !this.state.productDetails.createdBy || !this.state.productDetails.createdBy._id ? '#' : `/profile/${this.state.productDetails.createdBy._id}`}`} className="grey-darken-2 font-weight-normal">
                       <Row>
                         <Col span={12}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '-5px', marginTop: '5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '-5px', marginTop: '5px' }} alt="artboard"></img>
                         </Col>
                         <Col span={12} style={{ float: 'right' }}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '-5px', marginTop: '5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '-5px', marginTop: '5px' }} alt="artboard"></img>
                         </Col>
                       </Row>
                       <Row >
@@ -800,16 +800,16 @@ class ViewCarDetailsPage extends React.Component {
                           </div>
                         </Col>
                         <Col span={18} style={{ textAlign: 'left', paddingLeft: '15px', paddingTop: '3px' }}>
-                          <p style={{ marginBottom: '0px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}> <img src="/assets/profile/account-info-active.png" className="fill-parent" style={{ width: '10%', marginTop: '-1px' }}></img> {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.namePrefix ? null : this.state.productDetails.createdBy.namePrefix} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.firstName ? null : this.state.productDetails.createdBy.firstName} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.lastName ? null : this.state.productDetails.createdBy.lastName}</p>
+                          <p style={{ marginBottom: '0px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}> <img src="/assets/profile/account-info-active.png" className="fill-parent" style={{ width: '10%', marginTop: '-1px' }} alt="Account Icon" ></img> {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.namePrefix ? null : this.state.productDetails.createdBy.namePrefix} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.firstName ? null : this.state.productDetails.createdBy.firstName} {!this.state.productDetails.createdBy || !this.state.productDetails.createdBy.lastName ? null : this.state.productDetails.createdBy.lastName}</p>
                           <h3 style={{ paddingLeft: '4px' }}> Cars On Sale ({formatNumber(_.get(this.state.productDetails, ['createdBy', 'totalAdsAvailable']), 'auto', true, 0, 0)}) </h3>
                         </Col>
                       </Row>
                       <Row>
                         <Col span={12}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '5px', marginTop: '-5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '5px', marginTop: '-5px' }} alt="artboard"></img>
                         </Col>
                         <Col span={12} style={{ float: 'right' }}>
-                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '5px', marginTop: '-5px' }}></img>
+                          <img src="/Artboard.png" style={{ width: '10%', float: 'right', marginRight: '5px', marginBottom: '5px', marginTop: '-5px' }} alt="artboard"></img>
                         </Col>
                       </Row>
                     </a>
@@ -839,7 +839,7 @@ class ViewCarDetailsPage extends React.Component {
           <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <Breadcrumb>
               <Breadcrumb.Item>
-                <Link shallow={false} prefetch  href="/">
+                <Link shallow={false} prefetch href="/">
                   <a>
                     Home
                   </a>
@@ -865,35 +865,12 @@ class ViewCarDetailsPage extends React.Component {
                   <Col span={12}>
                     <div className="text-truncate-twoline">
                       <h1 style={{ marginBottom: '0px', fontWeight: '700', fontSize: '18px' }}>
-                        {/* <span style={{ color: '#E3C57D' }}>[ {v.condition} ] </span> */}
                         {this.state.productDetails.title}
-                        {/* {this.state.productDetails.carspecsAll ?
-                          this.state.productDetails.carspecsAll.year + ' ' +
-                          this.state.productDetails.carspecsAll.make + ' ' +
-                          this.state.productDetails.carspecsAll.model + ' ' +
-                          this.state.productDetails.carspecsAll['engine-capacity'] +
-                          ' (' + this.state.productDetails.carspecsAll.variant + ') '
-                          : ''}  */}
                       </h1>
                     </div>
-                    {/* <div className="wrap-viewProducts-condition">
-                                            {this._renderCondition(this.state.productDetails)}
-                                        </div> */}
-                    {/* <div className="wrap-viewProducts-title">
-                                    <label>{this.state.productDetails.carspecsAll.make}</label>
-                                </div> */}
                     <p >Posted on {moment(this.state.productDetails.createdAt).format("Do MMM YYYY")}</p>
                   </Col>
-                  {/* </Col> */}
-                  {/* <Col className="gutter-row" xs={24} sm={24} md={5} lg={5} xl={5}> */}
                   <Col span={12}>
-                    {/* {this._renderPrice()} */}
-                    {/* <div className="wrap-viewProducts-price">
-                      <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((this.state.productDetails.price ? this.state.productDetails.price : 0).toString())}</label>
-                      <p>RM {formatMoney((calMonth(this.state.productDetails.price ? this.state.productDetails.price : 0)).toString())}/month</p>
-                    </div> */}
-                    {/* </Col> */}
-                    {/* <Col className="gutter-row" xs={24} sm={24} md={5} lg={5} xl={5}> */}
                     <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                       <span className="d-inline-block">
                         <Wishlist type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
@@ -910,30 +887,6 @@ class ViewCarDetailsPage extends React.Component {
                       <span className="d-inline-block">
                         <ShareButtonDialog title={`CCAR.my | ${this.state.productDetails.title}`} />
                       </span>
-                      {/* <span className="d-inline-block">
-                        <CalculatorModal data={{ price: this.state.productDetails.price, downpayment: this.state.productDetails.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
-                      </span>
-                      <span className="d-inline-block">
-                        <Button type="normal" className="padding-x-sm margin-xs  " style={{ background: 'white', borderColor: '#d9d9d9', minWidth: '50px' }}><img src="/assets/CarListingIcon/Video@3x.png" style={{ width: '25px', height: '25px' }} /></Button>
-                      </span>
-                      <span className="d-inline-block">
-                      </span>
-                      <span className="d-inline-block">
-                        <AddCompareProductButton data={this.state.productDetails} saveButton={() => {
-                          return (
-                            <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
-                          );
-                        }}
-                          savedButton={() => {
-                            return (
-                              <Button type="normal" className="padding-x-sm margin-xs ads-purchase-button" style={{ minWidth: '50px', background: 'rgb(89, 54, 26)' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
-                            );
-                          }}
-                        />
-                      </span> */}
-                      {/* <RegisterCard key='register' button={
-                      [<Tooltip key='tooltipsregister' title="Registration Card"><Button type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(209 ,110, 132)', borderColor:  _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/registration-card.png" /></Button></Tooltip>]
-                      } registrationUrl={this.state.productDetails.registrationUrl ? this.state.productDetails.registrationUrl : null} />  */}
                     </div>
                   </Col>
                 </Row>
@@ -966,23 +919,22 @@ class ViewCarDetailsPage extends React.Component {
                             {
                               (data, setCurrentIndex, setVisible) => {
                                 return (
-
                                   <div show={this.state.show} className="code-box-shape" >
-                                    <img className="fade-in cursor-pointer absolute-center-img-no-stretch" onClick={() => { setVisible(true) }} id="my-element" src={_.get(data, ['images', data.currentIndex])} />
+                                    <img className="fade-in cursor-pointer absolute-center-img-no-stretch" onClick={() => { setVisible(true) }} id="my-element" src={_.get(data, ['images', data.currentIndex])} alt={`${_.get(this.state.productDetails, 'carspec.make') || ''} ${_.get(this.state.productDetails, 'carspec.model') || ''} Image ${data.currentIndex + 1}`} />
                                   </div>
 
                                 )
                               }
                             }
                           </LightBoxGallery>
-                          <img src={getStateIcon(_.get(this.state.productDetails, ['companys', 'state']) || imageNotFoundIcon)} style={{ width: 100, height: '30px', position: 'absolute', top: 0, right: 0 }} />
+                          <img src={getStateIcon(_.get(this.state.productDetails, ['companys', 'state']) || imageNotFoundIcon)} style={{ width: 100, height: '30px', position: 'absolute', top: 0, right: 0 }} alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
                           <span className="d-inline-block width-20" style={{ position: 'absolute', top: 0, left: 0 }} >
                             {this._renderCondition(this.state.productDetails)}
                           </span>
                           <button className="left-btn-viewProduct" onClick={() => this.scrollToLeftBtn()}><LeftOutlined /></button>
                           <button className="right-btn-viewProduct" onClick={() => this.scrollToRightBtn()}><RightOutlined /></button>
 
-                          <img src="/assets/Ccar-logo.png" style={{ width: this.state.window.innerHeight * 0.1, height: this.state.window.innerHeight * 0.1, position: 'absolute', bottom: 10, right: 10 }} />
+                          <img src="/assets/Ccar-logo.png" style={{ width: this.state.window.innerHeight * 0.1, height: this.state.window.innerHeight * 0.1, position: 'absolute', bottom: 10, right: 10 }} alt="CCAR Logo" />
 
                         </div>
                       </Col>
@@ -1005,7 +957,7 @@ class ViewCarDetailsPage extends React.Component {
               </Col>
 
               <Col className="gutter-row" xs={24} sm={24} md={0} lg={6} xl={6} style={{ paddingLeft: '10px', paddingRight: '10px' }} >
-                <div  className="fill-parent" >
+                <div className="fill-parent" >
 
                   <div className="background-white padding-sm thin-border">
                     <Row>
@@ -1022,12 +974,12 @@ class ViewCarDetailsPage extends React.Component {
 
                           <span className="d-inline-block">
                             <Car360ViewButton id={this.state.productDetails.xmlUrl ? this.state.productDetails._id : null} >
-                              <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} /></Button>
+                              <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon"/></Button>
                             </Car360ViewButton>
                           </span>
                         </span>
                         <span className="d-inline-block">
-                          <Button disabled type="normal" className="padding-x-sm margin-xs  " style={{ background: 'white', borderColor: '#d9d9d9', minWidth: '50px' }}><img src="/assets/CarListingIcon/Video@3x.png" style={{ '-webkit-filter': 'grayscale(100%)', 'filter': 'grayscale(100%)', width: '25px', height: '25px' }} /></Button>
+                          <Button disabled type="normal" className="padding-x-sm margin-xs  " style={{ background: 'white', borderColor: '#d9d9d9', minWidth: '50px' }}><img src="/assets/CarListingIcon/Video@3x.png" style={{ '-webkit-filter': 'grayscale(100%)', 'filter': 'grayscale(100%)', width: '25px', height: '25px' }} alt="Car Video Icon" /></Button>
                         </span>
 
                         <span className="d-inline-block">
@@ -1048,7 +1000,8 @@ class ViewCarDetailsPage extends React.Component {
                             [<Tooltip key='tooltipsregister' title="Registration Card">
                               <Button type="normal"
                                 className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`}
-                                style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor:  _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/registration-card.png" /></Button></Tooltip>]
+                                style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}>
+                                <img src="/assets/CarListingIconMobile/registration-card.png" alt="Registration Card Icon" /></Button></Tooltip>]
                           } registrationUrl={this.state.productDetails.registrationUrl ? this.state.productDetails.registrationUrl : []} />
                         </span>
                       </Col>
@@ -1071,9 +1024,6 @@ class ViewCarDetailsPage extends React.Component {
                     <KeyCarDetails productDetails={this.state.productDetails} />
                   </Card>
                 </div>
-                {/* <div className="advertisement-wrap">
-                  <img className="w-100" src={adverImg} />
-                </div> */}
               </Col>
             </Row>
           </div>

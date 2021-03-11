@@ -29,10 +29,10 @@ const OtherClubsBox = (props) => {
                 userId,
                 clubId,
             }
-            if(!userId){
+            if (!userId) {
                 delete query.userId;
             }
-            if(!clubId){
+            if (!clubId) {
                 delete query.clubId;
             }
             axios.get(`${client.io.io.uri}getOtherClubs`, {
@@ -58,19 +58,19 @@ const OtherClubsBox = (props) => {
                             {
                                 _.map(clubs, function (club) {
                                     return (
-                                        <Link shallow={false} prefetch href={`/social-club/${club._id}`} > 
-                                        <a>
-                                        
-                                        <span className='d-inline-block relative-wrapper flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: '100%', overflow: 'hidden' }}>
-                                            <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
-                                            <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
-                                                <span className='d-inline-block white h6 text-truncate-threeline' >
-                                                    {_.get(club, ['clubName']) || ''}
-                                                </span>
-                                            </div>
-                                        </span>
-                                        </a>
+                                    <span className='d-inline-block relative-wrapper flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: '100%', overflow: 'hidden' }}>
+                                        <Link shallow={false} prefetch href={`/social-club/${club._id}`} >
+                                            <a>
+
+                                                <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
+                                                <div className="fill-parent background-black-opacity-50 flex-items-align-center flex-justify-center padding-md absolute-center stack-element-opacity-100">
+                                                    <span className='d-inline-block white h6 text-truncate-threeline' >
+                                                        {_.get(club, ['clubName']) || ''}
+                                                    </span>
+                                                </div>
+                                            </a>
                                         </Link>
+                                    </span>
                                     )
                                 })
                             }

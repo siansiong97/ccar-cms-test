@@ -58,7 +58,7 @@ class LayoutV2 extends React.Component {
             client.authenticate().then(res => {
                 this.props.setUser(res.user);
             }).catch(err => {
-                this.props.history.push('/logout');
+                this.props.router.push('/logout');
                 this.props.loginMode(true);
                 message.error('Your authentication session is expired. Please login again.');
 
@@ -238,7 +238,7 @@ class LayoutV2 extends React.Component {
                                 </Col>
 
                                 <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                    {/* <Row gutter={10} onClick={() => { this.props.history.push('/') }} style={{ cursor: 'pointer' }}>
+                                    {/* <Row gutter={10} onClick={() => { this.props.router.push('/') }} style={{ cursor: 'pointer' }}>
                                         <Col className="footer-col-logo-center col-centered" xs={6} sm={2} md={2} lg={2} xl={2}>
                                             <div className="wrap-footer-title-logo">
                                             <div className="wrap-logo">
