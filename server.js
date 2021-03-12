@@ -19,10 +19,6 @@ app.prepare().then(() => {
     return app.render(req, res, `/viewCar/${_.get(req, 'params.id') || ''}`, req.query)
   })
 
-  server.get('/viewCar2/:id', (req, res) => {
-    return app.render(req, res, `/viewCar2/${_.get(req, 'params.id') || ''}`, req.query)
-  })
-
   server.all('*', (req, res) => {
     return handle(req, res)
   })

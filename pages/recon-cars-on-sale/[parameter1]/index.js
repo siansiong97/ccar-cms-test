@@ -17,12 +17,17 @@ const Index = (props) => {
 
     return (
         <ReduxPersistWrapper cookie={props.cookie}>
-            <CarMarketPage
-                productList={props.productList || {}}
-                config={props.config || {}}
-                availableOptions={props.availableOptions || {}}
-                productListTotal={props.productListTotal || 0}
-                filterGroup={props.filterGroup || {}} />
+            {
+                props.app.initedRedux ?
+                    <CarMarketPage
+                        productList={props.productList || {}}
+                        config={props.config || {}}
+                        availableOptions={props.availableOptions || {}}
+                        productListTotal={props.productListTotal || 0}
+                        filterGroup={props.filterGroup || {}} />
+                    :
+                    null
+            }
         </ReduxPersistWrapper>
     )
 }
@@ -71,8 +76,8 @@ export async function getServerSideProps(context) {
             productListTotal: _.get(carAdsRes, ['total']) || 0,
             filterGroup: _.get(filterObj, ['filterGroup']) || {},
             config: _.get(filterObj, ['config']) || {},
-            availableOptions : brandFilterRes || {},
-            seoData : {
+            availableOptions: brandFilterRes || {},
+            seoData: {
                 ...seoData,
             }
         }

@@ -26,7 +26,12 @@ const App = (props) => {
     return (
         <React.Fragment>
             <ReduxPersistWrapper cookie={props.cookie}>
-                <ViewCarDetailsPage data={carInfo || {}} />
+                {
+                    props.app.initedRedux ?
+                        <ViewCarDetailsPage data={carInfo || {}} />
+                        :
+                        null
+                }
             </ReduxPersistWrapper>
         </React.Fragment>
     )

@@ -1,9 +1,8 @@
-import { withRouter } from 'next/dist/client/router'
-import { connect } from 'react-redux'
-import LayoutV2 from '../../components/general/LayoutV2'
-import ReduxPersistWrapper from '../../components/general/ReduxPersistWrapper'
-import SocialNewsAndVideosPage from '../../components/news/page/SocialNewsAndVideosPage';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
+import { connect } from 'react-redux';
+import ReduxPersistWrapper from '../../../../components/general/ReduxPersistWrapper';
+import DealerProfilePage from '../../../../components/profile/page/DealerProfilePage';
 
 
 const searchBarRef = React.createRef();
@@ -14,7 +13,7 @@ const Index = (props) => {
         <ReduxPersistWrapper cookie={props.cookie}>
             {
                 props.app.initedRedux ?
-                    <SocialNewsAndVideosPage />
+                    <DealerProfilePage />
                     :
                     null
             }

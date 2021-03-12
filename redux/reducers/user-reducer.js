@@ -5,7 +5,9 @@ import localStorage from 'local-storage';
 
 const INITIAL_STATE = {
   info: {
-    user: {}
+    user: {
+      _id : null,
+    }
   },
   authenticated: false,
   loading: false,

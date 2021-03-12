@@ -1,17 +1,15 @@
 import { Col, Form, Row } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import UserAvatar from '../general/UserAvatar';
 import { withRouter } from 'next/dist/client/router';
 
 
-
 const SellerBusinessCard = (props) => {
-
 
     return (
         <div className="thin-border ">
-            <a href={props.readOnly ? null : !props.data1 || !props.data1._id ? null : '/dealer/' + (props.data1.companyurlId||'')+'/'+(props.data1.userurlId||'')} className="grey-darken-2 font-weight-normal">
+            <a href={props.readOnly ? null : !props.data1 || !props.data1._id ? null : '/dealer/' + (props.data1.companyurlId || '') + '/' + (props.data1.userurlId || '')} className="grey-darken-2 font-weight-normal">
                 <Row>
                     <Col span={12}>
                         <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '-5px', marginTop: '5px' }}></img>
@@ -27,7 +25,7 @@ const SellerBusinessCard = (props) => {
                         </div>
                         {/* <div className="wrap-company-logo-horizontal-dealer">
                             <img src="/assets/General/car-showroom.png" className="w-100" />
-                        </div> */}
+                        </div> */}›
                     </Col>
                     <Col xs={18} sm={18} md={18} lg={24} xl={18} style={{ marginLeft: '10px' }}>
                         <Row>

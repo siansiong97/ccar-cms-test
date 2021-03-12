@@ -42,6 +42,9 @@ const ProfileHomePage = (props) => {
     const [profile, setProfile] = useState({});
     const [isOwn, setIsOwn] = useState(false);
 
+    useEffect(() => { 
+    console.log(props.user);
+    } , [])
 
     useEffect(() => {
         getProfile();
@@ -51,8 +54,9 @@ const ProfileHomePage = (props) => {
     }, [isOwn])
 
     useEffect(() => {
+        console.log(props.user);
         setIsOwn(_.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']))
-    }, [props.user.authenticated, props.user.info.user._id, profile])
+    }, [props.user.authenticated, props.user.info.user, profile])
 
     useEffect(() => {
         if (_.isPlainObject(profile) && !_.isEmpty(profile)) {

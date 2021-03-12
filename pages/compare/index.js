@@ -13,7 +13,12 @@ const Index = (props) => {
 
     return (
         <ReduxPersistWrapper cookie={props.cookie}>
-            <ComparePage />
+            {
+                props.app.initedRedux ?
+                    <ComparePage />
+                    :
+                    null
+            }
         </ReduxPersistWrapper>
     )
 }

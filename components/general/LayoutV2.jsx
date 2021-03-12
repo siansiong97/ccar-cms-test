@@ -1,6 +1,6 @@
 
 import { CaretUpOutlined } from '@ant-design/icons';
-import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon } from 'antd';
+import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
