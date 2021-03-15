@@ -282,7 +282,7 @@ const GlobalSearchBar = (props) => {
                                             <Option key={`${group.title}-${index}`} value={`${opt.freakId || ''}`} onClick={() => {
                                                 if (_.isPlainObject(opt) && !_.isEmpty(opt)) {
                                                     if (opt._id) {
-                                                        props.router.push(`/profile/${opt._id}`);
+                                                        props.router.push(`/dealer/${opt.companyurlId}/${opt.userurlId}`);
                                                     }
                                                 }
                                             }}>
@@ -369,8 +369,8 @@ const GlobalSearchBar = (props) => {
                                     _.isArray(_.get(group, ['children'])) && !_.isEmpty(_.get(group, ['children'])) ?
                                         group.children.map((opt, index) => (
                                             <Option key={`${group.title}-${index}`} value={`${opt.fullName || ''} | ${opt.companyName ? opt.companyName : ''}`} onClick={() => {
-                                                if (opt.createdBy) {
-                                                    props.router.push('/profile/' + opt.createdBy);
+                                                if (opt.companyurlId && opt.userurlId) {
+                                                    props.router.push(`/dealer/${_.get(opt, 'companyurlId')}/${_.get(opt, 'userurlId')}`);
                                                 }
                                             }}>
                                                 <Highlighter

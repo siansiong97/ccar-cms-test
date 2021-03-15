@@ -336,7 +336,7 @@ const GridProductList = (props) => {
                                             </div>
                                             <div className="wrap-product-ads-text">
                                                 <div className="wrap-product-ads-title">
-                                                    <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} target="_self">
+                                                    <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
                                                         <a>
                                                             <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
                                                         </a>

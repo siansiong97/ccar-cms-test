@@ -25,7 +25,7 @@ const SellerBusinessCard = (props) => {
                         </div>
                         {/* <div className="wrap-company-logo-horizontal-dealer">
                             <img src="/assets/General/car-showroom.png" className="w-100" />
-                        </div> */}›
+                        </div> */}
                     </Col>
                     <Col xs={18} sm={18} md={18} lg={24} xl={18} style={{ marginLeft: '10px' }}>
                         <Row>

@@ -1,6 +1,6 @@
 
 import { CaretUpOutlined } from '@ant-design/icons';
-import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message } from 'antd';
+import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message, Drawer, Badge, Avatar } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
@@ -22,7 +22,30 @@ import LoginModal from '../login/login';
 import GlobalSearchBar from './global-search-bar';
 import UserAvatar from './UserAvatar';
 import axios from 'axios';
+import { useMediaQuery } from 'react-responsive';
 
+const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 992 })
+    return isDesktop ? children : null
+}
+const Tablet = ({ children }) => {
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
+    return isTablet ? children : null
+}
+const Mobile = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    return isMobile ? children : null
+}
+const Default = ({ children }) => {
+    const isNotMobile = useMediaQuery({ minWidth: 768 })
+    return isNotMobile ? children : null
+}
+
+const NotWebDevice = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
+    return isMobile || isTablet ? children : null;
+}
 
 var frontUrl = checkEnvReturnWebAdmin(client.io.io.uri)
 var currentEnv = checkEnv(client.io.io.uri)
@@ -53,6 +76,17 @@ class LayoutV2 extends React.Component {
     }
 
 
+    showDrawer = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+        });
+    };
     handleExpiredToken = () => {
         if (_.get(this.props, ['user', 'authenticated'])) {
             client.authenticate().then(res => {
@@ -211,6 +245,70 @@ class LayoutV2 extends React.Component {
         }
     }
 
+    _renderUserRes = (profileMenu) => {
+        let self = this;
+        if (_.get(this.props, ['user', 'authenticated'])) {
+            return (
+                <span className='d-inline-block margin-bottom-xs flex-items-align-center' >
+                    <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" overlayStyle={{ width: '250px' }} overlay={() => {
+                        return (
+                            <Menu>
+                                {
+                                    _.map(profileMenu, function (menu, index) {
+                                        return (
+                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path) }}>
+                                                <div className="flex-justify-start flex-items-align-center">
+                                                    <span className='d-inline-block margin-x-sm'>
+                                                        {menu.icon}
+                                                    </span>
+                                                    <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
+                                                        {menu.text}
+                                                    </span>
+                                                </div>
+                                            </Menu.Item>
+                                        )
+                                    })
+                                }
+                                {
+                                    _.get(this.props.user, ['info', 'user', 'role']) != 'mobile-user' && _.get(this.props.user, ['info', 'user', 'role']) != 'normaluser' ?
+                                        <Menu.Item key={`profile-menu-dealership`} className='padding-sm' onClick={(e) => {
+
+                                        }}>
+                                            <div className="flex-justify-start flex-items-align-center">
+                                                <Button className=" background-ccar-button-yellow black border-ccar-button-yellow text-align-center" block shape="round" target="_blank" href={frontUrl} >Manage My Ads</Button>
+                                            </div>
+                                        </Menu.Item>
+                                        :
+                                        null
+                                }
+                            </Menu>
+                        )
+                    }}>
+                        <div>
+                            <div className=' cursor-pointer' >
+                                <Badge >
+                                    <Avatar
+                                        icon={!this.props.user.info || !this.props.user.info.user || !this.props.user.info.user.avatar ? 'user' : null}
+                                        src={!this.props.user.info || !this.props.user.info.user || !this.props.user.info.user.avatar ? null : this.props.user.info.user.avatar} />
+                                </Badge>
+                            </div>
+                            <div style={{ color: "#1890ff" }} className=' subtitle1 cursor-pointer'>
+                                My Profile
+                            </div>
+                        </div>
+                    </Dropdown>
+                </span>
+            );
+        } else {
+            return (
+                <span style={{ color: "#1890ff" }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
+                    {/* <img src="/assets/CarListingIcon/login@3x-2.png" style={{ width: 20 }} className="margin-right-xs" /> */}
+                    Login
+                </span>
+            )
+        }
+    }
+
     _renderFooter = () => {
         return (
             <React.Fragment>
@@ -238,15 +336,6 @@ class LayoutV2 extends React.Component {
                                 </Col>
 
                                 <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                    {/* <Row gutter={10} onClick={() => { this.props.router.push('/') }} style={{ cursor: 'pointer' }}>
-                                        <Col className="footer-col-logo-center col-centered" xs={6} sm={2} md={2} lg={2} xl={2}>
-                                            <div className="wrap-footer-title-logo">
-                                            <div className="wrap-logo">
-                                                <img alt="ccar" className="w-100" src="/assets/Ccar-logo.png" />
-                                            </div>
-                                            </div>
-                                        </Col>
-                                    </Row> */}
                                     <Row>
                                         <Col span={8} className="justify-flex-start" >
                                             <p style={{ fontSize: '10px', color: 'white', fontWeight: '700', marginTop: '4px', marginBottom: '0px', float: 'left' }}> #1 Car Social Platform </p>
@@ -269,47 +358,23 @@ class LayoutV2 extends React.Component {
                                             </Row>
                                         </Col>
                                     </Row>
-                                    {/* <Row style={{ textAlign: 'center', color: '#E3C57D', margin: '18px 0px' }}>
-                                        <Col span={20} className="col-centered" style={{ fontSize: '15px' }}>
-                                            <Row>
-                                                <Col xs={12} sm={12} md={12} lg={7} xl={7} className="col-centered" style={{ fontSize: '15px', color: 'grey' }}>
-                                                    <p style={{marginBottom:'0px'}}> Available on: </p>  
-                                                    <a href="https://play.google.com/store/apps/details?id=com.ccarmy" target="_blank"> <img style={{ padding: '5px', width: 40 }} src="/assets/Social Media/Google Play@3x.png" /></a>
-                                                    <a href="https://apps.apple.com/my/app/ccar-my/id1526288072" target="_blank"><img style={{ padding: '5px', width: 40 }} src="/assets/Social Media/Apple Store @3x.png" /></a>
-                                                </Col>
-                                                <Col xs={12} sm={12} md={12} lg={7} xl={7} className="col-centered" style={{ fontSize: '15px', color: 'grey' }}>
-                                                    <p style={{marginBottom:'0px'}}> Find us at: </p>
-                                                    <a href="https://www.facebook.com/CCARmy-101790904962298/" target="_blank"> <img style={{ padding: '5px', width: 40 }} src="/assets/Social Media/Facebook @3x.png" /></a>
-                                                    <a href="https://www.instagram.com/ccar.my/" target="_blank"> <img style={{ padding: '5px', width: 35 }} src="/assets/Social Media/instagram.png" /></a>
-                                                    <a href="https://www.youtube.com/channel/UCxicQ1-VsdNWEdGZCqU-35g" target="_blank"> <img style={{ padding: '5px', width: 40 }} src="/assets/Social Media/youtube.png" /> </a>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row> */}
                                 </Col>
                             </Row>
 
                             <Row>
                                 <Col span={24}>
                                     <Divider orientation="left" style={{ border: 'solid 1px #FFCC32', fontWeight: 'normal', margin: '4px 0px' }} />
-                                    {/* <div className="yellow-divider">
-                                    <Divider/>
-                                    </div> */}
 
                                     <Row style={{ color: '#E3C57D' }}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
-                                            {/* <Link shallow={false} prefetch passHref  style={{ color: 'white' }} href="/"> */}
                                             <div className="flex-justify-start flex-items-align-center main-footer ">
-                                                    CCAR.MY <Icon type="copyright" /> 2020
+                                                CCAR.MY <Icon type="copyright" /> 2020
                                                 </div>
-                                            {/* </Link> */}
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            {/* <Link shallow={false} prefetch passHref  style={{ color: 'white' }} href="/termOfUse" target="_blank"> */}
                                             <div className="flex-justify-end flex-items-align-center main-footer">
                                                 Terms of Use | Privacy Policy
                                                 </div>
-                                            {/* </Link> */}
                                         </Col>
                                     </Row>
                                 </Col>
@@ -509,6 +574,141 @@ class LayoutV2 extends React.Component {
                                 </div>
                             </div>
                         </Col>
+
+                        <Tablet>
+                            <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                                <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
+                                    <Col xs={12} sm={12} md={14} lg={12} xl={12}>
+                                        <div className='flex-justify-start flex-items-align-center topnav-child'  >
+                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }} onClick={(e) => { this.props.router.push('/') }}>
+                                                <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
+                                            </span>
+                                            {
+                                                this.props.hideSearchBar ?
+                                                    null
+                                                    :
+                                                    <span className='d-inline-block' style={{ minWidth: '250px', overflow: 'visible' }} >
+                                                        <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                                    </span>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={10} lg={12} xl={12}>
+                                        <div style={{ width: '300' }}>
+                                            <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
+                                                <Icon type="menu" />
+                                            </Button>
+                                            <Drawer
+                                                title="Main Menu"
+                                                placement="right"
+                                                closable={true}
+                                                onClose={this.onClose}
+                                                visible={this.state.visible}
+                                            >
+                                                <div className="margin-bottom-md">
+                                                    {this._renderUserRes(profileMenu)}
+                                                </div>
+                                                {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
+                                                    <img src="/assets/CarListingIcon/login@3x.png" style={{ width: 20 }} className="margin-right-xs" />
+                                                    Register/Login
+                                                </p> */}
+                                                {/* <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
+                                                <p> <a href="/newcar"> All-NewCar</a> </p>
+                                                <p> <a href="/live"><span className='d-inline-block white background-red padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
+                                                <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
+                                                <p> <a href="/car-freaks"> CarFreaks </a> </p>
+                                                <p> <a href="/petrolprice"> Petrol Price </a>  </p>
+                                                <p> <a href="/kpp"> Driving School </a> </p>
+                                                <p> <a href="/about-us"> About Us </a> </p>
+                                                <p> <a href="/contact-us"> Contact Us </a> </p> */}
+
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '1' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/') }}> Home</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '2' ? 'yellow' : ''}`} onClick={() => { this.props.router.push(convertParameterToProductListUrl()) }} > CarMarket</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '3' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/newcar') }} > All-NewCar</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '4' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/live') }} > <p className="background-red padding-x-md" style={{ borderRadius: '10px', marginBottom: '0px', width: '40%' }}>LIVE</p> </div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '5' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/socialNewsAndVideo') }} > Social News & Videos</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '6' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/car-freaks') }} > CarFreaks</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '7' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/petrolprice') }} > Petrol Price</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '8' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/kpp') }} > Driving School</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '9' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/about-us') }} > About Us</div>
+                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '10' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/contact-us') }} > Contact Us</div>
+
+                                                {currentEnv === 'prod' ?
+                                                    <React.Fragment>
+                                                        {/* <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
+                                                <p> <a href="/extended-warranty"> Extended Warranty </a> </p> */}
+                                                        <div style={{ fontSize: '18px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '11' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/roadtax-insurance') }} > Road Tax & Insurance </div>
+                                                        <div style={{ fontSize: '18px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '12' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/extended-warranty') }} > Extended Warranty </div>
+                                                    </React.Fragment>
+                                                    : ''}
+
+                                            </Drawer>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Tablet>
+
+                        <Mobile>
+                            <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                                <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
+                                    <Col xs={20} sm={20} md={14} lg={12} xl={12}>
+                                        <div className='flex-justify-start flex-items-align-center topnav-child'  >
+                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' style={{ height: '62px', width: '120px' }} onClick={(e) => { this.props.router.push('/') }}>
+                                                <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
+                                            </span>
+                                            {
+                                                this.props.hideSearchBar ?
+                                                    null
+                                                    :
+                                                    <span className='d-inline-block' style={{ width: '150px', overflow: 'visible' }} >
+                                                        <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                                    </span>
+                                            }
+                                        </div>
+                                    </Col>
+                                    <Col xs={4} sm={4} md={10} lg={12} xl={12}>
+                                        <div style={{ width: '300' }}>
+                                            <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
+                                                <Icon type="menu" />
+                                            </Button>
+                                            <Drawer
+                                                title="Main Menu"
+                                                placement="right"
+                                                closable={true}
+                                                onClose={this.onClose}
+                                                visible={this.state.visible}
+                                            >
+                                                <div className="margin-bottom-md">
+                                                    {this._renderUserRes(profileMenu)}
+                                                </div>
+                                                {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
+                                                    <img src="/assets/CarListingIcon/login@3x.png" style={{ width: 20 }} className="margin-right-xs" />
+                                                    Register/Login
+                                                </p> */}
+                                                <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
+                                                <p> <a href="/newcar"> All-NewCar</a> </p>
+                                                <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
+                                                <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
+                                                <p> <a href="/car-freaks"> CarFreaks </a> </p>
+                                                <p> <a href="/petrolprice"> Petrol Price </a>  </p>
+                                                <p> <a href="/kpp"> Driving School </a> </p>
+                                                <p> <a href="/about-us"> About Us </a> </p>
+                                                <p> <a href="/contact-us"> Contact Us </a> </p>
+                                                {currentEnv !== 'prod' ?
+                                                    <React.Fragment>
+                                                        <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
+                                                        <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
+                                                    </React.Fragment>
+                                                    : ''}
+
+                                            </Drawer>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Mobile>
+
 
                     </Row>
 

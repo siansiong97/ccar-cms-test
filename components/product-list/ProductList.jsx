@@ -88,7 +88,7 @@ const ProductList = (props) => {
     if (notEmptyLength(v.carUrl)) {
       if (v.currentImg != null && v.currentImg < v.carUrl.length) {
         return (
-          <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+          <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -100,7 +100,7 @@ const ProductList = (props) => {
         )
       } else {
         return (
-          <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+          <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -117,7 +117,7 @@ const ProductList = (props) => {
       }
     } else {
       return (
-        <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+        <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
           <a>
             <React.Fragment>
               <div className="wrap-product-ads-img-horizontal">
@@ -602,7 +602,7 @@ const ProductList = (props) => {
                                                         {_renderCondition(v)}
                                                     </Col> */}
                           <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '10px 10px' }}>
-                            <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} target="_blank">
+                            <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
                               <a>
                                 <div className="text-truncate-twoline">
                                   <label>

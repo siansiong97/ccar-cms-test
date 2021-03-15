@@ -19,7 +19,6 @@ import LiveBoxPreview1 from './live-box-preview-1';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 
-LayoutV2
 TweenOne.plugins.push(BezierPlugin);
 
 

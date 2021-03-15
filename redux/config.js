@@ -7,6 +7,8 @@ import localStorage from 'local-storage';
 import { FETCH_CLIENT_SOCKET_IO, CLEAR_CLIENT_SOCKET_IO } from './actions/live-action';
 import { UPDATE_SOCKET_INFO, DELETE_SOCKET_INFO } from './actions/socketRefresh-actions';
 
+//Not supported for multiple same action update yet
+//Ex. ADD_COMPARE__PRODUCT_ID for twice, i will only take the last 1. Same actions before last one will be ignored;
 export const statePersistActions = [
   {
     action: LOGIN_SUCCESSFUL,
@@ -20,9 +22,9 @@ export const statePersistActions = [
   {
     action: FETCH_COMPARE_LIMIT,
   },
-  {
-    action : ADD_COMPARE__PRODUCT_ID,
-  },
+  // {
+  //   action : ADD_COMPARE__PRODUCT_ID,
+  // },
   {
     action : PATCH_COMPARE_PRODUCT_IDS,
   },

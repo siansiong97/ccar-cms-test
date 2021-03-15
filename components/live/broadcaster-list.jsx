@@ -210,7 +210,7 @@ const BroadcasterList = (props) => {
                                                 }
                                                 else {
                                                     //donar it manages the routes
-                                                    props.router.push(`/live/${selectedActiveBroadcaster.dealerSocketId}`, undefined, { shallow : false })
+                                                    props.router.push(`/live/${selectedActiveBroadcaster.dealerSocketId}`, undefined, { shallow : true })
                                                 }
                                             }}>
                                                 <UserAvatar

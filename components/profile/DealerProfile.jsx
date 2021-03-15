@@ -91,7 +91,7 @@ const DealerProfile = (props) => {
                     <Tabs defaultActiveKey="1"
                         tabBarExtraContent={
                             _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == profile._id && (_.get(profile, ['role']) != 'normaluser' && _.get(profile, ['role']) != 'mobile-user') ?
-                                <Button className=" background-ccar-button-yellow black border-ccar-button-yellow text-align-center" shape="round" target="_blank" href={frontUrl} >Manage My Ads</Button>
+                                <Button className=" background-ccar-button-yellow black border-ccar-button-yellow text-align-center" shape="round" href={frontUrl} >Manage My Ads</Button>
                                 :
                                 null
                         }
@@ -186,7 +186,7 @@ const DealerProfile = (props) => {
                                 </Col>
                             </Row>
                         </TabPane> */}
-                        <TabPane tab="Reviews" key="5">
+                        <TabPane tab="Reviews" key="6">
                             <Row gutter={[20, 10]} className='margin-top-md'>
                                 <Col xs={{ order: 2, span: 18 }} sm={{ order: 2, span: 18 }} md={{ order: 2, span: 18 }} lg={{ order: 1, span: 18 }} xl={{ order: 1, span: 18 }}>
                                     <UserReceivedReview data={profile} />

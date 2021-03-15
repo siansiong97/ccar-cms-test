@@ -34,7 +34,7 @@ const InfiniteScrollWrapper = (props) => {
                     }
                 }}
                 hasMore={props.hasMore != null ? props.hasMore : true}
-                useWindow
+                useWindow={props.useWindow == false ? false : true}
                 loader={
                     <div className="width-100 flex-justify-center" style={{ height: 50 }}>
                         <Icon type="loading" style={{ fontSize: 50 }} />

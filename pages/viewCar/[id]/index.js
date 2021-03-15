@@ -7,6 +7,7 @@ import ViewCarDetailsPage from '../../../components/product-list/page/ViewCarDet
 import client from '../../../feathers'
 import { withRouter } from 'next/router'
 import { checkEnvReturnCmsUrl } from '../../../functionContent'
+import { connect } from 'react-redux'
 
 const App = (props) => {
     const carInfo = _.get(props, 'carInfo') || {};
@@ -40,7 +41,17 @@ const App = (props) => {
 
 }
 
-export default withRouter(App)
+const mapStateToProps = state => ({
+    app: state.app,
+    user: state.user,
+    productsList: state.productsList,
+});
+
+
+const mapDispatchToProps = {
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))
 
 export async function getServerSideProps({ req, res, }) {
     try {

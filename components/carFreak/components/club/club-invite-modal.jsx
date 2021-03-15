@@ -152,13 +152,13 @@ const ClubInviteModal = (props) => {
                         }}>
                             {
                                 _.isArray(users) && !_.isEmpty(users) ?
-                                    <Row gutter={[10, 15]} >
+                                    <Row gutter={[10, 15]} style={{ width: '100%' }} >
                                         {
                                             _.map(users, function (user) {
                                                 return (
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="flex-justify-space-between flex-items-align-center">
-                                                            <span className='d-inline-block' style={{ maxWidth: '80%' }} >
+                                                        <div className="flex-justify-space-between flex-items-align-center" >
+                                                            <span className='d-inline-block'  >
                                                                 <UserAvatar
                                                                     data={user}
                                                                     size={50}

@@ -74,7 +74,11 @@ const ClubDiscussionBox = (props) => {
     useEffect(() => {
         setPosts([]);
         setUserChatLikes([]);
-        getPosts(0)
+        if(postPage == 1){
+            getPosts(0);
+        }else{
+            setPostPage(1);
+        }
     }, [clubId, tabKey])
 
     useEffect(() => {

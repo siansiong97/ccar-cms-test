@@ -12,7 +12,7 @@ import client from '../../../feathers';
 import SocialInput from './social-input';
 import { loading, loginMode } from '../../../redux/actions/app-actions';
 import { setUser } from '../../../redux/actions/user-actions';
-import {  getUserName, notEmptyLength  } from '../../../common-function';
+import { getUserName, notEmptyLength } from '../../../common-function';
 import UserAvatar from '../../general/UserAvatar';
 
 const { TextArea } = Input;
@@ -74,6 +74,7 @@ const WritePostModal1 = (props) => {
     }, [props.chatType])
 
 
+
     function closeModal() {
         if (props.onCancel) {
             props.onCancel();
@@ -112,6 +113,8 @@ const WritePostModal1 = (props) => {
                 setConfirmLoading(false)
                 return message.error("Please upload Image.")
             }
+        }else{
+            fileList = [];
         }
 
         let promiseArr = []
@@ -476,7 +479,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
-    loginMode : loginMode,
+    loginMode: loginMode,
     loading: loading,
     setUser: setUser,
 };

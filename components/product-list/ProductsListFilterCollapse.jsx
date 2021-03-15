@@ -1,13 +1,14 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, Icon, Input, Radio, Row, Select, Tooltip } from 'antd';
+import { Button, Card, Col, Form, Icon, Radio, Row, Select, Tooltip } from 'antd';
 import axios from 'axios';
 import _, { isObject } from 'lodash';
+import { withRouter } from 'next/router';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { convertRangeFormatBack, convertToRangeFormat, formatNumber, isValidNumber, notEmptyLength, objectRemoveEmptyValue } from '../../common-function';
 import client from '../../feathers';
-import { carspecNotFoundImage, cnyLionHead } from '../../icon';
+import { carspecNotFoundImage } from '../../icon';
 import { getBodyType } from '../../params/bodyTypeList';
 import { getCarBrand } from '../../params/carBrandsList';
 import { getColor } from '../../params/colorList';
@@ -15,15 +16,14 @@ import { getDrivenWheel } from '../../params/drivenWheelList';
 import { getFuelType } from '../../params/fuelTypeList';
 import { getState } from '../../params/stateList';
 import { clearProductFilterOptions, fetchFilterModalState, fetchProductFilterOptions } from '../../redux/actions/productsList-actions';
-import { withRouter } from 'next/dist/client/router';
+import AreaModal from './filter-modal/AreaModal';
+import BodyTypeModal from './filter-modal/BodyTypeModal';
+import ColorModal from './filter-modal/ColorModal';
+import DrivenWheelModal from './filter-modal/DrivenWheelModal';
+import FuelTypeModal from './filter-modal/FuelTypeModal';
 import MakeModal from './filter-modal/MakeModal';
 import ModelModal from './filter-modal/ModelModal';
 import StateModal from './filter-modal/StateModal';
-import AreaModal from './filter-modal/AreaModal';
-import BodyTypeModal from './filter-modal/BodyTypeModal';
-import FuelTypeModal from './filter-modal/FuelTypeModal';
-import DrivenWheelModal from './filter-modal/DrivenWheelModal';
-import ColorModal from './filter-modal/ColorModal';
 
 
 
@@ -61,15 +61,14 @@ const mileages = [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000,
 const engineCapacities = [0.1, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
-const optionsFields = ['title', 'transmission', 'make', 'model', 'state', 'area', 'year', 'price', 'mileage', 'engineCapacity', 'bodyType', 'color', 'fuelType'];
+const optionsFields = ['transmission', 'make', 'model', 'state', 'area', 'year', 'price', 'mileage', 'engineCapacity', 'bodyType', 'color', 'fuelType'];
 let inputRefs = {};
 for (let index = 0; index < optionsFields.length; index++) {
     inputRefs[optionsFields[index] + 'Ref'] = React.createRef();
+
 }
+const ProductsListFilterCollapse = (props) => {
 
-const ProductsListFilterForm = (props) => {
-
-    const [title, setTitle] = useState('')
     const [moreOptionModalVisible, setMoreOptionModalVisible] = useState(false)
     const [makeModalVisible, setMakeModalVisible] = useState(false)
     const [modelModalVisible, setModelModalVisible] = useState(false)
@@ -81,9 +80,11 @@ const ProductsListFilterForm = (props) => {
     const [fuelTypeModalVisible, setFuelTypeModalVisible] = useState(false)
 
     const [fieldThatShowRangeTitle, setFieldThatShowRangeTitle] = useState('year')
+    const [stopCheckingCollapse, setStopCheckingCollapse] = useState(false);
     const [isDropDownOpen, setIsDropDownOpen] = useState(false)
     const [collapseFields, setCollapseFields] = useState([])
-    const [containerHeight, setContainerHeight] = useState(400)
+    const [containerHeight, setContainerHeight] = useState(500)
+    const [formHeight, setFormHeight] = useState(500)
     const [formActualHeight, setFormActualHeight] = useState();
     const [filterGroup, setFilterGroup] = useState({})
     const [origOptions, setOrigOptions] = useState({
@@ -122,14 +123,6 @@ const ProductsListFilterForm = (props) => {
         }
     }, []);
 
-    useEffect(() => {
-
-        if (filterGroup.title) {
-            setTitle(filterGroup.title);
-        } else {
-            setTitle('');
-        }
-    }, [filterGroup])
 
     useEffect(() => {
         setOrigOptions(_.isPlainObject(props.productsList.filterOptions) && !_.isEmpty(props.productsList.filterOptions) ? props.productsList.filterOptions : {});
@@ -146,6 +139,7 @@ const ProductsListFilterForm = (props) => {
     }, [makeModalVisible, modelModalVisible, stateModalVisible, areaModalVisible, bodyTypeModalVisible, colorModalVisible, fuelTypeModalVisible, drivenwheelModalVisible, isDropDownOpen])
 
     useEffect(() => {
+
         props.fetchFilterModalState(isModalOpen())
     }, [makeModalVisible, modelModalVisible, stateModalVisible, areaModalVisible, bodyTypeModalVisible, colorModalVisible, fuelTypeModalVisible, drivenwheelModalVisible])
 
@@ -340,6 +334,15 @@ const ProductsListFilterForm = (props) => {
         setFilterGroup({});
     }
 
+    function isCollapse(field) {
+        if (notEmptyLength(collapseFields)) {
+            return _.some(collapseFields, function (item) {
+                return item == field;
+            })
+        } else {
+            return false;
+        }
+    }
     const _renderRangeTitle = () => {
         return <Row>
             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -357,52 +360,9 @@ const ProductsListFilterForm = (props) => {
 
     const _renderFormItem = (item) => {
         switch (item) {
-            case 'title':
-                return (
-                    <React.Fragment>
-                        <div className="padding-bottom-xs">
-                            <Input
-                                placeholder="Search Title"
-                                suffix={
-                                    <Icon type="search" className="cursor-pointer" onClick={(e) => {
-                                        setFilterGroup({
-                                            ...filterGroup,
-                                            title: title,
-                                        })
-                                    }} />
-                                }
-                                value={title}
-                                onChange={(e) => {
-                                    setTitle(e.target.value)
-                                }}
-                                onPressEnter={(e) => {
-                                    setFilterGroup({
-                                        ...filterGroup,
-                                        title: e.target.value
-                                    })
-                                }}
-                            >
-                            </Input>
-                        </div>
-                    </React.Fragment>
-                );
-
             case 'condition':
                 return (
                     <React.Fragment>
-
-                        {/* <Row style={{ marginBottom: 5 }}>
-                            <Col span={22} style={{ textAlign: "left" }}>
-                                <label style={{ color: '#FBB040', fontWeight: '500', marginLeft: '10px' }}>Condition</label>
-                            </Col>
-                            <Col span={2}>
-                                <CloseOutlined
-                                    style={{ color: "grey", fontSize: '13px' }}
-                                    className='cursor-pointer'
-                                    onClick={(e) => { setFilterGroup({ ...filterGroup, condition: '' }) }}
-                                />
-                            </Col>
-                        </Row> */}
                         <Form.Item style={{ margin: '0px', marginBottom: '0px', padding: '2px 2px 0px 0px' }}>
                             <Radio.Group className='condition-form ' style={{ textAlign: 'center', width: '100%', padding: '0px' }} value={filterGroup.condition || ''} onChange={(e) => { setFilterGroup({ ...filterGroup, condition: _.toLower(e.target.value) == _.toLower(filterGroup.condition) ? '' : _.toLower(e.target.value) }) }} >
                                 <Row gutter={[10, 0]} type="flex" align="middle" justify="space-around" className='fill-parent'>
@@ -435,8 +395,7 @@ const ProductsListFilterForm = (props) => {
             case 'transmission':
                 return (
                     <React.Fragment>
-
-                        <div className="padding-bottom-xs">
+                        <Form.Item style={{ margin: '0px', padding: '2px 2px 0px 0px' }}>
                             <Radio.Group className="w-100 condition-form" style={{ textAlign: 'center' }} value={filterGroup.transmission || ''} onChange={(e) => { setFilterGroup({ ...filterGroup, transmission: _.toLower(e.target.value) }) }} >
                                 <Row type="flex" align="middle" justify="center" className='fill-parent' >
                                     <Col xs={24} sm={24} md={24} lg={10} xl={10} >
@@ -449,7 +408,7 @@ const ProductsListFilterForm = (props) => {
                                     </Col>
                                 </Row>
                             </Radio.Group>
-                        </div>
+                        </Form.Item>
                     </React.Fragment>
                 );
 
@@ -834,19 +793,6 @@ const ProductsListFilterForm = (props) => {
             case 'price':
                 return (
                     <React.Fragment>
-                        {/* <Row>
-                                <Col span={22}>
-                                    <label style={{ color: '#FBB040', fontWeight: '500', marginLeft: '12px' }}>Price</label>
-                                </Col>
-                                <Col span={2}>
-                                    <CloseOutlined
-                                        style={{ color: "grey", fontSize: '13px', marginBottom: '10px' }}
-                                        className='cursor-pointer'
-                                        onClick={(e) => { setFilterGroup({ ...filterGroup, priceRange: [undefined, undefined] }) }}
-                                    />
-                                </Col>
-                            </Row> */}
-
                         {
                             fieldThatShowRangeTitle == item ?
                                 _renderRangeTitle()
@@ -917,18 +863,6 @@ const ProductsListFilterForm = (props) => {
             case 'engineCapacity':
                 return (
                     <React.Fragment>
-                        {/* <Row>
-                                    <Col span={22}>
-                                        <label style={{ color: '#FBB040', fontWeight: '500', marginLeft: '12px' }}>Price</label>
-                                    </Col>
-                                    <Col span={2}>
-                                        <CloseOutlined
-                                            style={{ color: "grey", fontSize: '13px', marginBottom: '10px' }}
-                                            className='cursor-pointer'
-                                            onClick={(e) => { setFilterGroup({ ...filterGroup, priceRange: [undefined, undefined] }) }}
-                                        />
-                                    </Col>
-                                </Row> */}
 
                         {
                             fieldThatShowRangeTitle == item ?
@@ -1000,18 +934,6 @@ const ProductsListFilterForm = (props) => {
             case 'mileage':
                 return (
                     <React.Fragment>
-                        {/* <Row>
-                                <Col span={22}>
-                                    <label style={{ color: '#FBB040', fontWeight: '500', marginLeft: '12px' }}>Mileage</label>
-                                </Col>
-                                <Col span={2}>
-                                    <CloseOutlined
-                                        style={{ color: "grey", fontSize: '13px', marginBottom: '10px' }}
-                                        className='cursor-pointer'
-                                        onClick={(e) => { setFilterGroup({ ...filterGroup, mileageRange: [undefined, undefined] }) }}
-                                    />
-                                </Col>
-                            </Row> */}
 
                         {
                             fieldThatShowRangeTitle == item ?
@@ -1088,14 +1010,33 @@ const ProductsListFilterForm = (props) => {
 
 
     return (
-        <span className='d-inline-block width-100' ref={containerRef} style={{ ...props.style, position: 'relative' }}>
+        <span className='d-inline-block width-100' ref={containerRef} style={{ ...props.style, zIndex: 1001, position: 'relative', maxHeight: `${containerHeight}px` }}>
             <Card
                 bordered={false}
                 title="Quick Filter"
                 size="small"
+                style={{ zIndex: 1001 }}
                 className='width-100 card-padding-0'
+                extra={
+                    <Tooltip title="Reset Filter">
+                        <Button
+                            style={{
+                                border: 'none',
+                                background: 'none',
+                                color: 'red',
+                                padding: 0,
+                                fontSize: 12,
+                                fontWeight: 500
+                            }} className="w-100 h-100"
+                            onClick={(e) => { resetFilterGroup() }} >
+                            {/* <img src="/assets/General/reset.png" style={{ width: '16px', marginRight: 4, paddingBottom: 2 }} /> */}
+
+                            <Icon type="reload" />
+                        </Button>
+                    </Tooltip>
+                }
             >
-                <div>
+                <div style={{ maxHeight: `${formHeight}px`, overflow: 'hidden' }}>
                     <div ref={formRef} className='padding-sm' >
                         <Form
                             // {...layout}
@@ -1107,7 +1048,12 @@ const ProductsListFilterForm = (props) => {
                                     _.map(optionsFields, function (option, i) {
                                         return (
                                             <div key={'optionsFields' + i} ref={inputRefs[`${option}Ref`]} className=''>
-                                                {_renderFormItem(option)}
+                                                {
+                                                    !isCollapse(option) ?
+                                                        _renderFormItem(option)
+                                                        :
+                                                        null
+                                                }
                                             </div>
                                         )
                                     })
@@ -1129,26 +1075,6 @@ const ProductsListFilterForm = (props) => {
                 </div>
             </Card>
 
-            {/* <img src={cnyLionHead} style={{ width: 55, height: 90, position: 'absolute', right: -15, top: -60, }}></img> */}
-
-            <span className='d-inline-block cursor-pointer' style={{ position: 'absolute', right: 18, top: 7, }}>
-                <Tooltip title="Reset Filter">
-                    <Button
-                        style={{
-                            border: 'none',
-                            background: 'none',
-                            color: 'red',
-                            padding: 0,
-                            fontSize: 12,
-                            fontWeight: 500
-                        }} className="w-100 h-100"
-                        onClick={(e) => { resetFilterGroup() }} >
-                        {/* <img src="/assets/General/reset.png" style={{ width: '16px', marginRight: 4, paddingBottom: 2 }} /> */}
-
-                        <Icon type="reload" />
-                    </Button>
-                </Tooltip>
-            </span>
             <div
                 id="moreOptionModal"
                 className={`background-white ${moreOptionModalVisible ? 'd-inline-block' : 'd-none'}`}
@@ -1160,6 +1086,7 @@ const ProductsListFilterForm = (props) => {
                         top: 0,
                         bottom: 0,
                         margin: 0,
+                        zIndex: 1001,
                         width: `${moreOptionModalWidth}px`,
                         height: 'fit-content'
                     }
@@ -1191,7 +1118,6 @@ const ProductsListFilterForm = (props) => {
                         :
                         null
                 }
-
             </div>
 
             <MakeModal
@@ -1372,11 +1298,10 @@ const mapStateToProps = state => ({
     productsList: state.productsList,
 });
 
-
 const mapDispatchToProps = {
     fetchProductFilterOptions,
     clearProductFilterOptions,
     fetchFilterModalState,
 
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(ProductsListFilterForm)));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(ProductsListFilterCollapse)));

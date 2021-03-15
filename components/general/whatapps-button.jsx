@@ -52,6 +52,28 @@ const WhatsAppButton = (props) => {
                     }
                 </a>
             </Default>
+            <Mobile>
+                <a  href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://wa.me/" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://share.ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => {
+                    if (!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary'])) {
+                        message.error('Whatsapp No Not Found')
+                    }
+                }}  >
+                    {
+                        props.button ?
+                            props.button()
+                            :
+                            <Button
+                                type="normal"
+                                className="w-100 ads-purchase-button ccar-product-btn-car"
+                                style={{ padding: 0 }}
+                            >
+                                {/* <WhatsAppOutlined style={{ fontSize: 20, color: 'white' }} /> */}
+                                <img src="/assets/profile/icon-list/carmarket-bar-icon/whatsapp.png" style={{ width: '20px' }} />
+                            </Button>
+                    }
+                </a>
+                {/* </Tooltip> */}
+            </Mobile>
         </span>
     );
 }

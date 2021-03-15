@@ -292,19 +292,19 @@ const SocialVideoTabs = (props) => {
     }
     return (
         <React.Fragment>
-            <div className="flex-items-align-stretch">
+            <div className="flex-items-align-stretch authorList">
                 {
                     props.hideAuthorList != null || props.hideAuthorList == true || arrayLengthCount(authorList) <= 0 ?
                         null
                         :
-                        <span className="d-inline-block thin-border background-white round-border margin-right-sm width-auto">
+                        <span className="d-inline-block thin-border background-white round-border margin-right-sm width-auto author-hide">
                             <Scrollbars autoHide autoHeight autoHeightMax={700}>
                                 {_renderAuthorList(notEmptyLength(authorList) ? authorList : [])}
                             </Scrollbars>
                         </span>
 
                 }
-                <span className="d-inline-block thin-border background-white  margin-left-sm width-auto flex-items-grow-max" >
+                <span className="d-inline-block thin-border background-white  margin-left-sm width-auto flex-items-grow-max content" >
                     <Loading spinning={videoLoading}>
                         {
                             notEmptyLength(videolist) ?

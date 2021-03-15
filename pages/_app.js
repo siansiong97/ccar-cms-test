@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css';
+
 import '../styles/index.css';
 import '../styles/overwrite.css';
 import '../styles/main.css';
@@ -67,6 +67,7 @@ const WrappedApp = ({ Component, pageProps, router }) => {
       />
       <Head>
         <link rel="icon" href="https://yt3.ggpht.com/a/AATXAJyACAnnk58_qfVZqvjaTkavsxOb8dSYGeciv4a7=s88-c-k-c0x00ffffff-no-rj" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <RouterContextProvider>
         <PageTransition>

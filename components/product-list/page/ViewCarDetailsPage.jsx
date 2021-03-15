@@ -133,21 +133,6 @@ class ViewCarDetailsPage extends React.Component {
     )
   }
 
-  // _renderImagesMobile(){
-  //     var imgList = this.props.productsList.activeproductList.carUrl.map((v, i) => {
-  //         return (
-  //             <div className="dot-img-mobile" onClick={()=>{this.setState({ currentImg: i })}}>
-  //                 <img src={v.url}/>
-  //             </div>
-  //         );
-  //       });
-
-  //     return(
-  //         <div className="wrap-dot-img-mobile" id="wrap-dot-img-mobile">
-  //             {imgList}
-  //       </div>
-  //     )
-  // }
 
   dotScrollToBottom() {
     // this.onClickShow()
@@ -215,16 +200,6 @@ class ViewCarDetailsPage extends React.Component {
     }
   }
 
-  // dotScrollToBottomMobile(){
-  //     const objDiv = document.getElementById("wrap-dot-img-mobile");
-  //     objDiv.scrollTop = objDiv.scrollTop + 30;
-  // }
-
-  // dotScrollToTopMobile(){
-  //     const objDiv = document.getElementById("wrap-dot-img-mobile");
-  //     objDiv.scrollTop = objDiv.scrollTop - 30;
-  // }
-
   breadcrumbSearchCondition = (v) => {
 
     let path = convertParameterToProductListUrl({ condition: v });
@@ -272,227 +247,106 @@ class ViewCarDetailsPage extends React.Component {
     }
   }
 
-  // _formatCountdown = (value, fixedPoint) => {
-  //   if (value != null) {
-  //     if (isNaN(parseFloat(value))) {
-  //       return value;
-  //     } else {
-  //       value = value.toString().split('.');
-  //       if (value[0]) {
-  //         if (value[0].length > fixedPoint) {
-  //           value[0] = value[0].slice(value[0].length - fixedPoint);
-  //         }
-
-  //         if (value[0].length < fixedPoint) {
-  //           _.forEach(_.range(fixedPoint - value[0].length), function () {
-  //             value[0] = '0' + value[0];
-  //           })
-  //         }
-  //         return value[0];
-  //       }
-  //       return value;
-  //     }
-  //   } else {
-  //     return value;
-  //   }
-  // }
-
-  // _renderCountdown = () => {
-  //   const duration = moment.duration(moment().diff(moment()));
-  //   const days = Math.floor(duration.asDays());
-  //   const daysFormatted = days ? `${days}` : 0;
-  //   const hours = duration.hours();
-  //   const hoursFormatted = hours ? `${hours}` : 0;
-
-  //   return (
-  //     <p style={{ marginLeft: '10px', color: 'white' }}>
-  //       <span style={{ fontSize: '10px', verticalAlign: 'super' }}>D </span>
-  //       <span style={{ backgroundColor: '#d62828', borderRadius: '3px', fontWeight: '900', fontSize: '15px', padding: '1px 2px' }}>{_formatCountdown(daysFormatted, 2)}</span>
-  //       <span style={{ fontSize: '10px', verticalAlign: 'super' }}> H </span>
-  //       <span style={{ backgroundColor: '#d62828', borderRadius: '3px', fontWeight: '900', fontSize: '15px', padding: '1px 2px' }}>{_formatCountdown(hoursFormatted, 2)}</span>
-  //       <div className="overlay-price"> <img src={flame}/> </div>
-  //       <img src={flame} style={{marginTop:'-20px', width:'25%', marginRight:'-97px'}}/>
-  //     </p>
-  //   )
-  // }
-
-  // _renderPrice = () => {
-  //   const currentDateTime = moment().format();
-  //   const addon = _.find(this.state.productDetails.addon, { 'addonType': 'spicydeal' });
-  //   const addon2 = _.find(this.state.productDetails.addon, { 'addonType': 'kingad' });
-
-  //   if (this.state.productDetails.addon && (addon||addon2)) {
-  //     if(addon){
-  //     if (currentDateTime < addon.endDate) {
-  //       if (addon.addonType === 'spicydeal' && addon.showPrice === 'show') {
-  //         return (
-  //           <div className="wrap-product-ads-price">
-  //             <span style={{ textDecoration: 'line-through', fontSize: '12px', marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((this.state.productDetails.price).toString())}</span>
-  //             <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((addon.discountedPrice).toString())}</h4>
-  //             <Row>
-  //               <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //                 <p style={{ marginLeft: '10px', color: '#a9d46f' }}>RM {formatMoney((calMonth(addon.discountedPrice)).toString())}/month</p>
-  //               </Col>
-  //             </Row>
-  //           </div>
-  //         )
-  //       } else if (addon.addonType === 'spicydeal' && addon.showPrice === 'hide') {
-  //         return (
-  //           <div className="wrap-product-ads-countdown-spicydeal">
-  //             <span style={{ marginLeft: '10px', color: '#f9f5ef' }}><span>SuperDeal Ends in</span></span> <img src={flame} />
-  //             <Row>
-  //               <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //                 {_renderCountdown(addon.endDate)}
-  //               </Col>
-  //             </Row>
-  //           </div>
-  //         )
-  //       } else {
-  //         return (
-  //           <div className="wrap-product-ads-price">
-  //             <Row>
-  //               <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //                 <p style={{ marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((calMonth(this.state.productDetails.price)).toString())}/month</p>
-  //               </Col>
-  //             </Row>
-
-  //             <h4 style={{ marginLeft: '10px' }}>RM {formatMoney((this.state.productDetails.price).toString())}</h4>
-
-  //           </div>
-  //         )
-  //       }
-  //     } 
-  //   }
-  //     else if (this.state.productDetails.addon && addon2) {
-  //       if (currentDateTime < addon2.endDate) {
-  //         if (addon2.addonType === 'kingad' && addon2.showPrice === 'show') {
-  //           return (
-  //             <div className="wrap-product-ads-price">
-  //               <span style={{ textDecoration: 'line-through', fontSize: '12px', marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((this.state.productDetails.price).toString())}</span> 
-  //               <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((addon2.discountedPrice).toString())}</h4>
-  //               <Row>
-  //                 <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //                   <p style={{ marginLeft: '10px', color: '#a9d46f' }}>RM {formatMoney((calMonth(addon2.discountedPrice)).toString())}/month</p>
-  //                 </Col>
-  //               </Row>
-  //             </div>
-  //           )
-  //         } else if (addon2.addonType === 'kingad' && addon2.showPrice === 'hide') {
-  //           return (
-  //             <div className="wrap-product-ads-countdown-spicydeal">
-  //             <span style={{ marginLeft: '10px', color: '#f9f5ef' }}><span>SuperDeal Ends in</span></span> <img src={flame} />
-  //             <Row>
-  //               <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //                 {_renderCountdown(addon2.endDate)}
-  //               </Col>
-  //             </Row>
-  //           </div>
-  //           )
-  //         }
-  //       }
-  //     }
-  //     else {
-  //       return (
-  //         <div className="wrap-product-ads-price">
-  //           <Row>
-  //             <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //               <p style={{ marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((calMonth(this.state.productDetails.price)).toString())}/month</p>
-  //             </Col>
-  //           </Row>
-
-  //           <h4 style={{ marginLeft: '10px' }}>RM {formatMoney((this.state.productDetails.price).toString())}</h4>
-
-  //         </div>
-  //       )
-  //     }
-  //   } else {
-  //     return (
-  //       <div className="wrap-product-ads-price">
-  //         <Row>
-  //           <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-  //             <span style={{ marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((calMonth(this.state.productDetails.price)).toString())}/month</span>
-  //           </Col>
-  //         </Row>
-
-  //         <h4 style={{ marginLeft: '10px' }}>RM {formatMoney((this.state.productDetails.price).toString())}</h4>
-
-  //       </div>
-  //     )
-  //   }
-  // }
-
-  // _renderDiscount = () => {
-  //   const currentDateTime = moment().format();
-  //   const addon = _.find(this.state.productDetails.addon, { 'addonType': 'spicydeal' });
-  //   const addon2 = _.find(this.state.productDetails.addon, { 'addonType': 'kingad' });
-
-  //   const pattern = /\.(\d*?)0+(\D*)$/gm;
-  //   if (this.state.productDetails.addon && addon) {
-  //     if (currentDateTime < addon.endDate) {
-  //       if (addon.addonType === 'spicydeal' && addon.showPrice === 'show') {
-  //         return (
-  //           // <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{addon ? '-' + ((100 * (v.price - addon.discountedPrice) / v.price).toFixed(1).toString()).replace(pattern, '') + '%' : 0}</span>
-  //           <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{addon ? (((100 * (this.state.productDetails.price - addon.discountedPrice) / this.state.productDetails.price) * -1).toFixed(1).toString()).replace(pattern, '') + '%' : 0}</span>
-  //         )
-  //       }
-  //     }
-  //   } else if (this.state.productDetails.addon && addon2) {
-  //     if (currentDateTime < addon2.endDate) {
-  //       if (addon2.addonType === 'kingad' && addon2.showPrice === 'show') {
-  //         return (
-  //           <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{addon ? (((100 * (this.state.productDetails.price - addon.discountedPrice) / this.state.productDetails.price) * -1).toFixed(1).toString()).replace(pattern, '') + '%' : 0}</span>
-  //         )
-  //       }
-  //     }
-  //   }
-  // }
-
   _renderPrice = () => {
-    const currentDateTime = moment().format();
-    const addon = _.find(this.state.productDetails.addon, { 'addonType': 'spicydeal' });
-    const addon2 = _.find(this.state.productDetails.addon, { 'addonType': 'kingad' });
 
-    if (addon) {
-      if (currentDateTime < addon.endDate) {
-        if (addon.addonType === 'spicydeal' && addon.showPrice === 'show') {
-          return (
-            <div className="wrap-viewProducts-price">
-              <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((addon.discountedPrice ? addon.discountedPrice : 0).toString())}</label>
-              <p>RM {formatMoney((calMonth(addon.discountedPrice ? addon.discountedPrice : 0)).toString())}/month</p>
-              <img src={flame} style={{ width: '10%' }} alt="CCAR Spicy Deal Flame Icon" />
-            </div>
-          )
-        } else if (addon.addonType === 'spicydeal' && addon.showPrice === 'hide') {
-          return (
-            <div className="wrap-viewProducts-price">
-              {/* <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((this.state.productDetails.price ? this.state.productDetails.price : 0).toString())}</label>
-              <p>RM {formatMoney((calMonth(this.state.productDetails.price ? this.state.productDetails.price : 0)).toString())}/month</p> */}
-            </div>
-          )
-        } else {
-          return (
-            <div className="wrap-viewProducts-price">
-              <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((this.state.productDetails.price ? this.state.productDetails.price : 0).toString())}</label>
-              <p>RM {formatMoney((calMonth(this.state.productDetails.price ? this.state.productDetails.price : 0)).toString())}/month</p>
-            </div>
-          )
-        }
-      } else {
-        return (
-          <div className="wrap-viewProducts-price">
-            <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((this.state.productDetails.price ? this.state.productDetails.price : 0).toString())}</label>
-            <p>RM {formatMoney((calMonth(this.state.productDetails.price ? this.state.productDetails.price : 0)).toString())}/month</p>
-          </div>
-        )
-      }
-    } else {
+    let v = this.state.productDetails
+
+    if (_.isEmpty(v) === true) { return }
+
+    if (_.isEmpty(v.carspecsAll) === true &&
+      _.isEmpty(v.companys) === true &&
+      _.isEmpty(v.condition) === true &&
+      _.isEmpty(v.registrationUrl) === true
+    ) { return }
+
+
+    let normalPrice =
+      (<div className="wrap-product-ads-price">
+        <Row><Col xs={14} sm={14} md={16} lg={16} xl={16}><span style={{ color: '#20abcc' }} className='installmentPrice'>RM {formatMoney((calMonth(v.price)).toString())}/month</span></Col></Row>
+        <h4 style={{ marginLeft: '10px' }}>RM {formatMoney((v.price).toString())}</h4>
+      </div>)
+
+    function renderShowPrice(price, discountedPrice) {
+
+      const pattern = /\.(\d*?)0+(\D*)$/gm;
       return (
-        <div className="wrap-viewProducts-price">
-          <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((this.state.productDetails.price ? this.state.productDetails.price : 0).toString())}</label>
-          <p>RM {formatMoney((calMonth(this.state.productDetails.price ? this.state.productDetails.price : 0)).toString())}/month</p>
+        <div className="wrap-product-ads-price">
+          <span style={{ color: '#000000' }} className='gridMoneyText'>RM {formatMoney((price).toString())}</span>
+          <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{(((100 * (price - discountedPrice) / price) * -1).toFixed(1).toString()).replace(pattern, '') + '%'}</span>
+          <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((discountedPrice).toString())}</h4>
+          <div className="wrap-product-ads-price">
+            <Row><Col xs={14} sm={14} md={16} lg={16} xl={16}><span style={{ color: '#20abcc' }} className='installmentPrice'>RM {formatMoney((calMonth(discountedPrice)).toString())}/month</span></Col></Row>
+          </div>
         </div>
       )
     }
+
+    function renderCountdown(endDate) {
+
+      const duration = moment.duration(moment(endDate).diff(moment()));
+      const days = Math.floor(duration.asDays());
+      const daysFormatted = days ? `${days}` : 0;
+      const hours = duration.hours();
+      const minutes = duration.minutes();
+      const hoursFormatted = hours ? `${hours}` : 0;
+      const minutesFormatted = minutes ? `${minutes}` : 0;
+
+      const formatCountdown = (value, fixedPoint) => {
+        if (value != null) {
+          if (isNaN(parseFloat(value))) {
+            return value;
+          } else {
+            value = value.toString().split('.');
+            if (value[0]) {
+              if (value[0].length > fixedPoint) {
+                value[0] = value[0].slice(value[0].length - fixedPoint);
+              }
+
+              if (value[0].length < fixedPoint) {
+                _.forEach(_.range(fixedPoint - value[0].length), function () {
+                  value[0] = '0' + value[0];
+                })
+              }
+              return value[0];
+            }
+            return value;
+          }
+        } else {
+          return value;
+        }
+      }
+
+
+      return (
+        <div className="wrap-product-ads-countdown-spicydeal">
+          <span className='gridAddonMainText' style={{ marginLeft: '10px', color: '#000000' }} ><span>SuperDeal Ends in</span></span>
+          <Row>
+            <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+              <p className='gridAddonDayHourSubText'>
+
+                <span style={{ color: '#000000' }} className='gridAddonDayHourText'>D </span>
+                <span className='gridAddonDayHour'>{formatCountdown(daysFormatted, 2)}</span>
+                <span style={{ color: '#000000' }} className='gridAddonDayHourText'> H </span>
+                <span className='gridAddonDayHour'>{formatCountdown(hoursFormatted, 2)}</span>
+                <span style={{ color: '#000000' }} className='gridAddonDayHourText'> M </span>
+                <span className='gridAddonDayHour'>{formatCountdown(minutesFormatted, 2)}</span>
+              </p>
+            </Col>
+          </Row>
+        </div>
+      )
+
+    }
+
+    if (v.priority === 'addonKingadType') { return renderShowPrice(v.price, v.addonKingadType.discountedPrice) }
+    else if (v.priority === 'addonKingadType2') { return renderCountdown(v.addonKingadType2.endDate) }
+    else if (v.priority === 'addonSpicydeal') {
+      if (v.addonSpicydeal.showPrice === 'show') { return renderShowPrice(v.price, v.addonSpicydeal.discountedPrice) }
+      if (v.addonSpicydeal.showPrice === 'hide') { return renderCountdown(v.addonSpicydeal.endDate) }
+    }
+
+    else { return (normalPrice) }
+
   }
 
   _renderPriceAffix = () => {
@@ -511,8 +365,7 @@ class ViewCarDetailsPage extends React.Component {
         } else if (addon.addonType === 'spicydeal' && addon.showPrice === 'hide') {
           return (
             <div className="wrap-viewProducts-price-affix">
-              {/* <label style={{ color: 'rgb(190,150,46)' }}>RM {formatMoney((this.state.productDetails.price ? this.state.productDetails.price : 0).toString())}</label>
-              <p>RM {formatMoney((calMonth(this.state.productDetails.price ? this.state.productDetails.price : 0)).toString())}/month</p> */}
+
             </div>
           )
         } else {
@@ -623,7 +476,7 @@ class ViewCarDetailsPage extends React.Component {
                         </span>
                         <span className="d-inline-block">
                           <Car360ViewButton id={this.state.productDetails.xmlUrl ? this.state.productDetails._id : null} >
-                            <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon"/></Button>
+                            <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon" /></Button>
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
@@ -974,7 +827,7 @@ class ViewCarDetailsPage extends React.Component {
 
                           <span className="d-inline-block">
                             <Car360ViewButton id={this.state.productDetails.xmlUrl ? this.state.productDetails._id : null} >
-                              <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon"/></Button>
+                              <Button type="normal" className={`padding-x-sm margin-xs ${this.state.productDetails.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ background: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: this.state.productDetails.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', minWidth: '50px' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" style={{ width: '25px', height: '25px' }} alt="Car 360 View Icon" /></Button>
                             </Car360ViewButton>
                           </span>
                         </span>

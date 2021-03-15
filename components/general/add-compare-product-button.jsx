@@ -1,14 +1,14 @@
+import { Form } from '@ant-design/compatible';
 import { Button, message, Modal, Tooltip } from 'antd';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'next/dist/client/router';
-import { Form } from '@ant-design/compatible';
-import { addCompareProductId, clearCompareProductIds, patchCompareProductIds, removeCompareProductId } from '../../redux/actions/productsList-actions';
-import { loading } from '../../redux/actions/app-actions';
-import { setUser } from '../../redux/actions/user-actions';
 import { arrayLengthCount, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
+import { loading } from '../../redux/actions/app-actions';
+import { clearCompareProductIds, patchCompareProductIds, removeCompareProductId } from '../../redux/actions/productsList-actions';
+import { setUser } from '../../redux/actions/user-actions';
 
 
 
@@ -54,15 +54,13 @@ const AddCompareProductButton = (props) => {
           }
         }).then(res => {
           if (notEmptyLength(res.data)) {
-            _.forEach(res.data, function (item) {
-              ids.push(item._id);
-            })
-            props.patchCompareProductIds(ids);
           } else {
             props.clearCompareProductIds();
           }
 
-          props.addCompareProductId(data._id);
+          ids = _.map(_.get(res, ['data']), '_id') || [];
+          ids.push(data._id);
+          props.patchCompareProductIds(ids);
           message.success('Added to comparison list')
         }).catch(err => {
           // message.error(err.message)
@@ -71,7 +69,7 @@ const AddCompareProductButton = (props) => {
       }
       else {
         message.success('Added to comparison list')
-        props.addCompareProductId(data._id);
+        props.patchCompareProductIds([data._id]);
       }
     } else {
       message.error("Product Not Found")
@@ -126,7 +124,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loading: loading,
   setUser: setUser,
-  addCompareProductId: addCompareProductId,
   removeCompareProductId: removeCompareProductId,
   patchCompareProductIds: patchCompareProductIds,
   clearCompareProductIds: clearCompareProductIds,
