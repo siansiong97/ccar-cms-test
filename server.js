@@ -19,6 +19,26 @@ app.prepare().then(() => {
     return app.render(req, res, `/viewCar/${_.get(req, 'params.id') || ''}`, req.query)
   })
 
+  server.get('/profile/:id', (req, res) => {
+    return app.render(req, res, `/profile/${_.get(req, 'params.id') || ''}`, req.query)
+  })
+
+  server.get('/car-freaks/:id', (req, res) => {
+    return app.render(req, res, `/car-freaks/${_.get(req, 'params.id') || ''}`, req.query)
+  })
+
+  server.get('/social-board/:id', (req, res) => {
+    return app.render(req, res, `/social-board/${_.get(req, 'params.id') || ''}`, req.query)
+  })
+
+  server.get('/social-club/:id', (req, res) => {
+    return app.render(req, res, `/social-club/${_.get(req, 'params.id') || ''}`, req.query)
+  })
+
+  server.get('/newcar/details/:make/:model', (req, res) => {
+    return app.render(req, res, `/newcar/details/${_.get(req, 'params.make') || ''}/${_.get(req, 'params.model') || ''}`, req.query)
+  })
+
   server.all('*', (req, res) => {
     return handle(req, res)
   })

@@ -35,7 +35,24 @@ const WrappedApp = ({ Component, pageProps, router }) => {
   let title = _.get(seoData, ['title']) || 'CCAR.MY | #1 Car Social Platform'
   let basePath = checkEnvReturnCmsUrl(client.io.io.uri);
   let url = seoData.url || `${basePath}${router.asPath}`;
-  console.log('router', router);
+
+  if (!_.isArray(seoData.images)) {
+
+    if (_.isString(seoData.images)) {
+      seoData.images = [{
+        url : seoData.images,
+        alt : 'CCAR Image Preview',
+      }];
+    } else {
+      seoData.images = [
+        {
+          url: `${basePath}${ccarWebLogo400X150}`,
+          alt: `CCAR Logo`,
+        }
+      ];
+    }
+  }
+
 
   return (
     <React.Fragment>
@@ -50,10 +67,7 @@ const WrappedApp = ({ Component, pageProps, router }) => {
           type: 'website',
           site_name: 'CCAR SDN BHD',
           images: [
-            {
-              url: `${basePath}${ccarWebLogo400X150}`,
-              alt: `CCAR Logo`,
-            }
+            ...seoData.images,
           ]
         }}
         twitter={{

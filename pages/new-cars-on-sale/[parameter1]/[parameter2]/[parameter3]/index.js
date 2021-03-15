@@ -6,6 +6,7 @@ import carAdsFilter from '../../../../../api/carAdsFilter'
 import CarMarketPage from '../../../../../components/product-list/page/CarMarketPage'
 import { loading } from '../../../../../redux/actions/app-actions'
 import { convertProductRouteParamsToFilterObject, getCarMarketSeoData } from '../../../../../common-function'
+import ReduxPersistWrapper from '../../../../../components/general/ReduxPersistWrapper'
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
 const antIcon = <img src="/assets/Ccar-logo.png" style={{ fontSize: 60 }} />;

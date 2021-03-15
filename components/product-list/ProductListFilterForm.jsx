@@ -1194,175 +1194,183 @@ const ProductsListFilterForm = (props) => {
 
             </div>
 
-            <MakeModal
-                visible={makeModalVisible}
-                onCancel={(e) => { setMakeModalVisible(false) }}
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0,
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, make: _.toLower(data), model: undefined }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.make}
-                id="make-modal"
-                options={notEmptyLength(origOptions.makeList) ? origOptions.makeList : []} />
+            {
+                containerRef.current ?
+                    <React.Fragment>
 
-            <ModelModal
-                visible={modelModalVisible}
-                onCancel={(e) => { setModelModalVisible(false) }}
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, model: _.toLower(data) }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.model}
-                id="model-modal"
-                options={_.isArray(modelOptions) && notEmptyLength(modelOptions) && filterGroup.make ? modelOptions : null}
-                loading={modelLoading}
-            />
+                        <MakeModal
+                            visible={makeModalVisible}
+                            onCancel={(e) => { setMakeModalVisible(false) }}
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0,
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, make: _.toLower(data), model: undefined }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.make}
+                            id="make-modal"
+                            options={notEmptyLength(origOptions.makeList) ? origOptions.makeList : []} />
 
-            <StateModal
-                visible={stateModalVisible}
-                onCancel={(e) => { setStateModalVisible(false) }}
+                        <ModelModal
+                            visible={modelModalVisible}
+                            onCancel={(e) => { setModelModalVisible(false) }}
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, model: _.toLower(data) }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.model}
+                            id="model-modal"
+                            options={_.isArray(modelOptions) && notEmptyLength(modelOptions) && filterGroup.make ? modelOptions : null}
+                            loading={modelLoading}
+                        />
 
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, state: _.toLower(data), area: undefined }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.state}
-                id="state-modal"
-                options={isObject(props.availableFilterOption) ? props.availableFilterOption.stateList : notEmptyLength(origOptions.stateList) ? origOptions.stateList : null} />
+                        <StateModal
+                            visible={stateModalVisible}
+                            onCancel={(e) => { setStateModalVisible(false) }}
 
-            <AreaModal
-                visible={areaModalVisible}
-                onCancel={(e) => { setAreaModalVisible(false) }}
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, area: _.toLower(data) }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.area}
-                id="area-modal"
-                options={_.isArray(_.get(props.availableFilterOption, ['areaList'])) && !_.isEmpty(_.get(props.availableFilterOption, ['areaList'])) ? _.get(props.availableFilterOption, ['areaList']) : []}
-                loading={modelLoading}
-            />
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, state: _.toLower(data), area: undefined }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.state}
+                            id="state-modal"
+                            options={isObject(props.availableFilterOption) ? props.availableFilterOption.stateList : notEmptyLength(origOptions.stateList) ? origOptions.stateList : null} />
 
-            <BodyTypeModal
-                visible={bodyTypeModalVisible}
-                onCancel={(e) => { setBodyTypeModalVisible(false) }}
+                        <AreaModal
+                            visible={areaModalVisible}
+                            onCancel={(e) => { setAreaModalVisible(false) }}
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, area: _.toLower(data) }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.area}
+                            id="area-modal"
+                            options={_.isArray(_.get(props.availableFilterOption, ['areaList'])) && !_.isEmpty(_.get(props.availableFilterOption, ['areaList'])) ? _.get(props.availableFilterOption, ['areaList']) : []}
+                            loading={modelLoading}
+                        />
 
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, bodyType: data != "all" && data != null ? _.toLower(data) : '' }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.bodyType}
-                id="body-type-modal"
-                options={isObject(props.availableFilterOption) ? props.availableFilterOption.bodyTypeList : notEmptyLength(origOptions.bodyTypeList) ? origOptions.bodyTypeList : null} />
+                        <BodyTypeModal
+                            visible={bodyTypeModalVisible}
+                            onCancel={(e) => { setBodyTypeModalVisible(false) }}
 
-            <DrivenWheelModal
-                visible={drivenwheelModalVisible}
-                onCancel={(e) => { setDrivenWheelModalVisible(false) }}
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, bodyType: data != "all" && data != null ? _.toLower(data) : '' }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.bodyType}
+                            id="body-type-modal"
+                            options={isObject(props.availableFilterOption) ? props.availableFilterOption.bodyTypeList : notEmptyLength(origOptions.bodyTypeList) ? origOptions.bodyTypeList : null} />
 
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, drivenwheel: _.toLower(data) }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.drivenwheel}
-                id="driven-wheel-modal"
-                options={isObject(props.availableFilterOption) ? props.availableFilterOption.drivenWheelList : notEmptyLength(origOptions.drivenWheelList) ? origOptions.drivenWheelList : null} />
+                        <DrivenWheelModal
+                            visible={drivenwheelModalVisible}
+                            onCancel={(e) => { setDrivenWheelModalVisible(false) }}
 
-            <ColorModal
-                visible={colorModalVisible}
-                onCancel={(e) => { setColorModalVisible(false) }}
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, drivenwheel: _.toLower(data) }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.drivenwheel}
+                            id="driven-wheel-modal"
+                            options={isObject(props.availableFilterOption) ? props.availableFilterOption.drivenWheelList : notEmptyLength(origOptions.drivenWheelList) ? origOptions.drivenWheelList : null} />
 
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, color: _.toLower(data) }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.color}
-                id="color-modal"
-                options={isObject(props.availableFilterOption) ? props.availableFilterOption.colorList : notEmptyLength(origOptions.colorList) ? origOptions.colorList : null} />
+                        <ColorModal
+                            visible={colorModalVisible}
+                            onCancel={(e) => { setColorModalVisible(false) }}
 
-            <FuelTypeModal
-                visible={fuelTypeModalVisible}
-                onCancel={(e) => { setFuelTypeModalVisible(false) }}
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, color: _.toLower(data) }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.color}
+                            id="color-modal"
+                            options={isObject(props.availableFilterOption) ? props.availableFilterOption.colorList : notEmptyLength(origOptions.colorList) ? origOptions.colorList : null} />
 
-                style={
-                    {
-                        left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
-                        top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
-                        margin: 0
-                    }
-                }
-                closable={false}
-                maskClosable={true}
-                className='no-padding-modal-body'
-                width={`${modalWidth}px`}
-                onChange={(data) => { setFilterGroup({ ...filterGroup, fuelType: _.toLower(data) }) }}
-                bodyStyle={{ maxHeight: containerHeight }}
-                selectedValue={filterGroup.fuelType}
-                id="fuel-type-modal"
-                options={isObject(props.availableFilterOption) ? props.availableFilterOption.fuelTypeList : notEmptyLength(origOptions.fuelTypeList) ? origOptions.fuelTypeList : null} />
+                        <FuelTypeModal
+                            visible={fuelTypeModalVisible}
+                            onCancel={(e) => { setFuelTypeModalVisible(false) }}
 
+                            style={
+                                {
+                                    left: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().left) ? 0 : notEmptyLength(collapseFields) && moreOptionModalVisible ? `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin - moreOptionModalWidth - modalMargin}px` : `${containerRef.current.getBoundingClientRect().left - modalWidth - modalMargin}px`,
+                                    top: !containerRef || !containerRef.current || !isValidNumber(containerRef.current.getBoundingClientRect().top) ? 0 : `${containerRef.current.getBoundingClientRect().top < props.app.menuHeight ? props.app.menuHeight : containerRef.current.getBoundingClientRect().top}px`,
+                                    margin: 0
+                                }
+                            }
+                            closable={false}
+                            maskClosable={true}
+                            className='no-padding-modal-body'
+                            width={`${modalWidth}px`}
+                            onChange={(data) => { setFilterGroup({ ...filterGroup, fuelType: _.toLower(data) }) }}
+                            bodyStyle={{ maxHeight: containerHeight }}
+                            selectedValue={filterGroup.fuelType}
+                            id="fuel-type-modal"
+                            options={isObject(props.availableFilterOption) ? props.availableFilterOption.fuelTypeList : notEmptyLength(origOptions.fuelTypeList) ? origOptions.fuelTypeList : null} />
+
+                    </React.Fragment>
+                    :
+                    null
+            }
         </span >
     );
 }

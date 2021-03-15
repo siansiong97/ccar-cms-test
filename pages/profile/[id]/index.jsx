@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import { connect } from 'react-redux';
+import { getProfileSeoData } from '../../../common-function';
 import ReduxPersistWrapper from '../../../components/general/ReduxPersistWrapper';
 import ProfileHomePage from '../../../components/profile/page/ProfileHomePage';
+import client from '../../../feathers';
 
 
 const searchBarRef = React.createRef();
@@ -24,10 +26,27 @@ const Index = (props) => {
 
 export async function getServerSideProps(context) {
 
+    const { id } = context.req.params;
+    let profile = {};
+    let seoData = {};
+    if (id) {
+        profile = await client.service('users').find({
+            query: {
+                _id: id,
+            }
+        })
+        profile = _.get(profile, 'data[0]') || {}
+    }
 
+    if (_.isPlainObject(profile) && !_.isEmpty(profile)) {
+        seoData = getProfileSeoData(profile);
+    }
     return {
         props: {
             cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
+            seoData: {
+                ...seoData,
+            }
         }
     }
 }

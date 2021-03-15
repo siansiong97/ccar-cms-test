@@ -12,7 +12,7 @@ import PostMenu from './post-menu';
 
 
 
-const defaultHeight = 'auto';
+const defaultHeight = 100;
 
 
 const SocialBoardCard = (props) => {

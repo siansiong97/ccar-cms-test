@@ -11,6 +11,7 @@ import { getFuelType } from "./params/fuelTypeList";
 import { getColor } from "./params/colorList";
 import { checkEnvReturnCmsUrl } from "./functionContent";
 import client from "./feathers";
+import { parseTagStringToPlainString } from "./components/carFreak/config";
 
 var moment = require('moment');
 
@@ -1491,27 +1492,27 @@ export function getCarMarketSeoData(filterGroup, total) {
         }
     })
 
-    if(filterGroup.bodyType){
+    if (filterGroup.bodyType) {
         otherFilter.push(_.capitalize(_.get(getBodyType(filterGroup.bodyType), 'value') || ''));
     }
 
-    if(filterGroup.fuelType){
+    if (filterGroup.fuelType) {
         otherFilter.push(_.capitalize(_.get(getFuelType(filterGroup.fuelType), 'value') || ''));
     }
 
-    if(filterGroup.color){
+    if (filterGroup.color) {
         otherFilter.push(`Color ${_.capitalize(_.get(getColor(filterGroup.color), 'value') || '')}`);
     }
 
-    if(filterGroup.registrationUrl){
+    if (filterGroup.registrationUrl) {
         otherFilter.push(`With Registration Url`);
     }
 
-    if(filterGroup.readyStock){
+    if (filterGroup.readyStock) {
         otherFilter.push(`Is Ready Stock`);
     }
 
-    if(filterGroup.car360View){
+    if (filterGroup.car360View) {
         otherFilter.push(`With Car 360 View`);
     }
 
@@ -1551,3 +1552,204 @@ export function getCarMarketSeoData(filterGroup, total) {
 }
 
 
+export function getProfileSeoData(profile) {
+
+    if (!_.isPlainObject(profile)) {
+        return {};
+    } else {
+        profile = _.cloneDeep(profile)
+    }
+
+    let title = [];
+    let description = [];
+
+    title.push(`${getUserName(profile, 'fullName') || ''}`);
+    title.push(`'s Profile - CCAR.my #1 Car Social Platform `);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(`${getUserName(profile, 'fullName') || ''}`);
+    description.push(`is on CCAR #1 Car Social Platform. Come and share car info with ${getUserName(profile, 'fullName') || ''} and others. CCAR connects all car lovers together.`)
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+
+    let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/profile/${profile._id}`;
+    let images = [{
+        url : profile.avatar,
+        alt : 'CCAR User Profile Image'
+    }];
+
+    return {
+        title,
+        description,
+        canonical,
+        images,
+    }
+
+}
+
+
+export function getCarFreakSeoData(data) {
+
+    if (!_.isPlainObject(data)) {
+        return {};
+    } else {
+        data = _.cloneDeep(data)
+    }
+
+    let title = [];
+    let description = [];
+
+    title.push(`${parseTagStringToPlainString(data.title)|| ''}`);
+    title.push(`|`);
+    title.push(`CarFreaks`);
+    title.push(`- CCAR.my #1 Car Social Platform`);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(`${parseTagStringToPlainString(data.content) || ''}`);
+    if(_.isPlainObject(data.userId) && !_.isEmpty(data.userId)){
+        description.push('|');
+        description.push(`Posted By ${getUserName(data.userId, 'fullName') || ''}`)
+    }
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+
+    let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/car-freaks/${data._id}`;
+    let images = [{
+        url : _.get(data, 'mediaList[0].url') || '',
+        alt : 'CCAR CarFreak Image'
+    }];
+
+    return {
+        title,
+        description,
+        canonical,
+        images,
+    }
+}
+
+export function getSocialBoardSeoData(data) {
+
+    if (!_.isPlainObject(data)) {
+        return {};
+    } else {
+        data = _.cloneDeep(data)
+    }
+
+    let title = [];
+    let description = [];
+
+    title.push(`${parseTagStringToPlainString(data.title)|| ''}`);
+    title.push(`|`);
+    title.push(`Social Board`);
+    title.push(`- CCAR.my #1 Car Social Platform`);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(`${parseTagStringToPlainString(data.content) || ''}`);
+    if(_.isPlainObject(data.userId) && !_.isEmpty(data.userId)){
+        description.push('|');
+        description.push(`Posted By ${getUserName(data.userId, 'fullName') || ''}`)
+    }
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+
+    let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/social-board/${data._id}`;
+
+    return {
+        title,
+        description,
+        canonical,
+    }
+
+}
+
+export function getClubSeoData(data) {
+
+    if (!_.isPlainObject(data)) {
+        return {};
+    } else {
+        data = _.cloneDeep(data)
+    }
+
+    let title = [];
+    let description = [];
+
+    title.push(`${data.clubName|| ''}`);
+    title.push(`|`);
+    title.push(`Social Club`);
+    title.push(`- CCAR.my #1 Car Social Platform`);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(`${data.clubBio || ''}`);
+    if(_.isPlainObject(data.userId) && !_.isEmpty(data.userId)){
+        description.push('|');
+        description.push(`Created By ${getUserName(data.userId, 'fullName') || ''}`)
+    }
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+
+    let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/social-club/${data._id}`;
+    let images = [{
+        url : _.get(data, 'clubAvatar') || '',
+        alt : 'CCAR CarFreak Image'
+    }];
+
+    return {
+        title,
+        description,
+        canonical,
+        images,
+    }
+
+}
+
+export function getAllNewCarSeoData(data) {
+
+    if (!_.isPlainObject(data)) {
+        return {};
+    } else {
+        data = _.cloneDeep(data)
+    }
+
+    let title = [];
+    let description = [];
+
+    title.push(`${getCarBrand(data.make).value || ''}`);
+    title.push(`|`);
+    title.push(`${_.capitalize(data.model|| '')}`);
+    title.push(`|`);
+    title.push(`All New Car - CCAR.my #1 Car Social Platform`);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(`View ${getCarBrand(data.make).value || ''} ${_.capitalize(data.model|| '')} All New Car at CCAR.my now - CCAR.my #1 Car Social Platform  `);
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+
+    let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/newcar/details/${data.make}/${data.model}`;
+    let images = [{
+        url : _.get(data, 'uri') || '',
+        alt : `CCAR ${getCarBrand(data.make).value || ''} ${_.capitalize(data.model|| '')} Image`
+    }];
+
+    return {
+        title,
+        description,
+        canonical,
+        images,
+    }
+
+}
