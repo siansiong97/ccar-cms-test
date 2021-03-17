@@ -27,25 +27,34 @@ const messagePageSize = 6;
 const Post1 = (props) => {
 
     const [post, setPost] = useState({});
-    const [postLikeId, setPostLikeId] = useState();
     const [messageTotal, setMessageTotal] = useState(0);
     const [totalLike, setTotalLike] = useState(0);
     const [messages, setMessages] = useState([]);
     const [text, setText] = useState('');
     const [canSendMessage, setCanSendMessage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [postLike, setPostLike] = useState({});
 
 
     useEffect(() => {
 
         if (_.isPlainObject(props.data) && !_.isEmpty(props.data)) {
             setPost(props.data);
-            setPostLikeId(v4())
         } else {
             setPost({});
         }
 
     }, [props.data])
+
+    useEffect(() => {
+
+        if (_.isPlainObject(props.postLike) && !_.isEmpty(props.postLike)) {
+            setPostLike(props.postLike);
+        } else {
+            setPostLike({});
+        }
+
+    }, [props.postLike])
 
     useEffect(() => {
 
@@ -211,7 +220,7 @@ const Post1 = (props) => {
                                             <LikePostButton className='d-inline-block margin-right-md'
                                                 chatId={post._id}
                                                 likeOn="chat"
-                                                refreshId={postLikeId}
+                                                postLike={postLike}
                                                 onClick={(liked) => { setTotalLike(liked ? parseInt(totalLike) + 1 : parseInt(totalLike) - 1) }} ></LikePostButton>
                                             <span className='flex-items-align-center cursor-pointer' onClick={(e) => {
                                                 postCommentRef.current.focus();
@@ -222,7 +231,7 @@ const Post1 = (props) => {
                                                 <span className='headline' >
                                                     Comment
                                         </span>
-                                            </span>                                    {/* <LikePostButton className='d-inline-block margin-right-md'></LikePostButton> */}
+                                            </span>
                                         </div>
                                         <Divider className="no-margin" type="horizontal"></Divider>
                                     </Col>

@@ -139,6 +139,22 @@ const SocialInput = (props) => {
         }
     }
 
+    function focus() {
+        if (ReactQuill) {
+            let quill = props.inputRef || ref[uid];
+            if (quill.current) {
+                let editor = quill.current.getEditor();
+                if (editor && quill) {
+                    setTimeout(() => {
+                        editor.setSelection(currentCursor);
+                    }, 10);
+                }
+            }
+
+            return;
+        }
+    }
+
     function handleSubmit() {
         let finalText = text;
         if (props.excludeEnter) {
@@ -146,8 +162,9 @@ const SocialInput = (props) => {
         }
         if (props.onSubmit && finalText) {
             finalText = parseToTagString(finalText, aliasCode)
-            reset();
             props.onSubmit(finalText);
+            reset();
+            focus();
         }
     }
 
@@ -231,25 +248,25 @@ const SocialInput = (props) => {
             }
         }
 
-        if (props.excludeEnter && _.get(action, ['insert']) == '\n') {
-            newText = newText.replace(/\n/g, ""); 
-            if (ReactQuill) {
-                let quill = props.inputRef || ref[uid];
-                if (quill.current) {
-                    let editor = quill.current.getEditor();
-                    if (editor && quill) {
-                        quill.current.focus();
-                        let currentCursor = editor.getSelection().index || 0;
-                        editor.setText(newText, 'silent');
-                        setTimeout(() => {
-                        editor.setSelection(currentCursor);
-                        }, 10);
-                    }
-                }
+        // if (props.excludeEnter && _.get(action, ['insert']) == '\n') {
+        //     newText = newText.replace(/\n/g, "");
+        //     if (ReactQuill) {
+        //         let quill = props.inputRef || ref[uid];
+        //         if (quill.current) {
+        //             let editor = quill.current.getEditor();
+        //             if (editor && quill) {
+        //                 quill.current.focus();
+        //                 let currentCursor = editor.getSelection().index || 0;
+        //                 editor.setText(newText, 'silent');
+        //                 setTimeout(() => {
+        //                     editor.setSelection(currentCursor);
+        //                 }, 10);
+        //             }
+        //         }
 
-                return;
-            }
-        }
+        //         return;
+        //     }
+        // }
 
         setText(newText);
 
@@ -330,11 +347,9 @@ const SocialInput = (props) => {
             let newAliasCode = _.unionBy(_.sortBy(_.reverse(_.sortBy(_.cloneDeep(aliasCode) || [], ['createdAt'])), ['position']), [], 'position');
             //need update back position after delete things
 
-            let effectedAliasCode = _.filter(newAliasCode, function (aliasCode) {
-                return aliasCode.position >= position || (position >= aliasCode.position && position <= aliasCode.endPosition);
-            })
-
-
+            console.log(newAliasCode);
+            console.log('position');
+            console.log(position);
             let quill = props.inputRef || ref[uid];
             if (quill.current) {
                 let editor = quill.current.getEditor();
@@ -386,6 +401,7 @@ const SocialInput = (props) => {
                                 quill.formatText(position, 1, {
                                     bold: true,
                                     color: code.prefix == hashTagPrefix ? 'black' : '#2196F3',
+                                    // color: '#2196F3',
                                 })
                             } else {
                                 return false;
@@ -406,7 +422,7 @@ const SocialInput = (props) => {
         let text = editor.getText();
         let newSearchWord = '';
 
-        if (!currentPosition || (text[currentPosition - 1] == ' ') && hashTagActived) {
+        if (!currentPosition || (text[currentPosition - 1] == ' ' && hashTagActived)) {
             setHashTagActived(false);
             setTimeout(() => {
                 setSearchMode(false);
@@ -415,7 +431,12 @@ const SocialInput = (props) => {
 
         if (currentPosition > 0) {
             let canSearch = false;
+            let gotSpace = false;
             _.forEach(_.reverse(_.range(0, currentPosition)), function (i) {
+                if ((text[i] == ' ')) {
+                    gotSpace = true;
+                }
+
                 if ((text[i] == ' ' && !searchMode)) {
                     return false;
                 }
@@ -430,7 +451,7 @@ const SocialInput = (props) => {
                         setSearchMode(true);
                         return false;
                     }
-                } else if (text[i] == hashTagPrefix) {
+                } else if (text[i] == hashTagPrefix && !gotSpace) {
                     canSearch = true;
                     if (text[i - 1] == undefined || text[i - 1] == ' ' || text[i - 1] == '') {
                         setPrefix(text[i]);

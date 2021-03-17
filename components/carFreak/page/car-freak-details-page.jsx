@@ -19,6 +19,7 @@ const PAGE_SIZE = 36;
 const CarFreakDetailsPage = (props) => {
 
     const [post, setPost] = useState({})
+    const [userChatLikes, setUserChatLikes] = useState([]);
     const [otherPosts, setOtherPosts] = useState([])
     const [otherPostTotal, setOtherPostTotal] = useState(0)
     const [otherPostPage, setOtherPostPage] = useState(1)
@@ -34,9 +35,17 @@ const CarFreakDetailsPage = (props) => {
     }, [props.router.query.id])
 
     useEffect(() => {
+        if (props.user.authenticated && _.get(post, '_id')) {
+            getUserChatLikes(_.compact(_.concat([_.get(post, '_id')], _.map(otherPosts, '_id') || [])), false);
+        }
+
+    }, [props.user.authenticated])
+
+    useEffect(() => {
 
         if (_.isPlainObject(post) && !_.isEmpty(post)) {
             getOtherPosts(0);
+            getUserChatLikes([post._id], false)
         } else {
             setOtherPosts([]);
         }
@@ -44,8 +53,13 @@ const CarFreakDetailsPage = (props) => {
     }, [post])
 
     useEffect(() => {
+        console.log(userChatLikes);
+    }, [userChatLikes])
+
+    useEffect(() => {
         getOtherPosts((otherPostPage - 1) * PAGE_SIZE)
     }, [otherPostPage])
+
 
     function getPost() {
 
@@ -70,6 +84,26 @@ const CarFreakDetailsPage = (props) => {
                 });
         } else {
             setPost({});
+        }
+    }
+
+
+
+    function getUserChatLikes(ids, concat) {
+
+        if (_.isArray(ids) && !_.isEmpty(ids) && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id'])) {
+            client.service('chatlikes')
+                .find({
+                    query: {
+                        chatId: {
+                            $in: ids || [],
+                        },
+                        userId: _.get(props.user, ['info', 'user', '_id'])
+                    }
+                })
+                .then((res) => {
+                    setUserChatLikes(concat ? _.concat(userChatLikes, res.data) : res.data)
+                })
         }
     }
 
@@ -111,6 +145,7 @@ const CarFreakDetailsPage = (props) => {
                                 otherPosts
                     );
 
+                    getUserChatLikes(_.map(_.get(res, ['data']), '_id'), true)
                     setOtherPostTotal(res.total);
                     setIsLoading(false);
                 }).catch(err => {
@@ -142,6 +177,7 @@ const CarFreakDetailsPage = (props) => {
                     <Row gutter={[10, 20]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Post1 data={post}
+                                postLike={_.find(userChatLikes, { chatId: post._id })}
                                 onEditClick={(post) => {
                                     setEditMode('edit');
                                     setWriteModalVisible(true);
@@ -168,9 +204,10 @@ const CarFreakDetailsPage = (props) => {
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={6}>
                                                         <Post data={otherPost} className="background-white box-shadow-heavy round-border"
                                                             hideAction
+                                                            postLike={_.find(userChatLikes, { chatId: otherPost._id })}
                                                             onRedirectToPost={() => {
                                                                 if (_.isPlainObject(otherPost) && !_.isEmpty(otherPost) && _.get(otherPost, ['_id'])) {
-                                                                    props.router.push(`/car-freaks/${otherPost._id}`, undefined, { shallow : false })
+                                                                    props.router.push(`/car-freaks/${otherPost._id}`, undefined, { shallow: false })
                                                                 }
                                                             }}
                                                         />

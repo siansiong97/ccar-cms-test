@@ -3,7 +3,7 @@ export const LOGOUT_SUCCESSFUL = 'LOGOUT_SUCCESSFUL';
 export const ADDRESS_BOOK_FORM = 'ADDRESS_BOOK_FORM';
 export const BANK_FORM = 'BANK_FORM';
 export const CARD_FORM = 'CARD_FORM';
-export const SET_USER = 'GET_AUTH_USER';
+export const SET_USER = 'SET_USER';
 
 export function loginSuccessful(userInfo){
   return (dispatch) => {

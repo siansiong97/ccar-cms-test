@@ -25,7 +25,7 @@ import {
   SET_PRODUCT_LIST_LOADING,
 } from '../actions/productsList-actions';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
   productListLoading: false,
@@ -47,17 +47,8 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
+  checkNeedPersist(_.get(action, 'type'), 'productsList', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data: action.payload,
-      reducer: 'productsList',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
   switch (action.type) {
     case FETCH_PRODUCTSLIST:
       return {

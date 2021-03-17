@@ -23,7 +23,7 @@ import {
   RESET_NEW_CAR_FILTER_GROUP,
 } from '../actions/newcars-actions';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
   news: [],
@@ -59,17 +59,8 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
-
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data : action.payload,
-      reducer: 'newCars',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
+  checkNeedPersist(_.get(action, 'type'), 'newCars', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+    
   switch (action.type) {
     case FETCH_NEWS:
       return {

@@ -36,9 +36,9 @@ const combinedReducer = combineReducers({
   register,
   sellerProfile,
   socketRefresh,
-  user,
   userlikes,
   variant,
+  user,
 })
 
 const reducer = (state, action) => {

@@ -31,7 +31,7 @@ export const flame = '/assets/carDetails/flame.gif'
 export const ccarWebLogo400X150 = '/assets/profile/400x150-icon.png'
 
 //Login
-export const loginBackground = '/assets/login/background.PNG';
+export const loginBackground = '/assets/login/background.png';
 export const tbhCny = '/assets/login/tbh.png';
 export const tbh1Cny = '/assets/login/tbh-01.png';
 export const tbh2Cny = '/assets/login/tbh-02.png';
@@ -61,12 +61,12 @@ export const faqOurFeaturesIcon = '/assets/faq/our-features.png';
 export const faqSellCarIcon = '/assets/faq/sell-a-car.png';
 
 
-export const searchBoxImg = '/assets/faq/sell-a-car.png';
-export const sortingImg = '/assets/faq/sell-a-car.png';
-export const filterFormImg = '/assets/faq/sell-a-car.png';
-export const allNewCarImg = '/assets/faq/sell-a-car.png';
+export const searchBoxImg = '/assets/faq/Homepage.png';
+export const sortingImg = '/assets/faq/carmarket filter.png';
+export const filterFormImg = '/assets/faq/Carmarket quick filter box.png';
+export const allNewCarImg = '/assets/faq/all-newcar brand.png';
 export const carBrandImg = '/assets/faq/sell-a-car.png';
-export const newCarFilterFormImg = '/assets/faq/sell-a-car.png';
+export const newCarFilterFormImg = '/assets/faq/all-newcar filter.png';
 export const carMoreInfoImg = '/assets/faq/sell-a-car.png';
 export const cstarListImg = '/assets/faq/sell-a-car.png';
 export const cstarAnimationImg = '/assets/faq/sell-a-car.png';

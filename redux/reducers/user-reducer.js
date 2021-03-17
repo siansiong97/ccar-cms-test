@@ -1,12 +1,13 @@
 import { LOGIN_SUCCESSFUL, LOGOUT_SUCCESSFUL, SET_USER, ADDRESS_BOOK_FORM, CARD_FORM, BANK_FORM } from '../actions/user-actions';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getLocalStoragePersistStates, getPersistObj } from '../config';
 import _ from 'lodash';
 import localStorage from 'local-storage';
+import { isValidNumber } from '../../common-function';
 
 const INITIAL_STATE = {
   info: {
     user: {
-      _id : null,
+      _id: null,
     }
   },
   authenticated: false,
@@ -20,17 +21,8 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
 
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
-
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data: action.payload,
-      reducer: 'user',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
+  checkNeedPersist(_.get(action, 'type'), 'user', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+  
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
       return {

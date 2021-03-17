@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import { connect } from 'react-redux';
 import ReduxPersistWrapper from '../../components/general/ReduxPersistWrapper';
-import NewCarHomePage from '../../components/newcar/page/NewCarHomePage';
+import CarFreakSearchPage from '../../components/carFreak/page/CarFreakSearchPage';
 
 
 const searchBarRef = React.createRef();
@@ -13,7 +13,7 @@ const Index = (props) => {
         <ReduxPersistWrapper cookie={props.cookie}>
             {
                 props.app.initedRedux ?
-                    <NewCarHomePage />
+                    <CarFreakSearchPage />
                     :
                     null
             }
@@ -37,7 +37,6 @@ const mapStateToProps = state => ({
     user: state.user,
     productsList: state.productsList,
 });
-
 
 const mapDispatchToProps = {
 };

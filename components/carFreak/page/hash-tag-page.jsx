@@ -1,18 +1,20 @@
 
-import { Col, Empty, Form, message, Row, Icon } from 'antd';
+import { Col, Empty, Form, Icon, message, Row } from 'antd';
 import _ from 'lodash';
+import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
-import { withRouter } from 'next/dist/client/router';
+import { arrayLengthCount, formatNumber, isValidNumber } from '../../../common-function';
 import client from '../../../feathers';
-import LayoutV2 from '../../Layout-V2';
-import { formatNumber, isValidNumber, arrayLengthCount } from '../../profile/common-function';
+import LayoutV2 from '../../general/LayoutV2';
+import WindowScrollLoadWrapper from '../../general/WindowScrollLoadWrapper';
 import PostCollapse from '../components/post-collapse';
-import { carFreakGlobalSearch } from '../config';
-import WritePostModal1 from '../components/write-post-modal-1';
 import WriteEventModal from '../components/write-event-modal';
-import WindowScrollLoadWrapper from '../../commonComponent/window-scroll-load-wrapper';
+import WritePostModal1 from '../components/write-post-modal-1';
+import { carFreakGlobalSearch } from '../config';
+
+
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -75,7 +77,7 @@ const HashTagPage = (props) => {
         } else {
             setPostPage(1);
         }
-    }, [props.router.query.id, tabKey])
+    }, [props.router.query.hashTag, tabKey])
 
     useEffect(() => {
         getData((postPage - 1) * PAGE_SIZE);
@@ -84,7 +86,7 @@ const HashTagPage = (props) => {
     useEffect(() => {
         client.service('hashtaggroup').find({
             query: {
-                hashTagId: props.router.query.id,
+                hashTag: `#${(props.router.query.hashTag || '')}`,
                 $limit: 1,
                 $populate: [
                     {
@@ -99,11 +101,11 @@ const HashTagPage = (props) => {
         }).catch(err => {
             console.log(err);
         });
-    }, [props.router.query.id])
+    }, [props.router.query.hashTag])
 
     function getData(skip) {
 
-        if (props.router.query.id) {
+        if (props.router.query.hashTag) {
 
             if (!isValidNumber(parseInt(skip))) {
                 skip = 0;
@@ -113,7 +115,7 @@ const HashTagPage = (props) => {
 
 
             let query = {
-                hashTagId: props.router.query.id,
+                hashTag: `#${(props.router.query.hashTag || '')}`,
                 type: 'chat',
                 'chat.chatType': tabKey,
                 $limit: PAGE_SIZE,

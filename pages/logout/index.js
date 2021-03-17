@@ -21,7 +21,6 @@ const Logout = (props) => {
             });
         }
         catch (err) {
-
         }
     }, [])
 

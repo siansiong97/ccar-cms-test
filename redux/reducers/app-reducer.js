@@ -56,7 +56,7 @@ import {
 } from '../actions/app-actions';
 
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -129,17 +129,8 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
 
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
+  checkNeedPersist(_.get(action, 'type'), 'app', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data: action.payload,
-      reducer: 'app',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
   switch (action.type) {
     case LOADING:
       return {

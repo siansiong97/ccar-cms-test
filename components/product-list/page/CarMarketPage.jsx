@@ -46,6 +46,7 @@ const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType
 const antIcon = <img src="/assets/Ccar-logo.png" style={{ fontSize: 60 }} />;
 const PAGESIZE = 30;
 const searchBarRef = React.createRef();
+let timeoutFunction;
 const CarMarketPage = (props) => {
 
 
@@ -90,25 +91,29 @@ const CarMarketPage = (props) => {
             if (window) {
                 window.scroll(0, 0)
             }
-            carAdsFilter({
-                filterGroup: currentFilterGroup,
-                config: mainConfig
-            }, PAGESIZE).then(res => {
-                props.setProductListLoading(false);
-                setProductList(_.get(res, ['data']) || []);
-                setTotal(_.get(res, ['total']) || 0);
+            clearTimeout(timeoutFunction);
+            timeoutFunction = setTimeout(() => {
+                console.log('run api');
+                carAdsFilter({
+                    filterGroup: currentFilterGroup,
+                    config: mainConfig
+                }, PAGESIZE).then(res => {
+                    props.setProductListLoading(false);
+                    setProductList(_.get(res, ['data']) || []);
+                    setTotal(_.get(res, ['total']) || 0);
 
-            }).catch(err => {
-                props.setProductListLoading(false);
-            });
-            brandFilterTotal(modals, {
-                filterGroup: currentFilterGroup,
-                config: mainConfig
-            }).then(res => {
-                setAvailableFilterOption(res);
+                }).catch(err => {
+                    props.setProductListLoading(false);
+                });
+                brandFilterTotal(modals, {
+                    filterGroup: currentFilterGroup,
+                    config: mainConfig
+                }).then(res => {
+                    setAvailableFilterOption(res);
 
-            }).catch(err => {
-            });
+                }).catch(err => {
+                });
+            }, 500);
         }
     }, [currentFilterGroup, mainConfig])
 
@@ -588,7 +593,7 @@ const CarMarketPage = (props) => {
                                                             <span className="margin-right-md" >
                                                                 Ready Stock:
                               </span>
-                                                            <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => {setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >

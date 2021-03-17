@@ -2,7 +2,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import { FETCH_CARPLATESLIST } from '../actions/carPlatesList-actions';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
     carPlatesList: []
@@ -10,17 +10,8 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-    let needPersist = checkIsNeedPersist(_.get(action, ['type']));
-  
-    if (needPersist) {
-      let persistObj = getPersistObj(_.get(action, ['type']));
-      let persistData = {
-        data : action.payload,
-        reducer: 'carPlatesList',
-        createdAt: new Date(),
-      }
-      localStorage.set(_.get(persistObj, ['action']), persistData);
-    }
+    checkNeedPersist(_.get(action, 'type'), 'carPlatesList', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+
     switch (action.type) {
         case FETCH_CARPLATESLIST:
             return {

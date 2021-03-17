@@ -31,11 +31,11 @@ const ParseTag = (props) => {
                         {v.value}
                     </a>
                 }
-                // if (v.type == 'hashTag') {
-                //     return <a key={'ccarhashtag'+i} className={`${props.tagClassName || 'font-weight-bold black'} cursor-pointer`} href={v.id ? `/hashtag/${v.id}` : '#'} target="_blank">
-                //         {v.value}
-                //     </a>
-                // }
+                if (v.type == 'hashTag') {
+                    return <a key={'ccarhashtag'+i} className={`${props.tagClassName || 'font-weight-bold black'} cursor-pointer`} href={v.id ? `/hashtag/${(v.value || '').replace('#', '')}` : '#'} target="_blank">
+                        {v.value}
+                    </a>
+                }
                 return v.value;
             })
         } else {

@@ -2,7 +2,7 @@
 import moment from 'moment'
 import { SET_POST_MODAL_LIKE_REFRESH_ID, FETCH_CAR_FREAK_POSTS, FETCH_EDITED_POST } from '../actions/carfreak.action';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
@@ -13,17 +13,8 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
+    checkNeedPersist(_.get(action, 'type'), 'carfreak', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data : action.payload,
-      reducer: 'carfreak',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
     switch (action.type) {
         case SET_POST_MODAL_LIKE_REFRESH_ID:
             return {

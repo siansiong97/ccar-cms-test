@@ -43,7 +43,7 @@ const ClubInviteModal = (props) => {
     useEffect(() => {
 
         if (userPage == 1) {
-            getUserList(props.clubId, props.userId, (userPage - 1) * PAGE_SIZE);
+            getUserList(props.clubId, props.userId, 0);
         } else {
             setUserPage(1);
         }

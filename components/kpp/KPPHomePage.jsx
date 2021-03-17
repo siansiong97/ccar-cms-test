@@ -11,6 +11,7 @@ import { updateActiveMenu } from '../../redux/actions/app-actions';
 import CustomTabs from '../general/CustomTabs';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
+import { address } from '../../icon';
 
 
 
@@ -107,7 +108,7 @@ const KPPIndex = (props) => {
         return (
             <React.Fragment>
                 <div className='relative-wrapper fill-parent' style={{ height: '450px' }}>
-                    <img src={banner} className='fill-parent absolute-center'></img>
+                    <img src={`/${banner}`} className='fill-parent absolute-center'></img>
                     {/* <div className='fill-parent absolute-center background-black opacity-60'>
                     </div> */}
                     <div className='fill-parent absolute-center padding-lg flex-items-align-center'>
@@ -223,7 +224,7 @@ const KPPIndex = (props) => {
                             <Col xs={{ span: 24, offsetTop: '10px' }} sm={{ span: 24, offsetTop: '10px' }} md={{ span: 24, offsetTop: '0px' }} lg={{ span: 6, offsetTop: '0px' }} xl={{ span: 6, offsetTop: '0px' }}>
                                 {_renderQuestion(questions[0])}
                                 <div className='margin-top-md relative-wrapper' style={{ height: '160px' }}>
-                                    <img src={ads} className='fill-parent absolute-center'></img>
+                                    <img src={`/${ads}`} className='fill-parent absolute-center'></img>
                                 </div>
                             </Col>
                         </Row>

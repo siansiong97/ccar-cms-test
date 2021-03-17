@@ -50,14 +50,10 @@ const SearchIndex = (props) => {
 
 
     useEffect(() => {
+        console.log(props.router.query.matchStr);
         let search = props.router.query.matchStr;
         setSearchText(search);
-    }, [])
-
-    useEffect(() => {
-        getData(0)
-    }, [searchText])
-
+    }, [props.router.query.matchStr])
 
     useEffect(() => {
         if (postPage == 1) {
@@ -65,7 +61,7 @@ const SearchIndex = (props) => {
         } else {
             setPostPage(1);
         }
-    }, [props.router.query.matchStr, tabKey])
+    }, [searchText, tabKey])
 
     useEffect(() => {
         getData((postPage - 1) * PAGE_SIZE);

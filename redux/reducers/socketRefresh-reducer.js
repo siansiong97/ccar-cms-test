@@ -1,6 +1,6 @@
 import { UPDATE_SOCKET_INFO, DELETE_SOCKET_INFO } from '../actions/socketRefresh-actions';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 import _ from 'lodash'
 
 const INITIAL_STATE = false;
@@ -8,17 +8,8 @@ const INITIAL_STATE = false;
 
 export default function (state = INITIAL_STATE, action) {
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
-
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data : action.payload,
-      reducer: 'socketRefresh',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
+  checkNeedPersist(_.get(action, 'type'), 'socketRefresh', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+    
   switch (action.type) {
     case UPDATE_SOCKET_INFO:
       return action.payload;

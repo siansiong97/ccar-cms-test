@@ -1,4 +1,5 @@
 
+import 'antd/dist/antd.css';
 import '../styles/index.css';
 import '../styles/overwrite.css';
 import '../styles/main.css';
@@ -40,8 +41,8 @@ const WrappedApp = ({ Component, pageProps, router }) => {
 
     if (_.isString(seoData.images)) {
       seoData.images = [{
-        url : seoData.images,
-        alt : 'CCAR Image Preview',
+        url: seoData.images,
+        alt: 'CCAR Image Preview',
       }];
     } else {
       seoData.images = [
@@ -83,11 +84,7 @@ const WrappedApp = ({ Component, pageProps, router }) => {
         <link rel="icon" href="https://yt3.ggpht.com/a/AATXAJyACAnnk58_qfVZqvjaTkavsxOb8dSYGeciv4a7=s88-c-k-c0x00ffffff-no-rj" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <RouterContextProvider>
-        <PageTransition>
-          <Component {...pageProps} key={router.route} />
-        </PageTransition>
-      </RouterContextProvider>
+      <Component {...pageProps} key={router.route} />
     </React.Fragment>
   )
 }

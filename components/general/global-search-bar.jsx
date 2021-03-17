@@ -9,7 +9,7 @@ import { useMediaQuery } from 'react-responsive';
 import { v4 } from 'uuid';
 import client from '../../feathers';
 import { parseTagStringToPlainString } from '../carFreak/config';
-import { notEmptyLength, convertParameterToProductListUrl, formatNumber } from '../../common-function';
+import { notEmptyLength, convertParameterToProductListUrl, formatNumber, arrayLengthCount } from '../../common-function';
 import { loading } from '../../redux/actions/app-actions';
 import { withRouter } from 'next/router';
 
@@ -341,9 +341,10 @@ const GlobalSearchBar = (props) => {
                                 {
                                     _.isArray(_.get(group, ['children'])) && !_.isEmpty(_.get(group, ['children'])) ?
                                         group.children.map((opt, index) => (
-                                            <Option key={`${group.title}-${index}`} value={`${opt.make ? opt.make : ''} ${opt.model ? opt.model : ''}`} onClick={() => { 
-                                                props.router.push(`/newcar/details/${opt.make}/${opt.model}`); 
-                                                window.location.reload() }}>
+                                            <Option key={`${group.title}-${index}`} value={`${opt.make ? opt.make : ''} ${opt.model ? opt.model : ''}`} onClick={() => {
+                                                props.router.push(`/newcar/details/${opt.make}/${opt.model}`);
+                                                window.location.reload()
+                                            }}>
                                                 <Highlighter
                                                     style={{ padding: '0px 10px' }}
                                                     highlightStyle={{ color: '#ffc069', padding: 0 }}
@@ -493,7 +494,17 @@ const GlobalSearchBar = (props) => {
                         if (e.target.value) {
                             // let path = `/cars-on-sale-search?page=${1}${`&${queryStringifyNestedObject({ title: searchValue })}`}`;
                             if (props.enterSearchCarFreaks) {
-                                props.router.push(`/search-car-freaks/${e.target.value}`);
+                                let text = e.target.value || '';
+                                let canSearchHashTag = false;
+                                if (text.indexOf('#') == 0 && arrayLengthCount(text.split(' ')) == 1) {
+                                    canSearchHashTag = true;
+                                }
+                                text = text.replace('#', '');
+                                if (canSearchHashTag) {
+                                    props.router.push(`/hashtag/${text}`);
+                                } else {
+                                    props.router.push(`/search-car-freaks?matchStr=${text}`);
+                                }
                             } else {
                                 let path = convertParameterToProductListUrl({ title: searchValue });
                                 props.router.push(path);

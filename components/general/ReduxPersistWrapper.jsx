@@ -12,7 +12,7 @@ const ReduxPersistWrapper = (props) => {
     useEffect(() => {
         if (props.cookie) {
             let persistStates = getLocalStoragePersistStates();
-            console.log('persistStates', {data : persistStates});
+            console.log('persistStates', { data: persistStates });
             _.forEach(persistStates, function (persistState) {
                 props.dynamicDispatch(_.get(persistState, ['persistObj', 'action']), _.get(persistState, ['data']))
             })
@@ -25,7 +25,10 @@ const ReduxPersistWrapper = (props) => {
 
         <React.Fragment>
             {
-                props.children
+                props.app.initedRedux ?
+                    props.children
+                    :
+                    null
             }
         </React.Fragment>
     );

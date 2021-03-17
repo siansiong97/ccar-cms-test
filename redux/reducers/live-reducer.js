@@ -2,7 +2,7 @@ import _, { upperFirst } from 'lodash'
 import moment from 'moment'
 import { FETCH_CLIENT_SOCKET_IO, CLEAR_CLIENT_SOCKET_IO } from '../actions/live-action';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
 
 const INITIAL_STATE = {
     socket: undefined,
@@ -10,17 +10,8 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-  let needPersist = checkIsNeedPersist(_.get(action, ['type']));
-
-  if (needPersist) {
-    let persistObj = getPersistObj(_.get(action, ['type']));
-    let persistData = {
-      data : action.payload,
-      reducer: 'live',
-      createdAt: new Date(),
-    }
-    localStorage.set(_.get(persistObj, ['action']), persistData);
-  }
+    checkNeedPersist(_.get(action, 'type'), 'live', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+    
     switch (action.type) {
         case FETCH_CLIENT_SOCKET_IO:
             return {

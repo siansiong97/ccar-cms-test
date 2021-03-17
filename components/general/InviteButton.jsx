@@ -1,6 +1,6 @@
 import { Button, Form, Icon, message, Popconfirm } from 'antd';
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import client from '../../feathers';
 import { withRouter } from 'next/router';
@@ -16,29 +16,10 @@ const InviteButton = (props) => {
     const [isInvited, setIsInvited] = useState(false);
 
 
-    // function init(){
-    //     if (!_.isEmpty(props.invitedBy) && !_.isEmpty(props[props.type + 'Id'])) {
-    //         console.log('check follows');
-    //         let query = {};
-    //         query[props.type + 'Id'] = props[props.type + 'Id'];
-    //         query.type = props.type;
-    //         query.invitedBy = props.invitedBy
-
-    //         client.service('follows').find({
-    //             query: query
-    //         }).then(res => {
-    //             if (notEmptyLength(res.data)) {
-    //                 setInvite(res.data[0])
-    //                 setIsInvited(true);
-    //             } else {
-    //                 setInvite(null)
-    //                 setIsInvited(false);
-    //             }
-    //         }).catch(err => {
-    //         message.error(err.message)
-    //         });
-    //     }
-    // }
+    //Not a proper way, this work because i am sure invited people will be removed in list. The list only contain not invited 1.
+    useEffect(() => {
+        setIsInvited(false);
+    }, [props.invitee])
 
     function handleSuccess(success) {
         if (props.onSuccess) {

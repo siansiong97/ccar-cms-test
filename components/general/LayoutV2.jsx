@@ -87,6 +87,7 @@ class LayoutV2 extends React.Component {
             visible: false,
         });
     };
+
     handleExpiredToken = () => {
         if (_.get(this.props, ['user', 'authenticated'])) {
             client.authenticate().then(res => {
@@ -95,7 +96,6 @@ class LayoutV2 extends React.Component {
                 this.props.router.push('/logout');
                 this.props.loginMode(true);
                 message.error('Your authentication session is expired. Please login again.');
-
             });
         }
     }
@@ -158,6 +158,7 @@ class LayoutV2 extends React.Component {
                 scrollRange: this.props.scrollRange,
             })
         }
+
 
         if (!_.isEqual(prevState.window, this.state.window)) {
             this.state.window.addEventListener('scroll', this.handleScroll, { passive: true });
@@ -492,7 +493,6 @@ class LayoutV2 extends React.Component {
 
         return (
             <Layout>
-
                 <div className="relative-wrapper">
                     <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                         <Col xs={0} sm={0} md={0} lg={24} xl={24} >
