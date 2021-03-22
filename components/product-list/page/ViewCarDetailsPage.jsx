@@ -96,6 +96,18 @@ class ViewCarDetailsPage extends React.Component {
     })
   }
 
+  componentDidUpdate() {
+
+    if(typeof(window) != undefined){
+      window.addEventListener('scroll', this.handleScroll, { passive: true });
+
+      return () => {
+  
+        window.removeEventListener('scroll', this.handleScroll);
+      };
+    }
+  }
+
   onClickShow = () => {
     this.setState({
       show: !this.state.show,
@@ -399,7 +411,7 @@ class ViewCarDetailsPage extends React.Component {
       <React.Fragment>
         <Desktop>
           <div className="background-white broder-top-grey thin-border car-for-sale">
-            {this.state.scrollYPosition > 10 ?
+            {this.state.scrollYPosition > (this.state.window.innerHeight || 500) * 0.2 ?
               <Row className="padding-top-sm fixed-container" style={{ backgroundColor: '#ffffff' }}>
                 <Col xs={12} sm={12} md={18} lg={18} xl={18} style={{ paddingRight: '20px' }}>
                   <Row>
@@ -771,7 +783,7 @@ class ViewCarDetailsPage extends React.Component {
 
                             {
                               (data, setCurrentIndex, setVisible) => {
-                                {console.log(this.state.show)}
+                                { console.log(this.state.show) }
                                 return (
                                   <div show={this.state.show} className="code-box-shape" >
                                     <img className="fade-in cursor-pointer absolute-center-img-no-stretch" onClick={() => { setVisible(true) }} id="my-element" src={_.get(data, ['images', data.currentIndex])} alt={`${_.get(this.state.productDetails, 'carspec.make') || ''} ${_.get(this.state.productDetails, 'carspec.model') || ''} Image ${data.currentIndex + 1}`} />

@@ -1,0 +1,125 @@
+body {
+    font-family: 'Ubuntu', sans-serif !important;
+  }
+  
+  .App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  .fade-enter {
+    opacity: 0;
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    animation-play-state: paused;
+  }
+  
+  .fade-appear {
+    opacity: 0;
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    animation-play-state: paused;
+  }
+  
+  .fade-leave {
+    animation-duration: .5s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in;
+    animation-play-state: paused;
+  }
+  
+  .fade-enter.fade-enter-active {
+    animation-name: fadeIn;
+    animation-play-state: running;
+  }
+  
+  .fade-appear.fade-appear-active {
+    animation-name: fadeIn;
+    animation-play-state: running;
+  }
+  
+  .fade-leave.fade-leave-active {
+    animation-name: fadeOut;
+    animation-play-state: running;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  
+  @-webkit-keyframes Gradient {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  
+  @-moz-keyframes Gradient {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }
+  
+  @keyframes Gradient {
+    0% {
+      background-position: 0% 50%
+    }
+    50% {
+      background-position: 100% 50%
+    }
+    100% {
+      background-position: 0% 50%
+    }
+  }

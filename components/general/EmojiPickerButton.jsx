@@ -48,7 +48,7 @@ const EmojiPickerButton = (props) => {
                 </span>
                 {
                     emojiVisible ?
-                        <span className={`d-inline-block ${props.className || ''}`} ref={emojiRef} style={notEmptyLength(objectRemoveEmptyValue(props.position)) ? { position: 'absolute', ...props.position } : { position: 'absolute', top: -380, left: -200 }}>
+                        <span className={`d-inline-block ${props.className || ''}`} ref={emojiRef} style={notEmptyLength(objectRemoveEmptyValue(props.position)) ? { position: 'absolute', ...props.position, zIndex : 999999 } : { position: 'absolute', top: -380, left: -200, zIndex : 999999 }}>
                             <Picker enableFrequentEmojiSort useButton theme='auto' showPreview={false} showSkinTones={false} perLine={6} onClick={(emoji) => {
                                 handleOnSelect(emoji);
                             }} />

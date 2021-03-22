@@ -1,5 +1,5 @@
 import { Form } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
@@ -41,6 +41,15 @@ const ScrollLoadWrapper = (props) => {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        if(_.get(containerRef, [uid, 'current'])){
+            if(props.getRef){
+                props.getRef(containerRef[uid].current);
+            }
+        }
+    
+    } , [containerRef[uid]])
 
 
 

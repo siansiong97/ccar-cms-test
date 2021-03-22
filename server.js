@@ -27,7 +27,6 @@ app.prepare().then(() => {
   ];
   serviceWorkers.forEach(({ filename, path }) => {
     server.get(`/${filename}`, (req, res) => {
-      console.log(`/${filename}`);
       app.serveStatic(req, res, path);
     });
   });

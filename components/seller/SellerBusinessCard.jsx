@@ -8,7 +8,7 @@ import { withRouter } from 'next/dist/client/router';
 const SellerBusinessCard = (props) => {
 
     return (
-        <div className="thin-border ">
+        <div className="thin-border">
             <a href={props.readOnly ? null : !props.data1 || !props.data1._id ? null : '/dealer/' + (props.data1.companyurlId || '') + '/' + (props.data1.userurlId || '')} className="grey-darken-2 font-weight-normal">
                 <Row>
                     <Col span={12}>

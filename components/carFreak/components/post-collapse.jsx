@@ -330,7 +330,9 @@ const PostCollapse = (props) => {
                                                 _.map(messages, function (v) {
                                                     return (
                                                         <div>
-                                                            <CommentBox1 data={v}
+                                                            <CommentBox1
+                                                                data={v}
+                                                                clubId={props.clubId}
                                                                 onChange={(data) => {
                                                                     handleCommentChange(data);
                                                                 }}
@@ -349,6 +351,7 @@ const PostCollapse = (props) => {
                                         placeholder="What's on your mind?"
                                         maxLength={1000}
                                         inputRef={commentInputRef}
+                                        clubId={props.clubId}
                                         size="small"
                                         onChange={(v) => {
                                             setText(v)

@@ -53,6 +53,7 @@ const GridProductList = (props) => {
               v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
               v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
               let priority = ''
+              v.priority = '';
               if (priority === '') {
     
                 if (v.addonKingadType) {
@@ -111,6 +112,8 @@ const GridProductList = (props) => {
     
               return v
             })
+            console.log('inputDataList');
+            console.log(inputDataList);
             setProductList(inputDataList);
           }
         }
@@ -434,7 +437,7 @@ const GridProductList = (props) => {
                                                                 }
                                                             </Col>
                                                             <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                                <CalculatorModal key='calculator' data={{ price: v.price, downpayment: v.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
+                                                                <CalculatorModal key='calculator' data={{ price: v.searchPrice, downpayment: v.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }} />
                                                             </Col>
                                                         </Row>
                                                 }

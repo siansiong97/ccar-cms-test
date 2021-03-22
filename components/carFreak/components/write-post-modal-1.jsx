@@ -355,7 +355,7 @@ const WritePostModal1 = (props) => {
                             </div>
                         </span>
                         <span className='d-inline-block' >
-                            <RadioGroup className=" round-border-radio-button" value={chatType} buttonStyle="solid">
+                            <RadioGroup className=" round-border-radio-button" disabled={props.editMode} value={chatType} buttonStyle="solid">
                                 <Radio.Button className="round-border-right" value="carfreaks" onClick={(e) => {
                                     setChatType('carfreaks')
                                 }}>

@@ -62,7 +62,7 @@ const LikePostButton = (props) => {
             }).then(res => {
                 setPostLike(_.get(res, ['data', 0]) || {})
             }).catch(err => {
-            message.error(err.message)
+                console.log(error);
             });
         }
     }
@@ -115,7 +115,6 @@ const LikePostButton = (props) => {
 
                     query[`${likeOn}Id`] = props[`${likeOn}Id`];
 
-
                     axios.post(`${client.io.io.uri}updateLike`,
                         query
                         , {
@@ -132,6 +131,7 @@ const LikePostButton = (props) => {
                             setTimeoutFunc();
                         }).catch((err) => {
                             setTimeoutFunc();
+                            console.log(error);
                             console.log('not able to like');
                         })
                 }, TIME_OUT))

@@ -80,37 +80,34 @@ const CommentBox1 = (props) => {
     function getData() {
 
         if (_.get(comment, ['_id'])) {
-            client.authenticate()
-                .then((res) => {
-                    setIsLoading(true);
+            setIsLoading(true);
 
-                    client.service('chatmessagereplies').find(
-                        {
-                            query: {
-                                messageId: comment._id,
-                                $populate: 'userId',
-                                $limit: PAGE_SIZE,
-                                $sort: { _id: -1 },
-                                $skip: messages.length
-                            }
-                        }
-                    ).then((res) => {
+            client.service('chatmessagereplies').find(
+                {
+                    query: {
+                        messageId: comment._id,
+                        $populate: 'userId',
+                        $limit: PAGE_SIZE,
+                        $sort: { _id: -1 },
+                        $skip: messages.length
+                    }
+                }
+            ).then((res) => {
 
-                        setIsLoading(false);
-                        if (res.data.length > 0) {
-                            let newMessages = messages.concat(res.data)
-                            setMessages(newMessages)
-                        }
-                        else {
-                            setMessages([])
-                        }
-                        setMessageTotal(res.total)
+                setIsLoading(false);
+                if (res.data.length > 0) {
+                    let newMessages = messages.concat(res.data)
+                    setMessages(newMessages)
+                }
+                else {
+                    setMessages([])
+                }
+                setMessageTotal(res.total)
 
-                    }).catch(err => {
-                        setIsLoading(false);
-                    });
-
-                })
+            }).catch(err => {
+                console.log(error);
+                setIsLoading(false);
+            })
         }
     }
 
@@ -252,6 +249,7 @@ const CommentBox1 = (props) => {
                                     editMode
                                     clickOutsideSubmit
                                     excludeEnter
+                                    clubId={props.clubId}
                                     text={`${_.get(comment, ['message']) || ''}`}
                                     emojiPosition={{ right: 33, bottom: 0 }}
                                     onSubmit={(text) => {
@@ -296,6 +294,7 @@ const CommentBox1 = (props) => {
                                                     return (
                                                         <div>
                                                             <ReplyBox1 data={v}
+                                                            clubId={props.clubId}
                                                                 onChange={(data) => {
                                                                     handleReplyChange(data);
                                                                 }}
@@ -323,6 +322,7 @@ const CommentBox1 = (props) => {
                                             text={text || ''}
                                             inputRef={commentInputRef}
                                             excludeEnter
+                                            clubId={props.clubId}
                                             emojiPosition={{ bottom: 0, right: 33 }}
                                             onChange={(text, finalText) => {
                                                 if (!text) {

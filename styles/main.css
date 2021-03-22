@@ -105,7 +105,7 @@
 
 .wrap-product-ads-spotlight {
     /* background-color: #ffe9c8; */
-    background: linear-gradient(60deg, #F7DA00 , #EFA600, #F5F54B);
+    background: linear-gradient(-45deg, #F7DA00 , #EFA600, #F5F54B);
     background-size: 400% 400%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 5s ease infinite;
@@ -130,7 +130,7 @@
 
 .wrap-product-ads-spicydeal {
     /* background: linear-gradient(-45deg, #ff3145 , #ff884e, #f732c5); */
-    background: linear-gradient(60deg, #FF0011 , #FD8800, #f732c5);
+    background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5);
     background-size: 400% 400%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 5s ease infinite;
@@ -528,9 +528,24 @@
     width: 100%;
 }
 
-.wrap-product-ads-horizontal-spotlight {
+/* .wrap-product-ads-horizontal-spotlight {
     background: linear-gradient(-45deg, #F7DA00 , #EFA600, #F5F54B);
-    /* background-color: #ffe9c8 !important; */
+    background-color: #ffe9c8 !important;
+    border-radius: 5px;
+    position: relative;
+    border: solid 1px #eee;
+    padding: 10px;
+    width: 100%;
+} */
+
+.wrap-product-ads-horizontal-spotlight {
+    /* background-color: #ffe9c8; */
+    background: linear-gradient(-45deg, #F7DA00 , #EFA600, #F5F54B);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 5s ease infinite;
+    animation: Gradient 5s ease infinite;
+    /* border: solid 3px #f0f2f5; */
     border-radius: 5px;
     position: relative;
     border: solid 1px #eee;
@@ -539,9 +554,30 @@
 }
 
 .wrap-product-ads-horizontal-spicydeal {
-    background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5);
+    background: linear-gradient(-45deg, #FF0011 , #FD8800, #FF0011);
+    /* background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5); */
     /* background-color: #ffffff !important; */
     /* background-image: linear-gradient(to right, #ff3145 , #ff884e); */
+    border-radius: 5px;
+    position: relative;
+    border: solid 1px #eee;
+    padding: 10px;
+    width: 100%;
+}
+
+.wrap-product-ads-horizontal-spicydeal-1 {
+     /* background: linear-gradient(-45deg, #ff3145 , #ff884e, #f732c5); */
+     background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5);
+     background-size: 400% 400%;
+     -webkit-animation: Gradient 15s ease infinite;
+     -moz-animation: Gradient 5s ease infinite;
+     animation: Gradient 5s ease infinite;
+     /* background-color: #ffffff;
+     background-image: linear-gradient(to right, #ff3145 , #ff884e); */
+     /* border: 3px solid;
+     border-image-slice: 1;
+     border-image-source: linear-gradient(to right,  #ff3145 , #ff884e); */
+ 
     border-radius: 5px;
     position: relative;
     border: solid 1px #eee;
@@ -583,7 +619,8 @@
 }
 
 .wrap-product-ads-title-horizontal p {
-    color: #757575;
+    /* color: #757575; */
+    color: #ffffff;
     font-size: 13px;
     font-weight: 500;
 }
@@ -593,7 +630,7 @@
 }
 
 #wrap-product-ads-title-horizontal a label {
-    color: #ffffff;
+    color: rgba(0, 0, 0, 0.65);
 }
 
 #wrap-product-ads--horizontal p {

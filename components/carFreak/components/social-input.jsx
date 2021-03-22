@@ -144,6 +144,8 @@ const SocialInput = (props) => {
             let quill = props.inputRef || ref[uid];
             if (quill.current) {
                 let editor = quill.current.getEditor();
+                quill.current.focus();
+                let currentCursor = editor.getSelection().index || 0;
                 if (editor && quill) {
                     setTimeout(() => {
                         editor.setSelection(currentCursor);
@@ -176,12 +178,15 @@ const SocialInput = (props) => {
                 params: {
                     match: {
                         userId: _.get(props.user, ['info', 'user', '_id']),
+                        clubId : props.clubId || '',
                         keyword: keyword || '',
                     },
                     limit: PAGE_SIZE,
                     skip: skip || 0,
                 }
             }).then(res => {
+                console.log('res');
+                console.log(res);
                 setIsLoading(false);
                 let temp = _.cloneDeep(suggestList);
                 temp[prefix] = suggestListPage > 1 ?
@@ -194,7 +199,7 @@ const SocialInput = (props) => {
                 setSuggestList(temp);
             }).catch(err => {
                 setIsLoading(false);
-                message.error(err.message)
+                console.log(err);
             });
         }
 
@@ -221,7 +226,7 @@ const SocialInput = (props) => {
                 setSuggestList(temp);
 
             }).catch(err => {
-                message.error(err.message)
+                console.log(err);
             });
         }
     }

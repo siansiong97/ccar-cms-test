@@ -205,11 +205,16 @@ const EventDetailsBox = (props) => {
                     :
                     null
             } */}
-                                <Menu.Item>
-                                    <ShareButtonDialog link={`/event-post/${_.get(eventPost, ['_id'])}`}>
-                                        <span>Share Link</span>
-                                    </ShareButtonDialog>
-                                </Menu.Item>
+                                {
+                                    _.get(event, 'scope') == 'public' ?
+                                        <Menu.Item>
+                                            <ShareButtonDialog link={`/event-post/${_.get(eventPost, ['_id'])}`}>
+                                                <span>Share Link</span>
+                                            </ShareButtonDialog>
+                                        </Menu.Item>
+                                        :
+                                        null
+                                }
                             </Menu>
                         }>
                             <Icon type="more" className="black" style={{ fontSize: 20 }} />

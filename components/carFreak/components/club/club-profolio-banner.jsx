@@ -29,6 +29,17 @@ const ClubProfolioBanner = (props) => {
     const [clubApprovalVisible, setClubApprovalVisible] = useState(false)
     const [viewType, setViewType] = useState('non-member');
 
+
+    useEffect(() => {
+        let query = props.router.query;
+        if (!query) {
+            query = {};
+        }
+        if(query.invite == '1'){
+            setInviteVisible(true)
+        }
+    }, [props.router.query])
+
     useEffect(() => {
         setClub(_.isPlainObject(props.data) && !_.isEmpty(props.data) ? props.data : {});
     }, [props.data])

@@ -193,7 +193,7 @@ const ReplyBox = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="width-100 flex-justify-space-between flex-items-align-center">
                                 <span className='flex-justify-start flex-items-align-center margin-right-md' >
-                                    <LikePostButton className="margin-right-md" text={(actived) => `${formatNumber(totalLike, 'auto', true, 0, true) || 0}`} replyId={_.get(comment, ['_id'])} likeOn='reply' onClick={(actived) => {
+                                    <LikePostButton className="margin-right-md" autoHandle text={(actived) => `${formatNumber(totalLike, 'auto', true, 0, true) || 0}`} replyId={_.get(comment, ['_id'])} likeOn='reply' onClick={(actived) => {
                                         setTotalLike(actived ? totalLike + 1 : totalLike - 1)
                                     }} />
                                 </span>

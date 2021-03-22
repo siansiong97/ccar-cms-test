@@ -72,7 +72,7 @@ export default async function (data, limit) {
   }
 
   if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.engineCapacityRange)) {
-    data.filterGroup.engineCapacityRange = convertRangeFormatBack(data.filterGroup.engineCapacityRange);
+    data.filterGroup.engineCapacityRange = convertToRangeFormat(data.filterGroup.engineCapacityRange);
     data.filterGroup.engineCapacityRange = convertFilterRange(data.filterGroup.engineCapacityRange, 'carspec.engineCapacity')
     if (notEmptyLength(data.filterGroup.engineCapacityRange)) {
       andFilter.$and = [...andFilter.$and, ...data.filterGroup.engineCapacityRange]

@@ -69,7 +69,6 @@ const CarMarketPage = (props) => {
     const [visible, setVisible] = useState()
 
     useEffect(() => {
-        console.log(props.filterGroup);
         setInitRan({
             filterGroup: true,
             config: true,
@@ -93,7 +92,6 @@ const CarMarketPage = (props) => {
             }
             clearTimeout(timeoutFunction);
             timeoutFunction = setTimeout(() => {
-                console.log('run api');
                 carAdsFilter({
                     filterGroup: currentFilterGroup,
                     config: mainConfig
@@ -502,8 +500,6 @@ const CarMarketPage = (props) => {
                                             <ProductListFilterForm
                                                 initFilterGroup={currentFilterGroup}
                                                 onChange={(data) => {
-                                                    console.log('data');
-                                                    console.log(data);
                                                     setCurrentFilterGroup({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false });
                                                     pushParameterToUrl({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false }, { ...mainConfig, page: 1 })
                                                 }}
@@ -563,8 +559,6 @@ const CarMarketPage = (props) => {
                                                 <ProductsListFilterCollapse
                                                     initFilterGroup={currentFilterGroup}
                                                     onChange={(data) => {
-                                                        console.log('data');
-                                                        console.log(data);
                                                         setCurrentFilterGroup({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false });
                                                         pushParameterToUrl({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false }, { ...mainConfig, page: 1 })
                                                     }} availableFilterOption={notEmptyLength(availableFilterOption) ? availableFilterOption : {}} />
@@ -781,8 +775,6 @@ const CarMarketPage = (props) => {
                                                 <ProductsListFilterCollapse
                                                     initFilterGroup={currentFilterGroup}
                                                     onChange={(data) => {
-                                                        console.log('data');
-                                                        console.log(data);
                                                         setCurrentFilterGroup({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false });
                                                         pushParameterToUrl({ ...data, businessType: currentFilterGroup.businessType || '', registrationUrl: currentFilterGroup.registrationUrl || false, car360View: currentFilterGroup.car360View || false }, { ...mainConfig, page: 1 })
                                                     }} availableFilterOption={notEmptyLength(availableFilterOption) ? availableFilterOption : {}} />

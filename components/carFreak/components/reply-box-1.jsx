@@ -121,6 +121,7 @@ const ReplyBox1 = (props) => {
                                     clickOutsideSubmit
                                     text={`${_.get(comment, ['message']) || ''}`}
                                     emojiPosition={{ bottom: -20, right: 33 }}
+                                    clubId={props.clubId}
                                     onSubmit={(text) => {
                                         handleSubmit(text);
                                         setEditMode(false);

@@ -92,7 +92,6 @@ const SocialClubLayout = (props) => {
                         }
                     }
                 }}
-                triggerInvite
             >
             </WriteClubModal>
         </React.Fragment>

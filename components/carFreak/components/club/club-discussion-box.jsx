@@ -74,9 +74,9 @@ const ClubDiscussionBox = (props) => {
     useEffect(() => {
         setPosts([]);
         setUserChatLikes([]);
-        if(postPage == 1){
+        if (postPage == 1) {
             getPosts(0);
-        }else{
+        } else {
             setPostPage(1);
         }
     }, [clubId, tabKey])
@@ -247,7 +247,8 @@ const ClubDiscussionBox = (props) => {
                                                                     confirmDeleteEvent(data)
                                                                 }} />
                                                             :
-                                                            <PostCollapse data={post}
+                                                            <PostCollapse
+                                                                data={post}
                                                                 postLike={_.find(userChatLikes, { chatId: post._id })}
                                                                 onEditClick={(data) => {
                                                                     if (_.isPlainObject(data) && !_.isEmpty(data)) {
@@ -256,7 +257,7 @@ const ClubDiscussionBox = (props) => {
                                                                         setWritePostVisible(true);
                                                                     }
                                                                 }}
-
+                                                                clubId={clubId}
                                                                 onRemoveClick={(data) => {
                                                                     confirmDelete(data)
                                                                 }}

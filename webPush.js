@@ -27,7 +27,6 @@ export const tokenInlocalforage = async () => {
 export const initFirebaseToken = async () => {
     try {
         const messaging = firebase.messaging();
-        console.log(firebase);
         const tokenInLocalForage = await tokenInlocalforage();
         //if FCM token is already there just return the token
         if (tokenInLocalForage !== null) {
@@ -35,7 +34,6 @@ export const initFirebaseToken = async () => {
         }
         //requesting notification permission from browser
         const status = await Notification.requestPermission();
-        console.log('status',status);
         if (status && status === 'granted') {
             //getting token from FCM
             const fcm_token = await messaging.getToken();
@@ -57,7 +55,6 @@ export const onMessageListener = () => {
     const messaging = firebase.messaging();
     return new Promise((resolve) => {
         messaging.onMessage((payload) => {
-            console.log('payload', payload);
             resolve(payload);
         });
     });

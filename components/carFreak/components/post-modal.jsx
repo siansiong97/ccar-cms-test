@@ -177,6 +177,7 @@ const PostModal = (props) => {
                 setMessageTotal(res.total)
 
             }).catch(err => {
+                console.log(err);
                 setIsLoading(false);
             });
 

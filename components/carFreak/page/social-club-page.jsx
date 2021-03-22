@@ -140,7 +140,8 @@ const SocialClubPage = (props) => {
                             tabKey={tabKey}
                             onCreate={(item) => {
                                 if (_.isPlainObject(item) && !_.isEmpty(item)) {
-                                    setClubs([item].concat(clubs))
+                                    props.router.push(`/social-club/${item._id}?invite=1`)
+                                    // setClubs([item].concat(clubs))
                                 }
                             }}
                             onChange={(tabKey) => {

@@ -73,6 +73,7 @@ const SocialClubProfilePage = (props) => {
         setTabKey(_.get(_.find(tabs, function (tab) {
             return tab.value == query.tab;
         }), ['value']) || 'discussions');
+
     }, [props.router.query])
 
     useEffect(() => {

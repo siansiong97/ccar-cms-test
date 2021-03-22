@@ -29,6 +29,7 @@ const ClubInviteModal = (props) => {
     const [filterGroup, setFilterGroup] = useState({
         keyword: '',
     });
+    const [scrollBarRef, setScrollBarRef] = useState({});
 
     useEffect(() => {
         setVisible(props.visible);
@@ -42,6 +43,14 @@ const ClubInviteModal = (props) => {
 
     useEffect(() => {
 
+        if(scrollBarRef){
+            console.log(scrollBarRef);
+            if(scrollBarRef.scrollToTop){
+                scrollBarRef.scrollToTop();
+            }
+        }
+
+        setUsers([]);
         if (userPage == 1) {
             getUserList(props.clubId, props.userId, 0);
         } else {
@@ -102,6 +111,8 @@ const ClubInviteModal = (props) => {
                 }
             }).then(res => {
 
+                console.log('res');
+                console.log(res);
                 setUsers(_.isArray(_.get(res, ['data', 'data'])) && !_.isEmpty(_.get(res, ['data', 'data'])) ? userPage <= 1 ? res.data.data : users.concat(res.data.data) : users)
                 setUserTotal(_.get(res, ['data', 'total']));
                 setIsLoading(false)
@@ -145,59 +156,49 @@ const ClubInviteModal = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className="width-100 padding-top-sm">
-                        <ScrollLoadWrapper style={{ height: '50vh' }} onScrolledBottom={() => {
+                        <ScrollLoadWrapper style={{ height: '50vh' }} getRef={(scrollBarRef) => {
+                            setScrollBarRef(scrollBarRef);
+                        }} onScrolledBottom={() => {
                             if (arrayLengthCount(users) < userTotal) {
                                 setUserPage(userPage + 1);
                             }
                         }}>
                             {
                                 _.isArray(users) && !_.isEmpty(users) ?
-                                    <Row gutter={[10, 15]} style={{ width: '100%' }} >
+                                    <div className="width-100">
                                         {
                                             _.map(users, function (user) {
                                                 return (
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="flex-justify-space-between flex-items-align-center" >
-                                                            <span className='d-inline-block'  >
-                                                                <UserAvatar
-                                                                    data={user}
-                                                                    size={50}
-                                                                    className="margin-right-md"
-                                                                    showNameRight
-                                                                    redirectProfile
-                                                                    onRedirect={() => { closeModal() }}
-                                                                    avatarClassName='flex-items-no-shrink'
-                                                                    textClassName="text-truncate"
-                                                                    renderName={(data) => {
-                                                                        return (
-                                                                            <React.Fragment>
-                                                                                <Row>
-                                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                                        <div className="width-100 flex-justify-start flex-items-align-center text-truncate">
-                                                                                            {getUserName(data, ['freakId'])}
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                                        <div className="width-100 flex-justify-start flex-items-align-center text-truncate">
-                                                                                            {`${getUserName(data, ['fullName'])} ${isDealer(data) && _.get(data, ['companys', 'name']) ? '|' : ''} ${isDealer(data) && _.get(data, ['companys', 'name']) ? _.get(data, ['companys', 'name']) : ''}`}
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                </Row>
-                                                                            </React.Fragment>
-                                                                        )
-                                                                    }} />
-                                                            </span>
-                                                            <span className='d-inline-block' >
-                                                                <div className="flex-justify-end flex-items-align-center">
-                                                                    <InviteButton notify type="club" clubId={props.clubId} invitedBy={_.get(props.user, ['info', 'user', '_id'])} invitee={_.get(user, ['_id'])} />
+                                                    <div className="flex-justify-space-between flex-items-align-center margin-bottom-sm width-100" >
+                                                        <span className="flex-items-align-center width-80"  >
+                                                            <UserAvatar
+                                                                data={user}
+                                                                size={50}
+                                                                redirectProfile
+                                                                onRedirect={() => { closeModal() }}
+                                                                avatarClassName='flex-items-no-shrink'
+                                                                className="margin-right-md"
+                                                            />
+
+                                                            <span className='d-inline-block text-truncate' >
+                                                                <div>
+                                                                    {getUserName(user, ['freakId'])}
+                                                                </div>
+                                                                <div>
+                                                                    {`${getUserName(user, ['fullName'])} ${isDealer(user) && _.get(user, ['companys', 'name']) ? '|' : ''} ${isDealer(user) && _.get(user, ['companys', 'name']) ? _.get(user, ['companys', 'name']) : ''}`}
                                                                 </div>
                                                             </span>
-                                                        </div>
-                                                    </Col>
+                                                        </span>
+                                                        <span className='d-inline-block' >
+                                                            <div className="flex-justify-end flex-items-align-center">
+                                                                <InviteButton notify type="club" clubId={props.clubId} invitedBy={_.get(props.user, ['info', 'user', '_id'])} invitee={_.get(user, ['_id'])} />
+                                                            </div>
+                                                        </span>
+                                                    </div>
                                                 )
                                             })
                                         }
-                                    </Row>
+                                    </div>
                                     :
                                     <div className="flex-justify-center flex-align-center padding-md">
                                         <Empty></Empty>
