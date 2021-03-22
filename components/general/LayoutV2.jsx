@@ -555,7 +555,7 @@ class LayoutV2 extends React.Component {
                                 <div className="fixed-container">
                                     <Row type="flex" align="middle" className='padding-x-md' >
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
-                                            <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button>
+                                            {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
 
                                                 <Link shallow={false} prefetch href={`/`}  >
