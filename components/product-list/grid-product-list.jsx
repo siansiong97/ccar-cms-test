@@ -29,87 +29,93 @@ const GridProductList = (props) => {
     const [productList, setProductList] = useState([])
     const [initLoading, setInitLoading] = useState(true);
 
-
     useEffect(() => {
+        // processAddonProduct()
+        processAddonProduct()
+        var interval2 = setInterval(() => {
+          processAddonProduct()
+        }, 60000);
+        return () => clearInterval(interval2);
+    
+      }, [props.data])
 
+    function processAddonProduct() {
+        let currentDateTime = moment().format()
         if (notEmptyLength(props.data)) {
-            setInitLoading(true);
-            if (props.data != productList) {
-                setProductList([]);
-                let inputDataList = _.cloneDeep(props.data)
-
-                inputDataList.map(function (v) {
-                    v.addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
-                    v.addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
-                    v.addonKingadType = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'show' })
-                    v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
-                    v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
-                    let priority = ''
-                    if (priority === '') {
-
-                        if (v.addonKingadType) {
-                            if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
-                                priority = 'addonKingadType'
-                                v.priority = 'addonKingadType'
-                                v.addonKingadType.endDate = moment(v.addonKingadType.endDate).format()
-                                v.addonKingadType.startDate = moment(v.addonKingadType.startDate).format()
-                            }
-                        }
-                    }
-
-                    if (priority === '') {
-                        if (v.addonKingadType2) {
-                            if (currentDateTime > moment(v.addonKingadType2.startDate).format() && currentDateTime < moment(v.addonKingadType2.endDate).format()) {
-                                priority = 'addonKingadType2'
-                                v.priority = 'addonKingadType2'
-                                v.addonKingadType2.startDate = moment(v.addonKingadType2.startDate).format()
-                                v.addonKingadType2.endDate = moment(v.addonKingadType2.endDate).format()
-                            }
-                        }
-                    }
-
-                    if (priority === '') {
-                        if (v.addonKingadType3) {
-                            if (currentDateTime > moment(v.addonKingadType3.startDate).format() && currentDateTime < moment(v.addonKingadType3.endDate).format()) {
-                                priority = 'addonKingadType3'
-                                v.priority = 'addonKingadType3'
-                                v.addonKingadType3.startDate = moment(v.addonKingadType3.startDate).format()
-                                v.addonKingadType3.endDate = moment(v.addonKingadType3.endDate).format()
-                            }
-                        }
-                    }
-
-                    if (priority === '') {
-                        if (v.addonSpicydeal) {
-                            if (currentDateTime > moment(v.addonSpicydeal.startDate).format() && currentDateTime < moment(v.addonSpicydeal.endDate).format()) {
-                                priority = 'addonSpicydeal'
-                                v.priority = 'addonSpicydeal'
-                                v.addonSpicydeal.startDate = moment(v.addonSpicydeal.startDate).format()
-                                v.addonSpicydeal.endDate = moment(v.addonSpicydeal.endDate).format()
-                            }
-                        }
-                    }
-
-                    if (priority === '') {
-                        if (v.addonSpotlight) {
-                            if (currentDateTime > moment(v.addonSpotlight.startDate).format() && currentDateTime < moment(v.addonSpotlight.endDate).format()) {
-                                priority = 'addonSpotlight'
-                                v.priority = 'addonSpotlight'
-                                v.addonSpotlight.startDate = moment(v.addonSpotlight.startDate).format()
-                                v.addonSpotlight.endDate = moment(v.addonSpotlight.endDate).format()
-                            }
-                        }
-                    }
-
-                    // console.log(v.title);
-                    // console.log(v.priority);
-                    // console.log(v);
-                    return v
-                })
-                setProductList(inputDataList);
-            }
+          if (props.data != productList) {
+            setProductList([]);
+            let inputDataList = _.cloneDeep(props.data)
+    
+            inputDataList.map(function (v) {
+              v.addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
+              v.addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
+              v.addonKingadType = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'show' })
+              v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
+              v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
+              let priority = ''
+              if (priority === '') {
+    
+                if (v.addonKingadType) {
+                  if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
+                    priority = 'addonKingadType'
+                    v.priority = 'addonKingadType'
+                    v.addonKingadType.endDate = moment(v.addonKingadType.endDate).format()
+                    v.addonKingadType.startDate = moment(v.addonKingadType.startDate).format()
+                  }
+                }
+              }
+    
+              if (priority === '') {
+                if (v.addonKingadType2) {
+                  if (currentDateTime > moment(v.addonKingadType2.startDate).format() && currentDateTime < moment(v.addonKingadType2.endDate).format()) {
+                    priority = 'addonKingadType2'
+                    v.priority = 'addonKingadType2'
+                    v.addonKingadType2.startDate = moment(v.addonKingadType2.startDate).format()
+                    v.addonKingadType2.endDate = moment(v.addonKingadType2.endDate).format()
+                  }
+                }
+              }
+    
+              if (priority === '') {
+                if (v.addonKingadType3) {
+                  if (currentDateTime > moment(v.addonKingadType3.startDate).format() && currentDateTime < moment(v.addonKingadType3.endDate).format()) {
+                    priority = 'addonKingadType3'
+                    v.priority = 'addonKingadType3'
+                    v.addonKingadType3.startDate = moment(v.addonKingadType3.startDate).format()
+                    v.addonKingadType3.endDate = moment(v.addonKingadType3.endDate).format()
+                  }
+                }
+              }
+    
+              if (priority === '') {
+                if (v.addonSpicydeal) {
+                  if (currentDateTime > moment(v.addonSpicydeal.startDate).format() && currentDateTime < moment(v.addonSpicydeal.endDate).format()) {
+                    priority = 'addonSpicydeal'
+                    v.priority = 'addonSpicydeal'
+                    v.addonSpicydeal.startDate = moment(v.addonSpicydeal.startDate).format()
+                    v.addonSpicydeal.endDate = moment(v.addonSpicydeal.endDate).format()
+                  }
+                }
+              }
+    
+              if (priority === '') {
+                if (v.addonSpotlight) {
+                  if (currentDateTime > moment(v.addonSpotlight.startDate).format() && currentDateTime < moment(v.addonSpotlight.endDate).format()) {
+                    priority = 'addonSpotlight'
+                    v.priority = 'addonSpotlight'
+                    v.addonSpotlight.startDate = moment(v.addonSpotlight.startDate).format()
+                    v.addonSpotlight.endDate = moment(v.addonSpotlight.endDate).format()
+                  }
+                }
+              }
+    
+              return v
+            })
+            setProductList(inputDataList);
+          }
         }
-    }, [props.data])
+    
+      }
 
     useEffect(() => {
         setInitLoading(props.productsList.productListLoading)

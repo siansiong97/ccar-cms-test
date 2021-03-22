@@ -18,6 +18,7 @@ import { getStreamUrl } from './config';
 import LiveBoxPreview1 from './live-box-preview-1';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
+import { isIOS, isMobile } from 'react-device-detect'
 
 TweenOne.plugins.push(BezierPlugin);
 
@@ -137,6 +138,10 @@ class LiveIndex extends React.Component {
   }
 
   componentWillUnmount() {
+
+      if(isIOS && isMobile){
+        window.location.href="ccarmy:/" + this.props.location.pathname
+      }
 
     this.componentCleanup();
     window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting

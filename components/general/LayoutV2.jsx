@@ -23,6 +23,7 @@ import GlobalSearchBar from './global-search-bar';
 import UserAvatar from './UserAvatar';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
+import { initFirebaseToken } from '../../webPush';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -88,6 +89,29 @@ class LayoutV2 extends React.Component {
         });
     };
 
+
+
+    initUserNotification = () => {
+        if (_.get(this.props, ['user', 'authenticated'])) {
+            axios.get(`${client.io.io.uri}initUserNotificationTopics`, {
+                params: {
+                    userId: _.get(this.props.user, ['info', 'user', '_id'])
+                }
+            }).then(res => {
+                axios.get(`${client.io.io.uri}getUserNotifications`, {
+                    params: {
+                        userId: _.get(this.props.user, ['info', 'user', '_id'])
+                    }
+                }).then(res => {
+                }).catch(err => {
+                    message.error(err.message)
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }
+
     handleExpiredToken = () => {
         if (_.get(this.props, ['user', 'authenticated'])) {
             client.authenticate().then(res => {
@@ -99,6 +123,35 @@ class LayoutV2 extends React.Component {
             });
         }
     }
+    async setFirebaseToken() {
+        try {
+
+            const token = await initFirebaseToken();
+            console.log('token', token);
+            if (token) {
+                axios.post(`${client.io.io.uri}pushNotificationTokenToUser`, {
+                    userId: _.get(this.props.user, ['info', 'user', '_id']),
+                    token: token
+                }).then(res => {
+                }).catch(err => {
+                    message.error(err.message)
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    sendTestMessage(text) {
+        axios.post(`${client.io.io.uri}sendTestNotification`, {
+            params: {
+                text: text || '',
+            }
+        }).then(res => {
+
+        }).catch(err => {
+        });
+    }
 
     componentDidMount() {
         if (typeof window != 'undefined') {
@@ -109,6 +162,8 @@ class LayoutV2 extends React.Component {
 
         window.scrollTo(0, 0);
         this.handleExpiredToken();
+        this.setFirebaseToken();
+        this.initUserNotification();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -159,7 +214,6 @@ class LayoutV2 extends React.Component {
             })
         }
 
-
         if (!_.isEqual(prevState.window, this.state.window)) {
             this.state.window.addEventListener('scroll', this.handleScroll, { passive: true });
 
@@ -168,6 +222,7 @@ class LayoutV2 extends React.Component {
             };
         }
     }
+
     handleScroll = (e) => {
         this.setState({
             scrollY: window.scrollY,
@@ -495,11 +550,12 @@ class LayoutV2 extends React.Component {
             <Layout>
                 <div className="relative-wrapper">
                     <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
-                        <Col xs={0} sm={0} md={0} lg={24} xl={24} >
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} >
                             <div id="menu-bar" className="topnav" style={{ backgroundColor: '#000000' }}>
                                 <div className="fixed-container">
                                     <Row type="flex" align="middle" className='padding-x-md' >
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
+                                            <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button>
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
 
                                                 <Link shallow={false} prefetch href={`/`}  >

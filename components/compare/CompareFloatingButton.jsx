@@ -37,7 +37,6 @@ const CompareFloatingButton = (props) => {
 
   useEffect(() => {
 
-    console.log('props.productsList.compareIds', { data : props.productsList.compareIds});
     if (notEmptyLength(props.productsList.compareIds)) {
       client.service('product-ads').find({
         query: {
@@ -60,7 +59,6 @@ const CompareFloatingButton = (props) => {
           ],
         }
       }).then(res => {
-        console.log(res.data);
         if (notEmptyLength(res.data)) {
           setProductList(res.data.map(function (item) {
             item.companys = item.companyId;

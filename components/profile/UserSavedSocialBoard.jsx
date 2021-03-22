@@ -92,7 +92,7 @@ const UserSocialBoard = (props) => {
             }).then(res => {
                 setPostLoading(false);
                 if (notEmptyLength(res.data)) {
-                    setPosts(postPage == 1 ? _.compact(_.map(res.data, 'chatId')) : _.compact(posts.concat(_.map(res.data, 'chatId'))));
+                    setPosts(postPage == 1 ? _.map(res.data, 'chatId') : posts.concat(_.map(res.data, 'chatId')));
                 }
                 setPostTotal(res.total)
             }).catch(err => {

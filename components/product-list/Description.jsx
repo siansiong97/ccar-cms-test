@@ -10,7 +10,7 @@ import client from '../../feathers';
 import { loading } from '../../redux/actions/app-actions';
 import { fetchFeaturesList, updateCheckedFeaturesDate } from '../../redux/actions/productsList-actions';
 import CarspecsCompareTable from '../compare/CarspecsCompareTable';
-
+import { isIOS, isMobile } from 'react-device-detect'
 
 
 const { TabPane } = Tabs;
@@ -89,6 +89,7 @@ const Description = (props) => {
     const [ratingPage, setRatingPage] = useState(1)
     const [ratingTotal, setRatingTotal] = useState(0)
     const [ownRating, setOwnRating] = useState([])
+    const [displayContact, setDisplayContact] = useState(false)
 
     useEffect(() => {
         if (props.productDetails._id != id) {
@@ -439,12 +440,72 @@ const Description = (props) => {
         )
     }
 
+    function changeProductDetails(data, type) {
+
+        if (_.isEmpty(data) === true) { return }
+        let dataString = _.cloneDeep(data)
+        let phoneFormat = /(01)[0-46-9]-*[0-9]{7,8}/gim
+        let phoneFormat2 = /[0][1][0-46-9]-*[0-9]{7,8}/g
+
+        dataString = dataString.split('\n')
+        dataString = dataString.map(function (v) {
+
+            let n = v.match(phoneFormat);
+            let s = v.split(phoneFormat2);
+            let x = ''
+            if (_.isEmpty(n) === true) { return <p>{v}</p> }
+            x = s.map(function (v, i) {
+
+                if (n[i]) {
+                    if (type === 'callContact') {
+
+                        if(isMobile){
+                            v = <><>{v}</> <a className='contactShow'
+                            target={'_blank'}
+                            href={"tel:"+n[i]}
+                            >{n[i]}</a></>
+                        }   
+                        else{
+                            let username =''
+                            try{
+                             username = productDetails.createdBy.namePrefix + ' ' +  productDetails.createdBy.fullName
+                            }
+                            catch(err)
+                            {username = '' }
+
+                        v = <><>{v}</> <a className='contactShow'
+                            target={'_blank'}
+                            href={
+                                "https://web.whatsapp.com/send?phone="
+                                + n[i].replace('+', '') + "&text=Hi "
+                                + username
+                                + ", I am interested in your car ad on ccar.my and I would like to know more about "
+                                + productDetails.title
+                                + " (RM "
+                                +  productDetails.price.toFixed(2) + "). Thank you. https://share.ccar.my/viewCar/"
+                                + productDetails._id}
+
+                        >{n[i]}</a></>
+                        }
+                    }
+                    else {
+                        v = <><>{v}</> <span className='contactHide' onClick={() => { setDisplayContact(true) }}>(Click to View Contact No.)</span></>
+                    }
+                }
+                return v
+            })
+            return <p>{x}</p>
+        })
+        return dataString
+    }
+
     return (
         <div>
             <Card size="small">
                 <Tabs defaultActiveKey="1" onChange={callback} className="wrap-desciption">
                     <TabPane tab="Description" key="1">
-                        <p style={{ whiteSpace: 'pre-wrap' }}>{productDetails.description}</p>
+                        {/* <p style={{ whiteSpace: 'pre-wrap' }}>{productDetails.description}</p> */}
+                        <p style={{ whiteSpace: 'pre-wrap' }}  >{displayContact ? changeProductDetails(productDetails.description, 'callContact') : changeProductDetails(productDetails.description)}</p>
                     </TabPane>
                     <TabPane tab="Features" key="2">
                         {_renderFeatures(productDetails.features)}

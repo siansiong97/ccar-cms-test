@@ -12,7 +12,6 @@ const ReduxPersistWrapper = (props) => {
     useEffect(() => {
         if (props.cookie) {
             let persistStates = getLocalStoragePersistStates();
-            console.log('persistStates', { data: persistStates });
             _.forEach(persistStates, function (persistState) {
                 props.dynamicDispatch(_.get(persistState, ['persistObj', 'action']), _.get(persistState, ['data']))
             })

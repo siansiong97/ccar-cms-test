@@ -771,6 +771,7 @@ class ViewCarDetailsPage extends React.Component {
 
                             {
                               (data, setCurrentIndex, setVisible) => {
+                                {console.log(this.state.show)}
                                 return (
                                   <div show={this.state.show} className="code-box-shape" >
                                     <img className="fade-in cursor-pointer absolute-center-img-no-stretch" onClick={() => { setVisible(true) }} id="my-element" src={_.get(data, ['images', data.currentIndex])} alt={`${_.get(this.state.productDetails, 'carspec.make') || ''} ${_.get(this.state.productDetails, 'carspec.model') || ''} Image ${data.currentIndex + 1}`} />
