@@ -39,6 +39,10 @@ app.prepare().then(() => {
     return app.render(req, res, `/viewCar/${_.get(req, 'params.id') || ''}`, req.query)
   })
 
+  server.get('/previewCarAds/:id', (req, res) => {
+    return app.render(req, res, `/previewCarAds/${_.get(req, 'params.id') || ''}`, req.query)
+  })
+
   server.get('/profile/:id', (req, res) => {
     return app.render(req, res, `/profile/${_.get(req, 'params.id') || ''}`, req.query)
   })
