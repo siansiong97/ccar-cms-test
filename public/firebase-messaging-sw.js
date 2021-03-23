@@ -1,10 +1,11 @@
 
-importScripts('https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/8.3.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.3.1/firebase-messaging.js');
+
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-     apiKey: "AIzaSyBNkd-inUJRLD_ke7pwJg66LND8M2e9A_s",
+     apiKey: "AIzaSyAWx6kjj-4Arrff7fcQPNaMIXuw44hgups",
      authDomain: "ccar-my.firebaseapp.com",
      databaseURL: "https://ccar-my.firebaseio.com",
      projectId: "ccar-my",
@@ -23,28 +24,19 @@ if (!firebase.apps.length) {
 const messaging = firebase.messaging();
 
 
-// messaging.setBackgroundMessageHandler(function (payload) {
-//      const promiseChain = clients
-//           .matchAll({
-//                type: "window",
-//                includeUncontrolled: true,
-//           })
-//           .then((windowClients) => {
-//                for (let i = 0; i < windowClients.length; i++) {
-//                     const windowClient = windowClients[i];
-//                     windowClient.postMessage(payload);
-//                }
-//           })
-//           .then(() => {
-//                return registration.showNotification("my notification title");
-//           })
-//           .catch((err) => {
-//                console.log({ err });
-//           })
+messaging.setBackgroundMessageHandler((payload) => {
+     console.log('[firebase-messaging-sw.js] Received background message ', payload);
+     // Customize notification here
+     const notificationTitle = 'Background Message Title';
+     const notificationOptions = {
+          body: 'Background Message body.',
+          icon: '/firebase-logo.png'
+     };
 
-//      return promiseChain;
-// });
+     console.log(self.registration);
 
+     return self.registration.showNotification(notificationTitle, notificationOptions);
+});
 
 // self.addEventListener("notificationclick", function (event) {
 //      console.log(event);

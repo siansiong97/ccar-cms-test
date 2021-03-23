@@ -112,8 +112,6 @@ const GridProductList = (props) => {
     
               return v
             })
-            console.log('inputDataList');
-            console.log(inputDataList);
             setProductList(inputDataList);
           }
         }

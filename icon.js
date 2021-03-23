@@ -29,6 +29,7 @@ export const flame = '/assets/carDetails/flame.gif'
 
 
 export const ccarWebLogo400X150 = '/assets/profile/400x150-icon.png'
+export const ccarLogo = '/logo192.png'
 
 //Login
 export const loginBackground = '/assets/login/background.png';

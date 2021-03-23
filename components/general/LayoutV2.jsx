@@ -1,6 +1,6 @@
 
 import { CaretUpOutlined } from '@ant-design/icons';
-import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message, Drawer, Badge, Avatar } from 'antd';
+import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message, Drawer, Badge, Avatar, notification } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import { v4 } from 'uuid';
 import { convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
-import { cnyLogo2 } from '../../icon';
+import { ccarLogo, cnyLogo2 } from '../../icon';
 import { loading, loginMode, quickSearchProductsList, registerMode, setApplyMileage, setApplyPrice, setApplyYear, setMenuHeight, setNotificationToken, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
 import { clearProductFilterOptions, fetchCompareCarLimit } from '../../redux/actions/productsList-actions';
@@ -24,6 +24,7 @@ import UserAvatar from './UserAvatar';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
 import { initFirebaseToken } from '../../webPush';
+import firebase from 'firebase/app';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -90,28 +91,6 @@ class LayoutV2 extends React.Component {
     };
 
 
-
-    initUserNotification = () => {
-        if (_.get(this.props, ['user', 'authenticated'])) {
-            axios.get(`${client.io.io.uri}initUserNotificationTopics`, {
-                params: {
-                    userId: _.get(this.props.user, ['info', 'user', '_id'])
-                }
-            }).then(res => {
-                axios.get(`${client.io.io.uri}getUserNotifications`, {
-                    params: {
-                        userId: _.get(this.props.user, ['info', 'user', '_id'])
-                    }
-                }).then(res => {
-                }).catch(err => {
-                    message.error(err.message)
-                });
-            }).catch(err => {
-                console.log(err);
-            });
-        }
-    }
-
     handleExpiredToken = () => {
         if (_.get(this.props, ['user', 'authenticated'])) {
             client.authenticate().then(res => {
@@ -127,19 +106,50 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
-            console.log('token', token);
+            console.log('getToken', token);
             if (token) {
-                axios.post(`${client.io.io.uri}pushNotificationTokenToUser`, {
-                    userId: _.get(this.props.user, ['info', 'user', '_id']),
-                    token: token
-                }).then(res => {
-                }).catch(err => {
-                    message.error(err.message)
-                });
+
+                await this.subscribeNotificationTopics(token);
+                this.listenOnNotification();
             }
         } catch (error) {
             console.log(error);
         }
+    }
+
+    listenOnNotification() {
+
+        console.log('listening notifications');
+        const messaging = firebase.messaging();
+        messaging.onMessage((message) => {
+            this._renderNotification(message);
+        });
+    }
+
+    subscribeNotificationTopics(token) {
+
+        console.log('subscribing topics');
+        if (_.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id'])) {
+            return axios.post(`${client.io.io.uri}pushNotificationTokenToUser`, {
+                userId: _.get(this.props.user, ['info', 'user', '_id']),
+                token: token
+            })
+        } else {
+            return axios.post(`${client.io.io.uri}subscribePublicNotification`, {
+                token: token,
+            })
+        }
+    }
+
+    _renderNotification = (data) => {
+        console.log('notification',data);
+        notification.open({
+            message : _.get(data, 'notification.title') || '',
+            description : _.get(data, 'notification.body') || '',
+            duration : 5,
+            placement : 'topRight',
+            icon : <Avatar src={ccarLogo} />,
+        })
     }
 
     sendTestMessage(text) {
@@ -163,7 +173,6 @@ class LayoutV2 extends React.Component {
         window.scrollTo(0, 0);
         this.handleExpiredToken();
         this.setFirebaseToken();
-        this.initUserNotification();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -220,6 +229,10 @@ class LayoutV2 extends React.Component {
             return () => {
                 this.state.window.removeEventListener('scroll', this.handleScroll);
             };
+        }
+
+        if (prevProps.user.authenticated != this.props.user.authenticated) {
+            this.setFirebaseToken();
         }
     }
 
