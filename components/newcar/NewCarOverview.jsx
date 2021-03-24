@@ -315,7 +315,7 @@ const NewCarOverview = (props) => {
                                     handleError={(e) => { message.error(e.message) }} />
                             </Col> */}
                                 <Col style={{ padding: '5px' }} xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    {/* <Link shallow={false} prefetch href={`/newcar/details/${props.router.query.make}/${props.router.query.model}/specs`}>
+                                    {/* <Link shallow={false}  href={`/newcar/details/${props.router.query.make}/${props.router.query.model}/specs`}>
                                     <Button style={{ width: '100%' }}>
                                         <p style={{ textTransform: 'capitalize', marginTop: '5px' }}> View {carDetails ? carDetails.make + ' ' + carDetails.model : ''} Specification </p>
                                     </Button>
@@ -577,7 +577,7 @@ const NewCarOverview = (props) => {
                     {peerComp.map((item, idx) => {
                         return (
                             <Col key={'keyDetails' + idx} xs={12} sm={12} md={6} lg={6} xl={6} >
-                                <Link shallow={false} prefetch href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                                <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
                                     <a>
                                         <div className="newcars-uniqBy-model cursor-pointer">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>

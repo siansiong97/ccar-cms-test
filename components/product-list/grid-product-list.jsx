@@ -309,7 +309,7 @@ const GridProductList = (props) => {
 
                                         <div className={_renderLayout(v)}>
                                             <div className="wrap-product-ads-img">
-                                                <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id}>
+                                                <Link shallow={false}  passHref href={'/viewCar/' + v._id}>
                                                     <a>
                                                         <React.Fragment>
                                                             <div className="overlay-condition">
@@ -343,7 +343,7 @@ const GridProductList = (props) => {
                                             </div>
                                             <div className="wrap-product-ads-text">
                                                 <div className="wrap-product-ads-title">
-                                                    <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
+                                                    <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
                                                         <a>
                                                             <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
                                                         </a>

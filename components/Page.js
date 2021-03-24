@@ -9,7 +9,7 @@ const Page = ({ title, linkTo, tick }) => (
     <Clock lastUpdate={tick.lastUpdate} light={tick.light} />
     <AddCount />
     <nav>
-      <Link shallow={false} prefetch passHref  href={linkTo}>
+      <Link shallow={false}  passHref  href={linkTo}>
         <a>Navigate</a>
       </Link>
     </nav>

@@ -71,3 +71,7 @@ export const newCarFilterFormImg = '/assets/faq/all-newcar filter.png';
 export const carMoreInfoImg = '/assets/faq/sell-a-car.png';
 export const cstarListImg = '/assets/faq/sell-a-car.png';
 export const cstarAnimationImg = '/assets/faq/sell-a-car.png';
+
+//Notification
+
+export const bellInactive = '/assets/notification/bell.png';

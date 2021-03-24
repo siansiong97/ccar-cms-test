@@ -149,7 +149,7 @@ const CompareIndex = (props) => {
                                     />
                                     {props.productsList.compareIds.length < props.productsList.compareLimit ?
                                         <Col key="add new" className="gutter-row col-centered" xs={24} sm={24} md={5} lg={5} xl={5}>
-                                            <Link shallow={false} prefetch href={convertParameterToProductListUrl()} >
+                                            <Link shallow={false}  href={convertParameterToProductListUrl()} >
                                                 <a>
                                                     <Button className="w-100" style={{ height: '10em' }}>
                                                         <CarOutlined style={{ fontSize: 40 }} />

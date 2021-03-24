@@ -49,21 +49,21 @@ const CarFreakLayout = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="width-100 flex-justify-space-between flex-items-align-center">
                                 <span className="flex-items-align-center flex-justify-start">
-                                    <Link shallow={false} prefetch href={'/car-freaks'}>
+                                    <Link shallow={false}  href={'/car-freaks'}>
                                         <a>
                                             <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
                                                 CarFreaks
                                             </span>
                                         </a>
                                     </Link>
-                                    <Link shallow={false} prefetch href={'/social-board'}>
+                                    <Link shallow={false}  href={'/social-board'}>
                                         <a>
                                             <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `}  >
                                                 Social Board
                                     </span>
                                         </a>
                                     </Link>
-                                    <Link shallow={false} prefetch href={'/social-club'}>
+                                    <Link shallow={false}  href={'/social-club'}>
                                         <a>
                                             <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
                                                 CarFreaks Club

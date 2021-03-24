@@ -315,12 +315,12 @@ const CarMarketPage = (props) => {
                                         <span className='d-inline-block ' >
                                             <Breadcrumb>
                                                 <Breadcrumb.Item>
-                                                    <Link shallow={false} prefetch passHref href="/">
+                                                    <Link shallow={false}  passHref href="/">
                                                         <a>Home</a>
                                                     </Link>
                                                 </Breadcrumb.Item>
                                                 <Breadcrumb.Item>
-                                                    <Link shallow={false} prefetch passHref href={convertParameterToProductListUrl()} >
+                                                    <Link shallow={false}  passHref href={convertParameterToProductListUrl()} >
                                                         <a>Product List</a>
                                                     </Link>
                                                 </Breadcrumb.Item>
@@ -521,12 +521,12 @@ const CarMarketPage = (props) => {
                                 <Col className="gutter-row" xs={24} sm={24} md={24} lg={18} xl={18}>
                                     <Breadcrumb>
                                         <Breadcrumb.Item>
-                                            <Link shallow={false} prefetch passHref href="/">
+                                            <Link shallow={false}  passHref href="/">
                                                 <a>Home</a>
                                             </Link>
                                         </Breadcrumb.Item>
                                         <Breadcrumb.Item>
-                                            <Link shallow={false} prefetch passHref href={convertParameterToProductListUrl()} >
+                                            <Link shallow={false}  passHref href={convertParameterToProductListUrl()} >
                                                 <a>Product List</a>
                                             </Link>
                                         </Breadcrumb.Item>

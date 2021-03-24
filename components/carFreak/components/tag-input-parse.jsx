@@ -29,7 +29,7 @@ const TagInputParse = (props) => {
         if (_.isArray(textArr) && !_.isEmpty(textArr)) {
             textArr = _.map(textArr, function (v) {
                 if (v.type == 'tag') {
-                    return <Link shallow={false} prefetch href={`/profile/${v.id}`}>
+                    return <Link shallow={false}  href={`/profile/${v.id}`}>
                     <a>
                         <span className="font-weight-bold blue cursor-pointer">
                             {v.value}

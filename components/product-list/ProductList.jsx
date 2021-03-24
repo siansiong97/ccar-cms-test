@@ -88,7 +88,7 @@ const ProductList = (props) => {
     if (notEmptyLength(v.carUrl)) {
       if (v.currentImg != null && v.currentImg < v.carUrl.length) {
         return (
-          <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
+          <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -100,7 +100,7 @@ const ProductList = (props) => {
         )
       } else {
         return (
-          <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
+          <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -117,7 +117,7 @@ const ProductList = (props) => {
       }
     } else {
       return (
-        <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
+        <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
           <a>
             <React.Fragment>
               <div className="wrap-product-ads-img-horizontal">

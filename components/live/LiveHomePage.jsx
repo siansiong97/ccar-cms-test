@@ -511,7 +511,7 @@ class LiveIndex extends React.Component {
           return (
             <React.Fragment>
               <Col xs={24} sm={24} md={24} lg={12} xl={12} >
-                <Link shallow={false} prefetch href={`/live/${broadcaster.dealerSocketId}`} >
+                <Link shallow={false}  href={`/live/${broadcaster.dealerSocketId}`} >
                   <a>
                     <LiveBoxPreview1
                       data={broadcaster}

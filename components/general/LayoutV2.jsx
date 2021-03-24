@@ -1,6 +1,6 @@
 
 import { CaretUpOutlined } from '@ant-design/icons';
-import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message, Drawer, Badge, Avatar, notification } from 'antd';
+import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message, Drawer, Badge, Avatar, notification, Popover } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
@@ -9,10 +9,10 @@ import CookieConsent, { Cookies } from "react-cookie-consent";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { v4 } from 'uuid';
-import { convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
+import { arrayLengthCount, convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
-import { ccarLogo, cnyLogo2 } from '../../icon';
+import { ccarLogo, bellInactive } from '../../icon';
 import { loading, loginMode, quickSearchProductsList, registerMode, setApplyMileage, setApplyPrice, setApplyYear, setMenuHeight, setNotificationToken, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
 import { clearProductFilterOptions, fetchCompareCarLimit } from '../../redux/actions/productsList-actions';
@@ -25,6 +25,11 @@ import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
 import { initFirebaseToken } from '../../webPush';
 import firebase from 'firebase/app';
+import InfiniteScrollWrapper from './InfiniteScrollWrapper';
+import ScrollLoadWrapper from './ScrollLoadWrapper';
+import Scrollbars from 'react-custom-scrollbars';
+
+
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -48,6 +53,8 @@ const NotWebDevice = ({ children }) => {
     const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
     return isMobile || isTablet ? children : null;
 }
+
+const notificationBoxRef = React.createRef();
 
 var frontUrl = checkEnvReturnWebAdmin(client.io.io.uri)
 var currentEnv = checkEnv(client.io.io.uri)
@@ -73,6 +80,13 @@ class LayoutV2 extends React.Component {
                 backgroundSize: '100% 100%'
             },
             window: {},
+            showProfileMenu: false,
+            notificationLoading: false,
+            notificationPage: 1,
+            notificationTotal: 0,
+            notifications: [],
+            notificationBoxVisible: false,
+            notificationTabKey: 'carfreaks',
         }
 
     }
@@ -102,6 +116,39 @@ class LayoutV2 extends React.Component {
             });
         }
     }
+    getUserNotifications() {
+
+        try {
+            if (_.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id'])) {
+                this.setState({
+                    notificationLoading: true,
+                }, () => {
+                    axios.get(`${client.io.io.uri}getUserNotifications`, {
+                        params: {
+                            userId: this.props.user.info.user._id
+                        }
+                    }).then(res => {
+                        this.setState({
+                            notificationLoading: false,
+                            notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
+                        })
+
+                    }).catch(err => {
+                        this.setState({
+                            notificationLoading: false,
+                        })
+                    });
+                })
+            } else {
+                this.setState({
+                    notifications: [],
+                })
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async setFirebaseToken() {
         try {
 
@@ -142,13 +189,13 @@ class LayoutV2 extends React.Component {
     }
 
     _renderNotification = (data) => {
-        console.log('notification',data);
+        console.log('notification', data);
         notification.open({
-            message : _.get(data, 'notification.title') || '',
-            description : _.get(data, 'notification.body') || '',
-            duration : 10,
-            placement : 'topRight',
-            icon : <Avatar src={ccarLogo} />,
+            message: _.get(data, 'notification.title') || '',
+            description: _.get(data, 'notification.body') || '',
+            duration: 10,
+            placement: 'topRight',
+            icon: <Avatar src={ccarLogo} />,
         })
     }
 
@@ -170,9 +217,11 @@ class LayoutV2 extends React.Component {
             })
         }
 
+        console.log('here');
         window.scrollTo(0, 0);
         this.handleExpiredToken();
-        this.setFirebaseToken();
+        // this.setFirebaseToken();
+        // this.getUserNotifications();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -231,9 +280,10 @@ class LayoutV2 extends React.Component {
             };
         }
 
-        if (prevProps.user.authenticated != this.props.user.authenticated) {
-            this.setFirebaseToken();
-        }
+        // if (prevProps.user.authenticated != this.props.user.authenticated) {
+        //     this.setFirebaseToken();
+        //     this.getUserNotifications();
+        // }
     }
 
     handleScroll = (e) => {
@@ -260,24 +310,37 @@ class LayoutV2 extends React.Component {
                                 src={!this.props.user.info || !this.props.user.info.user || !this.props.user.info.user.avatar ? null : this.props.user.info.user.avatar} />
                         </Badge>
                     </span> */}
-                    <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" overlayStyle={{ width: '250px' }} overlay={() => {
+                    <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" visible={self.state.showProfileMenu} onVisibleChange={(v) => {
+                        if (self.state.showProfileMenu != v) {
+                            console.log('setShowProfileMenu', v);
+                            self.setState({
+                                showProfileMenu: v,
+                            })
+                        }
+                    }} overlayStyle={{ width: '250px' }} overlay={() => {
                         return (
                             <Menu>
                                 {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
                                             <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
-                                                <Link shallow={false} prefetch href={menu.path}   >
+                                                <Link shallow={false} href={menu.path || ''}   >
                                                     <a>
-                                                        <div className="flex-justify-start flex-items-align-center">
-                                                            <span className='d-inline-block margin-x-sm'>
-                                                                {menu.icon}
-                                                            </span>
-                                                            <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
-                                                                {menu.text}
-                                                            </span>
-                                                        </div>
+                                                        {
+                                                            menu.render ?
+                                                                menu.render()
+                                                                :
+                                                                <div className="flex-justify-start flex-items-align-center">
+                                                                    <span className='d-inline-block margin-x-sm'>
+                                                                        {menu.icon}
+                                                                    </span>
+                                                                    <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
+                                                                        {menu.text}
+                                                                    </span>
+                                                                </div>
+                                                        }
                                                     </a>
+
                                                 </Link>
                                             </Menu.Item>
                                         )
@@ -456,6 +519,131 @@ class LayoutV2 extends React.Component {
         )
     }
 
+    // _renderNotificationBox = () => {
+
+    //     const tabs = [
+    //         {
+    //             value: 'carfreaks',
+    //             text: 'CarFreaks',
+    //         },
+    //         {
+    //             value: 'carAds',
+    //             text: 'CarMarket',
+    //         },
+    //         {
+    //             value: 'other',
+    //             text: 'Others',
+    //         },
+    //     ]
+
+    //     let self = this;
+
+    //     return (
+    //         <Popover
+    //             getPopupContainer={() => document.getElementById('notification-menu-item')}
+    //             onVisibleChange={(v) => {
+    //                 if (self.state.notificationBoxVisible != v) {
+    //                     console.log('setNotificationVisible', v);
+    //                     this.setState({
+    //                         notificationBoxVisible: v,
+    //                     })
+    //                 }
+    //             }}
+    //             placement="leftBottom"
+    //             title={
+    //                 <div className=" h6 font-weight-bold grey-darken-1" style={{ width: 300 }}>
+    //                     Notifications
+    //                  </div>
+    //             }
+    //             content={
+    //                 <div className="padding-y-sm" style={{ width: 300 }}>
+    //                     <div className="flex-justify-start flex-items-align-center">
+    //                         {
+    //                             _.map(tabs, function (tab) {
+    //                                 return (
+    //                                     <span className={`d-inline-block margin-right-md cursor-pointer ${self.state.notificationTabKey == tab.value ? 'ccar-button-yellow' : 'grey-darken-1'}`} onClick={(e) => {
+    //                                         self.setState({
+    //                                             notificationTabKey: tab.value
+    //                                         })
+    //                                     }} >
+    //                                         {tab.text}
+    //                                     </span>
+    //                                 )
+    //                             })
+    //                         }
+    //                     </div>
+    //                     {
+    //                         _.isArray(self.state.notifications) && !_.isEmpty(self.state.notifications) ?
+    //                             <Scrollbars autoHide autoHeight autoHeightMax={300} ref={notificationBoxRef}>
+    //                                 <InfiniteScrollWrapper useWindow={false}
+    //                                     onScrolledBottom={() => {
+    //                                         if (arrayLengthCount(this.state.notifications) < this.state.notificationTotal && !this.state.notificationLoading) {
+    //                                         }
+    //                                     }}
+    //                                     hasMore={!this.state.notificationLoading && arrayLengthCount(this.state.notifications) < this.state.notificationTotal}
+    //                                 >
+    //                                     {
+    //                                         _.map(this.state.notifications, function (notification) {
+    //                                             if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
+    //                                                 return (
+    //                                                     <div className="flex-justify-start flex-items-align-center margin-y-sm">
+    //                                                         <img src={ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md" />
+    //                                                         <span className='d-inline-block' >
+    //                                                             <div className=" caption text-truncate-twoline">
+    //                                                                 {_.get(notification, 'title') || ''}
+    //                                                             </div>
+    //                                                             <div className="small-text text-truncate">
+    //                                                                 {_.get(notification, 'body') || ''}
+    //                                                             </div>
+    //                                                         </span>
+    //                                                     </div>
+    //                                                 )
+    //                                             }
+    //                                             return null;
+    //                                         })
+    //                                     }
+    //                                 </InfiniteScrollWrapper>
+    //                             </Scrollbars>
+    //                             :
+    //                             <div className="flex-justify-center flex-items-align-center" style={{ height: 300 }}>
+    //                                 <span className="d-inline-block">
+    //                                     <div className="flex-justify-center flex-items-align-center">
+    //                                         <img src={bellInactive} style={{ height: 70, width: 70 }} />
+    //                                     </div>
+    //                                     <div className="h6 grey-darken-1 margin-top-sm">
+    //                                         No notification yet
+    //                                     </div>
+    //                                     <div className="caption grey-darken-1 flex-justify-center">
+    //                                         When you get notification,
+    //                                     </div>
+    //                                     <div className="caption grey-darken-1 flex-justify-center">
+    //                                         they'll show up here
+    //                                     </div>
+    //                                     <div className="flex-justify-center margin-top-sm">
+    //                                         <Button className=" background-ccar-button-yellow">Refresh</Button>
+    //                                     </div>
+
+    //                                 </span>
+    //                             </div>
+    //                     }
+    //                 </div>
+    //             }
+
+    //         >
+    //             <div className="flex-justify-start flex-items-align-center" id="notification-menu-item">
+    //                 <span className='d-inline-block margin-x-sm'>
+    //                     <span className='flex-items-align-center flex-justify-center' style={{ width: '20px', height: '20px' }} >
+    //                         <Badge dot><Icon type="message" theme="filled" style={{ fontSize: '17px' }} /></Badge>
+    //                     </span>
+    //                 </span>
+    //                 <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
+    //                     Notifications
+    //         </span>
+    //             </div>
+    //         </Popover>
+    //     )
+    // }
+
     render() {
         let self = this;
 
@@ -544,11 +732,7 @@ class LayoutV2 extends React.Component {
                 path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}`
             },
             // {
-            //     icon: <span className='flex-items-align-center flex-justify-center' style={{ width: '20px', height: '20px' }} >
-            //         <Badge dot><Icon type="message" theme="filled" style={{ fontSize: '17px' }} /></Badge>
-            //     </span>,
-            //     text: 'Notification',
-            //     path: '/kpp'
+            //     render: () => this._renderNotificationBox()
             // },
             {
                 icon: (<span className='d-inline-block relative-wrapper' style={{ width: '20px', height: '20px' }} >
@@ -571,7 +755,7 @@ class LayoutV2 extends React.Component {
                                             {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
 
-                                                <Link shallow={false} prefetch href={`/`}  >
+                                                <Link shallow={false} href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
                                                             <img alt="ccar" className="fill-parent absolute-center" src={"/assets/Artboard-3-2.svg"} />
@@ -595,7 +779,7 @@ class LayoutV2 extends React.Component {
                                                     notEmptyLength(outterMenu) ?
                                                         _.map(outterMenu, function (menu, i) {
                                                             return (
-                                                                <Link shallow={false} prefetch href={menu.path}  >
+                                                                <Link shallow={false} href={menu.path}  >
                                                                     <a>
                                                                         <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
                                                                             {menu.text}
@@ -614,7 +798,7 @@ class LayoutV2 extends React.Component {
                                                                 _.map(innerMenu, function (menu, index) {
                                                                     return (
                                                                         <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
-                                                                            <Link shallow={false} prefetch href={menu.path}  >
+                                                                            <Link shallow={false} href={menu.path}  >
                                                                                 <a>
                                                                                     <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
                                                                                         {menu.text}
