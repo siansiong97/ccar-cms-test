@@ -553,6 +553,12 @@
     width: 100%;
 }
 
+.wrap-product-ads-horizontal-spotlight p{
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
+}
+
 .wrap-product-ads-horizontal-spicydeal {
     background: linear-gradient(-45deg, #FF0011 , #FD8800, #FF0011);
     /* background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5); */
@@ -583,6 +589,12 @@
     border: solid 1px #eee;
     padding: 10px;
     width: 100%;
+}
+
+.wrap-product-ads-horizontal-spicydeal-1 p{
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .wrap-product-ads-horizontal-spotlight-spicydeal {
@@ -619,14 +631,15 @@
 }
 
 .wrap-product-ads-title-horizontal p {
-    /* color: #757575; */
-    color: #ffffff;
+    color: #757575;
+    /* color: #ffffff; */
     font-size: 13px;
     font-weight: 500;
 }
 
 #wrap-product-ads-title-horizontal {
-    color: #ffffff;
+    /* color: #ffffff; */
+    color: #757575;
 }
 
 #wrap-product-ads-title-horizontal a label {

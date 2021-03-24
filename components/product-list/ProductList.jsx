@@ -205,10 +205,10 @@ const ProductList = (props) => {
               onClick={(event) => { event.preventDefault(); toggleSeeMore(v._id) }}>
               See More
             </a>) : (
-              <a
-                onClick={(event) => { event.preventDefault(); toggleSeeMore(v._id) }}>
-                Hide
-              </a>) : (null)}
+            <a
+              onClick={(event) => { event.preventDefault(); toggleSeeMore(v._id) }}>
+              Hide
+            </a>) : (null)}
         </p>
       </div>
     )
@@ -603,8 +603,8 @@ const ProductList = (props) => {
                                                         {_renderCondition(v)}
                                                     </Col> */}
                           <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '10px 10px' }}>
-                            <Link shallow={false} prefetch passHref href={'/viewCar/' + v._id} >
-                              <a>
+                            <Link href={'/viewCar/' + v._id} >
+                              <a target="_blank">
                                 <div className="text-truncate-twoline">
                                   <label>
                                     {/* <span style={{ color: '#E3C57D' }}>[ {v.condition} ] </span> */}
@@ -622,16 +622,16 @@ const ProductList = (props) => {
                             </Link>
                           </Col>
                         </Row>
-                        <div>
-                          <p>
-                            {v.carspecsAll ?
-                              v.carspecsAll.transmission + ' | ' +
-                              renderMileageRange(v.mileage, v.mileage2) + ' | ' +
-                              (v.color ? v.color.toUpperCase() : '')
-                              : ''}
-                          </p>
-                          <p style={!v.seeMore ? { maxHeight: '120px', overflow: 'hidden', lineHeight: '1.6', marginBottom: '0px', textOverflow: 'ellipsis' } : {}}>{v.description}</p>
-                        </div>
+                      </div>
+                      <div style={{ padding: '5px 15px' }}>
+                        <p>
+                          {v.carspecsAll ?
+                            v.carspecsAll.transmission + ' | ' +
+                            renderMileageRange(v.mileage, v.mileage2) + ' | ' +
+                            (v.color ? v.color.toUpperCase() : '')
+                            : ''}
+                        </p>
+                        <p style={!v.seeMore ? { maxHeight: '120px', overflow: 'hidden', lineHeight: '1.6', marginBottom: '0px', textOverflow: 'ellipsis' } : {}}>{v.description}</p>
                       </div>
                     </Col>
                     <Col span={10}>
@@ -762,7 +762,7 @@ const ProductList = (props) => {
                                   </div>
                                 </Button>
                               </Tooltip>
-                            }} data={{ price: v.searchPrice, downpayment: v.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }} />
+                            }} data={{ price: v.price, downpayment: v.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
                           </Col>
                           {/* <Col xs={8} sm={8} md={4} lg={4} xl={4}>
                             <Button type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(237, 236, 234)', borderColor: 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/video.png" style={{ width: '40%' }} /></Button>

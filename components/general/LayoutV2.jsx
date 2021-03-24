@@ -146,7 +146,7 @@ class LayoutV2 extends React.Component {
         notification.open({
             message : _.get(data, 'notification.title') || '',
             description : _.get(data, 'notification.body') || '',
-            duration : 5,
+            duration : 10,
             placement : 'topRight',
             icon : <Avatar src={ccarLogo} />,
         })
