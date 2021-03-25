@@ -549,10 +549,10 @@ class LiveIndex extends React.Component {
             <div className='padding-x-md padding-y-lg'>
               <Row gutter={[10, 30]} type="flex" align="stretch">
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} >
-                  <div className="h6 font-weight-bold">
+                  {/* <div className="h6 font-weight-bold">
                     Live
-                                </div>
-                  <div className="width-100 background-white box-shadow-light padding-md">
+                  </div> */}
+                  <div className="width-100 background-white padding-md">
                     <div className="width-100 ">
                       <BroadcasterList
                         showName={true}
