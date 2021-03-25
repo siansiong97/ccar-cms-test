@@ -96,6 +96,34 @@ class ViewCarDetailsPage extends React.Component {
     })
   }
 
+  UNSAFE_componentWillMount() {
+
+  this.setState({
+
+    typingTimeout: setTimeout(() => {
+
+      axios.post(`${client.io.io.uri}processCTR`,
+        {
+          params: {
+            adsId: this.state.productDetails._id,
+            source: 'web',
+          }
+        })
+
+      let inputProductList = [{ productAdsId: this.state.productDetails._id }]
+      axios.post(`${client.io.io.uri}processImpression`,
+        {
+          params: {
+            productList: inputProductList,
+            source: 'web',
+          }
+        }).then((res) => { })
+
+
+    }, 3000)
+
+  })
+}
   componentDidUpdate() {
 
     if(typeof(window) != undefined){
@@ -845,7 +873,7 @@ class ViewCarDetailsPage extends React.Component {
                           </span>
                         </span>
                         <span className="d-inline-block">
-                          <Button disabled type="normal" className="padding-x-sm margin-xs  " style={{ background: 'white', borderColor: '#d9d9d9', minWidth: '50px' }}><img src="/assets/CarListingIcon/Video@3x.png" style={{ '-webkit-filter': 'grayscale(100%)', 'filter': 'grayscale(100%)', width: '25px', height: '25px' }} alt="Car Video Icon" /></Button>
+                          <Button disabled type="normal" className="padding-x-sm margin-xs  " style={{ background: 'white', borderColor: '#d9d9d9', minWidth: '50px' }}><img src="/assets/CarListingIcon/Video@3x.png" style={{ 'WebkitFilter': 'grayscale(100%)', 'filter': 'grayscale(100%)', width: '25px', height: '25px' }} alt="Car Video Icon" /></Button>
                         </span>
 
                         <span className="d-inline-block">
