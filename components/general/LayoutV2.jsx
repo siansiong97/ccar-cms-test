@@ -119,7 +119,6 @@ class LayoutV2 extends React.Component {
     }
     getUserNotifications(skip) {
 
-        console.log('getUserNotifications');
         try {
             if (_.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id'])) {
                 this.setState({
@@ -162,7 +161,17 @@ class LayoutV2 extends React.Component {
             const token = await initFirebaseToken();
             if (token) {
 
-                await this.subscribeNotificationTopics(token);
+                let self = this;
+                this.subscribeNotificationTopics(token).then(() => {
+                    if (self.state.notificationPage == 1) {
+                        self.getUserNotifications(0);
+                    } else {
+                        self.setState({
+                            notificationPage: 1,
+                        })
+                    }
+                });
+
                 this.listenOnNotification();
             }
         } catch (error) {
@@ -201,7 +210,14 @@ class LayoutV2 extends React.Component {
             description: _.get(data, 'notification.body') || '',
             duration: 10,
             placement: 'topRight',
-            icon: <Avatar src={ccarLogo} />,
+            icon: <Avatar src={_.get(data, 'data.avatar') || ccarLogo} />,
+            key: v4(),
+            onClick: () => {
+                if (_.get(data, 'data.path')) {
+                    this.props.router.push(_.get(data, 'data.path') || '/')
+                }
+            },
+
         })
     }
 
@@ -226,7 +242,6 @@ class LayoutV2 extends React.Component {
         window.scrollTo(0, 0);
         this.handleExpiredToken();
         this.setFirebaseToken();
-        this.getUserNotifications();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -387,9 +402,9 @@ class LayoutV2 extends React.Component {
                     </Dropdown>
 
 
-                    {/* <span className='d-inline-block margin-left-md' >
+                    <span className='d-inline-block margin-left-md' >
                         {this._renderNotificationBox()}
-                    </span> */}
+                    </span>
                 </span>
             );
         } else {
@@ -615,17 +630,21 @@ class LayoutV2 extends React.Component {
                                         _.map(this.state.notifications, function (notification) {
                                             if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
                                                 return (
-                                                    <div className="flex-justify-start flex-items-align-center margin-y-sm">
-                                                        <img src={ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md" />
-                                                        <span className='d-inline-block' >
-                                                            <div className=" caption text-truncate-twoline">
-                                                                {_.get(notification, 'title') || ''}
+                                                    <Link href={notification.path || '/'}>
+                                                        <a>
+                                                            <div className="flex-justify-start flex-items-align-center margin-y-sm hover-background-yellow-lighten-2 cursor-pointer grey-darken-1">
+                                                                <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
+                                                                <span className='d-inline-block' >
+                                                                    <div className=" headline text-truncate-twoline">
+                                                                        {_.get(notification, 'title') || ''}
+                                                                    </div>
+                                                                    <div className="small-text text-truncate">
+                                                                        {_.get(notification, 'body') || ''}
+                                                                    </div>
+                                                                </span>
                                                             </div>
-                                                            <div className="small-text text-truncate">
-                                                                {_.get(notification, 'body') || ''}
-                                                            </div>
-                                                        </span>
-                                                    </div>
+                                                        </a>
+                                                    </Link>
                                                 )
                                             }
                                             return null;
