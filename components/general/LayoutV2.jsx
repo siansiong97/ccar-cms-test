@@ -539,12 +539,12 @@ class LayoutV2 extends React.Component {
 
                                     <Row style={{ color: '#E3C57D' }}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
-                                            <div className="flex-justify-start flex-items-align-center main-footer ">
+                                            <div className="flex-justify-start white flex-items-align-center main-footer ">
                                                 CCAR.MY <Icon type="copyright" /> 2020
                                                 </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            <div className="flex-justify-end flex-items-align-center main-footer">
+                                            <div className="flex-justify-end white flex-items-align-center main-footer">
                                                 Terms of Use | Privacy Policy
                                                 </div>
                                         </Col>
@@ -851,7 +851,7 @@ class LayoutV2 extends React.Component {
                                                 }}>
                                                     <span className='d-inline-block margin-x-md white subtitle1  cursor-pointer relative-wrapper' >
                                                         Menu
-                                    </span>
+                                                    </span>
 
                                                 </Dropdown>
 

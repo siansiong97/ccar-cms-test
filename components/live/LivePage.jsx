@@ -733,13 +733,13 @@ class LivePage extends React.Component {
     return (
       <React.Fragment>
         <LayoutV2 showCompareCarButton={false} >
-          <div className='section' style={{ backgroundColor: 'powderblue' }}>
+          <div className='section'>
             <div className='padding-x-md padding-y-lg'>
               <Row gutter={[10, 10]} type="flex" align="stretch">
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                  <div className="h6 font-weight-bold">
+                  {/* <div className="h6 font-weight-bold">
                     LIVE
-                                </div>
+                  </div> */}
                   <div className="padding-md background-white margin-top-md">
                     <BroadcasterList activeBroadcasters={this.state.activeBroadcasters} showName allowSearch />
                   </div>
@@ -750,7 +750,7 @@ class LivePage extends React.Component {
                   </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                   <Row>
                     <Col className="gutter-row" span={24} className="margin-bottom-sm margin-top-sm ">
                       <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} >Social Videos</span>
@@ -762,7 +762,7 @@ class LivePage extends React.Component {
                       <a href="/socialNewsAndVideo?type=videos"><Button type="primary"> Show More </Button></a>
                     </Col>
                   </Row>
-                </Col>
+                </Col> */}
               </Row>
 
               {/* {
