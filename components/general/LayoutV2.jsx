@@ -505,7 +505,8 @@ class LayoutV2 extends React.Component {
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
                                             <div className="flex-justify-end flex-items-align-center main-footer">
-                                                Terms of Use | Privacy Policy
+                                                {/* Terms of Use | Privacy Policy */}
+                                                <Link shallow={false}  href={`/termsOfUse`}  >Terms of Use | Privacy Policy</Link>
                                                 </div>
                                         </Col>
                                     </Row>
