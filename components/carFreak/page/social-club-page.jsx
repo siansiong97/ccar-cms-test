@@ -189,6 +189,60 @@ const SocialClubPage = (props) => {
                     </CarFreakLayout>
                 </Desktop>
 
+                <Tablet>
+                <CarFreakLayout>
+                        <SocialClubLayout
+                            tabKey={tabKey}
+                            onCreate={(item) => {
+                                if (_.isPlainObject(item) && !_.isEmpty(item)) {
+                                    setClubs([item].concat(clubs))
+                                }
+                            }}
+                            onChange={(tabKey) => {
+                                setTabKey(tabKey);
+                            }}
+                        >
+
+
+                            {
+                                tabKey == 'myClub' ?
+                                    <React.Fragment>
+                                        <MyClubBox userId={_.get(props.user, ['info', 'user', '_id'])} />
+                                    </React.Fragment>
+                                    :
+                                    tabKey == 'myClubInvitation' ?
+                                        _.isArray(invites) && notEmptyLength(invites) ?
+                                            <React.Fragment>
+                                                <MyClubInvitationBox data={invites} userId={_.get(props.user, ['info', 'user', '_id'])} />
+                                            </React.Fragment>
+                                            :
+                                            !isLoading ?
+                                                <div className="width-100 flex-items-align-center flex-justify-center background-white" style={{ height: 400 }}><Empty /></div>
+                                                : <div></div>
+                                        :
+                                        _.isArray(clubs) && notEmptyLength(clubs) ?
+                                            <React.Fragment>
+                                                <AllClubBox data={clubs} />
+                                            </React.Fragment> 
+                                            :
+                                            !isLoading ?
+                                                <div className="width-100 flex-items-align-center flex-justify-center background-white" style={{ height: 400 }}><Empty /></div>
+                                                : <div></div>
+                            }
+
+
+                            <div className="width-100 flex-justify-center" style={{ height: 50 }}>
+                                {
+                                    isLoading ?
+                                        <Icon type="loading" style={{ fontSize: 50 }} />
+                                        :
+                                        null
+                                }
+                            </div>
+                        </SocialClubLayout>
+                    </CarFreakLayout>
+                </Tablet>
+
             </LayoutV2>
 
         </React.Fragment >

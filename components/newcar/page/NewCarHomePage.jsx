@@ -332,7 +332,7 @@ class NewCarVersion3 extends React.Component {
         // this.getData(0)
         this.getFuelPrice()
 
-        this.props.updateActiveMenu('1');
+        this.props.updateActiveMenu('3');
 
         this.props.loading(true)
         axios.get(`${client.io.io.uri}getPriceRangeSearchCarBrands`, {
@@ -473,84 +473,103 @@ class NewCarVersion3 extends React.Component {
         return (
             <div>
                 <Tablet>
-                    <BannerAnim prefixCls="banner-user" autoPlay>
-                        <Element
-                            prefixCls="banner-user-elem"
-                            key="0"
-                        >
-                            <BgElement
-                                key="bg"
-                                className="bg"
-                                style={{
-                                    backgroundImage: 'url(/banner/770x250.jpg)',
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                    maxInlineSize: '-webkit-fill-available'
-                                }}
-                            />
-                        </Element>
-                        <Element
-                            prefixCls="banner-user-elem"
-                            key="web1"
-                        >
-                            <BgElement
-                                onClick={(e) => { this.state.window.location = 'https://ccar.my/banner/duit-duit-giveaway.pdf' }}
-                                key="bg"
-                                className="bg"
-                                style={{
-                                    backgroundImage: 'url(/banner/CCAR-Website-Tab-Banner-01.jpg)',
-                                    backgroundSize: 'fit',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                    maxInlineSize: '-webkit-fill-available'
-                                }}
-                            />
-                        </Element>
-                        <Element
-                            prefixCls="banner-user-elem"
-                            key="1"
-                        >
-                            <BgElement
-                                key="webbg"
-                                className="bg"
-                            />
-                            <video autoPlay style={{
-                                // overflow: 'hidden', right: videoPosition 
+                <BannerAnim prefixCls="banner-user" autoPlay>
+                <Element
+                        prefixCls="banner-user-elem"
+                        key="0"
+                    >
+                        <BgElement
+                            key="bg"
+                            className="bg"
+                            style={{
+                                backgroundImage: 'url(/banner/CCAR-Tab-Banner-TBH-March-2021.jpg)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                maxInlineSize: '-webkit-fill-available'
+                            }}
+                        />
+                        {/* <div className="width-100 relative-wrapper" style={{height : 250}}>
+                            <img src={'/banner/CCAR-Tab-Banner-TBH-March-2021.jpg'} className="absolute-center"/>
+                        </div> */}
+                    </Element>
+                {/* <Element
+                        prefixCls="banner-user-elem"
+                        key="0"
+                    >
+                        <BgElement
+                            key="bg"
+                            className="bg"
+                            style={{
+                                backgroundImage: 'url(/banner/770x250.jpg)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                maxInlineSize: '-webkit-fill-available'
+                            }}
+                        />
+                    </Element> */}
+                    {/* <Element
+                        prefixCls="banner-user-elem"
+                        key="web1"
+                    >
+                    <BgElement
+                        onClick={(e) => {window.location='https://ccar.my/banner/duit-duit-giveaway.pdf'}}
+                        key="bg"
+                        className="bg"
+                        style={{
+                        backgroundImage: 'url(/banner/CCAR-Website-Tab-Banner-01.jpg)',
+                        backgroundSize: 'fit',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        maxInlineSize: '-webkit-fill-available'
+                    }}
+                />
+            </Element> */}
+                    <Element
+                        prefixCls="banner-user-elem"
+                        key="1"
+                    >
+                    <BgElement
+                        key="webbg"
+                        className="bg"
+                    />
+                        <video autoPlay style={{ 
+                    // overflow: 'hidden', right: videoPosition 
 
-                                position: 'fixed',
-                                right: '0',
-                                bottom: '0',
-                                minWidth: '100%',
-                                minHeight: '100%',
-                                transform: 'translateX(calc((100% - 100vw) / 2))'
-                            }} >
-                                <source src="/banner/ipad-360.mp4" type="video/mp4"></source>
-                            </video>
-                        </Element>
-                        <Element
-                            prefixCls="banner-user-elem"
-                            key="2"
-                        >
-                            <BgElement
-                                key="webbg"
-                                className="bg"
-                            />
-                            <video autoPlay style={{
-                                // overflow: 'hidden', right: videoPosition  
-                                position: 'fixed',
-                                right: '0',
-                                bottom: '0',
-                                minWidth: '100%',
-                                minHeight: '100%',
-                                transform: 'translateX(calc((100% - 100vw) / 2))'
-
-                            }} >
-                                <source src="/banner/carfreaks-ipad.mp4" type="video/mp4"></source>
-                            </video>
-                        </Element>
-                    </BannerAnim>
-                </Tablet>
+                    position: 'fixed',
+                    right: '0',
+                    bottom: '0',
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    transform: 'translateX(calc((100% - 100vw) / 2))'
+                    }} >
+                    <source src="/banner/ipad-360.mp4" type="video/mp4"></source>
+                </video>
+            </Element>
+            <Element
+                prefixCls="banner-user-elem"
+                key="2"
+            >
+                <BgElement
+                    key="webbg"
+                    className="bg"
+                />
+                <video autoPlay style={{ 
+                    // overflow: 'hidden', right: videoPosition  
+                    position: 'fixed',
+                    right: '0',
+                    bottom: '0',
+                    minWidth: '100%',
+                    minHeight: '100%',
+                    transform: 'translateX(calc((100% - 100vw) / 2))'
+                    
+                    }} >
+                    <source src="/banner/carfreaks-ipad.mp4" type="video/mp4"></source>
+                </video>
+            </Element>
+                </BannerAnim>
+            </Tablet>
 
                 <Mobile>
                     <BannerAnim prefixCls="banner-user-mobile" autoPlay>
@@ -985,6 +1004,120 @@ class NewCarVersion3 extends React.Component {
                         </div>
                     </div>
                 </Desktop>
+
+                <Tablet>
+                <div className="section-version3">
+                        <div className="container-version3" style={{ touchAction: 'pan-y' }}>
+                            <Row>
+                                <Col span={24} className="overlay-search-bar text-align-center certain-category-search ">
+                                    <Row >
+                                        <Col xs={{ span: 12, offset: 6 }} sm={{ span: 12, offset: 6 }} md={{ span: 10, offset: 7 }} lg={{ span: 10, offset: 7 }} xl={{ span: 10, offset: 7 }}  >
+                                            <div ref={searchBarRef}>
+                                                <GlobalSearchBar searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row className="background-white padding-top-md ">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+                                    <div className="brand-header">
+                                        <Tabs defaultActiveKey="1" >
+                                            <TabPane tab="Car Maker" key="parent1">
+                                                {this._renderCarBrandsList(notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : [])}
+                                            </TabPane>
+
+                                            <TabPane tab="Body Type" key="parent2">
+                                                {bodyTypeOri.map((v, i) => {
+                                                    if (i > 0) {
+                                                        return (
+                                                            <Col className="cartype" style={{ marginRight: '10px' }} xs={6} sm={6} md={3} lg={2} xl={2} key={i}>
+                                                                <div className="type cursor-pointer" onClick={() => {
+                                                                    this.setState({ bodyType: (v.value).toLowerCase() }
+                                                                        // ,()=>this.getData(0) 
+                                                                    );
+                                                                    this.props.router.push(`/newcar/filter?${queryStringifyNestedObject({ bodyType: v.value.toLowerCase() })}`)
+                                                                }
+                                                                }>
+                                                                    <img src={v.icon} />
+                                                                    <p style={{ marginTop: '-12px', textAlign: 'center', fontWeight: '700', textTransform: 'capitalize', marginBottom: '0px' }}> {v.value} </p>
+                                                                </div>
+                                                                {/* <p style={{color:'black', textAlign:'center', paddingTop:'10px'}}> {v.value}</p> */}
+                                                            </Col>
+                                                        )
+                                                    }
+                                                })}
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            <Row className="background-white ">
+                                <Col className="gutter-row" span={24} style={{paddingLeft:'10px', paddingRight:'10px'}} className="margin-bottom-sm margin-top-sm text-align-center yellow-divider">
+                                    <Divider> <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} > All NEW CARS</span> </Divider>
+                                    {/* <span style={{float:'right', marginRight:'10px'}}> <Link shallow={false}  href={'/newcar/filter'}>See More</Link> </span> */}
+                                </Col>
+                                <Col span={24}>
+                                    <div className="brand-header">
+                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow={false}  href={'/newcar/filter'} passHref>
+                                            <a>See More</a></Link>}>
+                                            <TabPane tab="RM20K - RM60K" key="5">
+                                                <Row>
+                                                    {this.renderFilterCarsTabs()}
+                                                </Row>
+                                            </TabPane>
+
+                                            <TabPane tab="RM60K - RM100K" key="6">
+                                                <Row>
+                                                    {this.renderFilterCarsTabs()}
+                                                </Row>
+                                            </TabPane>
+
+                                            <TabPane tab="Over RM100K" key="7">
+                                                <Row>
+                                                    {this.renderFilterCarsTabs()}
+                                                </Row>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            <Row className="background-white">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingLeft:'10px', paddingRight:'10px'}}>
+                                    <Row>
+                                        <Col className="gutter-row" span={24} className="margin-bottom-sm margin-top-sm text-align-center yellow-divider ">
+                                            <Divider><span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} >SOCIAL VIDEOS</span></Divider>
+                                        </Col>
+                                        <Col span={24} style={{ overflowX: 'auto' }}>
+                                            <SocialVideoTabs />
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className="margin-top-md margin-bottom-md text-align-center">
+                                            <a href="/socialNewsAndVideo?type=videos"><Button type="primary"> Show More </Button></a>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+
+                            <Row className="background-white ">
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingLeft:'10px', paddingRight:'10px'}}>
+                                    <Row>
+                                        <Col className="gutter-row" span={24} className="margin-bottom-sm margin-top-sm text-align-center yellow-divider">
+                                            <Divider> <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} >SOCIAL NEWS</span></Divider>
+                                        </Col>
+                                        <Col span={24} >
+                                            <SocialNewTabs />
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className="margin-top-md margin-bottom-md text-align-center">
+                                            <a href="/socialNewsAndVideo"><Button type="primary"> Show More </Button></a>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </div>
+                    </div>
+                </Tablet>
 
             </LayoutV2>
         );

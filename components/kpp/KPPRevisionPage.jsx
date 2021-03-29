@@ -59,7 +59,7 @@ const KPPRevision = (props) => {
     }, [props.kpp[`answered${_.upperFirst(props.router.query.language)}RevisionSection${String.fromCharCode(65 + parseInt(props.router.query.group))}Paper`]])
 
     function getQuestions(skip) {
-        props.updateActiveMenu('11');
+        props.updateActiveMenu('8');
 
         if (!props.router.query.group || !props.router.query.language) {
             props.router.push('/kpp', undefined, { shallow : false });
@@ -145,7 +145,7 @@ const KPPRevision = (props) => {
                 <div className='section'>
                     <div className="container">
                         <Row gutter={[10, 20]}>
-                            <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+                            <Col xs={24} sm={24} md={24} lg={20} xl={20}>
                                 <Row>
                                     <Col span={24}>
                                         <div className='width-100 flex-justify-space-between flex-items-align-center margin-bottom-sm'>
@@ -242,7 +242,7 @@ const KPPRevision = (props) => {
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col xs={0} sm={0} md={4} lg={4} xl={4}>
+                            <Col xs={0} sm={0} md={0} lg={4} xl={4}>
                                 <Row>
                                     <Col span={24}>
                                         <img style={{ width: '100%' }} src={adsImg}></img>

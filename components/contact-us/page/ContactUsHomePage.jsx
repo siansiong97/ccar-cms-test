@@ -6,7 +6,7 @@ import client from '../../../feathers';
 import LayoutV2 from '../../general/LayoutV2';
 import { loading } from '../../../redux/actions/app-actions';
 import { withRouter } from 'next/router';
-
+import { updateActiveMenu } from '../../../redux/actions/app-actions';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -26,6 +26,10 @@ const Desktop = ({ children }) => {
   }
 
 class ContactUsIndex extends React.Component {
+
+    componentDidMount = () => {
+        this.props.updateActiveMenu('10');
+    }
 
     handleSubmit = e => {
         e.preventDefault();
@@ -398,6 +402,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     loading: loading,
-
+    updateActiveMenu: updateActiveMenu,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(ContactUsIndex)));

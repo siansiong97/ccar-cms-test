@@ -93,6 +93,10 @@ class LiveIndex extends React.Component {
     window.addEventListener('beforeunload', this.componentCleanup);
   }
 
+  UNSAFE_componentWillMount() {
+    this.props.updateActiveMenu('4');
+}
+
   componentDidUpdate(prevProps, prevState) {
 
 
