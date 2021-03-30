@@ -117,6 +117,7 @@ class LayoutV2 extends React.Component {
             });
         }
     }
+    
     getUserNotifications(skip) {
 
         try {
@@ -159,6 +160,7 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
+            console.log('token', token);
             if (token) {
 
                 let self = this;
@@ -209,9 +211,10 @@ class LayoutV2 extends React.Component {
             message: _.get(data, 'notification.title') || '',
             description: _.get(data, 'notification.body') || '',
             duration: 10,
-            placement: 'topRight',
+            placement: 'bottomRight' ,
             icon: <Avatar src={_.get(data, 'data.avatar') || ccarLogo} />,
             key: v4(),
+            className : 'cursor-pointer',
             onClick: () => {
                 if (_.get(data, 'data.path')) {
                     this.props.router.push(_.get(data, 'data.path') || '/')

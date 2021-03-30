@@ -495,7 +495,7 @@ class ViewCarDetailsPage extends React.Component {
                           <ShareButtonDialog title={`CCAR.my | ${this.state.productDetails.title}`} />
                         </span>
                         <span className="d-inline-block margin-xs">
-                          <CalculatorModal data={{ price: this.state.productDetails.price, downpayment: this.state.productDetails.price * 0.1, loanPeriod: 9, interestRate: 3 }}
+                          <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
                             button={() => {
                               return (
                                 <Tooltip placement="top" title={`Calculate my monthly payment`}>
@@ -634,7 +634,7 @@ class ViewCarDetailsPage extends React.Component {
                           <ShareButtonDialog title={`CCAR.my | ${this.state.productDetails.title}`} />
                         </span>
                         <span className="d-inline-block margin-xs">
-                          <CalculatorModal data={{ price: this.state.productDetails.price, downpayment: this.state.productDetails.price * 0.1, loanPeriod: 9, interestRate: 3 }}
+                          <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
                             button={() => {
                               return (
                                 <Tooltip placement="top" title={`Calculate my monthly payment`}>
@@ -859,7 +859,7 @@ class ViewCarDetailsPage extends React.Component {
                         {this._renderPrice()}
                       </Col>
                       <Col span={4}>
-                        <CalculatorModal data={{ price: this.state.productDetails.price, downpayment: this.state.productDetails.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
+                        <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }} />
                       </Col>
                     </Row>
                     <Row className="padding-top-sm">

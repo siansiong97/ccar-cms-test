@@ -762,7 +762,7 @@ const ProductList = (props) => {
                                   </div>
                                 </Button>
                               </Tooltip>
-                            }} data={{ price: v.price, downpayment: v.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
+                            }} data={{ price: v.searchPrice, downpayment: v.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
                           </Col>
                           {/* <Col xs={8} sm={8} md={4} lg={4} xl={4}>
                             <Button type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(237, 236, 234)', borderColor: 'rgb(237, 236, 234)' }}><img src="/assets/CarListingIconMobile/video.png" style={{ width: '40%' }} /></Button>
