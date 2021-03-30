@@ -105,7 +105,7 @@ const fuelpriceindex = (props) => {
 
 
     useEffect(() => {
-        props.updateActiveMenu('10');
+        props.updateActiveMenu('7');
         setLoading(true)
         client.service('fuelprices').find({
             query: {
@@ -330,20 +330,22 @@ const fuelpriceindex = (props) => {
     return (
         <Spin tip={'Loading...'} spinning={loading} size="large">
             <LayoutV2>
-                <div className="section">
-                    <div className="container">
+                <div className="section-version3">
+                    <div className="container-version3 padding-x-xs padding-top-md">
                     <Desktop>
                         <Card title="Chart">
                             <LineChart {...config} chartRef={chartRef} data={chartData} description={{ visible: true, text: 'Last Update by ' + lastRecord.date }} />
                             <Table className={body} scroll={{ y: 400 }} dataSource={tableData} columns={columns} pagination={false} rowKey="_id" />
                         </Card>
                     </Desktop>
+
                     <Tablet>
-                        <Card title="Chart" className="card-padding-0 ">
+                        <Card title="Chart" className="card-padding-0">
                             <LineChart {...config} chartRef={chartRef} data={chartData} description={{ visible: true, text: 'Last Update by ' + lastRecord.date }} />
-                            <Table className={body} scroll={{ y: 400 }} dataSource={tableData} columns={columns} pagination={false} rowKey="_id" />
+                            <Table style={{marginTop:'10px'}} className={body} scroll={{ y: 400 }} dataSource={tableData} columns={columns} pagination={false} rowKey="_id" />
                         </Card>
                     </Tablet>
+
                     <Mobile>
                         <Card title="Petrol" className="card-padding-0 " >
                             <Table className={body} scroll={{ y: 400 }} dataSource={tableData} columns={petrol} pagination={false} rowKey="_id" />

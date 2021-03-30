@@ -16,6 +16,7 @@ import GridProductList from '../components/product-list/grid-product-list'
 import client from '../feathers'
 import { fetchProductsListHome } from '../redux/actions/productsList-actions'
 import { useMediaQuery } from 'react-responsive';
+import { loading, updateActiveMenu } from '../redux/actions/app-actions';
 
 const BgElement = Element.BgElement;
 
@@ -24,6 +25,10 @@ const Index = (props) => {
 
   const [quickFilterType, setQuickFilterType] = useState('carMarket');
   const [brandList, setBrandList] = useState(props.brands || []);
+
+  useEffect(() => {
+    props.updateActiveMenu('1');
+}, [])
 
   useEffect(() => {
 
@@ -690,5 +695,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchProductsListHome: fetchProductsListHome,
+  updateActiveMenu: updateActiveMenu,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Index))

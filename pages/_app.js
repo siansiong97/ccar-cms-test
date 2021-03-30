@@ -19,7 +19,7 @@ import 'react-quill/dist/quill.snow.css'; // ES6
 
 import { wrapper, store } from "../redux/store";
 import { NextSeo } from 'next-seo';
-import Head from 'next/head';
+import Head from 'next/head'; 
 import withRedux from "next-redux-wrapper";
 import { Provider } from 'react-redux';
 import _ from 'lodash';

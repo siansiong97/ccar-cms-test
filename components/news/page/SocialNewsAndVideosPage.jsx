@@ -7,7 +7,7 @@ import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { getLanguages, languageCount, languageExisted } from './config';
-import { loading } from '../../../redux/actions/app-actions';
+import { loading, updateActiveMenu } from '../../../redux/actions/app-actions';
 import client from '../../../feathers';
 import { withRouter } from 'next/router';
 import LayoutV2 from '../../general/LayoutV2';
@@ -110,6 +110,10 @@ const SocialNewsAndVideosPage = (props) => {
             setHtmlWindow(window);
         }
         getAuthorList();
+    }, [])
+
+    useEffect(() => {
+        props.updateActiveMenu('5');
     }, [])
 
     useEffect(() => {
@@ -476,6 +480,132 @@ const SocialNewsAndVideosPage = (props) => {
                 </div>
             </Desktop>
 
+            <Tablet>
+            <div className="section">
+                    <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+                        <Row gutter={[0, 10]}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="width-100 flex-items-align-center flex-justify-start">
+                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-normal h6 ${tabKey == 'news' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { setTabKey('news') }} >
+                                        News
+                                </span>
+                                    <span className='d-inline-block cursor-pointer margin-x-sm' >
+                                        |
+                                </span>
+                                    <span className={`d-inline-block cursor-pointer margin-x-sm font-weight-normal h6 ${tabKey == 'videos' ? 'border-bottom-ccar-yellow font-weight-bold ccar-yellow' : ''}`} onClick={(e) => { setTabKey('videos') }}>
+                                        Videos
+                                </span>
+                                </div>
+                            </Col>
+
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="background-white margin-top-md padding-sm width-100">
+                                    {/* <div className="subtitle1 font-weight-bold padding-x-md margin-bottom-md">
+                                    Authors
+                                </div> */}
+                                    <AuthorList authors={tabKey == 'news' ? newsAuthors : videoAuthors} size={30} avatarClassName={`thin-border border-grey cursor-pointer`} selectedAuthor={tabKey == 'news' ? newsSelectedAuthor : videoSelectedAuthor} onClick={(author) => {
+                                        let nextActiveLanguage = getNextActiveLanguage(author);
+                                        if (tabKey == 'news') {
+                                            setNewsFilterGroup({
+                                                ...newsFilterGroup,
+                                                language: nextActiveLanguage != newsActiveLanguage ? nextActiveLanguage : newsActiveLanguage,
+                                                author: author,
+                                            })
+                                            setNewsActiveLanguage(nextActiveLanguage != newsActiveLanguage ? nextActiveLanguage : newsActiveLanguage);
+                                            setNewsSelectedAuthor(author);
+                                        } else {
+                                            setVideoFilterGroup({
+                                                ...videoFilterGroup,
+                                                language: nextActiveLanguage != videoActiveLanguage ? nextActiveLanguage : videoActiveLanguage,
+                                                author: author,
+
+                                            })
+                                            setVideoActiveLanguage(nextActiveLanguage != videoActiveLanguage ? nextActiveLanguage : videoActiveLanguage);
+                                            setVideoSelectedAuthor(author);
+                                        }
+                                    }} />
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="width-100 background-white" >
+                                    <Tabs activeKey={tabKey == 'news' ? newsActiveLanguage : videoActiveLanguage} onChange={(e) => {
+                                        if (tabKey == 'news') {
+                                            setNewsFilterGroup({ ...newsFilterGroup, language: e });
+                                            setNewsActiveLanguage(e)
+                                        } else {
+                                            setVideoFilterGroup({ ...videoFilterGroup, language: e });
+                                            setVideoActiveLanguage(e)
+                                        }
+                                    }}
+                                    >
+                                        {/* <Tabs activeKey={activeKey}  onChange={(e) => { setFilterGroup({ ...filterGroup, language: e }) }}> */}
+                                        {
+                                            languageCount(
+                                                tabKey == 'news' ?
+                                                    isValidAuthor(newsFilterGroup.author) ? newsFilterGroup.author : newsAuthors
+                                                    :
+                                                    isValidAuthor(videoFilterGroup.author) ? videoFilterGroup.author : videoAuthors
+                                            ) > 1 ?
+                                                <Tabs.TabPane tab="All" key='all'>
+                                                    <Scrollbars autoHide style={{ height: containerHeight, width: '100%' }} ref={containerRef['all']} onScrollStop={() => { checkScrolledToBottom(containerRef['all']) }} >
+                                                        {
+                                                            tabKey == 'news' ?
+                                                                <SocialNewsBoxs data={news} />
+                                                                :
+                                                                <SocialVideoBoxs data={videos} />
+                                                        }
+                                                    </Scrollbars>
+                                                </Tabs.TabPane>
+                                                :
+                                                null
+                                        }
+                                        {
+                                            _.map(defaultLanguages, function (language) {
+                                                return (
+                                                    languageExisted(
+                                                        language.key,
+                                                        tabKey == 'news' ?
+                                                            isValidAuthor(newsFilterGroup.author) ? newsFilterGroup.author : newsAuthors
+                                                            :
+                                                            isValidAuthor(videoFilterGroup.author) ? videoFilterGroup.author : videoAuthors
+                                                    ) ?
+                                                        <Tabs.TabPane tab={language.text} key={language.key}>
+                                                            <Scrollbars autoHide style={{ height: containerHeight, width: '100%' }} ref={containerRef[language.key]} onScrollStop={() => { checkScrolledToBottom(containerRef[language.key]) }} >
+                                                                {
+                                                                    tabKey == 'news' ?
+                                                                        <SocialNewsBoxs data={news} />
+                                                                        :
+                                                                        <SocialVideoBoxs data={videos} />
+                                                                }
+                                                            </Scrollbars>
+                                                        </Tabs.TabPane>
+                                                        :
+                                                        null
+                                                )
+                                            })
+                                        }
+                                    </Tabs>
+                                    {
+                                        scrolledToBottom ?
+                                            <div className="width-100 padding-md flex-justify-center flex-items-align-center">
+                                                {
+
+                                                    arrayLengthCount(news) < newsTotal ?
+                                                        <Icon type="loading" style={{ fontSize: 30 }} />
+                                                        :
+                                                        '===== End Of News ====='
+                                                }
+                                            </div>
+                                            :
+                                            null
+                                    }
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+            </Tablet>
+
         </LayoutV2>
     )
 }
@@ -487,5 +617,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     loading: loading,
+    updateActiveMenu: updateActiveMenu,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(SocialNewsAndVideosPage)));

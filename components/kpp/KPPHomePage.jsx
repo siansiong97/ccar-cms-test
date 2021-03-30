@@ -27,7 +27,7 @@ const KPPIndex = (props) => {
     const [showEnRevisionModal, setShowEnRevisionModal] = useState(false)
     const [showBmRevisionModal, setShowBmRevisionModal] = useState(false)
     useEffect(() => {
-        props.updateActiveMenu('11');
+        props.updateActiveMenu('8');
         // setLoading(true)
         getQuestions();
 

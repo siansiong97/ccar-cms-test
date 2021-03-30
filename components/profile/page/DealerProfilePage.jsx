@@ -102,8 +102,8 @@ const UserProfileIndex = (props) => {
             </Desktop>
 
             <Tablet>
-            <div className="section">
-                <div>
+            <div className="section-version3">
+                <div className="container-version3">
                     {
                         userType == 'user' ?
                             <UserProfile data={profile} isOwn={isOwn} onChangeCoverPhoto={(url) => {

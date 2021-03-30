@@ -89,7 +89,7 @@ const KPPBM = (props) => {
     }
 
     const getQuestions = () => {
-        props.updateActiveMenu('11');
+        props.updateActiveMenu('8');
 
         axios.get(`${client.io.io.uri}randomKppQuestions`, {
             params: {

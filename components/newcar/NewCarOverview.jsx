@@ -11,7 +11,7 @@ import { calMonth } from '../../functionContent';
 import { calculateTimeRange, formatNumber, notEmptyLength, numberToFixed } from '../../common-function';
 import CalculatorModal from '../general/calculator-modal';
 import ShareButtonDialog from '../general/ShareButtonDialog';
-
+import { loading, updateActiveMenu } from '../../redux/actions/app-actions';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -50,6 +50,10 @@ const NewCarOverview = (props) => {
     const [monthlyInstalment, setMonthlyInstallment] = useState(0);
     const [timeoutFunction, setTimeoutFunction] = useState(null);
 
+    useEffect(() => {
+        props.updateActiveMenu('3');
+
+    }, [])
 
     useEffect(() => {
 
@@ -330,6 +334,185 @@ const NewCarOverview = (props) => {
                     </Row>
                 </Desktop>
 
+                <Tablet>
+                <Row>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <Row>
+                            <Col span={24}>
+                                <div>
+                                    <img src={carDetails.uri ? carDetails.uri : ''} style={{height:'100%', width:'100%'}}></img>
+                                </div>
+                            </Col>
+                        </Row>
+                        {/* <Row>
+                            <Col span={8} style={{ textAlign: 'center' }}>
+                                <Button style={{ border: 'none' }}>Interior</Button>
+                            </Col>
+                            <Col span={8} style={{ textAlign: 'center', border: 'none' }}>
+                                <Button style={{ border: 'none' }}>Exterior</Button>
+                            </Col>
+                            <Col span={8} style={{ textAlign: 'center', border: 'none' }}>
+                                <Button style={{ border: 'none' }}>360</Button>
+                            </Col>
+                        </Row> */}
+                    </Col>
+
+                    <Col style={{ marginTop: '13px', marginBottom: '13px' }} xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <div className=' flex-justify-space-between flex-items-align-center'>
+                            <span className='d-inline-block h5 font-weight-bold uppercase' >
+                                {carDetails ? carDetails.make + ' ' + carDetails.model : '-'}
+                            </span>
+                            <ShareButtonDialog style={{ border: 'none', marginRight: '10px', marginTop: '0px' }} />
+                        </div>
+                        <p style={{ fontWeight: '700', color: '#FBB040', marginBottom: '5px', fontSize: '20px' }}>
+
+                            {
+                                !carDetails.minPrice && !carDetails.maxPrice ?
+                                    'Price To Be Confirmed'
+                                    :
+                                    `${carDetails.minPrice ? 'RM ' + formatNumber(carDetails.minPrice, null, null, 2) : 'TBC'} - ${carDetails.maxPrice ? 'RM ' + formatNumber(carDetails.maxPrice, null, null, 2) : 'TBC'}`
+                            }
+                        </p>
+
+                        <p> Malaysia Preference Price Range </p>
+
+                        <Row style={{ marginTop: '35px' }}>
+                            <Col span={12}>
+                                <Row>
+                                    <Col span={14}>
+                                        <Row>
+                                            <Col span={4} style={{ textAlign: 'center' }}>
+                                                <img src="/assets/carDetails/Car Maker@3x.png" style={{ width: '100%' }}></img>
+                                            </Col>
+                                            <Col span={20} style={{ paddingLeft: '10px' }}>Maker</Col>
+                                        </Row>
+                                    </Col>
+                                    <Col span={10} style={{ textAlign: 'right', paddingRight: '20px' }}>
+                                        <p style={{ textTransform: 'capitalize' }} >{carDetails ? carDetails.make : ''} </p>
+                                    </Col>
+                                </Row>
+                                <Divider style={{ margin: 0 }} />
+                                <Row>
+                                    <Col span={14}>
+                                        <Row>
+                                            <Col span={4}>
+                                                <img src="/assets/carDetails/Car Maker@3x.png" style={{ width: '100%' }}></img>
+                                            </Col>
+                                            <Col style={{ paddingLeft: '10px' }} span={20}>
+                                                <p> Model </p>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col span={10} style={{ textAlign: 'right', paddingRight: '20px' }}>
+                                        <p style={{ textTransform: 'capitalize' }}>{carDetails ? carDetails.model : ''} </p>
+                                    </Col>
+                                </Row>
+                                <Divider style={{ margin: 0 }} />
+                                <Row>
+                                    <Col span={14}>
+                                        <Row>
+                                            <Col span={4}>
+                                                <img src="/assets/carDetails/Transmission@3x.png" style={{ width: '100%' }}></img>
+                                            </Col>
+                                            <Col style={{ paddingLeft: '10px' }} span={20}>
+                                                <p> Transmission </p>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col span={10} style={{ textAlign: 'right', paddingRight: '20px' }}>
+                                        <p style={{ textTransform: 'capitalize' }}>{carDetails ? carDetails.seats : ''} </p>
+                                    </Col>
+                                </Row>
+                            </Col>
+
+                            <Col span={12}>
+                                <Row>
+                                    <Col span={14}>
+                                        <Row>
+                                            <Col span={4}>
+                                                <img src="/assets/carDetails/Car Maker@3x.png" style={{ width: '100%' }}></img>
+                                            </Col>
+                                            <Col span={10} style={{ paddingLeft: '10px' }}>
+                                                Type
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col span={10} style={{ textAlign: 'right', paddingRight: '20px' }}>
+                                        <p style={{ textTransform: 'UPPERCASE' }} >{carDetails ? carDetails.bodyType : ''} </p>
+                                    </Col>
+                                </Row>
+                                <Divider style={{ margin: 0 }} />
+                                <Row>
+                                    <Col span={14}>
+                                        <Row>
+                                            <Col span={4}>
+                                                <img src="/assets/carDetails/Wheel@3x.png" style={{ width: '100%' }}></img>
+                                            </Col>
+                                            <Col span={20} style={{ paddingLeft: '10px' }}>
+                                                <p> Wheel </p>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col span={10} style={{ textAlign: 'right', paddingRight: '20px' }}>
+                                        <p> - </p>
+                                    </Col>
+                                </Row>
+                                <Divider style={{ margin: 0 }} />
+                                <Row>
+                                    <Col span={14}>
+                                        <Row>
+                                            <Col span={4}>
+                                                <img src="/assets/carDetails/Wheel@3x.png" style={{ width: '100%' }}></img>
+                                            </Col>
+                                            <Col style={{ paddingLeft: '10px' }} span={20}>
+                                                <p> Seats </p>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col span={10} style={{ textAlign: 'right', paddingRight: '20px' }}>
+                                        <p style={{ textTransform: 'capitalize' }}>{carDetails ? carDetails.seats : ''} </p>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+
+                        {/* <div>
+                            <p style={{ color: '#1890ff', fontSize: '20px', marginBottom: '5px', marginTop: '30px' }}>  Key Highlight </p>
+                            <p><Icon type="check" /> Priced competitively</p>
+                            <p> <Icon type="check" /> Wide dealer and services centre network </p>
+                            <p> <Icon type="check" /> Various after-market accesories available</p>
+                        </div> */}
+                        <Row>
+                            {/* <Col style={{ padding: '5px' }} xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <ReserveFormButton
+                                    type="carspec"
+                                    make={carDetails.make}
+                                    model={carDetails.model}
+                                    reserverId={props.user.authenticated ? props.user.info.user._id : null}
+                                    selection={filteredVariants()}
+                                    button={() => {
+                                        return (
+                                            <Button type="primary" style={{ width: '100%' }}> Ask For Reservation</Button>
+                                        )
+                                    }}
+                                    handleError={(e) => { message.error(e.message) }} />
+                            </Col> */}
+                            <Col style={{ padding: '5px' }} xs={24} sm={24} md={12} lg={12} xl={12}>
+                                {/* <Link to={`/newcar/details/${props.match.params.make}/${props.match.params.model}/specs`}>
+                                    <Button style={{ width: '100%' }}>
+                                        <p style={{ textTransform: 'capitalize', marginTop: '5px' }}> View {carDetails ? carDetails.make + ' ' + carDetails.model : ''} Specification </p>
+                                    </Button>
+                                </Link> */}
+                                <Button style={{ width: '100%', color: '#F89F27' }} onClick={(e) => props.changeTabs ? props.changeTabs('specs') : null}>
+                                    {/* <p style={{ textTransform: 'capitalize', marginTop: '5px' }}> View {carDetails ? carDetails.make + ' ' + carDetails.model : ''} Specification </p> */}
+                                    <p style={{ textTransform: 'capitalize', marginTop: '5px' }}> View Specification </p>
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Tablet>
+
             </div>
         )
     }
@@ -504,6 +687,73 @@ const NewCarOverview = (props) => {
                         </div>
                     </div>
                 </Desktop>
+
+                <Tablet>
+                <div className=' w-100 flex-items-align-center flex-justify-space-between'>
+                    <span className='d-inline-block h5 uppercase font-weight-bold' >
+                        Variants Price list
+                    </span>
+                    {
+                        _renderVariantGroupTitle()
+                    }
+                </div>
+
+                <div >
+                    <Row style={{backgroundColor:'#EEEDEB', padding:'10px'}} className="scroll-x-wrapper ">
+                        <Col span={12}>All Variant</Col>
+                        <Col span={3}>Transmission</Col >
+                        <Col span={4}>Price</Col>
+                        <Col span={5}>Monthly Payment</Col>
+                    </Row>
+                    <div style={{padding:'10px'}} className="scroll-x-wrapper">
+                        {
+                            !carDetails || !notEmptyLength(variants) ?
+                                <Empty />
+                                :
+                                _.compact(_.map(variants, (item, idx) => {
+                                    return (
+                                        isSelectedYear(item.year) ?
+                                            <div key={item._id + idx + 'div'}  >
+                                                <Row>
+                                                    <Col span={12}>
+                                                        <div className='cursor-pointer' style={{  display: 'inline-block' }}>
+                                                            {item.nameSearchBar}
+                                                        </div> 
+                                                    </Col>
+                                                    <Col span={3}>
+                                                        <div style={{display: 'inline-block' }}>
+                                                            {item.transmission}
+                                                        </div>
+                                                    </Col>
+                                                    <Col span={4}>
+                                                        <div style={{display: 'inline-block', color: 'rgb(251, 176, 64)' }}>
+                                                            RM {formatNumber(item.price || 0, null, null, 2)}
+                                                        </div>
+                                                    </Col>
+                                                    <Col span={4}>
+                                                        <div style={{display: 'inline-block', color: 'rgb(80, 135, 251)' }}>
+                                                            RM {formatNumber(calMonth(item.price || 0), null, null, 2)}
+                                                        </div>
+                                                    </Col>
+                                                    <Col span={1} style={{marginBottom:'5px'}}>
+                                                        <CalculatorModal key='calculator' data={{ price: item.price, downpayment: item.price * 0.1, loanPeriod: 9, interestRate: 3 }} />
+                                                    </Col>
+                                                </Row>
+                                                
+                                                {/* <span style={{ width: '100px', display: 'inline-block', marginLeft: '20px' }}>
+                                                    <Tooltip placement="right" title={`Calculate ${_.upperCase(item.nameSearchBar)} Monthly Pay`}>
+                                                        <Icon type="calculator" className='ccar-yellow cursor-pointer' style={{ fontSize: '25px', paddingTop: '13px' }} onClick={() => { calculateMonthlyPay(item) }} />
+                                                    </Tooltip>
+                                                </span> */}
+                                            </div>
+                                            :
+                                            null
+                                    )
+                                }))
+                        }
+                    </div>
+                </div>
+                </Tablet>
 
 
             </React.Fragment>
@@ -827,5 +1077,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+    updateActiveMenu: updateActiveMenu,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(NewCarOverview)));

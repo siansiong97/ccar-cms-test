@@ -788,6 +788,7 @@ class LayoutV2 extends React.Component {
                 <div className="relative-wrapper">
                     <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+                            <Desktop>
                             <div id="menu-bar" className="topnav" style={{ backgroundColor: '#000000' }}>
                                 <div className="fixed-container">
                                     <Row type="flex" align="middle" className='padding-x-md' >
@@ -866,7 +867,7 @@ class LayoutV2 extends React.Component {
                                     </Row>
                                 </div>
                             </div>
-                        </Col>
+                            </Desktop>
 
                         <Tablet>
                             <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
@@ -1002,7 +1003,7 @@ class LayoutV2 extends React.Component {
                             </div>
                         </Mobile>
 
-
+                        </Col>
                     </Row>
 
 
@@ -1028,11 +1029,28 @@ class LayoutV2 extends React.Component {
 
                     {this._renderFooter()}
                     <div className='width-100' style={{ position: '-webkit-sticky', position: 'sticky', bottom: 0, zIndex: 1002 }}>
-                        {
+                    {
                             this.props.footerOverLay ?
                                 this.props.footerOverLay
                                 :
-                                null
+                                this.props.hideOpenApp ?
+                                    null
+                                    :
+                                    <React.Fragment>
+                                        <NotWebDevice>
+                                            <div className="padding-md background-black flex-items-align-center flex-justify-space-between">
+                                                <span className=' flex-items-align-center' >
+                                                    <img src={ccarLogo} style={{ height: 30, width: 30 }} className="margin-right-md flex-items-no-shrink" />
+                                                    <div className="caption white">
+                                                        A place to connect car lovers' souls
+                                                </div>
+                                                </span>
+                                                <span className='d-inline-block ' >
+                                                    <Button className=" background-ccar-button-yellow black caption" style={{borderColor:'#FFCC32'}} onClick={(e) => { this.openApp() }}>Open App</Button>
+                                                </span>
+                                            </div>
+                                        </NotWebDevice>
+                                    </React.Fragment>
                         }
                     </div>
                     <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, left: 20, zIndex: 1002 }}  >
@@ -1053,7 +1071,7 @@ class LayoutV2 extends React.Component {
                             this.props.showCompareCarButton != undefined && this.props.showCompareCarButton == false && this.props.showCompareCarButton != null ?
                                 null
                                 :
-                                <Affix offsetBottom={20} className='affix-element-show-on-modal-1'>
+                                <Affix offsetBottom={95} className='affix-element-show-on-modal-1'>
                                     <CompareFloatingButton />
                                 </Affix>
                         }

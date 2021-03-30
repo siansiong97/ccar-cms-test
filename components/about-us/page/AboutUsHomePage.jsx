@@ -1,8 +1,9 @@
 import { Col, Row } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import LayoutV2 from '../../general/LayoutV2';
-
+import { updateActiveMenu } from '../../../redux/actions/app-actions';
 
 
 const Desktop = ({ children }) => {
@@ -23,6 +24,11 @@ const Desktop = ({ children }) => {
   }
 
 class AboutUsIndex extends React.Component{
+
+    componentDidMount = () => {
+        this.props.updateActiveMenu('9');
+    }
+
     render(){
 
         return (
@@ -276,4 +282,12 @@ class AboutUsIndex extends React.Component{
 
 }
 
-export default AboutUsIndex;
+const mapStateToProps = state => ({
+    app: state.app,
+});
+
+const mapDispatchToProps = {
+    updateActiveMenu: updateActiveMenu,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AboutUsIndex);
