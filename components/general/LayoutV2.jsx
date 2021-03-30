@@ -117,6 +117,7 @@ class LayoutV2 extends React.Component {
             });
         }
     }
+    
     getUserNotifications(skip) {
 
         try {
@@ -159,6 +160,7 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
+            console.log('token', token);
             if (token) {
 
                 let self = this;
@@ -209,9 +211,10 @@ class LayoutV2 extends React.Component {
             message: _.get(data, 'notification.title') || '',
             description: _.get(data, 'notification.body') || '',
             duration: 10,
-            placement: 'topRight',
+            placement: 'bottomRight' ,
             icon: <Avatar src={_.get(data, 'data.avatar') || ccarLogo} />,
             key: v4(),
+            className : 'cursor-pointer',
             onClick: () => {
                 if (_.get(data, 'data.path')) {
                     this.props.router.push(_.get(data, 'data.path') || '/')
@@ -544,8 +547,9 @@ class LayoutV2 extends React.Component {
                                                 </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            <div className="flex-justify-end white flex-items-align-center main-footer">
-                                                Terms of Use | Privacy Policy
+                                            <div className="flex-justify-end flex-items-align-center main-footer">
+                                                {/* Terms of Use | Privacy Policy */}
+                                                <Link shallow={false}  href={`/termsOfUse`}  >Terms of Use | Privacy Policy</Link>
                                                 </div>
                                         </Col>
                                     </Row>

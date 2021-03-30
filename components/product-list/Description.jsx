@@ -444,48 +444,62 @@ const Description = (props) => {
 
         if (_.isEmpty(data) === true) { return }
         let dataString = _.cloneDeep(data)
-        let phoneFormat = /(01)[0-46-9]-*[0-9]{7,8}/gim
-        let phoneFormat2 = /[0][1][0-46-9]-*[0-9]{7,8}/g
+        let phoneFormat = /((601)|(01))[0-46-9]*[0-9]{7,10}/gim
+        let phoneFormat2 = /([601]|[01]|)[0-46-9]-*[0-9]{7,10}/g
 
         dataString = dataString.split('\n')
         dataString = dataString.map(function (v) {
 
+            let v2 = v
+            v = v.replace(/\s/g, '')
+            v = v.replace(/\+/g, '')
+            v = v.replace(/-/g, '')
             let n = v.match(phoneFormat);
             let s = v.split(phoneFormat2);
+
+
             let x = ''
-            if (_.isEmpty(n) === true) { return <p>{v}</p> }
+            if (_.isEmpty(n) === true) { return <p style={{ marginBottom: '0em' }}>{v2}</p> }
+
+            s = _.without(s, '6')
+            s = _.without(s, '0')
+            s = _.without(s, '')
             x = s.map(function (v, i) {
 
                 if (n[i]) {
                     if (type === 'callContact') {
 
-                        if(isMobile){
+                        if (n[i].charAt(0) !== '6') {
+                            n[i] = '6' + n[i]
+                        }
+
+                        if (isMobile) {
                             v = <><>{v}</> <a className='contactShow'
-                            target={'_blank'}
-                            href={"tel:"+n[i]}
+                                target={'_blank'}
+                                href={"tel:" + n[i]}
                             >{n[i]}</a></>
-                        }   
-                        else{
-                            let username =''
-                            try{
-                             username = productDetails.createdBy.namePrefix + ' ' +  productDetails.createdBy.fullName
+                        }
+                        else {
+
+                            let username = ''
+                            try {
+                                username = productDetails.createdBy.namePrefix + ' ' + productDetails.createdBy.fullName
                             }
-                            catch(err)
-                            {username = '' }
+                            catch (err) { username = '' }
 
-                        v = <><>{v}</> <a className='contactShow'
-                            target={'_blank'}
-                            href={
-                                "https://web.whatsapp.com/send?phone="
-                                + n[i].replace('+', '') + "&text=Hi "
-                                + username
-                                + ", I am interested in your car ad on ccar.my and I would like to know more about "
-                                + productDetails.title
-                                + " (RM "
-                                +  productDetails.price.toFixed(2) + "). Thank you. https://share.ccar.my/viewCar/"
-                                + productDetails._id}
+                            v = <><>{v}</> <a className='contactShow'
+                                target={'_blank'}
+                                href={
+                                    "https://web.whatsapp.com/send?phone="
+                                    + n[i].replace('+', '') + "&text=Hi "
+                                    + username
+                                    + ", I am interested in your car ad on ccar.my and I would like to know more about "
+                                    + productDetails.title
+                                    + " (RM "
+                                    + productDetails.price.toFixed(2) + "). Thank you. https://share.ccar.my/viewCar/"
+                                    + productDetails._id}
 
-                        >{n[i]}</a></>
+                            >{n[i]}</a></>
                         }
                     }
                     else {
@@ -494,7 +508,7 @@ const Description = (props) => {
                 }
                 return v
             })
-            return <p>{x}</p>
+            return <p style={{ marginBottom: '0em' }}>{x}</p>
         })
         return dataString
     }
