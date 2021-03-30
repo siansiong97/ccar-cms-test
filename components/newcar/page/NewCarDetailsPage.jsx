@@ -175,7 +175,7 @@ class Details extends React.Component {
   _renderView = () => {
     switch (this.state.view) {
       case 'overview':
-        return <NewCarOverview changeTabs={this.changeTabs} ></NewCarOverview>
+        return <NewCarOverview changeTabs={this.changeTabs} ></NewCarOverview> 
         break;
       case 'specs':
         return <CompareNewCarIndex />
@@ -203,7 +203,7 @@ class Details extends React.Component {
 
         <Tablet>
           <div className='section'>
-            <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+            <div style={{ paddingLeft: '10px', paddingRight: '10px' }}> 
               <NewCarMenu  view={this.state.view} onChange={(view) => { this.setState({ view: view }) }} />
               <Divider style={{ marginTop: '0px', height: '2px' }} />
               <div className="margin-top-lg">
@@ -212,7 +212,7 @@ class Details extends React.Component {
             </div>
           </div>
         </Tablet>
-        
+
       </LayoutV2>
 
     );

@@ -210,7 +210,7 @@ const SocialBoardPage = (props) => {
             <Tablet>
                 <CarFreakLayout>
                     <Row gutter={[10, 10]}>
-                        <Col xs={24} sm={24} md={15} lg={15} xl={15}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="flex-justify-end flex-items-align-center margin-bottom-lg">
                                 <span className='d-inline-block margin-right-md' >
                                     <Button size="large" className="border-ccar-yellow" onClick={(e) => {
@@ -227,7 +227,7 @@ const SocialBoardPage = (props) => {
                                             socialBoards.map(function (post, i) {
                                                 return (
                                                     <Col key={'chats' + i} className="gutter-row"
-                                                        xs={24} sm={24} md={24} lg={24} xl={24}
+                                                        xs={12} sm={12} md={12} lg={12} xl={12}
                                                     >
                                                         <SocialBoardCard data={post}
                                                             onRedirectToPost={(data) => {
@@ -260,13 +260,13 @@ const SocialBoardPage = (props) => {
                                         <div></div>
                             }
                         </Col>
-                        <Col xs={24} sm={24} md={9} lg={9} xl={9}>
+                        {/* <Col xs={24} sm={24} md={9} lg={9} xl={9}>
                             <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
                                 if (_.isPlainObject(data) && !_.isEmpty(data) && data._id) {
                                     props.router.push(`/social-board/${data._id}`, undefined, { shallow : false })
                                 }
                             }} />
-                        </Col>
+                        </Col> */}
                     </Row>
                     <div className="width-100 flex-justify-center" style={{ height: 50 }}>
                         {
