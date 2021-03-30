@@ -124,6 +124,11 @@ const GridProductList = (props) => {
 
     const _renderState = (v) => {
         let value = _.get(v, ['companys', 'state'])
+
+        let value2 = _.get(v, ['createdBy', 'userstate'])
+        if(_.isEmpty(value2)===false){
+            value = value2
+        }
         return (
             <div className="width-20 relative-wrapper gridStateFloatRight" >
                 <img src={getStateIcon(value) || imageNotFoundIcon} className="fill-parent absolute-center" style={{ marginTop: '0px' }} />
@@ -296,6 +301,23 @@ const GridProductList = (props) => {
                 <Row type="flex" >
                     {data.map((v, i) => {
                         if (v) {
+
+                            let companyName = v.companys ? v.companys.name : null
+                            let areaName = v.companys ? v.companys.area : null
+
+                            let userCompany = _.get(v, ['createdBy', 'usercompanyName'])||''
+                            if(_.isEmpty(userCompany)===false){
+                                companyName = userCompany
+                            }
+
+                            let userarea = _.get(v, ['createdBy', 'userarea'])||''
+                            if(_.isEmpty(userarea)===false){
+                                areaName = userarea
+                            }
+
+                            // let companyName = v.companys ? v.companys.name : null
+                            // let areaName = v.companys ? v.companys.area : null
+
                             return (
                                 <Col key={'product' + i}
                                     style={{ touchAction: 'pan-y' }}
@@ -377,7 +399,7 @@ const GridProductList = (props) => {
                                                         <Row>
                                                             <Col className="icon-res" span={3} >{_renderIcon(v, 'company')}</Col>
                                                             <Col span={20}>
-                                                                <p style={{ marginLeft: '5px', fontSize: '14px' }} className="product-ads-company">{v.companys ? v.companys.name : null} </p>
+                                                                <p style={{ marginLeft: '5px', fontSize: '14px' }} className="product-ads-company">{companyName} </p>
                                                             </Col>
                                                         </Row>
                                                         <Row>
@@ -385,7 +407,7 @@ const GridProductList = (props) => {
                                                                 {_renderIcon(v, 'area')}
                                                             </Col>
                                                             <Col span={20}>
-                                                                <p style={{ marginLeft: '5px', fontSize: '14px', textTransform: 'uppercase' }} className="product-ads-company">{v.companys ? v.companys.area : null} </p>
+                                                                <p style={{ marginLeft: '5px', fontSize: '14px', textTransform: 'uppercase' }} className="product-ads-company">{areaName} </p>
                                                             </Col>
                                                         </Row>
                                                     </Col>

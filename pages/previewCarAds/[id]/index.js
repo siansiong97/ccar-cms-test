@@ -56,7 +56,6 @@ export async function getServerSideProps({ req, res, }) {
 
             if (id === 'record') {
                 let splitPath = _.get(Object.entries(req.query), [0]);
-                console.log(splitPath);
 
                 carInfo = await client.service('product-ads').find({
                     query: {

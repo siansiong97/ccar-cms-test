@@ -568,9 +568,7 @@ const ProductList = (props) => {
   const _renderList = (data) => {
 
     if (notEmptyLength(data)) {
-      console.log('data');
-
-      console.log(data);
+  
       return (
         data.map((v, i) =>
           <Col key={i} xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '0px' }}>

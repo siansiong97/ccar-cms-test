@@ -76,8 +76,7 @@ const UserProfileIndex = (props) => {
             message.error(err.message)
         });
     }
-
-
+ 
     return (
         <LayoutV2>
             <Desktop>

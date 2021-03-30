@@ -185,8 +185,7 @@ const SocialInput = (props) => {
                     skip: skip || 0,
                 }
             }).then(res => {
-                console.log('res');
-                console.log(res);
+       
                 setIsLoading(false);
                 let temp = _.cloneDeep(suggestList);
                 temp[prefix] = suggestListPage > 1 ?
@@ -352,9 +351,7 @@ const SocialInput = (props) => {
             let newAliasCode = _.unionBy(_.sortBy(_.reverse(_.sortBy(_.cloneDeep(aliasCode) || [], ['createdAt'])), ['position']), [], 'position');
             //need update back position after delete things
 
-            console.log(newAliasCode);
-            console.log('position');
-            console.log(position);
+     
             let quill = props.inputRef || ref[uid];
             if (quill.current) {
                 let editor = quill.current.getEditor();

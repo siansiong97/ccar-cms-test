@@ -396,7 +396,7 @@ const SocialNewsAndVideosPage = (props) => {
                                                 <Tabs.TabPane tab="All" key='all'>
                                                     <InfiniteScroll
                                                         loadMore={() => {
-                                                            console.log('here');
+                                                      
                                                             if (tabKey == 'news' && newsPage * NEWSSIZE < newsTotal) {
                                                                 setHasMore(false);
                                                                 setNewsPage(newsPage + 1);
@@ -440,7 +440,7 @@ const SocialNewsAndVideosPage = (props) => {
 
                                                             <InfiniteScroll
                                                                 loadMore={() => {
-                                                                    console.log('here');
+                                                                
                                                                     if (tabKey == 'news' && newsPage * NEWSSIZE < newsTotal) {
                                                                         setHasMore(false);
                                                                         setNewsPage(newsPage + 1);

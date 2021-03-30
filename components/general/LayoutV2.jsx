@@ -132,8 +132,7 @@ class LayoutV2 extends React.Component {
                             skip: skip || 0
                         }
                     }).then(res => {
-                        console.log('res');
-                        console.log(res);
+              
                         this.setState({
                             notificationLoading: false,
                             notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
@@ -206,7 +205,7 @@ class LayoutV2 extends React.Component {
     }
 
     _renderNotification = (data) => {
-        console.log('notification', data);
+      
         notification.open({
             message: _.get(data, 'notification.title') || '',
             description: _.get(data, 'notification.body') || '',
@@ -244,7 +243,7 @@ class LayoutV2 extends React.Component {
 
         window.scrollTo(0, 0);
         this.handleExpiredToken();
-        this.setFirebaseToken();
+        // this.setFirebaseToken();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -303,26 +302,26 @@ class LayoutV2 extends React.Component {
             };
         }
 
-        if (prevProps.user.authenticated != this.props.user.authenticated) {
-            this.setFirebaseToken();
-            if (this.state.notificationPage == 1) {
-                this.getUserNotifications(0);
-            } else {
-                this.setState({
-                    notificationPage: 1,
-                })
-            }
-        }
+        // if (prevProps.user.authenticated != this.props.user.authenticated) {
+        //     this.setFirebaseToken();
+        //     if (this.state.notificationPage == 1) {
+        //         this.getUserNotifications(0);
+        //     } else {
+        //         this.setState({
+        //             notificationPage: 1,
+        //         })
+        //     }
+        // }
 
-        if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
-            if (this.state.notificationBoxRef.current) {
-                this.state.notificationBoxRef.current.scrollToTop();
-            }
-        }
+        // if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
+        //     if (this.state.notificationBoxRef.current) {
+        //         this.state.notificationBoxRef.current.scrollToTop();
+        //     }
+        // }
 
-        if (prevState.notificationPage != this.state.notificationPage) {
-            this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
-        }
+        // if (prevState.notificationPage != this.state.notificationPage) {
+        //     this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
+        // }
     }
 
     handleScroll = (e) => {
@@ -405,9 +404,9 @@ class LayoutV2 extends React.Component {
                     </Dropdown>
 
 
-                    <span className='d-inline-block margin-left-md' >
+                    {/* <span className='d-inline-block margin-left-md' >
                         {this._renderNotificationBox()}
-                    </span>
+                    </span> */}
                 </span>
             );
         } else {
