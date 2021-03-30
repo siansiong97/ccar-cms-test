@@ -13,7 +13,7 @@ import GridProductList from '../../../components/product-list/grid-product-list'
 import ProductList from '../../../components/product-list/ProductList'
 import ProductListFilterForm from '../../../components/product-list/ProductListFilterForm'
 import client from '../../../feathers'
-import { loading } from '../../../redux/actions/app-actions'
+import { loading, updateActiveMenu } from '../../../redux/actions/app-actions'
 import { getCarBrand } from '../../../params/carBrandsList'
 import GridProductSkeleton from '../../skeleton-loader/GridProductSkeleton'
 import queryString from 'query-string';
@@ -67,6 +67,10 @@ const CarMarketPage = (props) => {
         config: false,
     });
     const [visible, setVisible] = useState()
+
+    useEffect(() => {
+        props.updateActiveMenu('2');
+    }, [])
 
     useEffect(() => {
         setInitRan({
@@ -530,7 +534,7 @@ const CarMarketPage = (props) => {
                                                 <a>Product List</a>
                                             </Link>
                                         </Breadcrumb.Item>
-                                        {props.router.query.parameter1 ?
+                                        {/* {props.router.query.parameter1 ?
                                             <Breadcrumb.Item>
                                                 <span style={{ cursor: 'pointer' }} onClick={() => { pushParameterToUrl({ ...currentFilterGroup, make: _.toLower(props.router.query.parameter1), model: null }, { ...mainConfig, page: 1 }) }}>{getCarBrand(_.toLower(props.router.query.parameter1)).value || props.router.query.parameter1}</span>
                                             </Breadcrumb.Item>
@@ -541,7 +545,7 @@ const CarMarketPage = (props) => {
                                                 <span style={{ cursor: 'pointer' }} onClick={() => { pushParameterToUrl({ ...currentFilterGroup, make: _.toLower(props.router.query.parameter1), model: _.toLower(props.router.query.parameter2) }, { ...mainConfig, page: 1 }) }}>{_.capitalize(props.router.query.parameter2)}</span>
                                             </Breadcrumb.Item>
                                             : null
-                                        }
+                                        } */}
                                     </Breadcrumb>
                                     <Affix offsetTop={250}>
                                         <Button style={{ float: 'right', marginRight: '-15px' }} type="primary" onClick={() => showDrawer(true)}>
@@ -571,9 +575,9 @@ const CarMarketPage = (props) => {
                                                 <div className="flex-justify-space-between">
                                                     <span className='d-inline-block h6' >
                                                         <span>{total} </span>
-                                                        {props.router.query.parameter1 ?
-                                                            <span className='capitalize'>{getCarBrand(_.toLower(props.router.query.parameter1)).value || props.router.query.parameter1} </span> : ''}
-                                                        <span>Cars in CarMarket</span>
+                                                        <span>{_.capitalize(_.get(getCarBrand(_.get(currentFilterGroup, ['make'])), ['value']) || '')} </span>
+                                                        <span>{_.capitalize(_.get(currentFilterGroup, ['model']) || '')} </span>
+                                                        <span>Cars in CarMarket </span>
                                                     </span>
                                                     <span className='flex-items-align-center flex-justify-space-around ' >
                                                         <span className='flex-items-align-center margin-right-md' >
@@ -888,5 +892,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     loading: loading,
     setProductListLoading: setProductListLoading,
+    updateActiveMenu: updateActiveMenu,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CarMarketPage))

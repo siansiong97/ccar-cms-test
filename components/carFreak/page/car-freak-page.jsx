@@ -18,6 +18,9 @@ import WindowScrollLoadWrapper from '../../general/WindowScrollLoadWrapper';
 import LayoutV2 from '../../general/LayoutV2';
 import { arrayLengthCount, notEmptyLength } from '../../../common-function';
 import InfiniteScrollWrapper from '../../general/InfiniteScrollWrapper';
+import {
+    updateActiveMenu
+} from '../../../redux/actions/app-actions';
 
 
 const Desktop = ({ children }) => {
@@ -60,6 +63,10 @@ const CarFreakPage = (props) => {
 
     const [htmlWindow, setHtmlWindow] = useState({});
     const [htmlDocument, setHtmlDocument] = useState({});
+
+    useEffect(() => {
+        props.updateActiveMenu('6');
+    }, [])
 
     useEffect(() => {
         if (window) {
@@ -342,6 +349,109 @@ const CarFreakPage = (props) => {
                         </Row>
                     </CarFreakLayout>
                 </Desktop>
+
+                <Tablet>
+                <CarFreakLayout>
+                        <Row gutter={[15, 15]}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="width-100 flex-justify-end flex-items-align-center">
+                                    <span className='d-inline-block margin-right-md' >
+                                        <Button size="large" className="border-ccar-yellow" onClick={(e) => {
+                                            setEditMode(null);
+                                            setWriteModalVisible(true);
+                                            setSelectedPost(null);
+                                        }}  ><Icon type="edit" /> Write a Post</Button>
+                                    </span>
+                                    <span className='d-inline-block' >
+                                        <RadioGroup className=" round-border-radio-button" value={scope} buttonStyle="solid">
+                                            <Radio.Button className="round-border-right" value="public" onClick={(e) => {
+                                                setScope('public')
+                                            }}>
+                                                <Tooltip title="Public" placement="top">
+                                                    <img src={earthGreyIcon} style={{ height: 20, width: 20 }}></img>
+                                                </Tooltip>
+                                            </Radio.Button>
+                                            <Radio.Button className="round-border-left" value="following" onClick={(e) => {
+                                                setScope('following')
+                                            }}>
+                                                <Tooltip title="Following" placement="top">
+                                                    <img src={followingGreyIcon} style={{ height: 20, width: 20 }}></img>
+                                                </Tooltip>
+                                            </Radio.Button>
+                                        </RadioGroup>
+                                    </span>
+                                </div>
+                            </Col>
+                            <WindowScrollLoadWrapper scrollRange={document.body.scrollHeight * 0.5} onScrolledBottom={() => {
+                                if (chatPage * PAGE_SIZE < totalChat) {
+                                    setChatPage(chatPage + 1);
+                                }
+                            }}>
+                                {
+                                    _.isArray(chats) && notEmptyLength(chats) ?
+                                        <React.Fragment>
+                                            {
+                                                _.map(chats, function (v, i) {
+                                                    return (
+                                                        <Col xs={24} sm={12} md={8} lg={6} xl={6} key={`post-${v4()}`}>
+                                                            <Post data={v}
+                                                                className="background-white thin-border round-border box-shadow-strong"
+                                                                postLike={_.find(userChatLikes, { chatId: v._id })}
+                                                                onRedirectToPost={(post) => {
+                                                                    setChatInfo(post);
+                                                                    setVisible(true);
+                                                                    setEditMode('');
+                                                                }}
+                                                                onEditClick={(post) => {
+                                                                    setEditMode('edit');
+                                                                    setWriteModalVisible(true);
+                                                                    setSelectedPost(post);
+                                                                }}
+
+                                                                onUpdatePost={(data) => {
+                                                                    handlePostChange(data);
+                                                                }}
+                                                                onRemoveClick={(post) => {
+                                                                    confirmDelete(post)
+                                                                }}
+                                                                onPostLikeChange={(liked, data) => {
+                                                                    if (liked) {
+                                                                        setUserChatLikes(_.concat(userChatLikes, [data]));
+                                                                    } else {
+                                                                        setUserChatLikes(_.filter(userChatLikes, function (like) {
+                                                                            return _.get(like, ['chatId']) != _.get(data, ['chatId']);
+                                                                        }))
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </Col>
+                                                    )
+                                                })
+                                            }
+
+                                        </React.Fragment>
+                                        :
+                                        !isLoading ?
+                                            <div className="width-100 flex-items-align-center flex-justify-center background-white" style={{ height: 400 }}><Empty /></div>
+                                            : <div></div>
+                                }
+                            </WindowScrollLoadWrapper>
+
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                                <div className="width-100 flex-justify-center" style={{ height: 50 }}>
+                                    {
+                                        isLoading ?
+                                            <Icon type="loading" style={{ fontSize: 50 }} />
+                                            :
+                                            null
+                                    }
+                                </div>
+                            </Col>
+                        </Row>
+                    </CarFreakLayout>
+                </Tablet>
+
             </LayoutV2>
             <PostModal
                 chatInfo={chatInfo}
@@ -397,6 +507,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+    updateActiveMenu: updateActiveMenu,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(CarFreakPage)));

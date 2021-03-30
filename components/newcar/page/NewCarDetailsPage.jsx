@@ -200,6 +200,19 @@ class Details extends React.Component {
             </div>
           </div>
         </Desktop>
+
+        <Tablet>
+          <div className='section'>
+            <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
+              <NewCarMenu  view={this.state.view} onChange={(view) => { this.setState({ view: view }) }} />
+              <Divider style={{ marginTop: '0px', height: '2px' }} />
+              <div className="margin-top-lg">
+                {this._renderView()}
+              </div>
+            </div>
+          </div>
+        </Tablet>
+        
       </LayoutV2>
 
     );

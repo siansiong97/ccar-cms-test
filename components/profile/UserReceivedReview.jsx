@@ -218,7 +218,7 @@ const UserReceivedReview = (props) => {
                             notEmptyLength(ratings) || notEmptyLength(ownRating) ?
                                 <div>
                                     <div className="width-100">
-                                        <ReviewList data={notEmptyLength(ownRating) ? ownRating : []} handleChange={(v) => { init() }} />
+                                        <ReviewList data={notEmptyLength(ownRating) ? ownRating : []} handleChange={(v) => { init() }} /> 
                                     </div>
                                     {
                                         notEmptyLength(ratings) ?

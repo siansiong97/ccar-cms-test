@@ -62,7 +62,7 @@ const LikePostButton = (props) => {
             }).then(res => {
                 setPostLike(_.get(res, ['data', 0]) || {})
             }).catch(err => {
-                console.log(error);
+                console.log(err);
             });
         }
     }
@@ -131,7 +131,7 @@ const LikePostButton = (props) => {
                             setTimeoutFunc();
                         }).catch((err) => {
                             setTimeoutFunc();
-                            console.log(error);
+                            console.log(err);
                             console.log('not able to like');
                         })
                 }, TIME_OUT))
