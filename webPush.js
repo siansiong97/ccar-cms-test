@@ -59,7 +59,7 @@ export const onMessageListener = () => {
     return new Promise((resolve) => {
         messaging.onMessage((payload) => {
             console.log('get message');
-            console.log(payload);
+            // console.log(payload);
             resolve(payload);
         });
     });

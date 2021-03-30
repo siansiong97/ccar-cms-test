@@ -722,6 +722,10 @@ class ViewCarDetailsPage extends React.Component {
 
 
     const { comments, submitting, value } = this.state;
+    let stateName = getStateIcon(_.get(this.state.productDetails, ['companys', 'state']) || imageNotFoundIcon)
+    let userstate = _.get(this.state.productDetails, ['createdBy', 'userstate'])||''
+    if(_.isEmpty(userstate)===false){stateName = getStateIcon(userstate)||imageNotFoundIcon}
+
     return (
       <LayoutV2
         footerOverLay={this._renderDealerBar()}
@@ -821,7 +825,10 @@ class ViewCarDetailsPage extends React.Component {
                               }
                             }
                           </LightBoxGallery>
-                          <img src={getStateIcon(_.get(this.state.productDetails, ['companys', 'state']) || imageNotFoundIcon)} style={{ width: 100, height: '30px', position: 'absolute', top: 0, right: 0 }} alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
+                          <img 
+                          src={stateName} 
+                          style={{ width: 100, height: '30px', position: 'absolute', top: 0, right: 0 }} 
+                          alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
                           <span className="d-inline-block width-20" style={{ position: 'absolute', top: 0, left: 0 }} >
                             {this._renderCondition(this.state.productDetails)}
                           </span>

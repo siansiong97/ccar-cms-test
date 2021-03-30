@@ -61,7 +61,7 @@ const EventPostPage = (props) => {
                 })
                 .then((res) => {
 
-                    console.log(res);
+               
                     props.loading(false);
                     setEventPost(notEmptyLength(res.data) ? res.data[0] : {});
                 }).catch(err => {

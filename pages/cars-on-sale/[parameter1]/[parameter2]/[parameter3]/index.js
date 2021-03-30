@@ -58,9 +58,9 @@ export async function getServerSideProps(context) {
 
         }
     }
-    console.log(filterObj);
+ 
     filterObj = convertProductRouteParamsToFilterObject(filterObj);
-    console.log(filterObj);
+ 
     if (_.get(filterObj, ['filterGroup'])) {
         filterObj.filterGroup.condition = '';
     }
