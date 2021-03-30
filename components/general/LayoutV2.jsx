@@ -54,7 +54,7 @@ const NotWebDevice = ({ children }) => {
     return isMobile || isTablet ? children : null;
 }
 
-const notificationBoxRef = React.createRef();
+const NOTIFICATION_PAGE_SIZE = 10;
 
 var frontUrl = checkEnvReturnWebAdmin(client.io.io.uri)
 var currentEnv = checkEnv(client.io.io.uri)
@@ -81,6 +81,7 @@ class LayoutV2 extends React.Component {
             },
             window: {},
             showProfileMenu: false,
+            notificationBoxRef: {},
             notificationLoading: false,
             notificationPage: 1,
             notificationTotal: 0,
@@ -116,7 +117,7 @@ class LayoutV2 extends React.Component {
             });
         }
     }
-    getUserNotifications() {
+    getUserNotifications(skip) {
 
         try {
             if (_.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id'])) {
@@ -125,12 +126,17 @@ class LayoutV2 extends React.Component {
                 }, () => {
                     axios.get(`${client.io.io.uri}getUserNotifications`, {
                         params: {
-                            userId: this.props.user.info.user._id
+                            userId: this.props.user.info.user._id,
+                            limit: NOTIFICATION_PAGE_SIZE,
+                            skip: skip || 0
                         }
                     }).then(res => {
+                        console.log('res');
+                        console.log(res);
                         this.setState({
                             notificationLoading: false,
                             notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
+                            notificationTotal: _.get(res, 'data.total') || 0,
                         })
 
                     }).catch(err => {
@@ -153,10 +159,19 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
-            console.log('getToken', token);
             if (token) {
 
-                await this.subscribeNotificationTopics(token);
+                let self = this;
+                this.subscribeNotificationTopics(token).then(() => {
+                    if (self.state.notificationPage == 1) {
+                        self.getUserNotifications(0);
+                    } else {
+                        self.setState({
+                            notificationPage: 1,
+                        })
+                    }
+                });
+
                 this.listenOnNotification();
             }
         } catch (error) {
@@ -195,7 +210,14 @@ class LayoutV2 extends React.Component {
             description: _.get(data, 'notification.body') || '',
             duration: 10,
             placement: 'topRight',
-            icon: <Avatar src={ccarLogo} />,
+            icon: <Avatar src={_.get(data, 'data.avatar') || ccarLogo} />,
+            key: v4(),
+            onClick: () => {
+                if (_.get(data, 'data.path')) {
+                    this.props.router.push(_.get(data, 'data.path') || '/')
+                }
+            },
+
         })
     }
 
@@ -217,11 +239,9 @@ class LayoutV2 extends React.Component {
             })
         }
 
-        console.log('here');
         window.scrollTo(0, 0);
         this.handleExpiredToken();
-        // this.setFirebaseToken();
-        // this.getUserNotifications();
+        this.setFirebaseToken();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -280,10 +300,26 @@ class LayoutV2 extends React.Component {
             };
         }
 
-        // if (prevProps.user.authenticated != this.props.user.authenticated) {
-        //     this.setFirebaseToken();
-        //     this.getUserNotifications();
-        // }
+        if (prevProps.user.authenticated != this.props.user.authenticated) {
+            this.setFirebaseToken();
+            if (this.state.notificationPage == 1) {
+                this.getUserNotifications(0);
+            } else {
+                this.setState({
+                    notificationPage: 1,
+                })
+            }
+        }
+
+        if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
+            if (this.state.notificationBoxRef.current) {
+                this.state.notificationBoxRef.current.scrollToTop();
+            }
+        }
+
+        if (prevState.notificationPage != this.state.notificationPage) {
+            this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
+        }
     }
 
     handleScroll = (e) => {
@@ -312,7 +348,6 @@ class LayoutV2 extends React.Component {
                     </span> */}
                     <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" visible={self.state.showProfileMenu} onVisibleChange={(v) => {
                         if (self.state.showProfileMenu != v) {
-                            console.log('setShowProfileMenu', v);
                             self.setState({
                                 showProfileMenu: v,
                             })
@@ -365,6 +400,11 @@ class LayoutV2 extends React.Component {
                             <UserAvatar showNameRight avatarClassName="flex-items-no-shrink" textClassName="white text-truncate subtitle1" size={35} data={_.get(this.props.user, ['info', 'user'])} />
                         </span>
                     </Dropdown>
+
+
+                    <span className='d-inline-block margin-left-md' >
+                        {this._renderNotificationBox()}
+                    </span>
                 </span>
             );
         } else {
@@ -499,7 +539,7 @@ class LayoutV2 extends React.Component {
 
                                     <Row style={{ color: '#E3C57D' }}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px' }}>
-                                            <div className="flex-justify-start flex-items-align-center main-footer ">
+                                            <div className="flex-justify-start white flex-items-align-center main-footer ">
                                                 CCAR.MY <Icon type="copyright" /> 2020
                                                 </div>
                                         </Col>
@@ -520,130 +560,130 @@ class LayoutV2 extends React.Component {
         )
     }
 
-    // _renderNotificationBox = () => {
+    _renderNotificationBox = () => {
 
-    //     const tabs = [
-    //         {
-    //             value: 'carfreaks',
-    //             text: 'CarFreaks',
-    //         },
-    //         {
-    //             value: 'carAds',
-    //             text: 'CarMarket',
-    //         },
-    //         {
-    //             value: 'other',
-    //             text: 'Others',
-    //         },
-    //     ]
+        const tabs = [
+            {
+                value: 'carfreaks',
+                text: 'CarFreaks',
+            },
+            {
+                value: 'carAds',
+                text: 'CarMarket',
+            },
+            {
+                value: 'other',
+                text: 'Others',
+            },
+        ]
 
-    //     let self = this;
+        let self = this;
 
-    //     return (
-    //         <Popover
-    //             getPopupContainer={() => document.getElementById('notification-menu-item')}
-    //             onVisibleChange={(v) => {
-    //                 if (self.state.notificationBoxVisible != v) {
-    //                     console.log('setNotificationVisible', v);
-    //                     this.setState({
-    //                         notificationBoxVisible: v,
-    //                     })
-    //                 }
-    //             }}
-    //             placement="leftBottom"
-    //             title={
-    //                 <div className=" h6 font-weight-bold grey-darken-1" style={{ width: 300 }}>
-    //                     Notifications
-    //                  </div>
-    //             }
-    //             content={
-    //                 <div className="padding-y-sm" style={{ width: 300 }}>
-    //                     <div className="flex-justify-start flex-items-align-center">
-    //                         {
-    //                             _.map(tabs, function (tab) {
-    //                                 return (
-    //                                     <span className={`d-inline-block margin-right-md cursor-pointer ${self.state.notificationTabKey == tab.value ? 'ccar-button-yellow' : 'grey-darken-1'}`} onClick={(e) => {
-    //                                         self.setState({
-    //                                             notificationTabKey: tab.value
-    //                                         })
-    //                                     }} >
-    //                                         {tab.text}
-    //                                     </span>
-    //                                 )
-    //                             })
-    //                         }
-    //                     </div>
-    //                     {
-    //                         _.isArray(self.state.notifications) && !_.isEmpty(self.state.notifications) ?
-    //                             <Scrollbars autoHide autoHeight autoHeightMax={300} ref={notificationBoxRef}>
-    //                                 <InfiniteScrollWrapper useWindow={false}
-    //                                     onScrolledBottom={() => {
-    //                                         if (arrayLengthCount(this.state.notifications) < this.state.notificationTotal && !this.state.notificationLoading) {
-    //                                         }
-    //                                     }}
-    //                                     hasMore={!this.state.notificationLoading && arrayLengthCount(this.state.notifications) < this.state.notificationTotal}
-    //                                 >
-    //                                     {
-    //                                         _.map(this.state.notifications, function (notification) {
-    //                                             if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
-    //                                                 return (
-    //                                                     <div className="flex-justify-start flex-items-align-center margin-y-sm">
-    //                                                         <img src={ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md" />
-    //                                                         <span className='d-inline-block' >
-    //                                                             <div className=" caption text-truncate-twoline">
-    //                                                                 {_.get(notification, 'title') || ''}
-    //                                                             </div>
-    //                                                             <div className="small-text text-truncate">
-    //                                                                 {_.get(notification, 'body') || ''}
-    //                                                             </div>
-    //                                                         </span>
-    //                                                     </div>
-    //                                                 )
-    //                                             }
-    //                                             return null;
-    //                                         })
-    //                                     }
-    //                                 </InfiniteScrollWrapper>
-    //                             </Scrollbars>
-    //                             :
-    //                             <div className="flex-justify-center flex-items-align-center" style={{ height: 300 }}>
-    //                                 <span className="d-inline-block">
-    //                                     <div className="flex-justify-center flex-items-align-center">
-    //                                         <img src={bellInactive} style={{ height: 70, width: 70 }} />
-    //                                     </div>
-    //                                     <div className="h6 grey-darken-1 margin-top-sm">
-    //                                         No notification yet
-    //                                     </div>
-    //                                     <div className="caption grey-darken-1 flex-justify-center">
-    //                                         When you get notification,
-    //                                     </div>
-    //                                     <div className="caption grey-darken-1 flex-justify-center">
-    //                                         they'll show up here
-    //                                     </div>
-    //                                     <div className="flex-justify-center margin-top-sm">
-    //                                         <Button className=" background-ccar-button-yellow">Refresh</Button>
-    //                                     </div>
+        return (
+            <Popover
+                onVisibleChange={(v) => {
+                    if (self.state.notificationBoxVisible != v) {
+                        this.setState({
+                            notificationBoxVisible: v,
+                        })
+                    }
+                }}
+                trigger="click"
+                arrowPointAtCenter
+                placement="bottomLeft"
+                title={
+                    <div className=" h6 font-weight-bold grey-darken-1" style={{ width: 300 }}>
+                        Notifications
+                     </div>
+                }
+                content={
+                    <div className="padding-y-sm" style={{ width: 300 }}>
+                        <div className="flex-justify-start flex-items-align-center">
+                            {
+                                _.map(tabs, function (tab) {
+                                    return (
+                                        <span className={`d-inline-block margin-right-md cursor-pointer ${self.state.notificationTabKey == tab.value ? 'ccar-button-yellow' : 'grey-darken-1'}`} onClick={(e) => {
+                                            self.setState({
+                                                notificationTabKey: tab.value
+                                            })
+                                        }} >
+                                            {tab.text}
+                                        </span>
+                                    )
+                                })
+                            }
+                        </div>
+                        {
+                            _.isArray(self.state.notifications) && !_.isEmpty(self.state.notifications) ?
+                                <ScrollLoadWrapper getRef={(ref) => {
+                                    self.setState({
+                                        notificationBoxRef: ref,
+                                    })
+                                }} scrollRangeUsePercentage scrollRange={50} autoHide autoHeight autoHeightMax={400}
+                                    onScrolledBottom={() => {
+                                        if (arrayLengthCount(this.state.notifications) < this.state.notificationTotal && !this.state.notificationLoading) {
+                                            self.setState({
+                                                notificationPage: this.state.notificationPage + 1,
+                                            })
+                                        }
+                                    }}>
+                                    {
+                                        _.map(this.state.notifications, function (notification) {
+                                            if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
+                                                return (
+                                                    <Link href={notification.path || '/'}>
+                                                        <a>
+                                                            <div className="flex-justify-start flex-items-align-center margin-y-sm hover-background-yellow-lighten-2 cursor-pointer grey-darken-1">
+                                                                <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
+                                                                <span className='d-inline-block' >
+                                                                    <div className=" headline text-truncate-twoline">
+                                                                        {_.get(notification, 'title') || ''}
+                                                                    </div>
+                                                                    <div className="small-text text-truncate">
+                                                                        {_.get(notification, 'body') || ''}
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                    </Link>
+                                                )
+                                            }
+                                            return null;
+                                        })
+                                    }
+                                </ScrollLoadWrapper>
+                                :
+                                <div className="flex-justify-center flex-items-align-center" style={{ height: 300 }}>
+                                    <span className="d-inline-block">
+                                        <div className="flex-justify-center flex-items-align-center">
+                                            <img src={bellInactive} style={{ height: 70, width: 70 }} />
+                                        </div>
+                                        <div className="h6 grey-darken-1 margin-top-sm">
+                                            No notification yet
+                                        </div>
+                                        <div className="caption grey-darken-1 flex-justify-center">
+                                            When you get notification,
+                                        </div>
+                                        <div className="caption grey-darken-1 flex-justify-center">
+                                            they'll show up here
+                                        </div>
+                                        <div className="flex-justify-center margin-top-sm">
+                                            <Button className=" background-ccar-button-yellow">Refresh</Button>
+                                        </div>
 
-    //                                 </span>
-    //                             </div>
-    //                     }
-    //                 </div>
-    //             }
+                                    </span>
+                                </div>
+                        }
+                    </div>
+                }
 
-    //         >
-    //             <div className="flex-justify-start flex-items-align-center" id="notification-menu-item">
-    //                 <span className='d-inline-block margin-x-sm'>
-    //                     <span className='flex-items-align-center flex-justify-center' style={{ width: '20px', height: '20px' }} >
-    //                         <Badge dot><Icon type="message" theme="filled" style={{ fontSize: '17px' }} /></Badge>
-    //                     </span>
-    //                 </span>
-    //                 <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
-    //                     Notifications
-    //         </span>
-    //             </div>
-    //         </Popover>
-    //     )
-    // }
+            >
+                <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
+                    <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 20 }} /></Badge>
+                </span>
+            </Popover>
+        )
+    }
 
     render() {
         let self = this;
@@ -732,9 +772,6 @@ class LayoutV2 extends React.Component {
                 text: 'Profile',
                 path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}`
             },
-            // {
-            //     render: () => this._renderNotificationBox()
-            // },
             {
                 icon: (<span className='d-inline-block relative-wrapper' style={{ width: '20px', height: '20px' }} >
                     <img src='/logout icon.svg' className='fill-parent absolute-center'></img>
@@ -815,7 +852,7 @@ class LayoutV2 extends React.Component {
                                                 }}>
                                                     <span className='d-inline-block margin-x-md white subtitle1  cursor-pointer relative-wrapper' >
                                                         Menu
-                                    </span>
+                                                    </span>
 
                                                 </Dropdown>
 

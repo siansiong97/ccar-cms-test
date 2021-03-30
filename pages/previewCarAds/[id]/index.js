@@ -52,17 +52,27 @@ export async function getServerSideProps({ req, res, }) {
         let carInfo = {
             condition: '', companys: {}, carspecsAll: {}, registrationUrl: {}
         };
-        console.log(id);
         if (id) {
 
-            carInfo = await client.service('product-ads-preview').find({
-                query: {
-                    _id: id,
-                    $populate: ['companyId', 'carspecsId', 'createdBy'],
-                }
-            })
-            console.log('carInfo');
-            console.log(carInfo);
+            if (id === 'record') {
+                let splitPath = _.get(Object.entries(req.query), [0]);
+                console.log(splitPath);
+
+                carInfo = await client.service('product-ads').find({
+                    query: {
+                        _id: splitPath[0],
+                        $populate: ['companyId', 'carspecsId', 'createdBy'],
+                    }
+                })
+            } else {
+                carInfo = await client.service('product-ads-preview').find({
+                    query: {
+                        _id: id,
+                        $populate: ['companyId', 'carspecsId', 'createdBy'],
+                    }
+                })
+            }
+
             carInfo = _.get(carInfo, ['data']) || [];
             carInfo = carInfo.map(function (v) {
                 v.companys = v.companyId || {}

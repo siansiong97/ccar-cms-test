@@ -183,7 +183,7 @@ const BroadcasterList = (props) => {
         <React.Fragment>
             <div id="broadcaster-list-container" className={`width-100 height-100 ${props.className ? props.className : ''}`} style={{ ...props.style }}>
 
-                {
+                {/* {
                     props.allowSearch != null || props.allowSearch == true ?
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className='width-30 round-border-big thin-border padding-x-sm padding-y-xs margin-bottom-lg'>
@@ -193,7 +193,8 @@ const BroadcasterList = (props) => {
                         :
                         null
 
-                }
+                } */}
+                
                 <Scrollbars autoHide style={{ height: showMore ? 300 : 130, width: '100%' }}>
                     <Row gutter={props.gutter ? props.gutter : [10, 20]} type="flex" align="stretch" justify="start">
                         {

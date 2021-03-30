@@ -620,7 +620,7 @@ class NewCarVersion3 extends React.Component {
                         key="bg"
                         className="bg"
                         style={{
-                            backgroundImage: 'url(/banner/ccar-cny-web-banner.png)',
+                            backgroundImage: 'url(/banner/CCAR-Website-Banner-TBH-March-2021-2.jpg)',
                             backgroundSize: 'fit',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
@@ -628,7 +628,7 @@ class NewCarVersion3 extends React.Component {
                         }}
                     />
                 </Element>
-                <Element
+                {/* <Element
                     prefixCls="banner-user-elem"
                     key="web1"
                 >
@@ -644,7 +644,7 @@ class NewCarVersion3 extends React.Component {
                             maxInlineSize: '-webkit-fill-available'
                         }}
                     />
-                </Element>
+                </Element> */}
 
                 {/* <Element
                     prefixCls="banner-user-elem"

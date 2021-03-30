@@ -12,6 +12,14 @@ const ContactList = (props) => {
 
     const [visible, setVisible] = useState(false)
 
+    let contactList = []
+    let hideContactName = 'show'
+    try { contactList = props.contactPerson.contactList } catch (err) { contactList = [] }
+    if(!contactList){contactList=[]}
+
+    try { hideContactName = props.contactPerson.hideContactName } catch (err) { hideContactName = 'show' }
+    
+
     return (
         <span className={props.className ? props.className : null} style={props.style ? props.style : null} >
             <a onClick={() => { setVisible(true) }}>
@@ -65,7 +73,8 @@ const ContactList = (props) => {
                     </Col>
                 </Row>
                 <Divider orientation="left" style={{ fontWeight: 'normal', margin: '5px 0px' }} />
-                {props.companys?props.companys.multipleContact !== 'on' ?
+                {/* {props.companys?props.companys.multipleContact !== 'on' ? */}
+                              {contactList.length===0?
                     <Row type="flex" align="middle" justify="space-between" gutter={[10, 10]}>
                         <Col xs={24} sm={24} md={16} lg={16} xl={16} >
                             <div className="flex-items-align-center flex-justify-start flex-wrap">
@@ -79,6 +88,7 @@ const ContactList = (props) => {
                                 </span>
                                 <span className="headline   text-truncate padding-xs">
                                     {
+                                        // `${_.get(props.contactPerson, ['contactNoPrimary']) || ''}`
                                         `${_.get(props.contactPerson, ['contactNoPrimary']) || ''}`
                                     }
                                 </span>
@@ -91,21 +101,33 @@ const ContactList = (props) => {
                         null
                         :
                         props.contactPerson.contactList.sort(() => 0.5 - Math.random()).map((v, id) => {
+
+                            let contactName = <></>
+                            if (hideContactName === 'show') {
+                                
+                                contactName = 
+                                
+                                <>
+                                {_.get(v, ['contactNamePrefix']) || ''}{_.get(v, ['contactFirstName']) || ''} {_.get(v, ['contactLastName']) || ''}
+                                <span className="headline   text-truncate padding-xs">{'|'}</span>
+                                </>
+                            } 
+                            
                             return (
                                 <Row key={'contact' + id} type="flex" align="middle" justify="space-between" gutter={[10, 10]}>
                                     <Col span={16}>
                                         <div className="flex-items-align-center flex-justify-start flex-wrap">
                                             <span className="headline   text-truncate padding-xs text-align-left">
                                                 {
-                                                    `${_.get(v, ['contactNamePrefix']) || ''} ${_.get(v, ['contactFirstName']) || ''} ${_.get(v, ['contactLastName']) || ''}`
+                                                    // `${_.get(v, ['contactNamePrefix']) || ''} ${_.get(v, ['contactFirstName']) || ''} ${_.get(v, ['contactLastName']) || ''}`
+                                                    contactName
                                                 }
                                             </span>
-                                            <span className="headline   text-truncate padding-xs">
-                                                {'|'}
-                                            </span>
+                                        
                                             <span className="headline   text-truncate padding-xs">
                                                 {
-                                                    `${_.get(v, ['contactNoPrefix']) || ''} ${_.get(v, ['contactNo']) || ''} ${_.get(v, ['contactLastName']) || ''}`
+                                                    // `${_.get(v, ['contactNoPrefix']) || ''} ${_.get(v, ['contactNo']) || ''} ${_.get(v, ['contactLastName']) || ''}`
+                                                    `${_.get(v, ['contactNoPrefix']) || ''} ${_.get(v, ['contactNo']) || ''}`
                                                 }
                                             </span>
                                         </div>
@@ -114,7 +136,7 @@ const ContactList = (props) => {
                                 </Row>
                             )
                         })
-                        :null
+                      
                 }
             </Modal>
         </span>

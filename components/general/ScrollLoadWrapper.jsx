@@ -14,6 +14,13 @@ containerRef[uid] = React.createRef();
 
 const ScrollLoadWrapper = (props) => {
 
+    useEffect(() => { 
+
+        if(props.getRef){
+            props.getRef(containerRef[uid]);
+        }
+    
+    } , [containerRef[uid].current])
 
     function checkScrolledToBottom(ref) {
         try {
