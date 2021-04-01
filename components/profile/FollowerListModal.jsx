@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import client from '../../feathers';
 import { isDealer } from './config';
-import { arrayLengthCount, isValidNumber } from '../../common-function';
+import { arrayLengthCount, getUserName, isValidNumber } from '../../common-function';
 import UserAvatar from '../general/UserAvatar';
 import FollowButton from './FollowButton';
 import ScrollLoadWrapper from '../general/ScrollLoadWrapper';
@@ -134,7 +134,7 @@ const FollowerListModal = (props) => {
             footer={null}
             centered
             maskClosable={false}
-            width={400}
+            width={500}
             onCancel={() => { closeModal() }}
         >
             <Row className="padding-top-lg margin-top-md" gutter={[10, 10]}>
@@ -158,50 +158,42 @@ const FollowerListModal = (props) => {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className="width-100 padding-top-sm">
-                        <ScrollLoadWrapper style={{ height: '50vh' }} onScrolledBottom={() => {
+                        <ScrollLoadWrapper style={{ height: '50vh' }} autoHide onScrolledBottom={() => {
                             if (arrayLengthCount(followers) < followerTotal) {
                                 setFollowerPage(followerPage + 1);
                             }
                         }}>
-                            {
-                                _.isArray(followers) && !_.isEmpty(followers) ?
-                                    <Row gutter={[10, 15]} >
-                                        {
-                                            _.map(followers, function (following, i) {
-                                                return (
-                                                    <Col key={'following' + i} xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="flex-justify-space-between flex-items-align-center">
-                                                            <span className='d-inline-block' >
+                            <div className="width-100">
+                                {
+                                    _.isArray(followers) && !_.isEmpty(followers) ?
+                                        <div className="width-100">
+                                            {
+                                                _.map(followers, function (follower) {
+                                                    let user = _.get(follower, 'followerId');
+                                                    return (
+                                                        <div className="flex-justify-space-between flex-items-align-center margin-bottom-sm width-100" >
+                                                            <span className="flex-items-align-center width-80"  >
                                                                 <UserAvatar
-                                                                    data={_.get(following, [`followerId`])}
+                                                                    data={user}
                                                                     size={50}
-                                                                    className="margin-right-md"
-                                                                    showNameRight
                                                                     redirectProfile
                                                                     onRedirect={() => { closeModal() }}
                                                                     avatarClassName='flex-items-no-shrink'
-                                                                    renderName={(data) => {
-                                                                        return (
-                                                                            <React.Fragment>
-                                                                                <Row>
-                                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                                        <div className="width-100 flex-justify-start flex-items-align-center text-truncate">
-                                                                                            {_.get(data, ['freakId']) || ''}
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                                        <div className="width-100 flex-justify-start flex-items-align-center text-truncate">
-                                                                                            {`${_.get(data, ['firstName']) || ''} ${_.get(data, ['lastName'])} ${isDealer(data) && _.get(data, ['companys', 'name']) ? '|' : ''} ${isDealer(data) && _.get(data, ['companys', 'name']) ? _.get(data, ['companys', 'name']) : ''}`}
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                </Row>
-                                                                            </React.Fragment>
-                                                                        )
-                                                                    }} />
+                                                                    className="margin-right-md"
+                                                                />
+
+                                                                <span className='d-inline-block text-truncate' >
+                                                                    <div>
+                                                                        {getUserName(user, 'freakId')}
+                                                                    </div>
+                                                                    <div>
+                                                                        {`${getUserName(user, 'fullName')} ${isDealer(user) && _.get(user, ['companys', 'name']) ? '|' : ''} ${isDealer(user) && _.get(user, ['companys', 'name']) ? _.get(user, ['companys', 'name']) : ''}`}
+                                                                    </div>
+                                                                </span>
                                                             </span>
                                                             <span className='d-inline-block' >
                                                                 <div className="flex-justify-end flex-items-align-center">
-                                                                    <FollowButton userId={_.get(following, [`followerId`, '_id'])} type="user" followerId={_.get(props.user, ['info', 'user', '_id'])}
+                                                                    <FollowButton userId={_.get(user, ['_id'])} type="user" followerId={_.get(props.user, ['info', 'user', '_id'])}
                                                                         notify
                                                                         followingButton={() => {
                                                                             return (
@@ -211,20 +203,19 @@ const FollowerListModal = (props) => {
                                                                         followButton={() => {
                                                                             return <Button className="background-ccar-yellow border-ccar-yellow black">+ Follow</Button>
                                                                         }}
-                                                                    />
-                                                                </div>
+                                                                    />                                                                            </div>
                                                             </span>
                                                         </div>
-                                                    </Col>
-                                                )
-                                            })
-                                        }
-                                    </Row>
-                                    :
-                                    <div className="flex-justify-center flex-align-center padding-md">
-                                        <Empty></Empty>
-                                    </div>
-                            }
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                        :
+                                        <div className="flex-justify-center flex-align-center padding-md">
+                                            <Empty></Empty>
+                                        </div>
+                                }
+                            </div>
                         </ScrollLoadWrapper>
                     </div>
                 </Col>

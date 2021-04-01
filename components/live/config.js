@@ -10,15 +10,16 @@ export const liveStreamUrl = 'https://stream.ccar.my';
 export function getStreamUrl(url){
 
     let stream = testStreamUrl;
-    if (url==='http://localhost:3030/'){stream = 'http://localhost:3041'}
+    if (url==='http://localhost:3030/'){stream = 'http://localhost:3030'}
     else if (url==='https://uat2-api.ccar.my/'){stream = testStreamUrl}
     else if (url==='https://api.ccar.my/'){stream = liveStreamUrl}
-    else  {stream = 'http://localhost:3041'} //default testing
+    else  {stream = 'http://localhost:3030'} //default testing
     
     // return 'http://192.168.0.191:7070/';
     // return "https://stream-uat2.ccar.my";
     // return 'http://localhost:7070/';
-    return  stream
+    // return 'http://192.168.1.164:3041/'
+    return stream;
 }
 
 

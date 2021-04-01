@@ -104,7 +104,7 @@ const AuthorList = (props) => {
                     return regex.test(item.name);
                 })
                 return newData;
-            } catch{
+            } catch {
                 return [];
             }
         } else {
@@ -163,33 +163,35 @@ const AuthorList = (props) => {
                         null
 
                 }
-                <Scrollbars style={{ height: showMore ? 120 : 'auto', width: '100%' }} autoHeight={!showMore}>
-                    <Row gutter={props.gutter ? props.gutter : [10, 20]} type="flex" align="middle" justify="start">
-                        {
-                            _.isArray(authors) && notEmptyLength(authors) ?
-                                _.map(authors, function (author) {
-                                    return (
-                                        <Col xs={props.xs ? props.xs : itemCol.xs} sm={props.sm ? props.sm : itemCol.sm} md={props.md ? props.md : itemCol.md} lg={props.lg ? props.lg : itemCol.lg} xl={props.xl ? props.xl : itemCol.xl} xxl={props.xxl ? props.xxl : itemCol.xxl}>
-                                            <span style={{ textAlign: 'center' }} className={`relative-wrapper d-inline-block cursor-pointer width-100`} onClick={(e) => {
-                                                handleOnClick(author)
-                                            }}>
-                                                <UserAvatar
-                                                    showTooltip
-                                                    size={isValidNumber(props.size) ? props.size : 80}
-                                                    showName={!props.showName || props.showName == false ? false : true}
-                                                    textClassName={`text-truncate margin-top-md ${props.textClassName ? props.textClassName : ''} ${!props.selectedAuthor || props.selectedAuthor._id != author._id ? '' : 'ccar-yellow underline'}`}
-                                                    avatarClassName={`${props.avatarClassName ? props.avatarClassName : ''} `}
-                                                    data={{ avatar: author.avatar || author.thumbnailUrl, name: author.name }} />
-                                            </span>
-                                        </Col>
-                                    )
-                                })
-                                :
-                                <div className="width-100">
-                                    <Empty></Empty>
-                                </div>
-                        }
-                    </Row>
+                <Scrollbars style={{ height: showMore ? 120 : 'auto', }} autoHide autoHeight={!showMore}>
+                    <div className="width-100 padding-x-xs">
+                        <Row gutter={props.gutter ? props.gutter : [10, 20]} type="flex" align="middle" justify="start">
+                            {
+                                _.isArray(authors) && notEmptyLength(authors) ?
+                                    _.map(authors, function (author) {
+                                        return (
+                                            <Col xs={props.xs ? props.xs : itemCol.xs} sm={props.sm ? props.sm : itemCol.sm} md={props.md ? props.md : itemCol.md} lg={props.lg ? props.lg : itemCol.lg} xl={props.xl ? props.xl : itemCol.xl} xxl={props.xxl ? props.xxl : itemCol.xxl}>
+                                                <span style={{ textAlign: 'center' }} className={`relative-wrapper d-inline-block cursor-pointer`} onClick={(e) => {
+                                                    handleOnClick(author)
+                                                }}>
+                                                    <UserAvatar
+                                                        showTooltip
+                                                        size={isValidNumber(props.size) ? props.size : 80}
+                                                        showName={!props.showName || props.showName == false ? false : true}
+                                                        textClassName={`text-truncate margin-top-md ${props.textClassName ? props.textClassName : ''} ${!props.selectedAuthor || props.selectedAuthor._id != author._id ? '' : 'ccar-yellow underline'}`}
+                                                        avatarClassName={`${props.avatarClassName ? props.avatarClassName : ''} `}
+                                                        data={{ avatar: author.avatar || author.thumbnailUrl, name: author.name }} />
+                                                </span>
+                                            </Col>
+                                        )
+                                    })
+                                    :
+                                    <div>
+                                        <Empty></Empty>
+                                    </div>
+                            }
+                        </Row>
+                    </div>
                 </Scrollbars>
                 {
                     !notEmptyLength(authors) || !overSize ?

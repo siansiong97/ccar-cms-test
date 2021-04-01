@@ -98,39 +98,39 @@ class ViewCarDetailsPage extends React.Component {
 
   UNSAFE_componentWillMount() {
 
-  this.setState({
+    this.setState({
 
-    typingTimeout: setTimeout(() => {
+      typingTimeout: setTimeout(() => {
 
-      axios.post(`${client.io.io.uri}processCTR`,
-        {
-          params: {
-            adsId: this.state.productDetails._id,
-            source: 'web',
-          }
-        })
+        axios.post(`${client.io.io.uri}processCTR`,
+          {
+            params: {
+              adsId: this.state.productDetails._id,
+              source: 'web',
+            }
+          })
 
-      let inputProductList = [{ productAdsId: this.state.productDetails._id }]
-      axios.post(`${client.io.io.uri}processImpression`,
-        {
-          params: {
-            productList: inputProductList,
-            source: 'web',
-          }
-        }).then((res) => { })
+        let inputProductList = [{ productAdsId: this.state.productDetails._id }]
+        axios.post(`${client.io.io.uri}processImpression`,
+          {
+            params: {
+              productList: inputProductList,
+              source: 'web',
+            }
+          }).then((res) => { })
 
 
-    }, 3000)
+      }, 3000)
 
-  })
-}
+    })
+  }
   componentDidUpdate() {
 
-    if(typeof(window) != undefined){
+    if (typeof (window) != undefined) {
       window.addEventListener('scroll', this.handleScroll, { passive: true });
 
       return () => {
-  
+
         window.removeEventListener('scroll', this.handleScroll);
       };
     }
@@ -384,9 +384,7 @@ class ViewCarDetailsPage extends React.Component {
       if (v.addonSpicydeal.showPrice === 'show') { return renderShowPrice(v.price, v.addonSpicydeal.discountedPrice) }
       if (v.addonSpicydeal.showPrice === 'hide') { return renderCountdown(v.addonSpicydeal.endDate) }
     }
-
     else { return (normalPrice) }
-
   }
 
   _renderPriceAffix = () => {
@@ -736,7 +734,7 @@ class ViewCarDetailsPage extends React.Component {
           <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <Breadcrumb>
               <Breadcrumb.Item>
-                <Link shallow={false}  href="/">
+                <Link shallow={false} href="/">
                   <a>
                     Home
                   </a>
@@ -827,7 +825,7 @@ class ViewCarDetailsPage extends React.Component {
                           </LightBoxGallery>
                           <img 
                           src={stateName} 
-                          style={{ width: 100, height: '30px', position: 'absolute', top: 0, right: 0 }} 
+                          style={{ width: 70, height: '30px', position: 'absolute', top: 0, right: 0 }} 
                           alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
                           <span className="d-inline-block width-20" style={{ position: 'absolute', top: 0, left: 0 }} >
                             {this._renderCondition(this.state.productDetails)}

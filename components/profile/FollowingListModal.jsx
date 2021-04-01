@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import client from '../../feathers';
 import { isDealer } from './config';
-import { arrayLengthCount, isValidNumber } from '../../common-function';
+import { arrayLengthCount, getUserName, isValidNumber } from '../../common-function';
 import UserAvatar from '../general/UserAvatar';
 import FollowButton from './FollowButton';
 import ScrollLoadWrapper from '../general/ScrollLoadWrapper';
@@ -161,68 +161,60 @@ const FollowingListModal = (props) => {
                                 setFollowingPage(followingPage + 1);
                             }
                         }}>
+                        <div className="width-100">
                             {
                                 _.isArray(followings) && !_.isEmpty(followings) ?
-                                    <Row gutter={[10, 15]} >
+                                    <div className="width-100">
                                         {
                                             _.map(followings, function (following) {
+                                                let user = _.get(following, 'userId');
                                                 return (
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="flex-justify-space-between flex-items-align-center">
-                                                            <span className='d-inline-block' >
-                                                                <UserAvatar
-                                                                    data={_.get(following, [`userId`])}
-                                                                    size={50}
-                                                                    className="margin-right-md"
-                                                                    showNameRight
-                                                                    redirectProfile
-                                                                    onRedirect={() => { closeModal() }}
-                                                                    avatarClassName='flex-items-no-shrink'
-                                                                    renderName={(data) => {
-                                                                        return (
-                                                                            <React.Fragment>
-                                                                                <Row>
-                                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                                        <div className="width-100 flex-justify-start flex-items-align-center text-truncate">
-                                                                                            {_.get(data, ['freakId']) || ''}
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                                                        <div className="width-100 flex-justify-start flex-items-align-center text-truncate">
-                                                                                            {`${_.get(data, ['firstName']) || ''} ${_.get(data, ['lastName'])} ${isDealer(data) && _.get(data, ['companys', 'name']) ? '|' : ''} ${isDealer(data) && _.get(data, ['companys', 'name']) ? _.get(data, ['companys', 'name']) : ''}`}
-                                                                                        </div>
-                                                                                    </Col>
-                                                                                </Row>
-                                                                            </React.Fragment>
-                                                                        )
-                                                                    }} />
-                                                            </span>
-                                                            <span className='d-inline-block' >
-                                                                <div className="flex-justify-end flex-items-align-center">
-                                                                    <FollowButton userId={following.userId} type="user" followerId={_.get(props.user, ['info', 'user', '_id'])}
-                                                                        notify
-                                                                        followingButton={() => {
-                                                                            return (
-                                                                                <Button>Following</Button>
-                                                                            )
-                                                                        }}
-                                                                        followButton={() => {
-                                                                            return <Button className="background-ccar-yellow border-ccar-yellow black">+ Follow</Button>
-                                                                        }}
-                                                                    />
+                                                    <div className="flex-justify-space-between flex-items-align-center margin-bottom-sm width-100" >
+                                                        <span className="flex-items-align-center width-80"  >
+                                                            <UserAvatar
+                                                                data={user}
+                                                                size={50}
+                                                                redirectProfile
+                                                                onRedirect={() => { closeModal() }}
+                                                                avatarClassName='flex-items-no-shrink'
+                                                                className="margin-right-md"
+                                                            />
+
+                                                            <span className='d-inline-block text-truncate' >
+                                                                <div>
+                                                                    {getUserName(user, 'freakId')}
+                                                                </div>
+                                                                <div>
+                                                                    {`${getUserName(user, 'fullName')} ${isDealer(user) && _.get(user, ['companys', 'name']) ? '|' : ''} ${isDealer(user) && _.get(user, ['companys', 'name']) ? _.get(user, ['companys', 'name']) : ''}`}
                                                                 </div>
                                                             </span>
-                                                        </div>
-                                                    </Col>
+                                                        </span>
+                                                        <span className='d-inline-block' >
+                                                            <div className="flex-justify-end flex-items-align-center">
+                                                                <FollowButton userId={_.get(user, ['_id'])} type="user" followerId={_.get(props.user, ['info', 'user', '_id'])}
+                                                                    notify
+                                                                    followingButton={() => {
+                                                                        return (
+                                                                            <Button>Following</Button>
+                                                                        )
+                                                                    }}
+                                                                    followButton={() => {
+                                                                        return <Button className="background-ccar-yellow border-ccar-yellow black">+ Follow</Button>
+                                                                    }}
+                                                                />                                                                            </div>
+                                                        </span>
+                                                    </div>
                                                 )
                                             })
                                         }
-                                    </Row>
+                                    </div>
                                     :
                                     <div className="flex-justify-center flex-align-center padding-md">
                                         <Empty></Empty>
                                     </div>
                             }
+                        </div>
+                    
                         </ScrollLoadWrapper>
                     </div>
                 </Col>

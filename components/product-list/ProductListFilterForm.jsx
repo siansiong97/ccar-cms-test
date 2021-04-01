@@ -1,5 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, Icon, Input, Radio, Row, Select, Tooltip } from 'antd';
+import { AutoComplete, Button, Card, Col, Form, Icon, Input, Radio, Row, Select, Tooltip } from 'antd';
 import axios from 'axios';
 import _, { isObject } from 'lodash';
 import queryString from 'query-string';
@@ -24,6 +24,7 @@ import BodyTypeModal from './filter-modal/BodyTypeModal';
 import FuelTypeModal from './filter-modal/FuelTypeModal';
 import DrivenWheelModal from './filter-modal/DrivenWheelModal';
 import ColorModal from './filter-modal/ColorModal';
+import moment from 'moment';
 
 
 
@@ -52,13 +53,19 @@ const drivenwheelCloseInputRef = React.createRef();
 const colorCloseInputRef = React.createRef();
 const fuelTypeCloseInputRef = React.createRef();
 
-const years = [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999, 1998, 1997, 1996, 1995, 1994, 1993, 1992, 1991, 1990]
+let latestYear = moment().year();
+let yearRange = latestYear - 1990 + 1;
+let years = [];
+_.forEach(_.range(0, yearRange), function (index) {
+    years.push(`${latestYear - index}`);
+})
+// const years = [2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999, 1998, 1997, 1996, 1995, 1994, 1993, 1992, 1991, 1990]
 
-const prices = [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 125000, 150000, 175000, 200000, 225000, 250000, 275000, 300000, 350000, 400000, 450000, 500000, 550000, 600000, 650000, 700000, 750000, 800000, 850000, 900000, 950000, 1000000, 2000000, 3000000, 4000000, 5000000]
+const prices = ['5000000', '4000000', '3000000', '2000000', '1000000', '950000', '900000', '850000', '800000', '750000', '700000', '650000', '600000', '550000', '500000', '450000', '400000', '350000', '300000', '275000', '250000', '225000', '200000', '175000', '150000', '125000', '100000', '90000', '80000', '70000', '60000', '50000', '40000', '30000', '20000', '10000']
 
-const mileages = [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 125000, 150000, 175000, 200000, 225000, 250000, 275000, 300000, 350000, 400000, 450000, 500000]
+const mileages = ['500000', '450000', '400000', '350000', '300000', '275000', '250000', '225000', '200000', '175000', '150000', '125000', '100000', '90000', '80000', '70000', '60000', '50000', '40000', '30000', '20000', '10000']
 
-const engineCapacities = [0.1, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]
+const engineCapacities = ['4', '3.5', '3', '2.5', '2', '1.5', '1', '0.1']
 
 const modals = ['make', 'model', 'state', 'area', 'bodyType', 'color', 'fuelType'];
 const optionsFields = ['title', 'transmission', 'make', 'model', 'state', 'area', 'year', 'price', 'mileage', 'engineCapacity', 'bodyType', 'color', 'fuelType'];
@@ -86,6 +93,18 @@ const ProductsListFilterForm = (props) => {
     const [containerHeight, setContainerHeight] = useState(400)
     const [formActualHeight, setFormActualHeight] = useState();
     const [filterGroup, setFilterGroup] = useState({})
+    const [dropDownSearchValue, setDropDownSearchValue] = useState({});
+    const [dropDownOptions, setDropDownOptions] = useState({
+        minYears: _.reverse(_.cloneDeep(years)),
+        maxYears: years,
+        minPrices: _.reverse(prices),
+        maxPrices: prices,
+        minMileages: _.reverse(mileages),
+        maxMileages: mileages,
+        minEngineCapacities: _.reverse(engineCapacities),
+        maxEngineCapacities: engineCapacities,
+
+    });
     const [origOptions, setOrigOptions] = useState({
         makeList: [],
         modelList: [],
@@ -129,6 +148,49 @@ const ProductsListFilterForm = (props) => {
         } else {
             setTitle('');
         }
+
+        let dropdownsearch = {};
+
+        if (_.get(filterGroup, 'yearRange[0]')) {
+            dropdownsearch.minYear = _.get(filterGroup, 'yearRange[0]');
+        }
+        if (_.get(filterGroup, 'yearRange[1]')) {
+            dropdownsearch.maxYear = _.get(filterGroup, 'yearRange[1]');
+        }
+
+        if (_.get(filterGroup, 'priceRange[0]')) {
+            dropdownsearch.minPrice = _.get(filterGroup, 'priceRange[0]');
+        }
+        if (_.get(filterGroup, 'priceRange[1]')) {
+            dropdownsearch.maxPrice = _.get(filterGroup, 'priceRange[1]');
+        }
+
+        if (_.get(filterGroup, 'mileageRange[0]')) {
+            dropdownsearch.minMileage = _.get(filterGroup, 'mileageRange[0]');
+        }
+        if (_.get(filterGroup, 'mileageRange[1]')) {
+            dropdownsearch.maxMileage = _.get(filterGroup, 'mileageRange[1]');
+        }
+
+        if (_.get(filterGroup, 'engineCapacityRange[0]')) {
+            dropdownsearch.minEngineCapacity = _.get(filterGroup, 'engineCapacityRange[0]');
+        }
+        if (_.get(filterGroup, 'engineCapacityRange[1]')) {
+            dropdownsearch.maxEngineCapacity = _.get(filterGroup, 'engineCapacityRange[1]');
+        }
+        setDropDownSearchValue(dropdownsearch);
+        setDropDownOptions(getFilteredDropDownOptions() || []);
+
+
+
+        if (props.onChange && startWatching) {
+            controlModalOpen();
+            let data = _.cloneDeep(filterGroup);
+            data = objectRemoveEmptyValue(data)
+            props.onChange(data);
+        }
+
+
     }, [filterGroup])
 
     useEffect(() => {
@@ -157,17 +219,6 @@ const ProductsListFilterForm = (props) => {
         }
     }, [props.availableFilterOption, filterGroup])
 
-    useEffect(() => {
-
-        if (props.onChange && startWatching) {
-            controlModalOpen();
-            let data = _.cloneDeep(filterGroup);
-            data = objectRemoveEmptyValue(data)
-            props.onChange(data);
-        }
-
-
-    }, [filterGroup])
 
 
     useEffect(() => {
@@ -181,6 +232,73 @@ const ProductsListFilterForm = (props) => {
         }
     }
 
+    function getFilteredDropDownOptions() {
+        let newDropDownOptions = {
+            minYears: _.reverse(_.cloneDeep(years)),
+            maxYears: years,
+            minPrices: _.reverse(prices),
+            maxPrices: prices,
+            minMileages: _.reverse(mileages),
+            maxMileages: mileages,
+            minEngineCapacities: _.reverse(engineCapacities),
+            maxEngineCapacities: engineCapacities,
+        };
+        if (_.get(filterGroup, 'yearRange[0]')) {
+            newDropDownOptions.maxYears = _.filter(_.cloneDeep(years) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'yearRange[0]'));
+                return parseFloat(item) > value;
+            })
+
+        }
+        if (_.get(filterGroup, 'yearRange[1]')) {
+            newDropDownOptions.minYears = _.filter(_.reverse(_.cloneDeep(years)) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'yearRange[1]'));
+                return parseFloat(item) < value;
+            })
+        }
+
+        if (_.get(filterGroup, 'priceRange[0]')) {
+            newDropDownOptions.maxPrices = _.filter(_.cloneDeep(prices) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'priceRange[0]'));
+                return parseFloat(item) > value;
+            })
+        }
+        if (_.get(filterGroup, 'priceRange[1]')) {
+            newDropDownOptions.minPrices = _.filter(_.reverse(_.cloneDeep(prices)) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'priceRange[1]'));
+                return parseFloat(item) < value;
+            })
+        }
+
+        if (_.get(filterGroup, 'mileageRange[0]')) {
+            newDropDownOptions.maxMileages = _.filter(_.cloneDeep(mileages) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'mileageRange[0]'));
+                return parseFloat(item) > value;
+            })
+        }
+        if (_.get(filterGroup, 'mileageRange[1]')) {
+            newDropDownOptions.minMileages = _.filter(_.reverse(_.cloneDeep(mileages)) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'mileageRange[1]'));
+                return parseFloat(item) < value;
+            })
+        }
+
+        if (_.get(filterGroup, 'engineCapacityRange[0]')) {
+            newDropDownOptions.maxEngineCapacities = _.filter(_.cloneDeep(engineCapacities) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'engineCapacityRange[0]'));
+                return parseFloat(item) > value;
+            })
+        }
+        if (_.get(filterGroup, 'engineCapacityRange[1]')) {
+            newDropDownOptions.minEngineCapacities = _.filter(_.reverse(_.cloneDeep(engineCapacities)) || [], function (item) {
+                let value = parseFloat(_.get(filterGroup, 'engineCapacityRange[1]'));
+                return parseFloat(item) < value;
+            })
+        }
+
+        return newDropDownOptions
+
+    }
 
     function getOrigOptions() {
 
@@ -773,58 +891,132 @@ const ProductsListFilterForm = (props) => {
                         <Row style={{ width: '100%', padding: '2px 0px' }}>
                             <Col span={11}>
                                 <div id="yearPopUpContainer-1">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Year"
                                         dropdownMatchSelectWidth={false}
                                         dropdownMenuStyle={{ height: "130px" }}
-                                        value={!_.isArray(filterGroup.yearRange) || !isValidNumber(filterGroup.yearRange[0]) ? undefined : parseInt(filterGroup.yearRange[0])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, yearRange: [e, !_.isArray(filterGroup.yearRange) || !isValidNumber(filterGroup.yearRange[1]) ? undefined : parseInt(filterGroup.yearRange[1])] }) }}
+                                        value={_.get(dropDownSearchValue, 'minYear') || undefined}
+                                        onSelect={(e) => { setFilterGroup({ ...filterGroup, yearRange: [e, _.get(filterGroup, 'yearRange[1]')] }) }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
+                                        }}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                minYear: _.get(filterGroup, 'yearRange[0]'),
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if(!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'minYears') || [], dropDownSearchValue.minYear) != -1 && _.get(filterGroup, 'yearRange[0]') ==  dropDownSearchValue.minYear){
+                                                setFilterGroup({ ...filterGroup, yearRange: [v, !_.isArray(filterGroup.yearRange) || !isValidNumber(filterGroup.yearRange[1]) ? undefined : parseInt(filterGroup.yearRange[1])] })
+                                            }else{
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    minYear: v
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'yearRange[0]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minYears: _.get(getFilteredDropDownOptions(), 'minYears'),
+                                                })
+                                            } else {
+                                                let newData = _.filter(_.get(getFilteredDropDownOptions(), 'minYears') || [], function (item) {
+                                                    let regex = new RegExp(`^${v}`, 'i')
+                                                    return regex.test(`${item}`);
+                                                })
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minYears: newData,
+                                                })
+                                            }
+
                                         }}
                                         getPopupContainer={() => document.getElementById('yearPopUpContainer-1')}
                                     >
                                         {
-                                            _.compact(_.map(_.cloneDeep(years), function (year, index) {
-                                                if (!_.isArray(filterGroup.yearRange) || !filterGroup.yearRange[1] || !isValidNumber(filterGroup.yearRange[1]) || year < filterGroup.yearRange[1]) {
-                                                    return <Select.Option key={`min-year-${index}`} value={parseInt(year)}>
-                                                        {year}
-                                                    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
+                                            _.isArray(_.get(dropDownOptions, 'minYears')) && !_.isEmpty(_.get(dropDownOptions, 'minYears')) ?
+                                                _.map(dropDownOptions.minYears, function (item, index) {
+                                                    return (
+                                                        <AutoComplete.Option key={`minYear-${index}`} value={`${item}`}>
+                                                            {item}
+                                                        </AutoComplete.Option>
+                                                    )
+                                                })
+                                                :
+                                                null
                                         }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                             <Col span={11} offset={2}>
                                 <div id="yearPopUpContainer-2">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Year"
                                         dropdownMatchSelectWidth={false}
                                         dropdownMenuStyle={{ height: "130px" }}
-                                        value={!_.isArray(filterGroup.yearRange) || !isValidNumber(filterGroup.yearRange[1]) ? undefined : parseInt(filterGroup.yearRange[1])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, yearRange: [!_.isArray(filterGroup.yearRange) || !isValidNumber(filterGroup.yearRange[0]) ? undefined : parseInt(filterGroup.yearRange[0]), e] }) }}
+                                        value={_.get(dropDownSearchValue, 'maxYear') || undefined}
+                                        onSelect={(v) => { setFilterGroup({ ...filterGroup, yearRange: [_.get(filterGroup, 'yearRange[0]'), v] }) }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                maxYear: _.get(filterGroup, 'yearRange[1]'),
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if(!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'maxYears') || [], dropDownSearchValue.maxYear) != -1 && _.get(filterGroup, 'yearRange[1]') ==  dropDownSearchValue.maxYear){
+                                                setFilterGroup({ ...filterGroup, yearRange: [_.get(filterGroup, 'yearRange[0]'), v] }) 
+                                            }else{
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    maxYear: v
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'yearRange[1]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxYears: _.get(getFilteredDropDownOptions(), 'maxYears'),
+                                                })
+                                            } else {
+                                                let newData = _.filter(_.get(getFilteredDropDownOptions(), 'maxYears') || [], function (item) {
+                                                    let regex = new RegExp(`^${v}`, 'i')
+                                                    return regex.test(`${item}`);
+                                                })
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxYears: newData,
+                                                })
+                                            }
+
+                                        }}
                                         getPopupContainer={() => document.getElementById('yearPopUpContainer-2')}
                                     >
-                                        {
-                                            _.compact(_.map(_.cloneDeep(years), function (year, index) {
-                                                if (!_.isArray(filterGroup.yearRange) || !filterGroup.yearRange[0] || !isValidNumber(filterGroup.yearRange[0]) || year > filterGroup.yearRange[0]) {
-                                                    return <Select.Option key={`max-year-${index}`} value={parseInt(year)}>
-                                                        {year}
-                                                    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    {
+                                        _.isArray(_.get(dropDownOptions, 'maxYears')) && !_.isEmpty(_.get(dropDownOptions, 'maxYears')) ?
+                                            _.map(dropDownOptions.maxYears, function (item, index) {
+                                                return (
+                                                    <AutoComplete.Option key={`maxYear-${index}`} value={`${item}`}>
+                                                        {item}
+                                                    </AutoComplete.Option>
+                                                )
+                                            })
+                                            :
+                                            null
+                                    }
+                                    </AutoComplete>
                                 </div>
                             </Col>
                         </Row>
@@ -869,7 +1061,7 @@ const ProductsListFilterForm = (props) => {
                                         getPopupContainer={() => document.getElementById('pricePopUpContainer-1')}
                                     >
                                         {
-                                            _.compact(_.map(_.cloneDeep(prices), function (price, index) {
+                                            _.compact(_.map(_.reverse(_.cloneDeep(prices)), function (price, index) {
                                                 if (!_.isArray(filterGroup.priceRange) || !filterGroup.priceRange[1] || !isValidNumber(filterGroup.priceRange[1]) || price < filterGroup.priceRange[1]) {
                                                     return <Select.Option key={`min-price-${index}`} value={parseInt(price)}>
                                                         {_.upperCase(formatNumber(price, 'auto', true, 0))}
@@ -952,7 +1144,7 @@ const ProductsListFilterForm = (props) => {
                                         getPopupContainer={() => document.getElementById('engineCapacityPopUpContainer-1')}
                                     >
                                         {
-                                            _.compact(_.map(_.cloneDeep(engineCapacities), function (engine, index) {
+                                            _.compact(_.map(_.reverse(_.cloneDeep(engineCapacities)), function (engine, index) {
                                                 if (!_.isArray(filterGroup.engineCapacityRange) || !filterGroup.engineCapacityRange[1] || !isValidNumber(filterGroup.engineCapacityRange[1]) || engine < filterGroup.engineCapacityRange[1]) {
                                                     return <Select.Option key={`min-engine-${index}`} value={parseFloat(engine)}>
                                                         {_.toUpper(formatNumber(engine, 'auto', true, 1))} cc
@@ -1035,7 +1227,7 @@ const ProductsListFilterForm = (props) => {
                                         getPopupContainer={() => document.getElementById('mileagePopUpContainer-1')}
                                     >
                                         {
-                                            _.compact(_.map(_.cloneDeep(mileages), function (mileage, index) {
+                                            _.compact(_.map(_.reverse(_.cloneDeep(mileages)), function (mileage, index) {
                                                 if (!_.isArray(filterGroup.mileageRange) || !filterGroup.mileageRange[1] || !isValidNumber(filterGroup.mileageRange[1]) || mileage < filterGroup.mileageRange[1]) {
                                                     return <Select.Option key={`min-mileage-${index}`} value={parseInt(mileage)}>
                                                         {formatNumber(mileage, null, true, 0)} KM

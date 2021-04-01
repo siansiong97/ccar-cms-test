@@ -42,6 +42,7 @@ const CommentBox1 = (props) => {
     const [canSendMessage, setCanSendMessage] = useState(true);
     const [messageTotal, setMessageTotal] = useState(0);
     const [loading, setIsLoading] = useState(false);
+    const [focusIndicator, setFocusIndicator] = useState(null);
 
 
 
@@ -226,7 +227,8 @@ const CommentBox1 = (props) => {
             setTimeout(() => {
                 setTextEditMode(false);
                 setText('');
-            }, 200);
+                setFocusIndicator(v4());
+            }, 500);
 
         }
     }
@@ -262,7 +264,7 @@ const CommentBox1 = (props) => {
                         }
                         <div className="width-100 flex-justify-start flex-items-align-center" style={{ padding: 0 }}>
                             <span className="small-text margin-right-md grey font-weight-light" >{getPlural('Like', 'Likes', totalLike, true)}</span>
-                            <span className="small-text margin-right-md grey font-weight-light  cursor-pointer" onClick={() => { setExpandReplyKey(expandReplyKey ? null : '1') }} >{getPlural('Reply', 'Replies', messageTotal, true)}</span>
+                            <span className="small-text margin-right-md grey font-weight-light  cursor-pointer" onClick={() => { setExpandReplyKey(expandReplyKey ? null : '1'); setFocusIndicator(v4()) }} >{getPlural('Reply', 'Replies', messageTotal, true)}</span>
                         </div>
 
                         <div className="width-100" style={{ padding: 0 }}>
@@ -294,7 +296,7 @@ const CommentBox1 = (props) => {
                                                     return (
                                                         <div>
                                                             <ReplyBox1 data={v}
-                                                            clubId={props.clubId}
+                                                                clubId={props.clubId}
                                                                 onChange={(data) => {
                                                                     handleReplyChange(data);
                                                                 }}
@@ -329,6 +331,7 @@ const CommentBox1 = (props) => {
                                                     setText('');
                                                 }
                                             }}
+                                            focusIndicator={focusIndicator}
                                             onSubmit={(text) => {
                                                 handleReplySubmit(text);
                                             }}
