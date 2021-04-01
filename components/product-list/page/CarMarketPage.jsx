@@ -241,8 +241,8 @@ const CarMarketPage = (props) => {
                 )
             } else {
                 return (
-                    <ProductList data={data} loading={_.get(props.productsList, ['productListLoading'])} />
-                )
+                    <ProductList data={data} loading={_.get(props.productsList, ['productListLoading'])} /> 
+                ) 
             }
         } else {
             return (
@@ -352,20 +352,20 @@ const CarMarketPage = (props) => {
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 Reg Card:
-                              </span>
+                                                    </span>
                                                             <Switch checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
 
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 Ready Stock:
-                              </span>
+                                                        </span>
                                                             <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 360&deg; View:
-                              </span>
+                                                        </span>
                                                             <Switch checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                     </span>
@@ -396,7 +396,7 @@ const CarMarketPage = (props) => {
                                                         <span className='flex-justify-center flex-items-align-center margin-x-sm' >
                                                             <span className='d-inline-block '>
                                                                 Year
-                              </span>
+                                                            </span>
                                                             <span className='flex-justify-center flex-items-align-center'>
                                                                 {
                                                                     _.get(mainConfig, ['sorting', 'carspec.year']) == 1 ?
@@ -418,7 +418,7 @@ const CarMarketPage = (props) => {
                                                         <span className='flex-justify-center flex-items-align-center margin-x-sm' >
                                                             <span className='d-inline-block ' >
                                                                 Price
-                              </span>
+                                                        </span>
                                                             <span className='flex-justify-center flex-items-align-center'>
                                                                 {
                                                                     _.get(mainConfig, ['sorting', 'searchPrice']) == 1 ?
@@ -440,7 +440,7 @@ const CarMarketPage = (props) => {
                                                         <span className='flex-justify-center flex-items-align-center margin-x-sm' >
                                                             <span className='d-inline-block ' >
                                                                 Mileage
-                              </span>
+                                                        </span>
                                                             <span className='flex-justify-center flex-items-align-center'>
                                                                 {
                                                                     _.get(mainConfig, ['sorting', 'mileageFilter']) == 1 ?

@@ -12,7 +12,24 @@ import LayoutV2 from '../../general/LayoutV2';
 import { isValidNumber, notEmptyLength } from '../../../common-function';
 import { loading } from '../../../redux/actions/app-actions';
 import { withRouter } from 'next/router';
+import { useMediaQuery } from 'react-responsive';
 
+const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 992 })
+    return isDesktop ? children : null
+}
+const Tablet = ({ children }) => {
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
+    return isTablet ? children : null
+}
+const Mobile = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    return isMobile ? children : null
+}
+const Default = ({ children }) => {
+    const isNotMobile = useMediaQuery({ minWidth: 768 })
+    return isNotMobile ? children : null
+}
 
 const PAGE_SIZE = 36;
 
@@ -172,6 +189,8 @@ const CarFreakDetailsPage = (props) => {
     }
     return (
         <LayoutV2 backgroundImage={`url("/banner/1 – 1.png")`} searchTypes={carFreakGlobalSearch} enterSearchCarFreaks scrollRange={window.innerHeight * 0.5} onScrolledBottom={() => { if (otherPostPage * PAGE_SIZE < otherPostTotal) { setOtherPostPage(otherPostPage + 1) } }} >
+
+            <Desktop>
             <div className="section">
                 <div className="container">
                     <Row gutter={[10, 20]}>
@@ -184,7 +203,7 @@ const CarFreakDetailsPage = (props) => {
                                     setSelectedPost(post);
                                 }}
                                 onRemoveClick={(post) => {
-                                    confirmDelete(post)
+                                    confirmDelete(post) 
                                 }}
                             />
                         </Col>
@@ -236,6 +255,75 @@ const CarFreakDetailsPage = (props) => {
                     </Row>
                 </div>
             </div>
+            </Desktop>
+
+            <Tablet>
+            <div className="section-version3">
+                <div className="container-version3 padding-x-md">
+                    <Row gutter={[10, 20]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Post1 data={post}
+                                postLike={_.find(userChatLikes, { chatId: post._id })}
+                                onEditClick={(post) => {
+                                    setEditMode('edit');
+                                    setWriteModalVisible(true);
+                                    setSelectedPost(post);
+                                }}
+                                onRemoveClick={(post) => {
+                                    confirmDelete(post) 
+                                }}
+                            />
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="width-100 flex-items-align-center flex-justify-start h5 font-weight-bold black">
+                                {`${_.get(post, ['userId', 'firstName']) || ''} ${_.get(post, ['userId', 'lastName']) || ''} ${_.get(post, ['userId', 'firstName']) || _.get(post, ['userId', 'lastName']) ? "'s" : ''} Other Post`}
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            {
+                                _.isArray(otherPosts) && !_.isEmpty(otherPosts) ?
+                                    <Row gutter={[10, 10]}>
+                                        {
+
+                                            _.map(otherPosts, function (otherPost) {
+                                                return (
+                                                    <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+                                                        <Post data={otherPost} className="background-white box-shadow-heavy round-border"
+                                                            hideAction
+                                                            postLike={_.find(userChatLikes, { chatId: otherPost._id })}
+                                                            onRedirectToPost={() => {
+                                                                if (_.isPlainObject(otherPost) && !_.isEmpty(otherPost) && _.get(otherPost, ['_id'])) {
+                                                                    props.router.push(`/car-freaks/${otherPost._id}`, undefined, { shallow: false })
+                                                                }
+                                                            }}
+                                                        />
+                                                    </Col>
+                                                )
+                                            })
+                                        }
+                                    </Row>
+                                    :
+                                    <div className="padding-md background-white box-shadow-heavy">
+                                        <Empty></Empty>
+                                    </div>
+                            }
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                            <div className="width-100 flex-justify-center" style={{ height: 50 }}>
+                                {
+                                    isLoading ?
+                                        <Icon type="loading" style={{ fontSize: 50 }} />
+                                        :
+                                        null
+                                }
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+            </Tablet>
+            
 
             <WritePostModal
                 currentRecord={selectedPost}

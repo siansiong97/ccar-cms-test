@@ -629,7 +629,8 @@ const ProductList = (props) => {
                             (v.color ? v.color.toUpperCase() : '')
                             : ''}
                         </p>
-                        <p style={!v.seeMore ? { maxHeight: '120px', overflow: 'hidden', lineHeight: '1.6', marginBottom: '0px', textOverflow: 'ellipsis' } : {}}>{v.description}</p>
+                        {/* <p style={!v.seeMore ? { maxHeight: '120px', overflow: 'hidden', lineHeight: '1.6', marginBottom: '0px', textOverflow: 'ellipsis' } : {}}>{v.description}</p> */}
+                        <p className=" text-truncate-fiveline" style={{ maxHeight: '120px', lineHeight: '1.6', marginBottom: '0px' }}>{v.description}</p>
                       </div>
                     </Col>
                     <Col span={10}>
@@ -772,8 +773,9 @@ const ProductList = (props) => {
                         </Row>
                       </div>
                     </Col>
+                    
                     <Col span={10}>
-                      <SellerBusinessCard data={v.companys} data1={v.createdBy} />
+                      <SellerBusinessCard data={v.companys} data1={v.createdBy} /> 
                     </Col>
                   </Row>
                 </Col>

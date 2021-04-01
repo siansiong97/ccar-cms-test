@@ -78,7 +78,7 @@ const WhatsAppButton = (props) => {
                                                 + ", I am interested in your car ad on ccar.my and I would like to know more about "
                                                 + props.mobileNumber.title
                                                 + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true)
-                                                + "). Thank you. https://share.ccar.my/viewCar/"
+                                                + "). Thank you. https://ccar.my/viewCar/"
                                                 + props.mobileNumber._id} onClick={(e) => {
 
                                                 }}  >
@@ -102,11 +102,11 @@ const WhatsAppButton = (props) => {
     return (
         <span className={props.className ? props.className : null} style={props.style ? props.style : null}>
             <Default>
-                {/* <a target={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : '_blank'} href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://web.whatsapp.com/send?phone=" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://share.ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => { */}
+                {/* <a target={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : '_blank'} href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://web.whatsapp.com/send?phone=" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => { */}
                 {/* <Tooltip title="WhatsApp"> */}
                 {/* <a href={"https://web.whatsapp.com/send?phone=" + props.mobileNumber + "&text=Hi"} > */}
                 {/* </Tooltip><a href={props.readOnly ? null : "https://web.whatsapp.com/send?phone=+60194341511&text=Hello From Ccar"}  > */}
-                <a target={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : '_blank'} href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://web.whatsapp.com/send?phone=" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']).replace('+60', '') + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://share.ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => {
+                <a target={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : '_blank'} href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://web.whatsapp.com/send?phone=" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']).replace('+60', '') + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => {
                     if (!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary'])) {
                         message.error('Whatsapp No Not Found')
                     }
@@ -127,11 +127,11 @@ const WhatsAppButton = (props) => {
                 </a>
             </Default>
             <Mobile>
-                {/* <a  href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://wa.me/" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://share.ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => { */}
+                {/* <a  href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://wa.me/" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => { */}
                 {/* <Tooltip title="WhatsApp"> */}
                 {/* <a href={"https://web.whatsapp.com/send?phone=" + props.mobileNumber + "&text=Hi"} > */}
                 {/* </Tooltip><a href={props.readOnly ? null : "https://web.whatsapp.com/send?phone=+60194341511&text=Hello From Ccar"}  > */}
-                <a href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://wa.me/" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']).replace('+60', '') + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://share.ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => {
+                <a href={!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']) ? null : "https://wa.me/" + _.get(props.mobileNumber, ['createdBy', 'contactNoPrimary']).replace('+60', '') + "&text=Hi " + getUserName(_.get(props.mobileNumber, ['createdBy']), 'prefixName') + ", I am interested in your car ad on ccar.my and I would like to know more about " + props.mobileNumber.title + " (RM " + formatNumber(props.mobileNumber.price, null, false, 2, true) + "). Thank you. https://ccar.my/viewCar/" + props.mobileNumber._id} onClick={(e) => {
                     if (!_.get(props.mobileNumber, ['createdBy', 'contactNoPrimary'])) {
                         message.error('Whatsapp No Not Found')
                     }

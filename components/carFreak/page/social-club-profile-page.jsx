@@ -187,6 +187,46 @@ const SocialClubProfilePage = (props) => {
                     </CarFreakLayout>
                 </Desktop>
 
+                <Tablet>
+                    <CarFreakLayout>
+                        <Row gutter={[15, 15]}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <ClubProfolioBanner viewType={getViewType(clubJoin)} data={club} onChange={(data) => {
+                                    if (_.isPlainObject(data) && !_.isEmpty(data)) {
+                                        setClub(data);
+                                    }
+                                }}></ClubProfolioBanner>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Scrollbars style={{ width: '100%' }} autoHide autoHeight>
+                                    <div className="flex-justify-start flex-items-align-center">
+                                        {
+                                            _.map(tabs || [], function (tab) {
+                                                return (
+                                                    <span className={`d-inline-block flex-items-no-shrink cursor-pointer margin-x-lg h7 ${tabKey == tab.value ? 'ccar-yellow border-bottom-ccar-yellow' : 'black'}`} onClick={(e) => { setTabKey(tab.value); }} >
+                                                        {tab.text}
+                                                    </span>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </Scrollbars>
+                                <Divider style={{ margin: '10px 0px 10px 0px' }} type="horizontal"></Divider>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                {_renderView(tabKey)}
+                            </Col>
+                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Card
+                                    title="Other CarFreaks Club"
+                                >
+                                    <OtherClubsBox clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])} />
+                                </Card>
+                            </Col> */}
+                        </Row>
+                    </CarFreakLayout>
+                </Tablet>
+
             </LayoutV2>
 
         </React.Fragment>

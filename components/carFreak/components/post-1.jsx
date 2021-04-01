@@ -165,14 +165,13 @@ const Post1 = (props) => {
         notEmptyLength(objectRemoveEmptyValue(post)) ?
             <React.Fragment>
                 <Row className={`width-100 ${props.className || ''}`} style={{ ...props.style }} type="flex" gutter={10} align="stretch" >
-                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                    <Col xs={24} sm={24} md={24} lg={16} xl={16}>
                         <LightBoxCarousel height={defaultHeight} images={_.compact(_.map(_.get(post, ['mediaList']), function (v) {
                             return _.get(v, ['url']) || null;
                         }))} />
                     </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <div className="width-100 background-white round-border box-shadow-heavy padding-md relative-wrapper" style={{ height: defaultHeight }}>
-
+                    <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                        <div className="width-100 background-white box-shadow-heavy padding-md relative-wrapper" style={{ height: defaultHeight }}>
                             <ScrollLoadWrapper style={{ height: '90%', width: '100%' }} autoHide onScrolledBottom={() => { if (arrayLengthCount(messages) < messageTotal) { getData(); } }}>
                                 <Row gutter={[10, 10]} className="width-100">
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>

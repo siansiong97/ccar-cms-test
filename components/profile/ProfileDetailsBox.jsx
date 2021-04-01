@@ -538,12 +538,12 @@ const ProfileDetailsBox = (props) => {
                             <div className="fill-parent flex-items-align-center flex-justify-center">
                                 <Row type="flex" align="middle">
                                     <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                        <div className='fill-parent flex-justify-start flex-items-align-start'>
-                                            <UserAvatar showPreview data={profile} size={100} />
+                                        <div className='fill-parent flex-justify-start flex-items-align-center'>
+                                            <UserAvatar showPreview data={profile} size={100} /> 
                                         </div>
                                     </Col>
                                     <Col xs={20} sm={20} md={20} lg={20} xl={20}>
-                                        <div className='flex-justify-start flex-items-align-center '>
+                                        <div className='flex-justify-start flex-items-align-start'>
                                             <span className='d-inline-block white h7 font-weight-bold margin-right-m'>
                                                 {getUserName(profile, 'freakId')}
                                             </span>

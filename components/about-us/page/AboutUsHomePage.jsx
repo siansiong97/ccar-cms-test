@@ -76,15 +76,17 @@ class AboutUsIndex extends React.Component{
                                     <h3 style={{marginBottom:'0px'}}><b style={{fontSize:'20px', color:'#FBB040'}}>R</b>evolutionize - Revolutionize the way the automobile industry works. </h3>
                                     <p> We transform everything related to automobiles into an online service where dealers could easily reach the right clients and users could effortlessly find their dream cars anytime, anywhere.</p>
                                 </div>
-                                <div className="car-for-sale">
-                                <img style={{width:'100%', marginTop:'-50px'}} src="/assets/about-us/about_us_3.png"></img>
+                                <div className="car-for-sale" >
+                                    <img style={{width:'100%', marginTop:'-50px'}} src="/assets/about-us/about_us_3.png"></img>
                                 </div>
                                 {/* <Col xs={0} sm={0} md={12} lg={12} xl={12}>
                                 <img style={{width:'100%'}} src="/assets/about-us/about_us_3.png"></img>
                                 </Col> */}
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <img style={{width:'85%', marginLeft:'100px'}} src="/assets/about-us/about_us_1.png"></img>
+                                <div style={{textAlign:'right'}}>
+                                    <img style={{width:'85%'}} src="/assets/about-us/about_us_1.png"></img>
+                                </div>
                                 <div className="margin-left-xl margin-right-xl">
                                 <h1> Why CCAR?</h1>
                                 <p><b>All-In-One.</b> You could find anything related to cars from our platform and build your car communities to exchange your thoughts with them.  </p>
@@ -138,7 +140,7 @@ class AboutUsIndex extends React.Component{
                             </Col>
                             <Col xs={{order:1, span:24}} sm={{order:1, span:24}} md={{order:2, span:12}} lg={{order:2, span:12}} xl={{order:2, span:12}}>
                                 <img className="width-100" src="/assets/about-us/about_ut_2.png"></img>
-                                <div className="margin-right-xl" style={{marginTop:'-100px', paddingRight:'40px'}}>
+                                <div className="margin-right-xl" style={{marginTop:'-100px'}}>
                                 <h1> Our Vision: </h1>
                                 <p> The world-leading all-in-one integrated automobile social platform where everyone could rely on whenever they think about anything that relates to automobiles. </p>
                                 </div>
@@ -168,7 +170,7 @@ class AboutUsIndex extends React.Component{
                                 </Col> */}
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <img style={{width:'85%', marginLeft:'100px'}} src="/assets/about-us/about_us_1.png"></img>
+                                <img style={{width:'85%', marginLeft:'58px'}} src="/assets/about-us/about_us_1.png"></img>
                                 <div className="margin-left-xl margin-right-xl">
                                 <h1> Why CCAR?</h1>
                                 <p><b>All-In-One.</b> You could find anything related to cars from our platform and build your car communities to exchange your thoughts with them.  </p>

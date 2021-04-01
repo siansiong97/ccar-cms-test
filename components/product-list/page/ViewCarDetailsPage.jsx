@@ -98,39 +98,39 @@ class ViewCarDetailsPage extends React.Component {
 
   UNSAFE_componentWillMount() {
 
-  this.setState({
+    this.setState({
 
-    typingTimeout: setTimeout(() => {
+      typingTimeout: setTimeout(() => {
 
-      axios.post(`${client.io.io.uri}processCTR`,
-        {
-          params: {
-            adsId: this.state.productDetails._id,
-            source: 'web',
-          }
-        })
+        axios.post(`${client.io.io.uri}processCTR`,
+          {
+            params: {
+              adsId: this.state.productDetails._id,
+              source: 'web',
+            }
+          })
 
-      let inputProductList = [{ productAdsId: this.state.productDetails._id }]
-      axios.post(`${client.io.io.uri}processImpression`,
-        {
-          params: {
-            productList: inputProductList,
-            source: 'web',
-          }
-        }).then((res) => { })
+        let inputProductList = [{ productAdsId: this.state.productDetails._id }]
+        axios.post(`${client.io.io.uri}processImpression`,
+          {
+            params: {
+              productList: inputProductList,
+              source: 'web',
+            }
+          }).then((res) => { })
 
 
-    }, 3000)
+      }, 3000)
 
-  })
-}
+    })
+  }
   componentDidUpdate() {
 
-    if(typeof(window) != undefined){
+    if (typeof (window) != undefined) {
       window.addEventListener('scroll', this.handleScroll, { passive: true });
 
       return () => {
-  
+
         window.removeEventListener('scroll', this.handleScroll);
       };
     }
@@ -384,9 +384,7 @@ class ViewCarDetailsPage extends React.Component {
       if (v.addonSpicydeal.showPrice === 'show') { return renderShowPrice(v.price, v.addonSpicydeal.discountedPrice) }
       if (v.addonSpicydeal.showPrice === 'hide') { return renderCountdown(v.addonSpicydeal.endDate) }
     }
-
     else { return (normalPrice) }
-
   }
 
   _renderPriceAffix = () => {
@@ -687,7 +685,7 @@ class ViewCarDetailsPage extends React.Component {
                         </Col>
                       </Row>
                       <Row >
-                        <Col span={6} >
+                        <Col xs={6} sm={6} md={0} lg={6} xl={6} >
                           <div className='fill-parent flex-justify-center flex-items-align-center' style={{ paddingLeft: '35px' }}>
                             <UserAvatar redirectProfile data={_.get(this.state.productDetails, ['createdBy'])} size={50} />
                           </div>
@@ -736,7 +734,7 @@ class ViewCarDetailsPage extends React.Component {
           <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
             <Breadcrumb>
               <Breadcrumb.Item>
-                <Link shallow={false}  href="/">
+                <Link shallow={false} href="/">
                   <a>
                     Home
                   </a>
@@ -827,7 +825,7 @@ class ViewCarDetailsPage extends React.Component {
                           </LightBoxGallery>
                           <img 
                           src={stateName} 
-                          style={{ width: 100, height: '30px', position: 'absolute', top: 0, right: 0 }} 
+                          style={{ width: 70, height: '30px', position: 'absolute', top: 0, right: 0 }} 
                           alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
                           <span className="d-inline-block width-20" style={{ position: 'absolute', top: 0, left: 0 }} >
                             {this._renderCondition(this.state.productDetails)}
@@ -900,7 +898,7 @@ class ViewCarDetailsPage extends React.Component {
                           <RegisterCard key='register' button={
                             [<Tooltip key='tooltipsregister' title="Registration Card">
                               <Button type="normal"
-                                className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`}
+                                className={`w-100 ads-purchase-button margin-xs ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`}
                                 style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}>
                                 <img src="/assets/CarListingIconMobile/registration-card.png" alt="Registration Card Icon" /></Button></Tooltip>]
                           } registrationUrl={this.state.productDetails.registrationUrl ? this.state.productDetails.registrationUrl : []} />

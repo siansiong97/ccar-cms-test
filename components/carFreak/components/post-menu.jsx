@@ -35,12 +35,12 @@ const PostMenu = (props) => {
                 {
                     _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == _.get(post, ['userId', '_id']) && _.get(post, ['chatType']) != 'event' ?
                         [
-                            <Menu.Item key={_.get(post, ['_id']) + 'editBtn'} onClick={(e) => {
+                            <Menu.Item key={_.get(post, ['_id']) + 'editBtn'} className="no-padding" onClick={(e) => {
                                 if (props.onEditPostClick) {
                                     props.onEditPostClick(post)
                                 }
-                            }}><span >Edit</span></Menu.Item>,
-                            <Menu.Item key={_.get(post, ['_id']) + 'removeBtn'}>
+                            }}><span className="d-inline-block padding-x-sm padding-y-xs">Edit</span></Menu.Item>,
+                            <Menu.Item key={_.get(post, ['_id']) + 'removeBtn'} className="no-padding">
                                 <Popconfirm
                                     title="Are you sure to delete this post?"
                                     onConfirm={(e) => {
@@ -51,7 +51,7 @@ const PostMenu = (props) => {
                                     okText="Yes"
                                     cancelText="No"
                                 >
-                                    <span>Delete</span>
+                                    <span className="d-inline-block padding-x-sm padding-y-xs">Delete</span>
                                 </Popconfirm>
                             </Menu.Item>
                         ]
@@ -60,13 +60,13 @@ const PostMenu = (props) => {
                 }
                 {
                     _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) != _.get(post, ['userId', '_id']) && _.get(post, ['chatType']) != 'event' ?
-                        <Menu.Item key={_.get(post, ['_id']) + 'saveBtn'}>
+                        <Menu.Item key={_.get(post, ['_id']) + 'saveBtn'} className="no-padding">
                             <SavePostButton userId={_.get(props.user, ['info', 'user', '_id'])} chatId={_.get(post, ['_id'])}
                                 saveButton={() => {
-                                    return <span className="grey-darken-3"><BookOutlined className="margin-right-xs" />Save Post</span>
+                                    return <span className="grey-darken-3 d-inline-block padding-x-sm padding-y-xs"><BookOutlined className="margin-right-xs" />Save Post</span>
                                 }}
                                 savedButton={() => {
-                                    return <span className=""><BookFilled className="margin-right-xs" />Saved Post</span>
+                                    return <span className="d-inline-block padding-x-sm padding-y-xs"><BookFilled className="margin-right-xs" />Saved Post</span>
                                 }}
                                 notify
                             />
@@ -77,10 +77,16 @@ const PostMenu = (props) => {
                 {
                     _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) != _.get(post, ['userId', '_id']) ?
                         [
-                            <Menu.Item key={_.get(post, ['_id']) + 'followBtn'}>
+                            <Menu.Item key={_.get(post, ['_id']) + 'followBtn'} className="no-padding">
                                 <FollowButton type="user" followerId={_.get(props.user, ['info', 'user', '_id'])} userId={_.get(post, ['userId', '_id'])}
                                     followButton={() => {
-                                        return <span className="grey-darken-3">Follow</span>
+                                        return <span className="grey-darken-3 d-inline-block padding-x-sm padding-y-xs">Follow</span>
+                                    }}
+                                    followingButton={() => {
+                                        return <span className="d-inline-block padding-x-sm padding-y-xs">
+                                            <Icon type="check" style={{ color: '#F57F17' }} className="margin-right-xs" />
+                                                Following
+                                            </span>
                                     }}
                                     handleSuccess={(data) => {
                                         message.success(data.type == 'remove' ? 'Unfollowed' : 'Followed')
@@ -90,12 +96,12 @@ const PostMenu = (props) => {
                                     }}
                                 />
                             </Menu.Item>,
-                            <Menu.Item key={_.get(post, ['_id']) + 'reportBtn'}>
+                            <Menu.Item key={_.get(post, ['_id']) + 'reportBtn'} className="no-padding">
                                 <ReportButton type="chat"
                                     reporterId={_.get(props.user, ['info', 'user', '_id'])}
                                     chatId={_.get(post, ['_id'])}
                                     reportButton={() => {
-                                        return <span className="red">Report</span>
+                                        return <span className="red d-inline-block padding-x-sm padding-y-xs">Report</span>
                                     }}
                                     cancelButton={() => {
                                         return null;
@@ -111,9 +117,9 @@ const PostMenu = (props) => {
                         :
                         null
                 }
-                <Menu.Item key={_.get(post, ['_id']) + 'shareBtn'}>
-                    <ShareButtonDialog link={`/${_.get(post, ['chatType']) == 'event' ? 'event-post' : _.get(post, ['chatType']) == 'socialboard' ? 'social-board' :  'car-freaks'}/${_.get(post, ['_id'])}`}>
-                        <span>Share Link</span>
+                <Menu.Item key={_.get(post, ['_id']) + 'shareBtn'} className="no-padding">
+                    <ShareButtonDialog link={`/${_.get(post, ['chatType']) == 'event' ? 'event-post' : _.get(post, ['chatType']) == 'socialboard' ? 'social-board' : 'car-freaks'}/${_.get(post, ['_id'])}`}>
+                        <span className="d-inline-block padding-x-sm padding-y-xs">Share Link</span>
                     </ShareButtonDialog>
                 </Menu.Item>
             </Menu>

@@ -188,10 +188,10 @@ const DealerProfile = (props) => {
                         </TabPane> */}
                         <TabPane tab="Reviews" key="6">
                             <Row gutter={[20, 10]} className='margin-top-md'>
-                                <Col xs={{ order: 2, span: 18 }} sm={{ order: 2, span: 18 }} md={{ order: 2, span: 18 }} lg={{ order: 1, span: 18 }} xl={{ order: 1, span: 18 }}>
-                                    <UserReceivedReview data={profile} />
+                                <Col xs={{ order: 2, span: 18 }} sm={{ order: 2, span: 18 }} md={{ order: 2, span: 24 }} lg={{ order: 1, span: 18 }} xl={{ order: 1, span: 18 }}>
+                                    <UserReceivedReview data={profile} /> 
                                 </Col>
-                                <Col xs={{ order: 1, span: 6 }} sm={{ order: 1, span: 6 }} md={{ order: 1, span: 6 }} lg={{ order: 2, span: 6 }} xl={{ order: 2, span: 6 }}>
+                                <Col xs={{ order: 1, span: 6 }} sm={{ order: 1, span: 6 }} md={{ order: 1, span: 0 }} lg={{ order: 2, span: 6 }} xl={{ order: 2, span: 6 }}>
                                     {_renderDealerDetailsBox()}
                                 </Col>
                             </Row>
@@ -278,7 +278,7 @@ const DealerProfile = (props) => {
                             </Breadcrumb> */}
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <ProfileDetailsBox data={profile} showProfileActions={props.isOwn} type="dealer"
+                            <ProfileDetailsBox data={profile} showProfileActions={props.isOwn} type="dealer" 
                                 onChangeCoverPhoto={(res) => {
                                     if (props.onChangeCoverPhoto) {
                                         props.onChangeCoverPhoto(res);

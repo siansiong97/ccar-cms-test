@@ -12,7 +12,7 @@ import { v4 } from 'uuid';
 import { arrayLengthCount, convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
-import { ccarLogo, bellInactive } from '../../icon';
+import { ccarLogo, bellInactive, wishList, wishlistIconActived } from '../../icon';
 import { loading, loginMode, quickSearchProductsList, registerMode, setApplyMileage, setApplyPrice, setApplyYear, setMenuHeight, setNotificationToken, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
 import { clearProductFilterOptions, fetchCompareCarLimit } from '../../redux/actions/productsList-actions';
@@ -32,11 +32,11 @@ import Scrollbars from 'react-custom-scrollbars';
 
 
 const Desktop = ({ children }) => {
-    const isDesktop = useMediaQuery({ minWidth: 992 })
+    const isDesktop = useMediaQuery({ minWidth: 1025 })
     return isDesktop ? children : null
 }
 const Tablet = ({ children }) => {
-    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 })
     return isTablet ? children : null
 }
 const Mobile = ({ children }) => {
@@ -159,7 +159,6 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
-            console.log('token', token);
             if (token) {
 
                 let self = this;
@@ -336,6 +335,7 @@ class LayoutV2 extends React.Component {
         }
 
     };
+
     _renderUser = (profileMenu) => {
         let self = this;
         if (_.get(this.props, ['user', 'authenticated'])) {
@@ -430,15 +430,19 @@ class LayoutV2 extends React.Component {
                                 {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
-                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path) }}>
-                                                <div className="flex-justify-start flex-items-align-center">
-                                                    <span className='d-inline-block margin-x-sm'>
-                                                        {menu.icon}
-                                                    </span>
-                                                    <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
-                                                        {menu.text}
-                                                    </span>
-                                                </div>
+                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
+                                                <Link shallow={false} href={menu.path || ''}   >
+                                                    <a>
+                                                        <div className="flex-justify-start flex-items-align-center">
+                                                            <span className='d-inline-block margin-x-sm'>
+                                                                {menu.icon}
+                                                            </span>
+                                                            <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
+                                                                {menu.text}
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                </Link>
                                             </Menu.Item>
                                         )
                                     })
@@ -775,6 +779,13 @@ class LayoutV2 extends React.Component {
                 path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}`
             },
             {
+                icon: <span className='flex-items-align-center flex-justify-center' >
+                    <img src={wishList} style={{ width: '20px', height: '20px' }}/>
+                </span>,
+                text: 'My Wishlist',
+                path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}/details/wishlists`
+            },
+            {
                 icon: (<span className='d-inline-block relative-wrapper' style={{ width: '20px', height: '20px' }} >
                     <img src='/logout icon.svg' className='fill-parent absolute-center'></img>
                 </span>),
@@ -795,7 +806,6 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
                                             {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
-
                                                 <Link shallow={false} href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
@@ -873,10 +883,14 @@ class LayoutV2 extends React.Component {
                             <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                                 <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
                                     <Col xs={12} sm={12} md={14} lg={12} xl={12}>
-                                        <div className='flex-justify-start flex-items-align-center topnav-child'  >
-                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }} onClick={(e) => { this.props.router.push('/') }}>
+                                        <div className='flex-justify-start flex-items-align-center topnav-child'>
+                                            <Link shallow={false} href={`/`}  >
+                                                <a>
+                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
                                                 <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
                                             </span>
+                                            </a>
+                                        </Link>
                                             {
                                                 this.props.hideSearchBar ?
                                                     null

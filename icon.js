@@ -30,6 +30,7 @@ export const flame = '/assets/carDetails/flame.gif'
 
 export const ccarWebLogo400X150 = '/assets/profile/400x150-icon.png'
 export const ccarLogo = '/logo192.png'
+export const ccarLogo2 = '/assets/Ccar-logo.png'
 
 //Login
 export const loginBackground = '/assets/login/background.png';
@@ -50,6 +51,9 @@ export const email = "/assets/sellerProfile/email.png"
 export const help = "/assets/sellerProfile/help.png"
 export const address = "/assets/sellerProfile/address-home.png"
 export const location = "/assets/sellerProfile/Location@3x.png"
+export const wishList = "/assets/profile/wishlist.png"
+export const wishlistIconActived = "/assets/profile/wishlist-active.png";
+
 
 
 //FAQ

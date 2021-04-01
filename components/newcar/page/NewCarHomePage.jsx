@@ -7,7 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { bodyTypeOri } from '../../../params/bodyTypeOri';
-import { carBrandsList, getCarBrandsIcon } from '../../../params/carBrandsList';
+import { carBrandsList, getCarBrand, getCarBrandsIcon } from '../../../params/carBrandsList';
 import { withRouter } from 'next/router';
 import { loading, updateActiveMenu } from '../../../redux/actions/app-actions';
 import Link from 'next/link';
@@ -129,7 +129,8 @@ class NewCarVersion3 extends React.Component {
                         { 'price': { $gte: +(0) } },
                         { 'price': { $lte: +(188763) } }
                     ]
-                }
+                },
+                sorting : 'price:1'
             }, () => this.getData(0))
         } else if (key == 2) {
             this.setState({ sorting: 'year:-1', filterAnd: {} }, () => this.getData(0))
@@ -141,7 +142,7 @@ class NewCarVersion3 extends React.Component {
                         { 'price': { $lte: +(188763) } }
                     ]
                 },
-                sorting: ''
+                sorting : 'price:1'
             }, () => this.getData(0))
         } else if (key == 4) {
             this.setState({
@@ -151,7 +152,7 @@ class NewCarVersion3 extends React.Component {
                         { 'price': { $lte: +(30000) } }
                     ]
                 },
-                sorting: ''
+                sorting : 'price:1'
             }, () => this.getData(0))
         } else if (key == 5) {
             this.setState({
@@ -161,7 +162,7 @@ class NewCarVersion3 extends React.Component {
                         { 'price': { $lte: +(60000) } }
                     ]
                 },
-                sorting: ''
+                sorting : 'price:1'
             }, () => this.getData(0))
         } else if (key == 6) {
             this.setState({
@@ -171,7 +172,7 @@ class NewCarVersion3 extends React.Component {
                         { 'price': { $lte: +(100000) } }
                     ]
                 },
-                sorting: ''
+                sorting : 'price:1'
             }, () => this.getData(0))
         } else if (key == 7) {
             this.setState({
@@ -180,7 +181,7 @@ class NewCarVersion3 extends React.Component {
                         { 'price': { $gte: +(100000) } },
                     ]
                 },
-                sorting: ''
+                sorting : 'price:1'
             }, () => this.getData(0))
         } else {
             this.setState({ filterAnd: {} }, this.getData(0))
@@ -473,7 +474,7 @@ class NewCarVersion3 extends React.Component {
         return (
             <div>
                 <Tablet>
-                <BannerAnim prefixCls="banner-user" autoPlay>
+                <BannerAnim className="carousel" prefixCls="banner-user" autoPlay>
                 <Element
                         prefixCls="banner-user-elem"
                         key="0"
@@ -572,7 +573,7 @@ class NewCarVersion3 extends React.Component {
             </Tablet>
 
                 <Mobile>
-                    <BannerAnim prefixCls="banner-user-mobile" autoPlay>
+                    <BannerAnim className="carousel" prefixCls="banner-user-mobile" autoPlay>
                         {/* <Element
                       prefixCls="banner-user-elem"
                       key="0"
@@ -630,7 +631,7 @@ class NewCarVersion3 extends React.Component {
     _renderCarouselWeb = () => {
 
         return (
-            <BannerAnim prefixCls="banner-user-web" autoPlay>
+            <BannerAnim className="carousel" prefixCls="banner-user-web" autoPlay>
                 <Element
                     prefixCls="banner-user-elem"
                     key="web0"
@@ -806,7 +807,7 @@ class NewCarVersion3 extends React.Component {
                                         <a>
                                             <div className="wrap-newCar-brand cursor-pointer" onClick={(e) => { self.filterByBrand(item.value); }}>
                                                 <img src={getCarBrandsIcon(_.toLower(item.value))} className="type w-100" />
-                                                <p>{_.capitalize(item.value)}</p>
+                                                <p>{_.get(getCarBrand(item.value), 'value') || _.capitalize(item.value)}</p>
                                             </div>
                                         </a>
                                     </Link>

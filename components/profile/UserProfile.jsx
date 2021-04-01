@@ -84,7 +84,7 @@ const UserProfile = (props) => {
                     <ProfileDetailsBox data={profile} showProfileActions={props.isOwn} type="user"
                         onChangeCoverPhoto={(res) => {
                             if (props.onChangeCoverPhoto) {
-                                props.onChangeCoverPhoto(res);
+                                props.onChangeCoverPhoto(res); 
                             }
                         }
                         }
