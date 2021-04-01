@@ -74,6 +74,7 @@ for (let index = 0; index < optionsFields.length; index++) {
     inputRefs[optionsFields[index] + 'Ref'] = React.createRef();
 }
 
+
 const ProductsListFilterForm = (props) => {
 
     const [title, setTitle] = useState('')
@@ -97,11 +98,11 @@ const ProductsListFilterForm = (props) => {
     const [dropDownOptions, setDropDownOptions] = useState({
         minYears: _.reverse(_.cloneDeep(years)),
         maxYears: years,
-        minPrices: _.reverse(prices),
+        minPrices: _.reverse(_.cloneDeep(prices)),
         maxPrices: prices,
-        minMileages: _.reverse(mileages),
+        minMileages: _.reverse(_.cloneDeep(mileages)),
         maxMileages: mileages,
-        minEngineCapacities: _.reverse(engineCapacities),
+        minEngineCapacities: _.reverse(_.cloneDeep(engineCapacities)),
         maxEngineCapacities: engineCapacities,
 
     });
@@ -142,6 +143,10 @@ const ProductsListFilterForm = (props) => {
     }, []);
 
     useEffect(() => {
+        console.log(dropDownSearchValue)
+    }, [dropDownSearchValue])
+
+    useEffect(() => {
 
         if (filterGroup.title) {
             setTitle(filterGroup.title);
@@ -152,31 +157,31 @@ const ProductsListFilterForm = (props) => {
         let dropdownsearch = {};
 
         if (_.get(filterGroup, 'yearRange[0]')) {
-            dropdownsearch.minYear = _.get(filterGroup, 'yearRange[0]');
+            dropdownsearch.minYear = `${_.get(filterGroup, 'yearRange[0]')}`;
         }
         if (_.get(filterGroup, 'yearRange[1]')) {
-            dropdownsearch.maxYear = _.get(filterGroup, 'yearRange[1]');
+            dropdownsearch.maxYear = `${_.get(filterGroup, 'yearRange[1]')}`;
         }
 
         if (_.get(filterGroup, 'priceRange[0]')) {
-            dropdownsearch.minPrice = _.get(filterGroup, 'priceRange[0]');
+            dropdownsearch.minPrice = `${_.get(filterGroup, 'priceRange[0]')}`;
         }
         if (_.get(filterGroup, 'priceRange[1]')) {
-            dropdownsearch.maxPrice = _.get(filterGroup, 'priceRange[1]');
+            dropdownsearch.maxPrice = `${_.get(filterGroup, 'priceRange[1]')}`;
         }
 
         if (_.get(filterGroup, 'mileageRange[0]')) {
-            dropdownsearch.minMileage = _.get(filterGroup, 'mileageRange[0]');
+            dropdownsearch.minMileage = `${_.get(filterGroup, 'mileageRange[0]')}`;
         }
         if (_.get(filterGroup, 'mileageRange[1]')) {
-            dropdownsearch.maxMileage = _.get(filterGroup, 'mileageRange[1]');
+            dropdownsearch.maxMileage = `${_.get(filterGroup, 'mileageRange[1]')}`;
         }
 
         if (_.get(filterGroup, 'engineCapacityRange[0]')) {
-            dropdownsearch.minEngineCapacity = _.get(filterGroup, 'engineCapacityRange[0]');
+            dropdownsearch.minEngineCapacity = `${_.get(filterGroup, 'engineCapacityRange[0]')}`;
         }
         if (_.get(filterGroup, 'engineCapacityRange[1]')) {
-            dropdownsearch.maxEngineCapacity = _.get(filterGroup, 'engineCapacityRange[1]');
+            dropdownsearch.maxEngineCapacity = `${_.get(filterGroup, 'engineCapacityRange[1]')}`;
         }
         setDropDownSearchValue(dropdownsearch);
         setDropDownOptions(getFilteredDropDownOptions() || []);
@@ -236,61 +241,61 @@ const ProductsListFilterForm = (props) => {
         let newDropDownOptions = {
             minYears: _.reverse(_.cloneDeep(years)),
             maxYears: years,
-            minPrices: _.reverse(prices),
+            minPrices: _.reverse(_.cloneDeep(prices)),
             maxPrices: prices,
-            minMileages: _.reverse(mileages),
+            minMileages: _.reverse(_.cloneDeep(mileages)),
             maxMileages: mileages,
-            minEngineCapacities: _.reverse(engineCapacities),
+            minEngineCapacities: _.reverse(_.cloneDeep(engineCapacities)),
             maxEngineCapacities: engineCapacities,
         };
         if (_.get(filterGroup, 'yearRange[0]')) {
-            newDropDownOptions.maxYears = _.filter(_.cloneDeep(years) || [], function (item) {
+            newDropDownOptions.maxYears = _.filter(newDropDownOptions.maxYears || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'yearRange[0]'));
                 return parseFloat(item) > value;
             })
 
         }
         if (_.get(filterGroup, 'yearRange[1]')) {
-            newDropDownOptions.minYears = _.filter(_.reverse(_.cloneDeep(years)) || [], function (item) {
+            newDropDownOptions.minYears = _.filter(newDropDownOptions.minYears || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'yearRange[1]'));
                 return parseFloat(item) < value;
             })
         }
 
         if (_.get(filterGroup, 'priceRange[0]')) {
-            newDropDownOptions.maxPrices = _.filter(_.cloneDeep(prices) || [], function (item) {
+            newDropDownOptions.maxPrices = _.filter(newDropDownOptions.maxPrices || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'priceRange[0]'));
                 return parseFloat(item) > value;
             })
         }
         if (_.get(filterGroup, 'priceRange[1]')) {
-            newDropDownOptions.minPrices = _.filter(_.reverse(_.cloneDeep(prices)) || [], function (item) {
+            newDropDownOptions.minPrices = _.filter(newDropDownOptions.minPrices || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'priceRange[1]'));
                 return parseFloat(item) < value;
             })
         }
 
         if (_.get(filterGroup, 'mileageRange[0]')) {
-            newDropDownOptions.maxMileages = _.filter(_.cloneDeep(mileages) || [], function (item) {
+            newDropDownOptions.maxMileages = _.filter(newDropDownOptions.maxMileages || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'mileageRange[0]'));
                 return parseFloat(item) > value;
             })
         }
         if (_.get(filterGroup, 'mileageRange[1]')) {
-            newDropDownOptions.minMileages = _.filter(_.reverse(_.cloneDeep(mileages)) || [], function (item) {
+            newDropDownOptions.minMileages = _.filter(newDropDownOptions.minMileages || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'mileageRange[1]'));
                 return parseFloat(item) < value;
             })
         }
 
         if (_.get(filterGroup, 'engineCapacityRange[0]')) {
-            newDropDownOptions.maxEngineCapacities = _.filter(_.cloneDeep(engineCapacities) || [], function (item) {
+            newDropDownOptions.maxEngineCapacities = _.filter(newDropDownOptions.maxEngineCapacities || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'engineCapacityRange[0]'));
                 return parseFloat(item) > value;
             })
         }
         if (_.get(filterGroup, 'engineCapacityRange[1]')) {
-            newDropDownOptions.minEngineCapacities = _.filter(_.reverse(_.cloneDeep(engineCapacities)) || [], function (item) {
+            newDropDownOptions.minEngineCapacities = _.filter(newDropDownOptions.minEngineCapacities || [], function (item) {
                 let value = parseFloat(_.get(filterGroup, 'engineCapacityRange[1]'));
                 return parseFloat(item) < value;
             })
@@ -897,7 +902,9 @@ const ProductsListFilterForm = (props) => {
                                         dropdownMatchSelectWidth={false}
                                         dropdownMenuStyle={{ height: "130px" }}
                                         value={_.get(dropDownSearchValue, 'minYear') || undefined}
-                                        onSelect={(e) => { setFilterGroup({ ...filterGroup, yearRange: [e, _.get(filterGroup, 'yearRange[1]')] }) }}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, yearRange: [e, _.get(filterGroup, 'yearRange[1]')] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
@@ -909,9 +916,9 @@ const ProductsListFilterForm = (props) => {
                                         }}
                                         onChange={(v) => {
                                             //On clear
-                                            if(!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'minYears') || [], dropDownSearchValue.minYear) != -1 && _.get(filterGroup, 'yearRange[0]') ==  dropDownSearchValue.minYear){
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'minYears') || [], dropDownSearchValue.minYear) != -1 && _.get(filterGroup, 'yearRange[0]') == dropDownSearchValue.minYear) {
                                                 setFilterGroup({ ...filterGroup, yearRange: [v, !_.isArray(filterGroup.yearRange) || !isValidNumber(filterGroup.yearRange[1]) ? undefined : parseInt(filterGroup.yearRange[1])] })
-                                            }else{
+                                            } else {
                                                 setDropDownSearchValue({
                                                     ...dropDownSearchValue,
                                                     minYear: v
@@ -974,9 +981,9 @@ const ProductsListFilterForm = (props) => {
                                         }}
                                         onChange={(v) => {
                                             //On clear
-                                            if(!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'maxYears') || [], dropDownSearchValue.maxYear) != -1 && _.get(filterGroup, 'yearRange[1]') ==  dropDownSearchValue.maxYear){
-                                                setFilterGroup({ ...filterGroup, yearRange: [_.get(filterGroup, 'yearRange[0]'), v] }) 
-                                            }else{
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'maxYears') || [], dropDownSearchValue.maxYear) != -1 && _.get(filterGroup, 'yearRange[1]') == dropDownSearchValue.maxYear) {
+                                                setFilterGroup({ ...filterGroup, yearRange: [_.get(filterGroup, 'yearRange[0]'), v] })
+                                            } else {
                                                 setDropDownSearchValue({
                                                     ...dropDownSearchValue,
                                                     maxYear: v
@@ -1004,18 +1011,18 @@ const ProductsListFilterForm = (props) => {
                                         }}
                                         getPopupContainer={() => document.getElementById('yearPopUpContainer-2')}
                                     >
-                                    {
-                                        _.isArray(_.get(dropDownOptions, 'maxYears')) && !_.isEmpty(_.get(dropDownOptions, 'maxYears')) ?
-                                            _.map(dropDownOptions.maxYears, function (item, index) {
-                                                return (
-                                                    <AutoComplete.Option key={`maxYear-${index}`} value={`${item}`}>
-                                                        {item}
-                                                    </AutoComplete.Option>
-                                                )
-                                            })
-                                            :
-                                            null
-                                    }
+                                        {
+                                            _.isArray(_.get(dropDownOptions, 'maxYears')) && !_.isEmpty(_.get(dropDownOptions, 'maxYears')) ?
+                                                _.map(dropDownOptions.maxYears, function (item, index) {
+                                                    return (
+                                                        <AutoComplete.Option key={`maxYear-${index}`} value={`${item}`}>
+                                                            {item}
+                                                        </AutoComplete.Option>
+                                                    )
+                                                })
+                                                :
+                                                null
+                                        }
                                     </AutoComplete>
                                 </div>
                             </Col>
@@ -1048,58 +1055,124 @@ const ProductsListFilterForm = (props) => {
                         <Row style={{ width: '100%', padding: '2px 0px' }}>
                             <Col span={11}>
                                 <div id="pricePopUpContainer-1">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Price"
                                         dropdownMenuStyle={{ height: "130px" }}
                                         dropdownMatchSelectWidth={false}
-                                        value={!_.isArray(filterGroup.priceRange) || !isValidNumber(filterGroup.priceRange[0]) ? undefined : parseInt(filterGroup.priceRange[0])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, priceRange: [e, !_.isArray(filterGroup.priceRange) || !isValidNumber(filterGroup.priceRange[1]) ? undefined : parseInt(filterGroup.priceRange[1])] }) }}
+                                        value={dropDownSearchValue.minPrice || undefined}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, priceRange: [e, _.get(filterGroup, 'priceRange[1]')] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        dataSource={
+                                            _.map(dropDownOptions.minPrices, function (item, index) {
+                                                return <AutoComplete.Option key={`minPrice-${index}`} value={item}>
+                                                    {_.upperCase(formatNumber(item, 'auto', true, 0))}
+                                                </AutoComplete.Option>
+
+                                            })}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                minPrice: `${_.get(filterGroup, 'priceRange[0]') || ''}`,
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'minPrices') || [], dropDownSearchValue.minPrice) != -1 && _.get(filterGroup, 'priceRange[0]') == dropDownSearchValue.minPrice) {
+                                                setFilterGroup({ ...filterGroup, priceRange: [v, !_.isArray(filterGroup.priceRange) || !isValidNumber(filterGroup.priceRange[1]) ? undefined : parseInt(filterGroup.priceRange[1])] })
+                                            } else {
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    minPrice: parseFloat(v) || 0,
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'priceRange[0]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minPrices: _.get(getFilteredDropDownOptions(), 'minPrices'),
+                                                })
+                                            } else {
+
+                                                let newData = _.compact([_.find(_.get(getFilteredDropDownOptions(), 'minPrices') || [], function (item) {
+                                                    return parseFloat(v) <= parseFloat(item);
+                                                })])
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minPrices: newData,
+                                                })
+                                            }
+                                        }}
                                         getPopupContainer={() => document.getElementById('pricePopUpContainer-1')}
                                     >
-                                        {
-                                            _.compact(_.map(_.reverse(_.cloneDeep(prices)), function (price, index) {
-                                                if (!_.isArray(filterGroup.priceRange) || !filterGroup.priceRange[1] || !isValidNumber(filterGroup.priceRange[1]) || price < filterGroup.priceRange[1]) {
-                                                    return <Select.Option key={`min-price-${index}`} value={parseInt(price)}>
-                                                        {_.upperCase(formatNumber(price, 'auto', true, 0))}
-                                                    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                             <Col span={11} offset={2}>
                                 <div id="pricePopUpContainer-2">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Price"
                                         dropdownMenuStyle={{ height: "130px" }}
                                         dropdownMatchSelectWidth={false}
-                                        value={!_.isArray(filterGroup.priceRange) || !isValidNumber(filterGroup.priceRange[1]) ? undefined : parseInt(filterGroup.priceRange[1])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, priceRange: [!_.isArray(filterGroup.priceRange) || !isValidNumber(filterGroup.priceRange[0]) ? undefined : parseInt(filterGroup.priceRange[0]), e] }) }}
+                                        value={dropDownSearchValue.maxPrice || undefined}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, priceRange: [_.get(filterGroup, 'priceRange[0]'), e] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        dataSource={
+                                            _.map(dropDownOptions.maxPrices, function (item, index) {
+                                                return <AutoComplete.Option key={`maxPrice-${index}`} value={item}>
+                                                    {_.upperCase(formatNumber(item, 'auto', true, 0))}
+                                                </AutoComplete.Option>
+
+                                            })}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                maxPrice: `${_.get(filterGroup, 'priceRange[1]') || ''}`,
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'maxPrices') || [], dropDownSearchValue.maxPrice) != -1 && _.get(filterGroup, 'priceRange[1]') == dropDownSearchValue.maxPrice) {
+                                                setFilterGroup({ ...filterGroup, priceRange: [_.get(filterGroup, 'priceRange[0]'), v] })
+                                            } else {
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    maxPrice: parseFloat(v) || 0,
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'priceRange[1]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxPrices: _.get(getFilteredDropDownOptions(), 'maxPrices'),
+                                                })
+                                            } else {
+
+                                                let newData = _.compact([_.find(_.reverse(_.get(getFilteredDropDownOptions(), 'maxPrices')) || [], function (item) {
+                                                    return parseFloat(v) <= parseFloat(item);
+                                                })])
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxPrices: newData,
+                                                })
+                                            }
+                                        }}
                                         getPopupContainer={() => document.getElementById('pricePopUpContainer-2')}
                                     >
-                                        {
-                                            _.compact(_.map(_.cloneDeep(prices), function (price, index) {
-                                                if (!_.isArray(filterGroup.priceRange) || !filterGroup.priceRange[0] || !isValidNumber(filterGroup.priceRange[0]) || price > filterGroup.priceRange[0]) {
-                                                    return <Select.Option key={`min-price-${index}`} value={parseInt(price)}>
-                                                        {_.upperCase(formatNumber(price, 'auto', true, 0))}
-                                                    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                         </Row>
@@ -1131,58 +1204,125 @@ const ProductsListFilterForm = (props) => {
                         <Row style={{ width: '100%', padding: '2px 0px' }}>
                             <Col span={11}>
                                 <div className="margin-bottom-xs" id="engineCapacityPopUpContainer-1">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Engine Capacity"
                                         dropdownMenuStyle={{ height: "130px" }}
                                         dropdownMatchSelectWidth={false}
-                                        value={!_.isArray(filterGroup.engineCapacityRange) || !isValidNumber(filterGroup.engineCapacityRange[0]) ? undefined : parseFloat(filterGroup.engineCapacityRange[0])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, engineCapacityRange: [e, !_.isArray(filterGroup.engineCapacityRange) || !isValidNumber(filterGroup.engineCapacityRange[1]) ? undefined : parseFloat(filterGroup.engineCapacityRange[1])] }) }}
+                                        value={dropDownSearchValue.minEngineCapacity || undefined}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, engineCapacityRange: [e, _.get(filterGroup, 'engineCapacityRange[1]')] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        dataSource={
+                                            _.map(dropDownOptions.minEngineCapacities, function (item, index) {
+                                                return {
+                                                    text : `${formatNumber(item, null, true, 1)} cc`,
+                                                    value : item,
+                                                }
+
+                                            })}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                minEngineCapacity: `${_.get(filterGroup, 'engineCapacityRange[0]') || ''}`,
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'minEngineCapacities') || [], dropDownSearchValue.minEngineCapacity) != -1 && _.get(filterGroup, 'engineCapacityRange[0]') == dropDownSearchValue.minEngineCapacity) {
+                                                setFilterGroup({ ...filterGroup, engineCapacityRange: [v, !_.isArray(filterGroup.engineCapacityRange) || !isValidNumber(filterGroup.engineCapacityRange[1]) ? undefined : parseInt(filterGroup.engineCapacityRange[1])] })
+                                            } else {
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    minEngineCapacity: parseFloat(v) || 0,
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'engineCapacityRange[0]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minEngineCapacities: _.get(getFilteredDropDownOptions(), 'minEngineCapacities'),
+                                                })
+                                            } else {
+
+                                                let newData = _.compact([_.find(_.get(getFilteredDropDownOptions(), 'minEngineCapacities') || [], function (item) {
+                                                    return parseFloat(v) <= parseFloat(item);
+                                                })])
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minEngineCapacities: newData,
+                                                })
+                                            }
+                                        }}
                                         getPopupContainer={() => document.getElementById('engineCapacityPopUpContainer-1')}
                                     >
-                                        {
-                                            _.compact(_.map(_.reverse(_.cloneDeep(engineCapacities)), function (engine, index) {
-                                                if (!_.isArray(filterGroup.engineCapacityRange) || !filterGroup.engineCapacityRange[1] || !isValidNumber(filterGroup.engineCapacityRange[1]) || engine < filterGroup.engineCapacityRange[1]) {
-                                                    return <Select.Option key={`min-engine-${index}`} value={parseFloat(engine)}>
-                                                        {_.toUpper(formatNumber(engine, 'auto', true, 1))} cc
-                                                    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                             <Col span={11} offset={2}>
                                 <div id="engineCapacityPopUpContainer-2">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Engine Capacity"
                                         dropdownMenuStyle={{ height: "130px" }}
                                         dropdownMatchSelectWidth={false}
-                                        value={!_.isArray(filterGroup.engineCapacityRange) || !isValidNumber(filterGroup.engineCapacityRange[1]) ? undefined : parseFloat(filterGroup.engineCapacityRange[1])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, engineCapacityRange: [!_.isArray(filterGroup.engineCapacityRange) || !isValidNumber(filterGroup.engineCapacityRange[0]) ? undefined : parseFloat(filterGroup.engineCapacityRange[0]), e] }) }}
+                                        value={dropDownSearchValue.maxEngineCapacity || undefined}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, engineCapacityRange: [_.get(filterGroup, 'engineCapacityRange[0]'), e] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        dataSource={
+                                            _.map(dropDownOptions.maxEngineCapacities, function (item, index) {
+                                                return {
+                                                    text : `${formatNumber(item, null, true, 1)} cc`,
+                                                    value : item,
+                                                }
+                                            })}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                maxEngineCapacity: `${_.get(filterGroup, 'engineCapacityRange[1]') || ''}`,
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'maxEngineCapacities') || [], dropDownSearchValue.maxEngineCapacity) != -1 && _.get(filterGroup, 'engineCapacityRange[1]') == dropDownSearchValue.maxEngineCapacity) {
+                                                setFilterGroup({ ...filterGroup, engineCapacityRange: [_.get(filterGroup, 'engineCapacityRange[0]'), v] })
+                                            } else {
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    maxEngineCapacity: parseFloat(v) || 0,
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'engineCapacityRange[1]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxEngineCapacities: _.get(getFilteredDropDownOptions(), 'maxEngineCapacities'),
+                                                })
+                                            } else {
+
+                                                let newData = _.compact([_.find(_.reverse(_.get(getFilteredDropDownOptions(), 'maxEngineCapacities')) || [], function (item) {
+                                                    return parseFloat(v) <= parseFloat(item);
+                                                })])
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxEngineCapacities: newData,
+                                                })
+                                            }
+                                        }}
                                         getPopupContainer={() => document.getElementById('engineCapacityPopUpContainer-2')}
                                     >
-                                        {
-                                            _.compact(_.map(_.cloneDeep(engineCapacities), function (engine, index) {
-                                                if (!_.isArray(filterGroup.engineCapacityRange) || !filterGroup.engineCapacityRange[0] || !isValidNumber(filterGroup.engineCapacityRange[0]) || engine > filterGroup.engineCapacityRange[0]) {
-                                                    return <Select.Option key={`min-engine-${index}`} value={parseFloat(engine)}>
-                                                        {_.toUpper(formatNumber(engine, 'auto', true, 1))} cc
-                                                    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                         </Row>
@@ -1214,58 +1354,124 @@ const ProductsListFilterForm = (props) => {
                         <Row style={{ width: '100%', padding: '2px 0px' }}>
                             <Col span={11}>
                                 <div id="mileagePopUpContainer-1">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Mileage"
                                         dropdownMenuStyle={{ height: "130px" }}
                                         dropdownMatchSelectWidth={false}
-                                        value={!_.isArray(filterGroup.mileageRange) || !isValidNumber(filterGroup.mileageRange[0]) ? undefined : parseInt(filterGroup.mileageRange[0])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, mileageRange: [e, !_.isArray(filterGroup.mileageRange) || !isValidNumber(filterGroup.mileageRange[1]) ? undefined : parseInt(filterGroup.mileageRange[1])] }) }}
+                                        value={dropDownSearchValue.minMileage || undefined}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, mileageRange: [e, _.get(filterGroup, 'mileageRange[1]')] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        dataSource={
+                                            _.map(dropDownOptions.minMileages, function (item, index) {
+                                                return {
+                                                    text : `${formatNumber(item, null, true, 0)} KM`,
+                                                    value : item,
+                                                }
+                                            })}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                minMileage: `${_.get(filterGroup, 'mileageRange[0]') || ''}`,
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'minMileages') || [], dropDownSearchValue.minMileage) != -1 && _.get(filterGroup, 'mileageRange[0]') == dropDownSearchValue.minMileage) {
+                                                setFilterGroup({ ...filterGroup, mileageRange: [v, !_.isArray(filterGroup.mileageRange) || !isValidNumber(filterGroup.mileageRange[1]) ? undefined : parseInt(filterGroup.mileageRange[1])] })
+                                            } else {
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    minMileage: parseFloat(v) || 0,
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'mileageRange[0]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minMileages: _.get(getFilteredDropDownOptions(), 'minMileages'),
+                                                })
+                                            } else {
+
+                                                let newData = _.compact([_.find(_.get(getFilteredDropDownOptions(), 'minMileages') || [], function (item) {
+                                                    return parseFloat(v) <= parseFloat(item);
+                                                })])
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    minMileages: newData,
+                                                })
+                                            }
+                                        }}
                                         getPopupContainer={() => document.getElementById('mileagePopUpContainer-1')}
                                     >
-                                        {
-                                            _.compact(_.map(_.reverse(_.cloneDeep(mileages)), function (mileage, index) {
-                                                if (!_.isArray(filterGroup.mileageRange) || !filterGroup.mileageRange[1] || !isValidNumber(filterGroup.mileageRange[1]) || mileage < filterGroup.mileageRange[1]) {
-                                                    return <Select.Option key={`min-mileage-${index}`} value={parseInt(mileage)}>
-                                                        {formatNumber(mileage, null, true, 0)} KM
-                                                        </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                             <Col span={11} offset={2}>
                                 <div id="mileagePopUpContainer-2">
-                                    <Select
+                                    <AutoComplete
                                         allowClear
                                         placeholder="Mileage"
                                         dropdownMenuStyle={{ height: "130px" }}
                                         dropdownMatchSelectWidth={false}
-                                        value={!_.isArray(filterGroup.mileageRange) || !isValidNumber(filterGroup.mileageRange[1]) ? undefined : parseInt(filterGroup.mileageRange[1])}
-                                        onChange={(e) => { setFilterGroup({ ...filterGroup, mileageRange: [!_.isArray(filterGroup.mileageRange) || !isValidNumber(filterGroup.mileageRange[0]) ? undefined : parseInt(filterGroup.mileageRange[0]), e] }) }}
+                                        value={dropDownSearchValue.maxMileage || undefined}
+                                        onSelect={(e) => {
+                                            setFilterGroup({ ...filterGroup, mileageRange: [_.get(filterGroup, 'mileageRange[0]'), e] })
+                                        }}
                                         onDropdownVisibleChange={(open) => {
                                             setIsDropDownOpen(open)
                                         }}
+                                        dataSource={
+                                            _.map(dropDownOptions.maxMileages, function (item, index) {
+                                                return {
+                                                    text : `${formatNumber(item, null, true, 0)} KM`,
+                                                    value : item,
+                                                }
+                                            })}
+                                        onBlur={() => {
+                                            setDropDownSearchValue({
+                                                ...dropDownSearchValue,
+                                                maxMileage: `${_.get(filterGroup, 'mileageRange[1]') || ''}`,
+                                            })
+                                        }}
+                                        onChange={(v) => {
+                                            //On clear
+                                            if (!v && _.indexOf(_.get(getFilteredDropDownOptions(), 'maxMileages') || [], dropDownSearchValue.maxMileage) != -1 && _.get(filterGroup, 'mileageRange[1]') == dropDownSearchValue.maxMileage) {
+                                                setFilterGroup({ ...filterGroup, mileageRange: [_.get(filterGroup, 'mileageRange[0]'), v] })
+                                            } else {
+                                                setDropDownSearchValue({
+                                                    ...dropDownSearchValue,
+                                                    maxMileage: parseFloat(v) || 0,
+                                                })
+                                            }
+                                        }}
+                                        onSearch={(v) => {
+                                            if (!v || _.get(filterGroup, 'mileageRange[1]') == v) {
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxMileages: _.get(getFilteredDropDownOptions(), 'maxMileages'),
+                                                })
+                                            } else {
+
+                                                let newData = _.compact([_.find(_.reverse(_.get(getFilteredDropDownOptions(), 'maxMileages')) || [], function (item) {
+                                                    return parseFloat(v) <= parseFloat(item);
+                                                })])
+
+                                                setDropDownOptions({
+                                                    ...dropDownOptions,
+                                                    maxMileages: newData,
+                                                })
+                                            }
+                                        }}
                                         getPopupContainer={() => document.getElementById('mileagePopUpContainer-2')}
                                     >
-                                        {
-                                            _.compact(_.map(_.cloneDeep(mileages), function (mileage, index) {
-                                                if (!_.isArray(filterGroup.mileageRange) || !filterGroup.mileageRange[0] || !isValidNumber(filterGroup.mileageRange[0]) || mileage > filterGroup.mileageRange[0]) {
-                                                    return <Select.Option key={`min-mileage-${index}`} value={parseInt(mileage)}>
-                                                        {formatNumber(mileage, null, true, 0)} KM
-    </Select.Option>
-                                                } else {
-                                                    return null;
-                                                }
-                                            }))
-                                        }
-                                    </Select>
+                                    </AutoComplete>
                                 </div>
                             </Col>
                         </Row>
