@@ -243,7 +243,7 @@ class LayoutV2 extends React.Component {
 
         window.scrollTo(0, 0);
         this.handleExpiredToken();
-        // this.setFirebaseToken();
+        this.setFirebaseToken();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -302,26 +302,26 @@ class LayoutV2 extends React.Component {
             };
         }
 
-        // if (prevProps.user.authenticated != this.props.user.authenticated) {
-        //     this.setFirebaseToken();
-        //     if (this.state.notificationPage == 1) {
-        //         this.getUserNotifications(0);
-        //     } else {
-        //         this.setState({
-        //             notificationPage: 1,
-        //         })
-        //     }
-        // }
+        if (prevProps.user.authenticated != this.props.user.authenticated) {
+            this.setFirebaseToken();
+            if (this.state.notificationPage == 1) {
+                this.getUserNotifications(0);
+            } else {
+                this.setState({
+                    notificationPage: 1,
+                })
+            }
+        }
 
-        // if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
-        //     if (this.state.notificationBoxRef.current) {
-        //         this.state.notificationBoxRef.current.scrollToTop();
-        //     }
-        // }
+        if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
+            if (this.state.notificationBoxRef.current) {
+                this.state.notificationBoxRef.current.scrollToTop();
+            }
+        }
 
-        // if (prevState.notificationPage != this.state.notificationPage) {
-        //     this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
-        // }
+        if (prevState.notificationPage != this.state.notificationPage) {
+            this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
+        }
     }
 
     handleScroll = (e) => {
