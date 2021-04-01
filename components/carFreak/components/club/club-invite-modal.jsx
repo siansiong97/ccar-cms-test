@@ -44,7 +44,7 @@ const ClubInviteModal = (props) => {
     useEffect(() => {
 
         if(scrollBarRef){
-            console.log(scrollBarRef);
+    
             if(scrollBarRef.scrollToTop){
                 scrollBarRef.scrollToTop();
             }
@@ -111,8 +111,7 @@ const ClubInviteModal = (props) => {
                 }
             }).then(res => {
 
-                console.log('res');
-                console.log(res);
+                
                 setUsers(_.isArray(_.get(res, ['data', 'data'])) && !_.isEmpty(_.get(res, ['data', 'data'])) ? userPage <= 1 ? res.data.data : users.concat(res.data.data) : users)
                 setUserTotal(_.get(res, ['data', 'total']));
                 setIsLoading(false)

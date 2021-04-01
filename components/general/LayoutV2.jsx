@@ -132,6 +132,7 @@ class LayoutV2 extends React.Component {
                             skip: skip || 0
                         }
                     }).then(res => {
+              
                         this.setState({
                             notificationLoading: false,
                             notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
@@ -203,7 +204,7 @@ class LayoutV2 extends React.Component {
     }
 
     _renderNotification = (data) => {
-        console.log('notification', data);
+      
         notification.open({
             message: _.get(data, 'notification.title') || '',
             description: _.get(data, 'notification.body') || '',
@@ -241,7 +242,7 @@ class LayoutV2 extends React.Component {
 
         window.scrollTo(0, 0);
         this.handleExpiredToken();
-        this.setFirebaseToken();
+        // this.setFirebaseToken();
         this.props.loading(false);
         // if(this.props.location.pathname.indexOf('viewCar') > 0){
         //   window.location.href="ccarmy:/" + this.props.location.pathname
@@ -300,26 +301,26 @@ class LayoutV2 extends React.Component {
             };
         }
 
-        if (prevProps.user.authenticated != this.props.user.authenticated) {
-            this.setFirebaseToken();
-            if (this.state.notificationPage == 1) {
-                this.getUserNotifications(0);
-            } else {
-                this.setState({
-                    notificationPage: 1,
-                })
-            }
-        }
+        // if (prevProps.user.authenticated != this.props.user.authenticated) {
+        //     this.setFirebaseToken();
+        //     if (this.state.notificationPage == 1) {
+        //         this.getUserNotifications(0);
+        //     } else {
+        //         this.setState({
+        //             notificationPage: 1,
+        //         })
+        //     }
+        // }
 
-        if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
-            if (this.state.notificationBoxRef.current) {
-                this.state.notificationBoxRef.current.scrollToTop();
-            }
-        }
+        // if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
+        //     if (this.state.notificationBoxRef.current) {
+        //         this.state.notificationBoxRef.current.scrollToTop();
+        //     }
+        // }
 
-        if (prevState.notificationPage != this.state.notificationPage) {
-            this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
-        }
+        // if (prevState.notificationPage != this.state.notificationPage) {
+        //     this.getUserNotifications((this.state.notificationPage - 1) * NOTIFICATION_PAGE_SIZE)
+        // }
     }
 
     handleScroll = (e) => {
@@ -334,6 +335,7 @@ class LayoutV2 extends React.Component {
         }
 
     };
+
     _renderUser = (profileMenu) => {
         let self = this;
         if (_.get(this.props, ['user', 'authenticated'])) {
@@ -402,9 +404,9 @@ class LayoutV2 extends React.Component {
                     </Dropdown>
 
 
-                    <span className='d-inline-block margin-left-md' >
+                    {/* <span className='d-inline-block margin-left-md' >
                         {this._renderNotificationBox()}
-                    </span>
+                    </span> */}
                 </span>
             );
         } else {
@@ -428,15 +430,19 @@ class LayoutV2 extends React.Component {
                                 {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
-                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm' onClick={(e) => { self.props.router.push(menu.path) }}>
-                                                <div className="flex-justify-start flex-items-align-center">
-                                                    <span className='d-inline-block margin-x-sm'>
-                                                        {menu.icon}
-                                                    </span>
-                                                    <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
-                                                        {menu.text}
-                                                    </span>
-                                                </div>
+                                            <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
+                                                <Link shallow={false} href={menu.path || ''}   >
+                                                    <a>
+                                                        <div className="flex-justify-start flex-items-align-center">
+                                                            <span className='d-inline-block margin-x-sm'>
+                                                                {menu.icon}
+                                                            </span>
+                                                            <span className='d-inline-block black headline subtitle1   cursor-pointer margin-x-sm' >
+                                                                {menu.text}
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                                </Link>
                                             </Menu.Item>
                                         )
                                     })
@@ -544,8 +550,9 @@ class LayoutV2 extends React.Component {
                                                 </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
-                                            <div className="flex-justify-end white flex-items-align-center main-footer">
-                                                Terms of Use | Privacy Policy
+                                            <div className="flex-justify-end flex-items-align-center main-footer">
+                                                {/* Terms of Use | Privacy Policy */}
+                                                <Link shallow={false}  href={`/termsOfUse`}  >Terms of Use | Privacy Policy</Link>
                                                 </div>
                                         </Col>
                                     </Row>
@@ -799,7 +806,6 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={11} xl={12}>
                                             {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
                                             <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
-
                                                 <Link shallow={false} href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
@@ -877,10 +883,14 @@ class LayoutV2 extends React.Component {
                             <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                                 <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
                                     <Col xs={12} sm={12} md={14} lg={12} xl={12}>
-                                        <div className='flex-justify-start flex-items-align-center topnav-child'  >
-                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }} onClick={(e) => { this.props.router.push('/') }}>
+                                        <div className='flex-justify-start flex-items-align-center topnav-child'>
+                                            <Link shallow={false} href={`/`}  >
+                                                <a>
+                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
                                                 <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
                                             </span>
+                                            </a>
+                                        </Link>
                                             {
                                                 this.props.hideSearchBar ?
                                                     null

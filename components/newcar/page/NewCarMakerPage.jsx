@@ -383,7 +383,7 @@ class Maker extends React.Component {
 
                                             <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase' >
                                                 {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
-                        </span>
+                                            </span>
                                         </Col>
 
                                         <Row className="maker-list-car" type="flex" >
@@ -634,6 +634,75 @@ class Maker extends React.Component {
                         </div>
                     </div>
                 </Desktop>
+
+                <Tablet>
+                <div className="section-version3" style={{ marginTop: '20px' }}>
+                        <div className="container-version3 padding-x-sm">
+                            <Breadcrumb style={{ marginBottom: '5px' }}>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/" passHref>
+                                        <a>Home</a>
+                                    </Link>
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/newcar" passHref>
+                                        <a>New Car</a>
+                                    </Link>
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/newcar/filter" passHref>
+                                        <a>Filter</a>
+                                    </Link>
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/newcar/maker" passHref>
+                                        <a>
+                                            {_.capitalize(_.get(this.props, ['router', 'query', 'id']) || '')}
+                                        </a>
+                                    </Link>
+                                </Breadcrumb.Item>
+                            </Breadcrumb>
+
+                            <Tablet>
+                                <Row>
+                                    <Col xs={24} sm={24} md={16} lg={19} xl={19} style={{ paddingLeft: '5px' }}>
+                                        <Row className="maker-details padding-lg">
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
+                                                <img style={{ width: '15%' }} src={getCarBrandsIcon(_.get(this.props, ['router', 'query', 'id']) || '')}></img>
+                                            </Col>
+                                        </Row>
+
+                                        <Col className="gutter-row text-align-center" xs={18} sm={18} md={24} lg={20} xl={20} >
+                                            <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase ' >
+                                                {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
+                                    </span>
+                                        </Col>
+
+                                        <Row className="maker-list-car" type="flex" >
+                                            {this._renderVariants()}
+                                        </Row>
+
+                                        {
+                                            this.state.total > PAGESIZE ?
+                                                <div className="flex-justify-center margin-md">
+                                                    <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
+                                                </div>
+                                                :
+                                                null
+                                        }
+                                    </Col>
+
+                                    <Col className="stick-column" xs={0} sm={0} md={8} lg={5} xl={5}>
+                                        <Affix offsetTop={65}>
+                                            <BrandFiltering brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList} />
+                                        </Affix>
+                                    </Col>
+                                </Row>
+
+                            </Tablet>
+                        </div>
+                    </div>
+                </Tablet>
 
             </LayoutV2>
         )

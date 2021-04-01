@@ -1354,6 +1354,178 @@ class Filter extends React.Component {
                     </div>
                 </Desktop>
 
+                <Tablet>
+                    <div className="section-version3" style={{ touchAction: 'pan-y' }}>
+                        <div className="container-version3 padding-x-sm margin-top-md" id="filter-top" >
+                            <Breadcrumb style={{ marginBottom: '5px' }}>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/">
+                                        <a>
+                                            Home
+                                        </a>
+                                    </Link>
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/newcar">
+                                        <a>
+                                            New Car
+                                        </a>
+                                    </Link>
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item>
+                                    <Link shallow={false}  href="/newcar/filter">
+                                        <a>
+                                            Filter
+                                        </a></Link>
+                                </Breadcrumb.Item>
+                            </Breadcrumb>
+                            <Row gutter={[20, 20]}>
+                                {/* <div className="collapse-filter" style={{ float: 'right' }} >
+                                <Affix offsetTop={200}>
+                                    <Button onClick={this.showDrawer} style={{ position: 'sticky', float: 'right', position: '-webkit-sticky', top: 0, right: 0 }} >
+                                        <Icon type="caret-left" />
+                                    </Button>
+                                    <Drawer
+                                        placement="right"
+                                        closable={true}
+                                        onClose={this.onClose}
+                                        visible={this.state.visible}
+                                        width={350}
+                                        title="Car Brands"
+                                    >
+                                        <div className="brand-res" >
+                                            <BrandFiltering
+                                                brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList}
+                                            />
+                                        </div>
+                                    </Drawer>
+                                </Affix>
+                            </div> */}
+
+                                <Col xs={24} sm={24} md={16} lg={18} xl={19}>
+                                    <Row type="flex" align='middle'>
+                                        <Col className="gutter-row" xs={{ span: 23, offset: 1 }} sm={{ span: 23, offset: 1 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }} xl={{ span: 12, offset: 0 }}>
+                                            <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginTop: '15px' }} >
+                                                SEARCH FILTER
+                                        </span>
+                                        </Col>
+                                        <Col className="gutter-row" xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 12 }}>
+                                            <div className='fill-parent flex-justify-end  flex-items-align-center flex-no-wrap'>
+                                                <span className='d-inline-block margin-x-sm' >
+                                                    <Switch
+                                                        checkedChildren="Show Text"
+                                                        unCheckedChildren="Show Icon"
+                                                        onChange={() => this.setState({
+                                                            showIcon: !this.state.showIcon,
+                                                        })
+                                                        }
+                                                    />
+                                                </span>
+                                                <span className='d-inline-block margin-x-sm' >
+                                                    <Switch
+                                                        defaultChecked
+                                                        checkedChildren="Less Condition"
+                                                        unCheckedChildren="More Conditions"
+                                                        onChange={(e) => this.setState({
+                                                            expand: e,
+                                                        })
+                                                        }
+                                                    />
+                                                </span>
+                                                <span className='d-inline-block margin-x-sm'>
+                                                    <Button onClick={() => this.resetSearch()}>
+                                                        <div className='flex-items-align-center flex-justify-center'>
+                                                            <span className='d-inline-block flex-items-align-center flex-justify-center' >
+                                                                <img src='/assets/General/reset.png' style={{ width: '20px', height: '20px' }} className="margin-x-xs"></img>
+                                                            </span>
+                                                            <span className='d-inline-block' >
+                                                                Reset
+                                                </span>
+                                                        </div>
+                                                    </Button>
+                                                </span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+
+                                    {this.renderSearchFilter()}
+
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <div className='fill-parent '>
+                                            <span className='d-inline-block ' >
+                                                <label>Sort by: </label>
+                                                <Select value={this.state.sorting} style={{ width: 120 }}
+                                                    dropdownMatchSelectWidth={false}
+                                                    onChange={(e) => this.onChangeSortBy(e)}
+                                                >
+                                                    <Select.Option value="createdAt:-1">Best Value</Select.Option>
+                                                    <Select.Option value="price:1">Price (Low to High)</Select.Option>
+                                                    <Select.Option value="price:-1">Price (High to Low)</Select.Option>
+                                                    {/* <Select.Option value='dealer'>Best Dealer Reviewed</Select.Option>
+                                <Select.Option value='rate'>Best Dealer Rating</Select.Option> */}
+                                                </Select>
+                                            </span>
+                                        </div>
+                                    </Col>
+
+
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <div className="padding-bottom-md background-white thick-border fill-parent">
+                                            {this._renderVariants()}
+                                        </div>
+                                    </Col>
+                                    {
+                                        this.state.total > PAGESIZE ?
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <div className="flex-justify-center">
+                                                    <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
+                                                </div>
+                                            </Col>
+                                            :
+                                            null
+                                    }
+
+                                </Col>
+
+
+                                <Col className="stick-column" xs={0} sm={0} md={8} lg={6} xl={5}>
+                                    <Affix offsetTop={65}>
+                                        <BrandFiltering
+                                            brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList}
+                                        // onSelect={(e) => { this.setState({ ...this.state.filterGroup, make: _.toLower(e) }) }}
+                                        // selected={
+                                        //     this.props.newCars ? this.state.filterGroup
+                                        //         ? this.state.filterGroup.make
+                                        //             ? this.state.filterGroup.make
+                                        //             : ''
+                                        //         : ''
+                                        //         : ''}
+                                        />
+                                    </Affix>
+                                </Col>
+
+                                {/* <Col className="stick-column" xs={24} sm={24} md={0} lg={0} xl={0}>
+                                <Button onClick={this.showDrawer} style={{position:'sticky', float:'right', position: '-webkit-sticky', top:0, right:0}} >
+                                <Icon type="caret-left" />
+                                </Button>
+                                <Drawer
+                                    placement="right"
+                                    closable={true}
+                                    onClose={this.onClose}
+                                    visible={this.state.visible}
+                                    width={300}
+                                >
+                                <BrandFiltering
+                                    brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList}
+                                />
+                                </Drawer>
+                        </Col> */}
+
+                            </Row>
+                        </div>
+                    </div>
+                </Tablet>
+
             </LayoutV2>
         );
     }

@@ -27,7 +27,7 @@ const Index = (props) => {
 
 export async function getServerSideProps(context) {
 
-    console.log(context.req.params);
+ 
     const { make, model } = context.req.params;
     let data = {};
     let seoData = {};
