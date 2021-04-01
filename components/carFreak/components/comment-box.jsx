@@ -6,6 +6,7 @@ import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
+import { v4 } from 'uuid';
 import { formatNumber, getObjectId, getPlural, getUserName, notEmptyLength, objectRemoveEmptyValue } from '../../../common-function';
 import client from '../../../feathers';
 import { pinIcon } from '../../../icon';
@@ -45,6 +46,7 @@ const CommentBox = (props) => {
     const [messageTotal, setMessageTotal] = useState(0);
     const [loading, setIsLoading] = useState(false);
     const [commentMenu, setCommentMenu] = useState([]);
+    const [focusIndicator, setFocusIndicator] = useState(null);
 
 
     useEffect(() => {
@@ -77,6 +79,13 @@ const CommentBox = (props) => {
         }
 
     }, [comment])
+
+    useEffect(() => {
+        if (expandReplyKey) {
+            setFocusIndicator(v4())
+        }
+
+    }, [expandReplyKey])
 
 
     useEffect(() => {
@@ -260,6 +269,7 @@ const CommentBox = (props) => {
             setTimeout(() => {
                 setTextEditMode(false);
                 setText('');
+                setFocusIndicator(v4());
             }, 200);
 
         }
@@ -345,7 +355,7 @@ const CommentBox = (props) => {
                                         onClick={(actived) => {
                                             setTotalLike(actived ? totalLike + 1 : totalLike - 1)
                                         }} />
-                                    <span className="cursor-pointer" onClick={() => { setExpandReplyKey(expandReplyKey ? null : '1') }}>
+                                    <span className="cursor-pointer" onClick={() => { setExpandReplyKey(expandReplyKey ? null : '1'); }}>
                                         {getPlural('Reply', 'Replies', messageTotal, true)}
                                     </span>
                                 </span>
@@ -392,6 +402,7 @@ const CommentBox = (props) => {
                                             editMode={textEditMode}
                                             text={text || ''}
                                             excludeEnter
+                                            focusIndicator={focusIndicator}
                                             onSubmit={(text) => {
                                                 handleSubmit(text);
                                             }}

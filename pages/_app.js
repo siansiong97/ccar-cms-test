@@ -27,7 +27,7 @@ import { PageTransition } from '../components/general/PageTransition';
 import { RouterContextProvider } from '../hooks/useRouter';
 import { checkEnvReturnCmsUrl } from '../functionContent';
 import client from '../feathers';
-import { ccarWebLogo400X150 } from '../icon';
+import { ccarLogo2, ccarWebLogo400X150 } from '../icon';
 
 
 
@@ -82,7 +82,7 @@ const WrappedApp = ({ Component, pageProps, router }) => {
         }}
       />
       <Head>
-        <link rel="icon" href="https://yt3.ggpht.com/a/AATXAJyACAnnk58_qfVZqvjaTkavsxOb8dSYGeciv4a7=s88-c-k-c0x00ffffff-no-rj" />
+        <link rel="icon" href={ccarLogo2 || "https://yt3.ggpht.com/a/AATXAJyACAnnk58_qfVZqvjaTkavsxOb8dSYGeciv4a7=s88-c-k-c0x00ffffff-no-rj"} />
         <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&family=Ubuntu:ital@1&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

@@ -411,7 +411,7 @@ const GridProductList = (props) => {
                                                             <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                                                                 <Car360ViewButton id={v.xmlUrl ? v._id : null}>
                                                                     {/* <Tooltip title="360&deg; View"> */}
-                                                                    <Button type="normal" className={`w-100 ads-purchase-button ${v.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)' }}><img src="/assets/profile/icon-list/carmarket-bar-icon/360.png" /></Button>
+                                                                    <Button type="normal" className={`w-100 ads-purchase-button ${v.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" /></Button>
                                                                     {/* </Tooltip> */}
                                                                 </Car360ViewButton>
                                                             </Col>

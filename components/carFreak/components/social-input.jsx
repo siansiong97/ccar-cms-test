@@ -65,6 +65,13 @@ const SocialInput = (props) => {
     }, [props.resetIndicator])
 
     useEffect(() => {
+        console.log('focus');
+        if (props.focusIndicator) {
+            focus();
+        }
+    }, [props.focusIndicator])
+
+    useEffect(() => {
         setEditMode(props.editMode ? true : false);
     }, [props.editMode])
 
@@ -145,7 +152,7 @@ const SocialInput = (props) => {
             if (quill.current) {
                 let editor = quill.current.getEditor();
                 quill.current.focus();
-                let currentCursor = editor.getSelection().index || 0;
+                let currentCursor = (editor.getText() || '').length || 0;
                 if (editor && quill) {
                     setTimeout(() => {
                         editor.setSelection(currentCursor);

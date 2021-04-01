@@ -482,7 +482,7 @@ const Description = (props) => {
                                 + ", I am interested in your car ad on ccar.my and I would like to know more about "
                                 + productDetails.title
                                 + " (RM "
-                                +  productDetails.price.toFixed(2) + "). Thank you. https://share.ccar.my/viewCar/"
+                                +  productDetails.price.toFixed(2) + "). Thank you. https://ccar.my/viewCar/"
                                 + productDetails._id}
 
                         >{n[i]}</a></>

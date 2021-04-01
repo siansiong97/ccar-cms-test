@@ -12,7 +12,7 @@ import { v4 } from 'uuid';
 import { arrayLengthCount, convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
-import { ccarLogo, bellInactive } from '../../icon';
+import { ccarLogo, bellInactive, wishList, wishlistIconActived } from '../../icon';
 import { loading, loginMode, quickSearchProductsList, registerMode, setApplyMileage, setApplyPrice, setApplyYear, setMenuHeight, setNotificationToken, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
 import { clearProductFilterOptions, fetchCompareCarLimit } from '../../redux/actions/productsList-actions';
@@ -132,8 +132,6 @@ class LayoutV2 extends React.Component {
                             skip: skip || 0
                         }
                     }).then(res => {
-                        console.log('res');
-                        console.log(res);
                         this.setState({
                             notificationLoading: false,
                             notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
@@ -160,7 +158,6 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
-            console.log('token', token);
             if (token) {
 
                 let self = this;
@@ -773,6 +770,13 @@ class LayoutV2 extends React.Component {
                 </span>,
                 text: 'Profile',
                 path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}`
+            },
+            {
+                icon: <span className='flex-items-align-center flex-justify-center' >
+                    <img src={wishList} style={{ width: '20px', height: '20px' }}/>
+                </span>,
+                text: 'My Wishlist',
+                path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}/details/wishlists`
             },
             {
                 icon: (<span className='d-inline-block relative-wrapper' style={{ width: '20px', height: '20px' }} >
