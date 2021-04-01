@@ -175,7 +175,7 @@ class Details extends React.Component {
   _renderView = () => {
     switch (this.state.view) {
       case 'overview':
-        return <NewCarOverview changeTabs={this.changeTabs} ></NewCarOverview> 
+        return <NewCarOverview changeTabs={this.changeTabs} ></NewCarOverview>  
         break;
       case 'specs':
         return <CompareNewCarIndex />

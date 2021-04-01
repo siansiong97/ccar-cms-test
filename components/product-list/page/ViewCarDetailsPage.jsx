@@ -1,9 +1,6 @@
 import {
   DownOutlined,
-
   HeartOutlined,
-
-
   LeftOutlined,
   RightOutlined, UpOutlined
 } from '@ant-design/icons';
@@ -17,7 +14,7 @@ import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { bindActionCreators } from "redux";
 import { flame } from '../../../icon';
-import { loading, quickSearchProductsList, showContactList } from '../../../redux/actions/app-actions';
+import { loading, quickSearchProductsList, showContactList, updateActiveMenu } from '../../../redux/actions/app-actions';
 import { updateActiveIdProductList } from '../../../redux/actions/productsList-actions';
 import { calMonth, formatMoney } from '../../../functionContent';
 import client from '../../../feathers';
@@ -97,7 +94,7 @@ class ViewCarDetailsPage extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
-
+    this.props.updateActiveMenu('2');
     this.setState({
 
       typingTimeout: setTimeout(() => {
@@ -952,6 +949,7 @@ function mapDispatchToProps(dispatch) {
     quickSearchProductsList: quickSearchProductsList,
 
     showContactList: showContactList,
+    updateActiveMenu: updateActiveMenu,
     setUser: setUser,
     loading,
 

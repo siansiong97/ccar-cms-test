@@ -99,7 +99,7 @@ const DealerProfile = (props) => {
                         <TabPane tab="Cars For Sale" key="1">
                             <Row gutter={[20, 10]} className='margin-top-md'>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={18}>
-                                    <UserCarOnSale data={profile} />
+                                    <UserCarOnSale data={profile} /> 
                                 </Col>
                                 <Col xs={0} sm={0} md={0} lg={0} xl={6}>
                                     {_renderDealerDetailsBox()}
@@ -215,7 +215,7 @@ const DealerProfile = (props) => {
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <ProfileDetailsBox data={profile} showProfileActions={props.isOwn} type="dealer"
-                                        onChangeCoverPhoto={(res) => {
+                                        onChangeCoverPhoto={(res) => { 
                                             if (props.onChangeCoverPhoto) {
                                                 props.onChangeCoverPhoto(res);
                                             }

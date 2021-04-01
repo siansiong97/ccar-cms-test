@@ -320,7 +320,7 @@ const Index = (props) => {
                 description={
                   <span>
                     No Result
-                                </span>
+                  </span>
                 }
               >
               </Empty>

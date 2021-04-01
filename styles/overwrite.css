@@ -320,6 +320,12 @@ video {
     border-color: #FFCC32;
 }
 
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+    color: #fff;
+    background: #FFCC32;
+    border-color: #FFCC32;
+}
+
 .round-border-radio-button .ant-radio-button-wrapper:first-child {
     border-radius: 12px 0px 0px 12px;
 }
