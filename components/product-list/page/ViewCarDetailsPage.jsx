@@ -687,7 +687,7 @@ class ViewCarDetailsPage extends React.Component {
                         </Col>
                       </Row>
                       <Row >
-                        <Col span={6} >
+                        <Col xs={6} sm={6} md={0} lg={6} xl={6} >
                           <div className='fill-parent flex-justify-center flex-items-align-center' style={{ paddingLeft: '35px' }}>
                             <UserAvatar redirectProfile data={_.get(this.state.productDetails, ['createdBy'])} size={50} />
                           </div>
@@ -900,7 +900,7 @@ class ViewCarDetailsPage extends React.Component {
                           <RegisterCard key='register' button={
                             [<Tooltip key='tooltipsregister' title="Registration Card">
                               <Button type="normal"
-                                className={`w-100 ads-purchase-button ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`}
+                                className={`w-100 ads-purchase-button margin-xs ${_.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'cursor-pointer' : 'cursor-not-allowed '}`}
                                 style={{ padding: 0, background: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)', borderColor: _.isArray(_.get(this.state.productDetails, ['registrationUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['registrationUrl'])) ? 'rgb(209 ,110, 132)' : 'rgb(237, 236, 234)' }}>
                                 <img src="/assets/CarListingIconMobile/registration-card.png" alt="Registration Card Icon" /></Button></Tooltip>]
                           } registrationUrl={this.state.productDetails.registrationUrl ? this.state.productDetails.registrationUrl : []} />

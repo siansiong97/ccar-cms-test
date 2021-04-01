@@ -1150,18 +1150,29 @@ code {
     margin-top: -40px;
     margin-right: -22px;
   }
+  .red-flame1 img {
+    width: 35%;
+    margin-top: -95px;
+    margin-right: -25px;
+  }
 }
 
 @media only screen and (max-width:1024px) {
   .ant-col-xl-8 .red-flame img {
     width: 35%;
-    margin-top: -36px;
+    margin-top: -30px;
     margin-right: -20px;
   }
   .red-flame img {
     width: 35%;
-    margin-top: -30px;
+    margin-top: -40px;
     margin-right: -20px;
+  }
+
+  .red-flame1 img {
+    width: 35%;
+    margin-top: -75px;
+    margin-right: -15px;
   }
 }
 

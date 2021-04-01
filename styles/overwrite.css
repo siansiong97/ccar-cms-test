@@ -208,9 +208,9 @@
     margin-bottom: 10px;
 }
 
-.banner-anim-thumb-default {
-    height: 40px;
-    line-height: 40px;
+.carousel .banner-anim-thumb-default {
+    height: 45px;
+    line-height: 30px;
 }
 
 .show-carousel-dots-inside .BrainhubCarousel__container {

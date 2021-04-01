@@ -209,7 +209,7 @@ const SocialBoardPage = (props) => {
 
             <Tablet>
                 <CarFreakLayout>
-                    <Row gutter={[10, 10]}>
+                    <Row gutter={[10, 10]}> 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="flex-justify-end flex-items-align-center margin-bottom-lg">
                                 <span className='d-inline-block margin-right-md' >
@@ -229,7 +229,7 @@ const SocialBoardPage = (props) => {
                                                     <Col key={'chats' + i} className="gutter-row"
                                                         xs={12} sm={12} md={12} lg={12} xl={12}
                                                     >
-                                                        <SocialBoardCard data={post}
+                                                        <SocialBoardCard data={post} 
                                                             onRedirectToPost={(data) => {
                                                                 if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
                                                                     props.router.push(`/social-board/${data._id}`, undefined, { shallow : false })
