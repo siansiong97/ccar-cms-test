@@ -474,7 +474,7 @@ class NewCarVersion3 extends React.Component {
         return (
             <div>
                 <Tablet>
-                <BannerAnim prefixCls="banner-user" autoPlay>
+                <BannerAnim className="carousel" prefixCls="banner-user" autoPlay>
                 <Element
                         prefixCls="banner-user-elem"
                         key="0"
@@ -573,7 +573,7 @@ class NewCarVersion3 extends React.Component {
             </Tablet>
 
                 <Mobile>
-                    <BannerAnim prefixCls="banner-user-mobile" autoPlay>
+                    <BannerAnim className="carousel" prefixCls="banner-user-mobile" autoPlay>
                         {/* <Element
                       prefixCls="banner-user-elem"
                       key="0"
@@ -631,7 +631,7 @@ class NewCarVersion3 extends React.Component {
     _renderCarouselWeb = () => {
 
         return (
-            <BannerAnim prefixCls="banner-user-web" autoPlay>
+            <BannerAnim className="carousel" prefixCls="banner-user-web" autoPlay>
                 <Element
                     prefixCls="banner-user-elem"
                     key="web0"

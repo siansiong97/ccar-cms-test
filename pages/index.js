@@ -61,7 +61,7 @@ const Index = (props) => {
     return (
       <div>
         <Tablet>
-          <BannerAnim prefixCls="banner-user" autoPlay>
+          <BannerAnim className="carousel" prefixCls="banner-user" autoPlay>
             <Element
               prefixCls="banner-user-elem"
               key="0"
@@ -218,7 +218,7 @@ const Index = (props) => {
   const _renderCarouselWeb = () => {
 
     return (
-      <BannerAnim type="across" prefixCls="banner-user-web" autoPlay>
+      <BannerAnim className="carousel" type="across" prefixCls="banner-user-web" autoPlay>
         <Element
           prefixCls="banner-user-elem"
           key="web0"

@@ -208,8 +208,8 @@
     margin-bottom: 10px;
 }
 
-.banner-anim-thumb-default {
-    height: 60px;
+.carousel .banner-anim-thumb-default {
+    height: 45px;
     line-height: 40px;
 }
 

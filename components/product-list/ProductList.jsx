@@ -773,8 +773,9 @@ const ProductList = (props) => {
                         </Row>
                       </div>
                     </Col>
+                    
                     <Col span={10}>
-                      <SellerBusinessCard data={v.companys} data1={v.createdBy} />
+                      <SellerBusinessCard data={v.companys} data1={v.createdBy} /> 
                     </Col>
                   </Row>
                 </Col>
