@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import { connect } from 'react-redux';
+import { getLiveSeoData } from '../../../common-function';
 import ReduxPersistWrapper from '../../../components/general/ReduxPersistWrapper';
 import LivePage from '../../../components/live/LivePage';
 
@@ -25,9 +26,17 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
 
 
+    console.log(context.req.params);
+    console.log(context.req.query);
+    const { id } = context.req.params 
+    const { user, title, companyName } = context.req.query
+    let broadCastInfo = {user, title, id, companyName}
+
+    let seoData = getLiveSeoData(broadCastInfo);
     return {
         props: {
             cookie: _.get(context, ['req', 'headers', 'cookie']) || null,
+            seoData,
         }
     }
 }

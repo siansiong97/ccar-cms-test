@@ -28,8 +28,10 @@ import firebase from 'firebase/app';
 import InfiniteScrollWrapper from './InfiniteScrollWrapper';
 import ScrollLoadWrapper from './ScrollLoadWrapper';
 import Scrollbars from 'react-custom-scrollbars';
+import moment from 'moment';
 
 
+const NOTIFICATION_BOX_WIDTH = 400
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 1025 })
@@ -117,7 +119,7 @@ class LayoutV2 extends React.Component {
             });
         }
     }
-    
+
     getUserNotifications(skip) {
 
         try {
@@ -132,7 +134,7 @@ class LayoutV2 extends React.Component {
                             skip: skip || 0
                         }
                     }).then(res => {
-              
+
                         this.setState({
                             notificationLoading: false,
                             notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
@@ -204,15 +206,15 @@ class LayoutV2 extends React.Component {
     }
 
     _renderNotification = (data) => {
-      
+
         notification.open({
             message: _.get(data, 'notification.title') || '',
             description: _.get(data, 'notification.body') || '',
             duration: 10,
-            placement: 'bottomRight' ,
+            placement: 'bottomRight',
             icon: <Avatar src={_.get(data, 'data.avatar') || ccarLogo} />,
             key: v4(),
-            className : 'cursor-pointer',
+            className: 'cursor-pointer',
             onClick: () => {
                 if (_.get(data, 'data.path')) {
                     this.props.router.push(_.get(data, 'data.path') || '/')
@@ -404,9 +406,9 @@ class LayoutV2 extends React.Component {
                     </Dropdown>
 
 
-                    {/* <span className='d-inline-block margin-left-md' >
+                    <span className='d-inline-block margin-left-md' >
                         {this._renderNotificationBox()}
-                    </span> */}
+                    </span>
                 </span>
             );
         } else {
@@ -552,8 +554,8 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
                                             <div className="flex-justify-end flex-items-align-center main-footer">
                                                 {/* Terms of Use | Privacy Policy */}
-                                                <Link shallow={false}  href={`/termsOfUse`}  >Terms of Use | Privacy Policy</Link>
-                                                </div>
+                                                <Link shallow={false} href={`/termsOfUse`}  >Terms of Use | Privacy Policy</Link>
+                                            </div>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -598,12 +600,12 @@ class LayoutV2 extends React.Component {
                 arrowPointAtCenter
                 placement="bottomLeft"
                 title={
-                    <div className=" h6 font-weight-bold grey-darken-1" style={{ width: 300 }}>
+                    <div className=" h6 font-weight-bold grey-darken-1" style={{ width: NOTIFICATION_BOX_WIDTH }}>
                         Notifications
                      </div>
                 }
                 content={
-                    <div className="padding-y-sm" style={{ width: 300 }}>
+                    <div className="padding-y-sm" style={{ width: NOTIFICATION_BOX_WIDTH }}>
                         <div className="flex-justify-start flex-items-align-center">
                             {
                                 _.map(tabs, function (tab) {
@@ -625,7 +627,9 @@ class LayoutV2 extends React.Component {
                                     self.setState({
                                         notificationBoxRef: ref,
                                     })
-                                }} scrollRangeUsePercentage scrollRange={50} autoHide autoHeight autoHeightMax={400}
+                                }}
+                                autoHide
+                                 scrollRangeUsePercentage scrollRange={50} autoHide autoHeight autoHeightMax={400}
                                     onScrolledBottom={() => {
                                         if (arrayLengthCount(this.state.notifications) < this.state.notificationTotal && !this.state.notificationLoading) {
                                             self.setState({
@@ -633,30 +637,35 @@ class LayoutV2 extends React.Component {
                                             })
                                         }
                                     }}>
-                                    {
-                                        _.map(this.state.notifications, function (notification) {
-                                            if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
-                                                return (
-                                                    <Link href={notification.path || '/'}>
-                                                        <a>
-                                                            <div className="flex-justify-start flex-items-align-center margin-y-sm hover-background-yellow-lighten-2 cursor-pointer grey-darken-1">
-                                                                <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
-                                                                <span className='d-inline-block' >
-                                                                    <div className=" headline text-truncate-twoline">
-                                                                        {_.get(notification, 'title') || ''}
-                                                                    </div>
-                                                                    <div className="small-text text-truncate">
-                                                                        {_.get(notification, 'body') || ''}
-                                                                    </div>
-                                                                </span>
-                                                            </div>
-                                                        </a>
-                                                    </Link>
-                                                )
-                                            }
-                                            return null;
-                                        })
-                                    }
+                                    <div className="width-100 padding-x-xs">
+                                        {
+                                            _.map(this.state.notifications, function (notification) {
+                                                if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
+                                                    return (
+                                                        <Link href={notification.path || '/'}>
+                                                            <a>
+                                                                <div className="flex-justify-start flex-items-align-center margin-y-sm hover-background-yellow-lighten-2 cursor-pointer grey-darken-1 width-100">
+                                                                    <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
+                                                                    <span className='d-inline-block width-80' >
+                                                                        <div className=" body2 text-truncate-twoline grey-darken-3">
+                                                                            {_.get(notification, 'title') || ''}
+                                                                        </div>
+                                                                        <div className="overline text-truncate ">
+                                                                            {_.get(notification, 'body') || ''}
+                                                                        </div>
+                                                                        <div className="small-text text-truncate margin-top-sm">
+                                                                            {moment(notification.createdAt).fromNow()}
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                        </Link>
+                                                    )
+                                                }
+                                                return null;
+                                            })
+                                        }
+                                    </div>
                                 </ScrollLoadWrapper>
                                 :
                                 <div className="flex-justify-center flex-items-align-center" style={{ height: 300 }}>
@@ -780,7 +789,7 @@ class LayoutV2 extends React.Component {
             },
             {
                 icon: <span className='flex-items-align-center flex-justify-center' >
-                    <img src={wishList} style={{ width: '20px', height: '20px' }}/>
+                    <img src={wishList} style={{ width: '20px', height: '20px' }} />
                 </span>,
                 text: 'My Wishlist',
                 path: `/profile/${_.get(this.props.user, ['info', 'user', '_id'])}/details/wishlists`
@@ -800,16 +809,94 @@ class LayoutV2 extends React.Component {
                     <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} >
                             <Desktop>
-                            <div id="menu-bar" className="topnav" style={{ backgroundColor: '#000000' }}>
-                                <div className="fixed-container">
-                                    <Row type="flex" align="middle" className='padding-x-md' >
-                                        <Col xs={12} sm={12} md={12} lg={11} xl={12}>
-                                            {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
-                                            <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
+                                <div id="menu-bar" className="topnav" style={{ backgroundColor: '#000000' }}>
+                                    <div className="fixed-container">
+                                        <Row type="flex" align="middle" className='padding-x-md' >
+                                            <Col xs={12} sm={12} md={12} lg={11} xl={12}>
+                                                {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
+                                                <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
+                                                    <Link shallow={false} href={`/`}  >
+                                                        <a>
+                                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
+                                                                <img alt="ccar" className="fill-parent absolute-center" src={"/assets/Artboard-3-2.svg"} />
+                                                            </span>
+                                                        </a>
+                                                    </Link>
+                                                    {
+                                                        this.props.hideSearchBar ?
+                                                            null
+                                                            :
+                                                            <span className='d-inline-block' style={{ minWidth: '300px', overflow: 'visible' }} >
+                                                                <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                                            </span>
+                                                    }
+                                                </div>
+                                            </Col>
+
+                                            <Col xs={12} sm={12} md={12} lg={13} xl={12}>
+                                                <div className='width-100 flex-justify-end flex-items-align-center topnav-child'>
+                                                    {
+                                                        notEmptyLength(outterMenu) ?
+                                                            _.map(outterMenu, function (menu, i) {
+                                                                return (
+                                                                    <Link shallow={false} href={menu.path}  >
+                                                                        <a>
+                                                                            <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
+                                                                                {menu.text}
+                                                                            </span>
+                                                                        </a>
+                                                                    </Link>
+                                                                )
+                                                            })
+                                                            :
+                                                            null
+                                                    }
+                                                    <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" overlayStyle={{ width: '250px' }} overlay={() => {
+                                                        return (
+                                                            <Menu >
+                                                                {
+                                                                    _.map(innerMenu, function (menu, index) {
+                                                                        return (
+                                                                            <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
+                                                                                <Link shallow={false} href={menu.path}  >
+                                                                                    <a>
+                                                                                        <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
+                                                                                            {menu.text}
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </Link>
+                                                                            </Menu.Item>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </Menu>
+                                                        )
+                                                    }}>
+                                                        <span className='d-inline-block margin-x-md white subtitle1  cursor-pointer relative-wrapper' >
+                                                            Menu
+                                                    </span>
+
+                                                    </Dropdown>
+
+                                                    <div className="topnav-child">
+                                                        {this._renderUser(profileMenu)}
+                                                    </div>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </div>
+                            </Desktop>
+
+                            <Tablet>
+                                <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                                    <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
+                                        <Col xs={12} sm={12} md={14} lg={12} xl={12}>
+                                            <div className='flex-justify-start flex-items-align-center topnav-child'>
                                                 <Link shallow={false} href={`/`}  >
                                                     <a>
                                                         <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
-                                                            <img alt="ccar" className="fill-parent absolute-center" src={"/assets/Artboard-3-2.svg"} />
+                                                            <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
                                                         </span>
                                                     </a>
                                                 </Link>
@@ -817,110 +904,32 @@ class LayoutV2 extends React.Component {
                                                     this.props.hideSearchBar ?
                                                         null
                                                         :
-                                                        <span className='d-inline-block' style={{ minWidth: '300px', overflow: 'visible' }} >
+                                                        <span className='d-inline-block' style={{ minWidth: '250px', overflow: 'visible' }} >
                                                             <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
                                                         </span>
                                                 }
                                             </div>
                                         </Col>
-
-                                        <Col xs={12} sm={12} md={12} lg={13} xl={12}>
-                                            <div className='width-100 flex-justify-end flex-items-align-center topnav-child'>
-                                                {
-                                                    notEmptyLength(outterMenu) ?
-                                                        _.map(outterMenu, function (menu, i) {
-                                                            return (
-                                                                <Link shallow={false} href={menu.path}  >
-                                                                    <a>
-                                                                        <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
-                                                                            {menu.text}
-                                                                        </span>
-                                                                    </a>
-                                                                </Link>
-                                                            )
-                                                        })
-                                                        :
-                                                        null
-                                                }
-                                                <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" overlayStyle={{ width: '250px' }} overlay={() => {
-                                                    return (
-                                                        <Menu >
-                                                            {
-                                                                _.map(innerMenu, function (menu, index) {
-                                                                    return (
-                                                                        <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
-                                                                            <Link shallow={false} href={menu.path}  >
-                                                                                <a>
-                                                                                    <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
-                                                                                        {menu.text}
-                                                                                    </span>
-                                                                                </a>
-                                                                            </Link>
-                                                                        </Menu.Item>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </Menu>
-                                                    )
-                                                }}>
-                                                    <span className='d-inline-block margin-x-md white subtitle1  cursor-pointer relative-wrapper' >
-                                                        Menu
-                                                    </span>
-
-                                                </Dropdown>
-
-                                                <div className="topnav-child">
-                                                    {this._renderUser(profileMenu)}
-                                                </div>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </div>
-                            </Desktop>
-
-                        <Tablet>
-                            <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
-                                <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
-                                    <Col xs={12} sm={12} md={14} lg={12} xl={12}>
-                                        <div className='flex-justify-start flex-items-align-center topnav-child'>
-                                            <Link shallow={false} href={`/`}  >
-                                                <a>
-                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
-                                                <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
-                                            </span>
-                                            </a>
-                                        </Link>
-                                            {
-                                                this.props.hideSearchBar ?
-                                                    null
-                                                    :
-                                                    <span className='d-inline-block' style={{ minWidth: '250px', overflow: 'visible' }} >
-                                                        <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
-                                                    </span>
-                                            }
-                                        </div>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={10} lg={12} xl={12}>
-                                        <div style={{ width: '300' }}>
-                                            <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
-                                                <Icon type="menu" />
-                                            </Button>
-                                            <Drawer
-                                                title="Main Menu"
-                                                placement="right"
-                                                closable={true}
-                                                onClose={this.onClose}
-                                                visible={this.state.visible}
-                                            >
-                                                <div className="margin-bottom-md">
-                                                    {this._renderUserRes(profileMenu)}
-                                                </div>
-                                                {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
+                                        <Col xs={12} sm={12} md={10} lg={12} xl={12}>
+                                            <div style={{ width: '300' }}>
+                                                <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
+                                                    <Icon type="menu" />
+                                                </Button>
+                                                <Drawer
+                                                    title="Main Menu"
+                                                    placement="right"
+                                                    closable={true}
+                                                    onClose={this.onClose}
+                                                    visible={this.state.visible}
+                                                >
+                                                    <div className="margin-bottom-md">
+                                                        {this._renderUserRes(profileMenu)}
+                                                    </div>
+                                                    {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
                                                     <img src="/assets/CarListingIcon/login@3x.png" style={{ width: 20 }} className="margin-right-xs" />
                                                     Register/Login
                                                 </p> */}
-                                                {/* <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
+                                                    {/* <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
                                                 <p> <a href="/newcar"> All-NewCar</a> </p>
                                                 <p> <a href="/live"><span className='d-inline-block white background-red padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
                                                 <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
@@ -930,92 +939,92 @@ class LayoutV2 extends React.Component {
                                                 <p> <a href="/about-us"> About Us </a> </p>
                                                 <p> <a href="/contact-us"> Contact Us </a> </p> */}
 
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '1' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/') }}> Home</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '2' ? 'yellow' : ''}`} onClick={() => { this.props.router.push(convertParameterToProductListUrl()) }} > CarMarket</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '3' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/newcar') }} > All-NewCar</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '4' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/live') }} > <p className="background-red padding-x-md" style={{ borderRadius: '10px', marginBottom: '0px', width: '40%' }}>LIVE</p> </div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '5' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/socialNewsAndVideo') }} > Social News & Videos</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '6' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/car-freaks') }} > CarFreaks</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '7' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/petrolprice') }} > Petrol Price</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '8' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/kpp') }} > Driving School</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '9' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/about-us') }} > About Us</div>
-                                                <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '10' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/contact-us') }} > Contact Us</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '1' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/') }}> Home</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '2' ? 'yellow' : ''}`} onClick={() => { this.props.router.push(convertParameterToProductListUrl()) }} > CarMarket</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '3' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/newcar') }} > All-NewCar</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '4' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/live') }} > <p className="background-red padding-x-md" style={{ borderRadius: '10px', marginBottom: '0px', width: '40%' }}>LIVE</p> </div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '5' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/socialNewsAndVideo') }} > Social News & Videos</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '6' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/car-freaks') }} > CarFreaks</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '7' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/petrolprice') }} > Petrol Price</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '8' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/kpp') }} > Driving School</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '9' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/about-us') }} > About Us</div>
+                                                    <div style={{ fontSize: '16px', margin: '10px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '10' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/contact-us') }} > Contact Us</div>
 
-                                                {currentEnv === 'prod' ?
-                                                    <React.Fragment>
-                                                        {/* <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
+                                                    {currentEnv === 'prod' ?
+                                                        <React.Fragment>
+                                                            {/* <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
                                                 <p> <a href="/extended-warranty"> Extended Warranty </a> </p> */}
-                                                        <div style={{ fontSize: '18px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '11' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/roadtax-insurance') }} > Road Tax & Insurance </div>
-                                                        <div style={{ fontSize: '18px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '12' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/extended-warranty') }} > Extended Warranty </div>
-                                                    </React.Fragment>
-                                                    : ''}
+                                                            <div style={{ fontSize: '18px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '11' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/roadtax-insurance') }} > Road Tax & Insurance </div>
+                                                            <div style={{ fontSize: '18px' }} className={`flex-items-no-shrink margin-sm ${this.props.app.activeMenu == '12' ? 'yellow' : ''}`} onClick={() => { this.props.router.push('/extended-warranty') }} > Extended Warranty </div>
+                                                        </React.Fragment>
+                                                        : ''}
 
-                                            </Drawer>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Tablet>
+                                                </Drawer>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Tablet>
 
-                        <Mobile>
-                            <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
-                                <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
-                                    <Col xs={20} sm={20} md={14} lg={12} xl={12}>
-                                        <div className='flex-justify-start flex-items-align-center topnav-child'  >
-                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' style={{ height: '62px', width: '120px' }} onClick={(e) => { this.props.router.push('/') }}>
-                                                <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
-                                            </span>
-                                            {
-                                                this.props.hideSearchBar ?
-                                                    null
-                                                    :
-                                                    <span className='d-inline-block' style={{ width: '150px', overflow: 'visible' }} >
-                                                        <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
-                                                    </span>
-                                            }
-                                        </div>
-                                    </Col>
-                                    <Col xs={4} sm={4} md={10} lg={12} xl={12}>
-                                        <div style={{ width: '300' }}>
-                                            <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
-                                                <Icon type="menu" />
-                                            </Button>
-                                            <Drawer
-                                                title="Main Menu"
-                                                placement="right"
-                                                closable={true}
-                                                onClose={this.onClose}
-                                                visible={this.state.visible}
-                                            >
-                                                <div className="margin-bottom-md">
-                                                    {this._renderUserRes(profileMenu)}
-                                                </div>
-                                                {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
+                            <Mobile>
+                                <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                                    <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
+                                        <Col xs={20} sm={20} md={14} lg={12} xl={12}>
+                                            <div className='flex-justify-start flex-items-align-center topnav-child'  >
+                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' style={{ height: '62px', width: '120px' }} onClick={(e) => { this.props.router.push('/') }}>
+                                                    <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
+                                                </span>
+                                                {
+                                                    this.props.hideSearchBar ?
+                                                        null
+                                                        :
+                                                        <span className='d-inline-block' style={{ width: '150px', overflow: 'visible' }} >
+                                                            <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                                        </span>
+                                                }
+                                            </div>
+                                        </Col>
+                                        <Col xs={4} sm={4} md={10} lg={12} xl={12}>
+                                            <div style={{ width: '300' }}>
+                                                <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
+                                                    <Icon type="menu" />
+                                                </Button>
+                                                <Drawer
+                                                    title="Main Menu"
+                                                    placement="right"
+                                                    closable={true}
+                                                    onClose={this.onClose}
+                                                    visible={this.state.visible}
+                                                >
+                                                    <div className="margin-bottom-md">
+                                                        {this._renderUserRes(profileMenu)}
+                                                    </div>
+                                                    {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
                                                     <img src="/assets/CarListingIcon/login@3x.png" style={{ width: 20 }} className="margin-right-xs" />
                                                     Register/Login
                                                 </p> */}
-                                                <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
-                                                <p> <a href="/newcar"> All-NewCar</a> </p>
-                                                <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
-                                                <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
-                                                <p> <a href="/car-freaks"> CarFreaks </a> </p>
-                                                <p> <a href="/petrolprice"> Petrol Price </a>  </p>
-                                                <p> <a href="/kpp"> Driving School </a> </p>
-                                                <p> <a href="/about-us"> About Us </a> </p>
-                                                <p> <a href="/contact-us"> Contact Us </a> </p>
-                                                {currentEnv !== 'prod' ?
-                                                    <React.Fragment>
-                                                        <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
-                                                        <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
-                                                    </React.Fragment>
-                                                    : ''}
+                                                    <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
+                                                    <p> <a href="/newcar"> All-NewCar</a> </p>
+                                                    <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
+                                                    <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
+                                                    <p> <a href="/car-freaks"> CarFreaks </a> </p>
+                                                    <p> <a href="/petrolprice"> Petrol Price </a>  </p>
+                                                    <p> <a href="/kpp"> Driving School </a> </p>
+                                                    <p> <a href="/about-us"> About Us </a> </p>
+                                                    <p> <a href="/contact-us"> Contact Us </a> </p>
+                                                    {currentEnv !== 'prod' ?
+                                                        <React.Fragment>
+                                                            <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
+                                                            <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
+                                                        </React.Fragment>
+                                                        : ''}
 
-                                            </Drawer>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Mobile>
+                                                </Drawer>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Mobile>
 
                         </Col>
                     </Row>
@@ -1043,7 +1052,7 @@ class LayoutV2 extends React.Component {
 
                     {this._renderFooter()}
                     <div className='width-100' style={{ position: '-webkit-sticky', position: 'sticky', bottom: 0, zIndex: 1002 }}>
-                    {
+                        {
                             this.props.footerOverLay ?
                                 this.props.footerOverLay
                                 :
@@ -1060,7 +1069,7 @@ class LayoutV2 extends React.Component {
                                                 </div>
                                                 </span>
                                                 <span className='d-inline-block ' >
-                                                    <Button className=" background-ccar-button-yellow black caption" style={{borderColor:'#FFCC32'}} onClick={(e) => { this.openApp() }}>Open App</Button>
+                                                    <Button className=" background-ccar-button-yellow black caption" style={{ borderColor: '#FFCC32' }} onClick={(e) => { this.openApp() }}>Open App</Button>
                                                 </span>
                                             </div>
                                         </NotWebDevice>

@@ -18,7 +18,7 @@ export function getStreamUrl(url){
     // return 'http://192.168.0.191:7070/';
     // return "https://stream-uat2.ccar.my";
     // return 'http://localhost:7070/';
-    // return 'http://192.168.1.164:3041/'
+    // return 'http://192.168.0.149:3041/'
     return stream;
 }
 
