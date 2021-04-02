@@ -115,7 +115,7 @@ const UserProfileIndex = (props) => {
                                     setProfile({ ...profile, profileCoverPhoto: url })
                                 }} />
                                 :
-                                <ProfileNotFound />
+                                <ProfileNotFound /> 
                     }
                 </div>
             </div>

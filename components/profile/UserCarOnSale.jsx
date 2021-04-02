@@ -424,7 +424,7 @@ const UserCarOnSale = (props) => {
                                 </div>
                             </Col>
 
-                            <Col xs={0} sm={0} md={{ span: 0 }} lg={{ span: 4 }} xl={{ span: 0 }} style={{ float: 'right' }}>
+                            <Col xs={0} sm={0} md={{ span: 0 }} lg={{ span: 0 }} xl={{ span: 4 }} style={{ float: 'right' }}>
                                 <Radio.Group onChange={(e) => { setView(e.target.value) }} value={view} className="wrap-gridView-btn" style={{ float: 'right' }}>
                                     <Tooltip title="List View"><Radio.Button value="listView"><BarsOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
                                     <Tooltip title="Grid View"><Radio.Button value="gridView"><AppstoreOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>

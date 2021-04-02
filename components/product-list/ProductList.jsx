@@ -298,7 +298,7 @@ const ProductList = (props) => {
             <div className="wrap-product-ads-countdown-spicydeal">
               <span style={{ marginLeft: '10px', color: '#f9f5ef' }}><span>SuperDeal Ends in</span></span>
               <Row>
-                <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+                <Col xs={14} sm={14} md={16} lg={18} xl={16}>
                   {_renderCountdown(addon.endDate)}
                 </Col>
               </Row>
@@ -308,7 +308,7 @@ const ProductList = (props) => {
           return (
             <div className="wrap-product-ads-price">
               <Row>
-                <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+                <Col xs={14} sm={14} md={16} lg={18} xl={16}>
                   <p style={{ marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((calMonth(v.price)).toString())}/month</p>
                 </Col>
               </Row>
@@ -327,7 +327,7 @@ const ProductList = (props) => {
                 <span style={{ textDecoration: 'line-through', fontSize: '12px', marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((v.price).toString())}</span> {_renderDiscount(v)}
                 <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((addon2.discountedPrice).toString())}</h4>
                 <Row>
-                  <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+                  <Col xs={14} sm={14} md={16} lg={18} xl={16}>
                     <p style={{ marginLeft: '10px', color: '#a9d46f' }}>RM {formatMoney((calMonth(addon2.discountedPrice)).toString())}/month</p>
                   </Col>
                 </Row>
@@ -338,7 +338,7 @@ const ProductList = (props) => {
               <div className="wrap-product-ads-countdown-spicydeal">
                 <span style={{ marginLeft: '10px', color: '#f9f5ef' }}><span>SuperDeal Ends in</span></span>  <img src={flameRedShadow} />
                 <Row>
-                  <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+                  <Col xs={14} sm={14} md={16} lg={18} xl={16}>
                     {_renderCountdown(addon2.endDate)}
                   </Col>
                 </Row>
@@ -351,7 +351,7 @@ const ProductList = (props) => {
         return (
           <div className="wrap-product-ads-price">
             <Row>
-              <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+              <Col xs={14} sm={14} md={16} lg={18} xl={16}>
                 <p style={{ marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((calMonth(v.price)).toString())}/month</p>
               </Col>
             </Row>
@@ -365,7 +365,7 @@ const ProductList = (props) => {
       return (
         <div className="wrap-product-ads-price">
           <Row>
-            <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+            <Col xs={14} sm={14} md={16} lg={18} xl={16}>
               <span style={{ marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((calMonth(v.price)).toString())}/month</span>
             </Col>
           </Row>
@@ -576,7 +576,6 @@ const ProductList = (props) => {
             <div className={_renderLayout(v)} id={_renderTextTitle(v)}>
               <Row>
                 <Col span={7}>
-
                   <div className="relative-wrapper">
                     {renderCurrentImg(v, i)}
                     <span className='d-inline-block' style={{ position: 'absolute', top: 0, left: 0 }} >
@@ -775,7 +774,9 @@ const ProductList = (props) => {
                     </Col>
                     
                     <Col span={10}>
-                      <SellerBusinessCard data={v.companys} data1={v.createdBy} /> 
+                      <div style={{marginTop:9}}>
+                        <SellerBusinessCard data={v.companys} data1={v.createdBy}/>
+                      </div>
                     </Col>
                   </Row>
                 </Col>

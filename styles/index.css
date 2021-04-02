@@ -1111,7 +1111,7 @@ code {
   }
   .spotlight img {
     width: 13%;
-    margin-top: 6px;
+    margin-top: 10px;
     margin-right: 5px;
   }
   /* .red-flame img {
@@ -1168,13 +1168,13 @@ code {
     margin-top: -40px;
     margin-right: -20px;
   }
-
   .red-flame1 img {
     width: 35%;
     margin-top: -75px;
     margin-right: -15px;
   }
 }
+
 
 @media only screen and (max-width:600px) {
   .incoming-footer {

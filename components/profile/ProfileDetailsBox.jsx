@@ -288,7 +288,7 @@ const ProfileDetailsBox = (props) => {
                 </div>
                 <Desktop>
                     <Row type="flex" align="stretch" justify="center" className='padding-md' style={{ height: 450 }}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+                        <Col xs={24} sm={24} md={8} lg={5} xl={6}>
                             <div className="fill-parent flex-items-align-center flex-justify-center">
                                 <Row type="flex" align="middle">
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -301,7 +301,6 @@ const ProfileDetailsBox = (props) => {
                                             {getUserName(profile, 'freakId')}
                                         </div>
                                     </Col>
-
                                 </Row>
                             </div>
                         </Col>
@@ -459,7 +458,7 @@ const ProfileDetailsBox = (props) => {
                             </Row>
                         </Col>
 
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Col xs={24} sm={24} md={6} lg={9} xl={6}>
                             {
                                 props.type == 'dealer' ?
                                     <Row className='padding-lg' gutter={[0, 10]}>
