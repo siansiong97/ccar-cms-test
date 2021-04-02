@@ -12,6 +12,7 @@ import { getColor } from "./params/colorList";
 import { checkEnvReturnCmsUrl } from "./functionContent";
 import client from "./feathers";
 import { parseTagStringToPlainString } from "./components/carFreak/config";
+import { getStreamUrl } from "./components/live/config";
 
 var moment = require('moment');
 
@@ -1577,8 +1578,8 @@ export function getProfileSeoData(profile) {
 
     let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/profile/${profile._id}`;
     let images = [{
-        url : profile.avatar,
-        alt : 'CCAR User Profile Image'
+        url: profile.avatar,
+        alt: 'CCAR User Profile Image'
     }];
 
     return {
@@ -1602,7 +1603,7 @@ export function getCarFreakSeoData(data) {
     let title = [];
     let description = [];
 
-    title.push(`${parseTagStringToPlainString(data.title)|| ''}`);
+    title.push(`${parseTagStringToPlainString(data.title) || ''}`);
     title.push(`|`);
     title.push(`CarFreaks`);
     title.push(`- CCAR.my #1 Car Social Platform`);
@@ -1610,7 +1611,7 @@ export function getCarFreakSeoData(data) {
     title = title.join(' ');
 
     description.push(`${parseTagStringToPlainString(data.content) || ''}`);
-    if(_.isPlainObject(data.userId) && !_.isEmpty(data.userId)){
+    if (_.isPlainObject(data.userId) && !_.isEmpty(data.userId)) {
         description.push('|');
         description.push(`Posted By ${getUserName(data.userId, 'fullName') || ''}`)
     }
@@ -1621,8 +1622,8 @@ export function getCarFreakSeoData(data) {
 
     let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/car-freaks/${data._id}`;
     let images = [{
-        url : _.get(data, 'mediaList[0].url') || '',
-        alt : 'CCAR CarFreak Image'
+        url: _.get(data, 'mediaList[0].url') || '',
+        alt: 'CCAR CarFreak Image'
     }];
 
     return {
@@ -1644,7 +1645,7 @@ export function getSocialBoardSeoData(data) {
     let title = [];
     let description = [];
 
-    title.push(`${parseTagStringToPlainString(data.title)|| ''}`);
+    title.push(`${parseTagStringToPlainString(data.title) || ''}`);
     title.push(`|`);
     title.push(`Social Board`);
     title.push(`- CCAR.my #1 Car Social Platform`);
@@ -1652,7 +1653,7 @@ export function getSocialBoardSeoData(data) {
     title = title.join(' ');
 
     description.push(`${parseTagStringToPlainString(data.content) || ''}`);
-    if(_.isPlainObject(data.userId) && !_.isEmpty(data.userId)){
+    if (_.isPlainObject(data.userId) && !_.isEmpty(data.userId)) {
         description.push('|');
         description.push(`Posted By ${getUserName(data.userId, 'fullName') || ''}`)
     }
@@ -1682,7 +1683,7 @@ export function getClubSeoData(data) {
     let title = [];
     let description = [];
 
-    title.push(`${data.clubName|| ''}`);
+    title.push(`${data.clubName || ''}`);
     title.push(`|`);
     title.push(`Social Club`);
     title.push(`- CCAR.my #1 Car Social Platform`);
@@ -1690,7 +1691,7 @@ export function getClubSeoData(data) {
     title = title.join(' ');
 
     description.push(`${data.clubBio || ''}`);
-    if(_.isPlainObject(data.userId) && !_.isEmpty(data.userId)){
+    if (_.isPlainObject(data.userId) && !_.isEmpty(data.userId)) {
         description.push('|');
         description.push(`Created By ${getUserName(data.userId, 'fullName') || ''}`)
     }
@@ -1701,8 +1702,8 @@ export function getClubSeoData(data) {
 
     let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/social-club/${data._id}`;
     let images = [{
-        url : _.get(data, 'clubAvatar') || '',
-        alt : 'CCAR CarFreak Image'
+        url: _.get(data, 'clubAvatar') || '',
+        alt: 'CCAR CarFreak Image'
     }];
 
     return {
@@ -1727,13 +1728,13 @@ export function getAllNewCarSeoData(data) {
 
     title.push(`${getCarBrand(data.make).value || ''}`);
     title.push(`|`);
-    title.push(`${_.capitalize(data.model|| '')}`);
+    title.push(`${_.capitalize(data.model || '')}`);
     title.push(`|`);
     title.push(`All New Car - CCAR.my #1 Car Social Platform`);
     title = _.compact(title);
     title = title.join(' ');
 
-    description.push(`View ${getCarBrand(data.make).value || ''} ${_.capitalize(data.model|| '')} All New Car at CCAR.my now - CCAR.my #1 Car Social Platform  `);
+    description.push(`View ${getCarBrand(data.make).value || ''} ${_.capitalize(data.model || '')} All New Car at CCAR.my now - CCAR.my #1 Car Social Platform  `);
     description = _.compact(description);
     description = description.join(' ');
 
@@ -1741,8 +1742,50 @@ export function getAllNewCarSeoData(data) {
 
     let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/newcar/details/${data.make}/${data.model}`;
     let images = [{
-        url : _.get(data, 'uri') || '',
-        alt : `CCAR ${getCarBrand(data.make).value || ''} ${_.capitalize(data.model|| '')} Image`
+        url: _.get(data, 'uri') || '',
+        alt: `CCAR ${getCarBrand(data.make).value || ''} ${_.capitalize(data.model || '')} Image`
+    }];
+
+    return {
+        title,
+        description,
+        canonical,
+        images,
+    }
+
+}
+
+export function getLiveSeoData(data) {
+
+    const apiDomain = getStreamUrl(client.io.io.uri)
+
+    if (!_.isPlainObject(data)) {
+        return {};
+    } else {
+        data = _.cloneDeep(data)
+    }
+
+    let title = [];
+    let description = [];
+
+    title.push(`CCAR LIVE`);
+    title.push(`|`);
+    title.push(`${_.capitalize(data.user || 'Ccar User')}`);
+    title.push(`- CCAR.my #1 Car Social Platform`);
+    title = _.compact(title);
+    title = title.join(' ');
+
+    description.push(data.title);
+    description.push(`View Car Live Streaming at CCAR.my now - CCAR.my #1 Car Social Platform  `);
+    description = _.compact(description);
+    description = description.join(' ');
+
+
+
+    let canonical = `${checkEnvReturnCmsUrl(client.io.io.uri)}/live/${data.id}`;
+    let images = [{
+        url: `${apiDomain}dealerVideoThumbnails/${data.id}.png`,
+        alt: `Live Streaming Image`
     }];
 
     return {

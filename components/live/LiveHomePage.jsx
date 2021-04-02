@@ -144,7 +144,8 @@ class LiveIndex extends React.Component {
   componentWillUnmount() {
 
       if(isIOS && isMobile){
-        window.location.href="ccarmy:/" + this.props.router.asPath
+        setTimeout(function () { window.location = `https://apps.apple.com/my/app/ccar-my/id1526288072`; }, 25);
+        window.location = "ccarmy:/" + this.props.location.pathname
       }
 
     this.componentCleanup();

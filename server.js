@@ -59,6 +59,10 @@ app.prepare().then(() => {
     return app.render(req, res, `/social-club/${_.get(req, 'params.id') || ''}`, req.query)
   })
 
+  server.get('/live/:id', (req, res) => {
+    return app.render(req, res, `/live/${_.get(req, 'params.id') || ''}`, req.query)
+  })
+
   server.get('/newcar/details/:make/:model', (req, res) => {
     return app.render(req, res, `/newcar/details/${_.get(req, 'params.make') || ''}/${_.get(req, 'params.model') || ''}`, req.query)
   })
