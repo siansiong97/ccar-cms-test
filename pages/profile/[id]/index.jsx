@@ -32,7 +32,7 @@ export async function getServerSideProps(context) {
     if (id) {
         profile = await client.service('users').find({
             query: {
-                _id: id,
+                userurlId: id,
             }
         })
         profile = _.get(profile, 'data[0]') || {}

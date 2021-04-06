@@ -45,11 +45,11 @@ const UserAvatar = (props) => {
                         props.onClick(e)
                     }
 
-                    if (_.get(props.data, ['_id']) && props.redirectProfile) {
+                    if (_.get(props.data, ['userurlId']) && props.redirectProfile) {
                         if (props.onRedirect) {
                             props.onRedirect()
                         }
-                        props.router.push(`/profile/${props.data._id}`, undefined, { shallow : false })
+                        props.router.push(`/profile/${props.data.userurlId}`, undefined, { shallow : false })
                     }
                 }}
             >

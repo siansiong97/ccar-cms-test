@@ -431,8 +431,8 @@ const ProfileDetailsBox = (props) => {
                                                     <Button className='margin-right-md white background-grey-opacity-30'> <Icon type="camera" /> Edit Cover Photo </Button>
                                                 </Upload>
                                                 <Button onClick={(e) => {
-                                                    if (_.get(profile, ['_id'])) {
-                                                        props.router.push(`/profile/${profile._id}/details`)
+                                                    if (_.get(profile, ['userurlId'])) {
+                                                        props.router.push(`/profile/${profile.userurlId}/details`)
                                                     }
                                                 }} className='white background-grey-opacity-30'> <Icon type="user" /> Manage My Account </Button>
                                             </div>
@@ -676,7 +676,7 @@ const ProfileDetailsBox = (props) => {
                                                         </Upload>
                                                         <Button onClick={(e) => {
                                                             if (_.get(profile, ['_id'])) {
-                                                                props.router.push(`/profile/${profile._id}/details`)
+                                                                props.router.push(`/profile/${profile.userurlId}/details`)
                                                             }
                                                         }} className='white background-grey-opacity-30'> <Icon type="user" /> Manage My Account </Button>
                                                     </div>
@@ -873,8 +873,8 @@ const ProfileDetailsBox = (props) => {
                                                     <Button className='margin-right-md white background-grey-opacity-30'> <Icon type="camera" /> Edit Cover Photo </Button>
                                                 </Upload>
                                                 <Button onClick={(e) => {
-                                                    if (_.get(profile, ['_id'])) {
-                                                        props.router.push(`/profile/${profile._id}/details`)
+                                                    if (_.get(profile, ['userurlId'])) {
+                                                        props.router.push(`/profile/${profile.userurlId}/details`)
                                                     }
                                                 }} className='white background-grey-opacity-30'> <Icon type="user" /> Manage My Account </Button>
                                             </div>

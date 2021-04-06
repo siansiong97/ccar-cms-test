@@ -17,6 +17,7 @@ import { isValidDate, isValidNumber, notEmptyLength, objectRemoveEmptyValue } fr
 import SocialVideoTabs from '../news/social-video-tabs';
 import LayoutV2 from '../general/LayoutV2';
 import { withRouter } from 'next/router';
+import BroadCasterListScroll from './BroadCasterListScroll';
 
 
 TweenOne.plugins.push(BezierPlugin);
@@ -741,7 +742,7 @@ class LivePage extends React.Component {
                     LIVE
                   </div> */}
                   <div className="padding-md background-white margin-top-md">
-                    <BroadcasterList activeBroadcasters={this.state.activeBroadcasters} showName allowSearch />
+                    <BroadCasterListScroll activeBroadcasters={this.state.activeBroadcasters} showName allowSearch />
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
