@@ -494,22 +494,22 @@ class NewCarVersion3 extends React.Component {
                             <img src={'/banner/CCAR-Tab-Banner-TBH-March-2021.jpg'} className="absolute-center"/>
                         </div> */}
                     </Element>
-                {/* <Element
+                <Element
                         prefixCls="banner-user-elem"
-                        key="0"
+                        key="1"
                     >
                         <BgElement
                             key="bg"
                             className="bg"
                             style={{
-                                backgroundImage: 'url(/banner/770x250.jpg)',
+                                backgroundImage: 'url(/banner/Tab-Banner-360-01.jpg)',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
                                 maxInlineSize: '-webkit-fill-available'
                             }}
                         />
-                    </Element> */}
+                    </Element>
                     {/* <Element
                         prefixCls="banner-user-elem"
                         key="web1"
@@ -527,7 +527,7 @@ class NewCarVersion3 extends React.Component {
                     }}
                 />
             </Element> */}
-                    <Element
+                    {/* <Element
                         prefixCls="banner-user-elem"
                         key="1"
                     >
@@ -547,8 +547,26 @@ class NewCarVersion3 extends React.Component {
                     }} >
                     <source src="/banner/ipad-360.mp4" type="video/mp4"></source>
                 </video>
-            </Element>
-            <Element
+            </Element> */}
+
+                    <Element
+                        prefixCls="banner-user-elem"
+                        key="2"
+                    >
+                        <BgElement
+                            key="bg"
+                            className="bg"
+                            style={{
+                                backgroundImage: 'url(/banner/Tab-Banner-01.jpg)',
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                maxInlineSize: '-webkit-fill-available'
+                            }}
+                        />
+                    </Element>
+
+            {/* <Element
                 prefixCls="banner-user-elem"
                 key="2"
             >
@@ -568,7 +586,7 @@ class NewCarVersion3 extends React.Component {
                     }} >
                     <source src="/banner/carfreaks-ipad.mp4" type="video/mp4"></source>
                 </video>
-            </Element>
+            </Element> */}
                 </BannerAnim>
             </Tablet>
 
@@ -1010,7 +1028,7 @@ class NewCarVersion3 extends React.Component {
                 <div className="section-version3">
                         <div className="container-version3" style={{ touchAction: 'pan-y' }}>
                             <Row>
-                                <Col span={24} className="overlay-search-bar text-align-center certain-category-search ">
+                                <Col span={24} className="overlay-search-bar-res text-align-center certain-category-search ">
                                     <Row >
                                         <Col xs={{ span: 12, offset: 6 }} sm={{ span: 12, offset: 6 }} md={{ span: 10, offset: 7 }} lg={{ span: 10, offset: 7 }} xl={{ span: 10, offset: 7 }}  >
                                             <div ref={searchBarRef}>

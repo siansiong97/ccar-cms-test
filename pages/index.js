@@ -81,22 +81,22 @@ const Index = (props) => {
                             <img src={'/banner/CCAR-Tab-Banner-TBH-March-2021.jpg'} className="absolute-center"/>
                         </div> */}
             </Element>
-            {/* <Element
-                        prefixCls="banner-user-elem"
-                        key="0"
-                    >
-                        <BgElement
-                            key="bg"
-                            className="bg"
-                            style={{
-                                backgroundImage: 'url(/banner/770x250.jpg)',
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                                maxInlineSize: '-webkit-fill-available'
-                            }}
-                        />
-                    </Element> */}
+            <Element
+              prefixCls="banner-user-elem"
+              key="1"
+            >
+              <BgElement
+                key="bg"
+                className="bg"
+                style={{
+                  backgroundImage: 'url(/banner/Tab-Banner-360-01.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  maxInlineSize: '-webkit-fill-available'
+                }}
+              />
+            </Element>
             {/* <Element
                         prefixCls="banner-user-elem"
                         key="web1"
@@ -114,7 +114,7 @@ const Index = (props) => {
                     }}
                 />
             </Element> */}
-            <Element
+            {/* <Element
               prefixCls="banner-user-elem"
               key="1"
             >
@@ -134,8 +134,26 @@ const Index = (props) => {
               }} >
                 <source src="/banner/ipad-360.mp4" type="video/mp4"></source>
               </video>
-            </Element>
+            </Element> */}
+
             <Element
+              prefixCls="banner-user-elem"
+              key="1"
+            >
+              <BgElement
+                key="bg"
+                className="bg"
+                style={{
+                  backgroundImage: 'url(/banner/Tab-Banner-01.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  maxInlineSize: '-webkit-fill-available'
+                }}
+              />
+            </Element>
+
+            {/* <Element
               prefixCls="banner-user-elem"
               key="2"
             >
@@ -155,7 +173,7 @@ const Index = (props) => {
               }} >
                 <source src="/banner/carfreaks-ipad.mp4" type="video/mp4"></source>
               </video>
-            </Element>
+            </Element> */}
           </BannerAnim>
         </Tablet>
 
@@ -237,24 +255,32 @@ const Index = (props) => {
         </Element>
 
         {/* <Element
-                prefixCls="banner-user-elem"
-                key="web1"
-            >
-                <BgElement
-                    key="webbg"
-                    className="bg"
-                    style={{
-                        backgroundImage: 'url(/banner/2560x250-smarter-way-to-find-cars.png)',
-                        backgroundSize: 'fit',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        maxInlineSize: '-webkit-fill-available',
-
-                    }}
-                />
-            </Element> */}
+          prefixCls="banner-user-elem"
+          key="web1"
+        >
+          <div className="width-100 relative-wrapper" style={{height : 250}}>
+            <img src={'/banner/Website-Banner-360-02.jpg'} className="absolute-center"/>
+          </div>
+        </Element> */}
 
         <Element
+          prefixCls="banner-user-elem"
+          key="web3"
+        >
+          <BgElement
+            id="banner-1"
+            className="bg"
+            style={{
+              backgroundImage: 'url(/banner/Website-Banner-360-02.jpg)',
+              backgroundSize: 'fit',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              maxInlineSize: '-webkit-fill-available',
+            }}
+          />
+        </Element>
+
+        {/* <Element
           prefixCls="banner-user-elem"
           key="web2"
         >
@@ -275,9 +301,26 @@ const Index = (props) => {
           }} >
             <source src="/banner/360-web-banner-2560x250.mp4" type="video/mp4"></source>
           </video>
-        </Element>
+        </Element> */}
 
         <Element
+          prefixCls="banner-user-elem"
+          key="web2"
+        >
+          <BgElement
+            id="banner-1"
+            className="bg"
+            style={{
+              backgroundImage: 'url(/banner/Website-Banner-02-02.jpg)',
+              backgroundSize: 'fit',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              maxInlineSize: '-webkit-fill-available',
+            }}
+          />
+        </Element>
+
+        {/* <Element
           prefixCls="banner-user-elem"
           key="web3"
         >
@@ -298,7 +341,7 @@ const Index = (props) => {
           }} >
             <source src="/banner/2560x250-4.mp4" type="video/mp4"></source>
           </video>
-        </Element>
+        </Element> */}
       </BannerAnim>);
   }
 
