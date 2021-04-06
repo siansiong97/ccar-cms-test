@@ -1,5 +1,5 @@
 import { LOGIN_SUCCESSFUL, LOGOUT_SUCCESSFUL, SET_USER, ADDRESS_BOOK_FORM, CARD_FORM, BANK_FORM } from '../actions/user-actions';
-import { checkIsNeedPersist, checkNeedPersist, getLocalStoragePersistStates, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getLocalStoragePersistStates, getPersistObj, persistRedux } from '../config';
 import _ from 'lodash';
 import localStorage from 'local-storage';
 import { isValidNumber } from '../../common-function';
@@ -25,49 +25,52 @@ export default function (state = INITIAL_STATE, action) {
   
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
-      return {
+      state = {
         ...state,
         authenticated: true,
         info: action.payload
       }
+      break;
     case LOGOUT_SUCCESSFUL:
-      return {
+      state = {
         ...state,
         authenticated: false,
         info: {}
       }
+      break;
     case SET_USER:
-      return {
+      state = {
         ...state,
         info: {
           ...state.info,
           user: action.payload,
         }
       }
+      break;
     case ADDRESS_BOOK_FORM:
-
-
-      return {
+      state = {
         ...state,
         addressForm: action.payload,
       }
+      break;
     case CARD_FORM:
-
-
-      return {
+      state = {
         ...state,
         cardForm: action.payload,
       }
+      break;
     case BANK_FORM:
-
-
-      return {
+      state = {
         ...state,
         bankForm: action.payload,
       }
+      break;
     default:
-      return state
-
+      break;
   }
+
+  // persistRedux('user', state);
+  return state;
+
 
 }

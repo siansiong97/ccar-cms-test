@@ -128,25 +128,25 @@ class LayoutV2 extends React.Component {
                 this.setState({
                     notificationLoading: true,
                 }, () => {
-                    // axios.get(`${client.io.io.uri}getUserNotifications`, {
-                    //     params: {
-                    //         userId: this.props.user.info.user._id,
-                    //         limit: NOTIFICATION_PAGE_SIZE,
-                    //         skip: skip || 0
-                    //     }
-                    // }).then(res => {
+                    axios.get(`${client.io.io.uri}getUserNotifications`, {
+                        params: {
+                            userId: this.props.user.info.user._id,
+                            limit: NOTIFICATION_PAGE_SIZE,
+                            skip: skip || 0
+                        }
+                    }).then(res => {
 
-                    //     this.setState({
-                    //         notificationLoading: false,
-                    //         notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
-                    //         notificationTotal: _.get(res, 'data.total') || 0,
-                    //     })
+                        this.setState({
+                            notificationLoading: false,
+                            notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
+                            notificationTotal: _.get(res, 'data.total') || 0,
+                        })
 
-                    // }).catch(err => {
-                    //     this.setState({
-                    //         notificationLoading: false,
-                    //     })
-                    // });
+                    }).catch(err => {
+                        this.setState({
+                            notificationLoading: false,
+                        })
+                    });
                 })
             } else {
                 this.setState({

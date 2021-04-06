@@ -113,7 +113,7 @@ const WritePostModal1 = (props) => {
                 setConfirmLoading(false)
                 return message.error("Please upload Image.")
             }
-        }else{
+        } else {
             fileList = [];
         }
 
@@ -355,18 +355,23 @@ const WritePostModal1 = (props) => {
                             </div>
                         </span>
                         <span className='d-inline-block' >
-                            <RadioGroup className=" round-border-radio-button" disabled={props.editMode} value={chatType} buttonStyle="solid">
-                                <Radio.Button className="round-border-right" value="carfreaks" onClick={(e) => {
-                                    setChatType('carfreaks')
-                                }}>
-                                    CarFreaks
-                                </Radio.Button>
-                                <Radio.Button className="round-border-left" value="socialboard" onClick={(e) => {
-                                    setChatType('socialboard')
-                                }}>
-                                    Social Board
-                                </Radio.Button>
-                            </RadioGroup>
+                            {
+                                props.hideChatType === true ?
+                                    null
+                                    :
+                                    <RadioGroup className=" round-border-radio-button" disabled={props.editMode} value={chatType} buttonStyle="solid">
+                                        <Radio.Button className="round-border-right" value="carfreaks" onClick={(e) => {
+                                            setChatType('carfreaks')
+                                        }}>
+                                            CarFreaks
+                                    </Radio.Button>
+                                        <Radio.Button className="round-border-left" value="socialboard" onClick={(e) => {
+                                            setChatType('socialboard')
+                                        }}>
+                                            Social Board
+                                    </Radio.Button>
+                                    </RadioGroup>
+                            }
                         </span>
                     </div>
 
