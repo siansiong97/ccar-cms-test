@@ -27,6 +27,7 @@ import LiveBoxPreview2 from './live-box-preview-2';
 import LiveBoxRecorded from './live-box-recorded';
 import Scrollbars from 'react-custom-scrollbars';
 import WindowScrollLoadWrapper from '../commonComponent/window-scroll-load-wrapper';
+import BroadCasterListScroll from './BroadCasterListScroll';
 TweenOne.plugins.push(BezierPlugin);
 
 
@@ -250,7 +251,7 @@ class LiveRecordedPage extends React.Component {
                     LIVE
                                 </div>
                   <div className="padding-md background-white margin-top-md">
-                    <BroadcasterList activeBroadcasters={this.state.activeBroadcasters} showName allowSearch />
+                    <BroadCasterListScroll activeBroadcasters={this.state.activeBroadcasters} showName allowSearch />
                   </div>
 
                 </Col>

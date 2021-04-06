@@ -143,13 +143,15 @@ const CompareIndex = (props) => {
                                     <GridProductList data={notEmptyLength(productList) ? productList : []} xs={24} sm={24} md={8} lg={6} xl={6}
                                         topRight={(v) => {
                                             return (
-                                                <Icon type="close" style={{ cursor: 'pointer', fontSize: '20px' }} onClick={() => { props.removeCompareProductId(v._id) }} className='font-weight-bold' />
+                                                <span className='d-inline-block background-grey-opacity-60' >
+                                                    <Icon type="close" style={{ cursor: 'pointer', fontSize: '20px' }} onClick={() => { props.removeCompareProductId(v._id) }} className='font-weight-bold' />
+                                                </span>
                                             )
                                         }}
                                     />
                                     {props.productsList.compareIds.length < props.productsList.compareLimit ?
                                         <Col key="add new" className="gutter-row col-centered" xs={24} sm={24} md={5} lg={5} xl={5}>
-                                            <Link shallow={false}  href={convertParameterToProductListUrl()} >
+                                            <Link shallow={false} href={convertParameterToProductListUrl()} >
                                                 <a>
                                                     <Button className="w-100" style={{ height: '10em' }}>
                                                         <CarOutlined style={{ fontSize: 40 }} />

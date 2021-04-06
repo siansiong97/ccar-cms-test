@@ -649,7 +649,7 @@ import {
                   </Col>
                   <Col xs={12} sm={12} md={6} lg={6} xl={6} className="margin-y-md" style={{ marginTop: '-2px' }}>
                     <div className="thin-border" style={{ marginTop: '5px' }}>
-                      <a href={`${!this.state.productDetails || !this.state.productDetails.createdBy || !this.state.productDetails.createdBy._id ? '#' : `/profile/${this.state.productDetails.createdBy._id}`}`} className="grey-darken-2 font-weight-normal">
+                      <a href={`${!this.state.productDetails || !this.state.productDetails.createdBy || !this.state.productDetails.createdBy.userurlId ? '#' : `/profile/${this.state.productDetails.createdBy.userurlId}`}`} className="grey-darken-2 font-weight-normal">
                         <Row>
                           <Col span={12}>
                             <img src="/Artboard.png" style={{ width: '10%', float: 'left', marginLeft: '5px', marginBottom: '-5px', marginTop: '5px' }} alt="artboard"></img>

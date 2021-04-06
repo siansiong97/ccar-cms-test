@@ -149,7 +149,7 @@ const CarFreakPage = (props) => {
                         {
                             path: 'userId',
                             ref: 'users',
-                            select: 'avatar _id fullName firstName lastName freakId'
+                            select: 'avatar _id fullName firstName lastName freakId userurlId'
                         }, 'eventId', 'clubId'],
                     $limit: PAGE_SIZE,
                     $sort: { _id: -1 },

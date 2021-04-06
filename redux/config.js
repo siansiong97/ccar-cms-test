@@ -21,6 +21,10 @@ export const statePersistActions = [
     reducer: 'user',
   },
   {
+    action: SET_USER,
+    reducer: 'user',
+  },
+  {
     action: FETCH_COMPARE_LIMIT,
     reducer: 'productsList',
   },

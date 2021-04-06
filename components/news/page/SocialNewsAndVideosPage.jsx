@@ -16,6 +16,7 @@ import AuthorList from '../AuthorList';
 import SocialNewsBoxs from '../SocialNewsBoxs';
 import SocialVideoBoxs from '../SocialVideoBoxs';
 import InfiniteScroll from 'react-infinite-scroller';
+import AuthorListScroll from '../AuthorListScroll';
 
 
 const Desktop = ({ children }) => {
@@ -350,7 +351,7 @@ const SocialNewsAndVideosPage = (props) => {
                                     {/* <div className="subtitle1 font-weight-bold padding-x-md margin-bottom-md">
                                     Authors
                                 </div> */}
-                                    <AuthorList authors={tabKey == 'news' ? newsAuthors : videoAuthors} size={30} avatarClassName={`thin-border border-grey cursor-pointer`} selectedAuthor={tabKey == 'news' ? newsSelectedAuthor : videoSelectedAuthor} onClick={(author) => {
+                                    <AuthorListScroll authors={tabKey == 'news' ? newsAuthors : videoAuthors} size={50} avatarClassName={`thin-border border-grey cursor-pointer`} selectedAuthor={tabKey == 'news' ? newsSelectedAuthor : videoSelectedAuthor} onClick={(author) => {
                                         let nextActiveLanguage = getNextActiveLanguage(author);
                                         if (tabKey == 'news') {
                                             setNewsFilterGroup({

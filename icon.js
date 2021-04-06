@@ -4,6 +4,7 @@ export const imageNotFoundIcon = '/image-not-found copy.png'
 
 
 export const raceFlagIcon = '/race-flag.jpg'
+export const allIcon = '/grid.svg'
 
 //CarFreak
 export const carFreakLikeIcon = '/assets/car-freak/carfreaks-like.png'

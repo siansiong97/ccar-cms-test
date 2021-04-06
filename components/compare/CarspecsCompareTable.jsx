@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { fetchDetails, filteredCompareData } from '../../redux/actions/newcars-actions';
-import { isValidNumber, notEmptyLength } from '../../common-function';
+import { arrayLengthCount, isValidNumber, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { loading } from '../../redux/actions/app-actions';
 
@@ -388,7 +388,7 @@ const CarspecsCompareTable = (props) => {
                             null
                     }
                     {
-                        props.hideExpandControl == null || props.hideExpandControl == true ?
+                        (props.hideExpandControl == null || props.hideExpandControl == true) && arrayLengthCount(carspecs) > 1 ?
                             <span className='d-inline-block margin-x-sm' >
                                 <Switch onChange={onChange} unCheckedChildren="Hide Same Items" checkedChildren="Show All Items" />
                             </span>
