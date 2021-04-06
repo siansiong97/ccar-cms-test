@@ -16,6 +16,8 @@ import ClubProfolioBanner from '../components/club/club-profolio-banner';
 import OtherClubsBox from '../components/club/other-clubs-box';
 import { carFreakGlobalSearch, getViewType } from '../config';
 import LayoutV2 from '../../general/LayoutV2';
+import ClubFreaksBox from '../components/club/ClubFreaksBox';
+import ClubSocialBoardBox from '../components/club/ClubSocialBoardBox';
 
 
 const Desktop = ({ children }) => {
@@ -40,9 +42,17 @@ const PAGE_SIZE = 36;
 
 const tabs = [
     {
-        text: 'Discussions',
-        value: 'discussions',
+        text: 'Freaks',
+        value: 'carfreaks',
     },
+    {
+        text: 'Social Board',
+        value: 'socialboard',
+    },
+    // {
+    //     text: 'Discussions',
+    //     value: 'discussions',
+    // },
     {
         text: 'Members',
         value: 'members',
@@ -72,7 +82,7 @@ const SocialClubProfilePage = (props) => {
 
         setTabKey(_.get(_.find(tabs, function (tab) {
             return tab.value == query.tab;
-        }), ['value']) || 'discussions');
+        }), ['value']) || 'carfreaks');
 
     }, [props.router.query])
 
@@ -126,9 +136,15 @@ const SocialClubProfilePage = (props) => {
 
     const _renderView = (value) => {
         switch (value) {
-            case 'discussions':
-                return <ClubDiscussionBox viewType={getViewType(clubJoin)} clubId={_.get(club, '_id')} />
+            case 'carfreaks':
+                return <ClubFreaksBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
                 break;
+            case 'socialboard':
+                return <ClubSocialBoardBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
+                break;
+            // case 'discussions':
+            //     return <ClubDiscussionBox viewType={getViewType(clubJoin)} clubId={_.get(club, '_id')} />
+            //     break;
             case 'members':
                 return <ClubMemberBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
                 break;

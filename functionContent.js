@@ -50,6 +50,7 @@ export function getFaceBookId(url) {
   if (url==='http://localhost:3030/'){appId = '694458901283391'}
   else if (url==='https://uat2-api.ccar.my/'){appId = '703731107216979'}
   else if (url==='https://api.ccar.my/'){appId = '747178012753410'}
+  else if (url==='https://preprod.ccar.my/'){appId = '747178012753410'}
   else  {appId = '747178012753410'} //default prod
 
   return  appId

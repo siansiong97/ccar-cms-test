@@ -280,14 +280,19 @@ const EventPost = (props) => {
                                             <Dropdown getPopupContainer={() => document.getElementById(`post-menu-${uid}`)}
                                                 overlay={
                                                     <Menu>
-                                                        <Menu.Item onClick={(e) => {
-                                                            if (props.onEditClick && props.manualControl) {
-                                                                props.onEditClick(post)
-                                                            } else {
-                                                                setWriteEventVisible(true);
-                                                                setEventEditMode(true);
-                                                            }
-                                                        }}><span >Edit</span></Menu.Item>
+                                                        {
+                                                            _.get(post, ['eventId', 'status']) == 'expired' ?
+                                                                null
+                                                                :
+                                                                <Menu.Item onClick={(e) => {
+                                                                    if (props.onEditClick && props.manualControl) {
+                                                                        props.onEditClick(post)
+                                                                    } else {
+                                                                        setWriteEventVisible(true);
+                                                                        setEventEditMode(true);
+                                                                    }
+                                                                }}><span >Edit</span></Menu.Item>
+                                                        }
                                                         <Menu.Item>
                                                             <Popconfirm
                                                                 title="Are you sure to delete this post?"

@@ -96,7 +96,7 @@ class LiveIndex extends React.Component {
 
   UNSAFE_componentWillMount() {
     this.props.updateActiveMenu('4');
-}
+  }
 
   componentDidUpdate(prevProps, prevState) {
 
@@ -144,10 +144,10 @@ class LiveIndex extends React.Component {
 
   componentWillUnmount() {
 
-      if(isIOS && isMobile){
-        setTimeout(function () { window.location = `https://apps.apple.com/my/app/ccar-my/id1526288072`; }, 25);
-        window.location = "ccarmy:/" + this.props.location.pathname
-      }
+    if (isIOS && isMobile) {
+      setTimeout(function () { window.location = `https://apps.apple.com/my/app/ccar-my/id1526288072`; }, 25);
+      window.location = "ccarmy:/" + this.props.location.pathname
+    }
 
     this.componentCleanup();
     window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
@@ -193,7 +193,8 @@ class LiveIndex extends React.Component {
 
       this.setState(() => {
         return {
-          broadcasters: _.slice(broadcastersArr, 0, TOP_LIVE_LIMIT),
+          broadcasters: broadcastersArr,
+          // broadcasters: _.slice(broadcastersArr, 0, TOP_LIVE_LIMIT),
           filteredBroadcasters: broadcastersArr,
           // activeBroadcasterId: broadcastersArr[0][0],
         }
@@ -239,7 +240,8 @@ class LiveIndex extends React.Component {
       if (!_.isEqual(this.state.broadcasters, broadcastersArr)) {
         this.setState(() => {
           return {
-            broadcasters: _.slice(broadcastersArr, 0, TOP_LIVE_LIMIT),
+            // broadcasters: _.slice(broadcastersArr, 0, TOP_LIVE_LIMIT),
+            broadcasters: broadcastersArr,
             filteredBroadcasters: broadcastersArr,
             // activeBroadcasterId: broadcastersArr[0][0],
           }
@@ -516,8 +518,8 @@ class LiveIndex extends React.Component {
         this.state.broadcasters.map(function (broadcaster) {
           return (
             <React.Fragment>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} >
-                <Link shallow={false}  href={`/live/${broadcaster.dealerSocketId}`} >
+              <Col xs={24} sm={24} md={12} lg={8} xl={8} >
+                <Link shallow={false} href={`/live/${broadcaster.dealerSocketId}`} >
                   <a>
                     <LiveBoxPreview1
                       data={broadcaster}
@@ -577,13 +579,17 @@ class LiveIndex extends React.Component {
                     :
                     null
                 }
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                  <Row gutter={[10,10]}>
+                    {
+                      _.isArray(this.state.broadcasters) && !_.isEmpty(this.state.broadcasters) ?
+                        this._renderTopLives()
+                        :
+                        null
+                    }
 
-                {
-                  _.isArray(this.state.broadcasters) && !_.isEmpty(this.state.broadcasters) ?
-                    this._renderTopLives()
-                    :
-                    null
-                }
+                  </Row>
+                </Col>
 
                 {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <div className="h6 font-weight-bold">
