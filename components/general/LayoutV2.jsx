@@ -694,9 +694,17 @@ class LayoutV2 extends React.Component {
                 }
 
             >
-                <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
-                    <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 20 }} /></Badge>
-                </span>
+                <Desktop>
+                    <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
+                        <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 20 }} /></Badge>
+                    </span>
+                </Desktop>
+
+                <Tablet>
+                    <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
+                        <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 25 }} /></Badge>
+                    </span>
+                </Tablet>
             </Popover>
         )
     }
@@ -890,7 +898,7 @@ class LayoutV2 extends React.Component {
                             </Desktop>
 
                             <Tablet>
-                                <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                                <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '65px' }}>
                                     <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
                                         <Col xs={12} sm={12} md={14} lg={12} xl={12}>
                                             <div className='flex-justify-start flex-items-align-center topnav-child'>
@@ -912,7 +920,15 @@ class LayoutV2 extends React.Component {
                                             </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={10} lg={12} xl={12}>
-                                            <div style={{ width: '300' }}>
+                                            <div className='flex-justify-end flex-items-align-center topnav-child' style={{ width: '300' }}>
+                                            {
+                                                _.get(this.props, ['user', 'authenticated']) ?
+                                                    <span className='d-inline-block' style={{marginRight:'20px'}}>
+                                                        {this._renderNotificationBox()}
+                                                    </span>
+                                                :
+                                                null
+                                            }
                                                 <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
                                                     <Icon type="menu" />
                                                 </Button>
