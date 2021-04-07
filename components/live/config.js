@@ -16,10 +16,10 @@ export function getStreamUrl(url){
     else  {stream = 'http://localhost:3030'} //default testing
     
     // return 'http://192.168.0.191:7070/';
-    // return "https://stream-uat2.ccar.my";
+    return "https://stream-uat2.ccar.my";
     // return 'http://localhost:7070/';
     // return 'http://192.168.0.149:3041/'
-    return stream;
+    // return stream;
 }
 
 

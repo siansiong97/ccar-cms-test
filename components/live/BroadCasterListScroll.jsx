@@ -155,6 +155,7 @@ const BroadcasterListScroll = (props) => {
                                             <UserAvatar
                                                 isBroadcastersList={true}
                                                 avatarClassName={`${isActiveBroadcaster(broadcaster) ? 'border-red' : 'border-grey cursor-not-allowed'} ${props.avatarClassName ? props.avatarClassName : ''}`}
+                                                avatarStyle={isActiveBroadcaster(broadcaster) ? { borderWidth: 'thick' } : {}}
                                                 className={`${isActiveBroadcaster(broadcaster) ? '' : 'cursor-not-allowed'}`}
                                                 size={isValidNumber(props.size) ? props.size : 80}
                                                 showName={!props.showName || props.showName == false ? false : true}

@@ -105,7 +105,7 @@ const UserAvatar = (props) => {
                                         src={realAvatar}
                                         icon={!props.data || (!props.data.avatar && !props.data.name && !props.data.firstName && !props.data.lastName) ? 'user' : null}
                                         className={`${props.avatarClassName ? props.avatarClassName : ''} ${props.redirectProfile || props.showPreview ? 'cursor-pointer' : ''}`}
-                                        style={realStyle}
+                                        style={{...realStyle, ...props.avatarStyle}}
                                             >
                                         {
                                             !realAvatar && (

@@ -77,7 +77,8 @@ const LiveBoxPreview1 = (props) => {
                 <div className={`${props.className ? props.className : ''} background-white`} style={{ height: `${defaultHeight}px`, width: '100%', ...props.style }} onClick={(e) => { handleOnClick(e) }}
                     
                 >
-                    <div className="width-100 relative-wrapper" style={{ height: !props.style || !isValidNumber(props.style.height) ? `${defaultHeight * 0.85}px` : `${parseFloat(props.style.height) * 0.85}px` }} >
+                    {/* <div className="width-100 relative-wrapper" style={{ height: !props.style || !isValidNumber(props.style.height) ? `${defaultHeight * 0.85}px` : `${parseFloat(props.style.height) * 0.85}px` }} > */}
+                    <div className="width-100 relative-wrapper" style={{ height: !props.style || !isValidNumber(props.style.height) ? `${defaultHeight * 1}px` : `${parseFloat(props.style.height) * 1}px` }} >
                         <img 
                             // src={_.get(props.data , ['dealerVideoThumbnailUrl'])} 
                             src={pictureUrl}

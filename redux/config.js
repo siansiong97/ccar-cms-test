@@ -62,6 +62,19 @@ export const statePersistActions = [
   },
 ];
 
+export function persistRedux(reducer, data) {
+
+  if(reducer && _.isPlainObject(data) && !_.isEmpty(data)){
+    let reduxStates = localStorage.get('redux');
+    if(!_.isPlainObject(reduxStates)){
+      reduxStates = {};
+    }
+
+    reduxStates[reducer] = data;
+    localStorage.set('redux', reduxStates);
+  }
+}
+
 export function checkIsNeedPersist(action) {
   if (action) {
     return _.some(statePersistActions || [] || [], ['action', action]) || false;

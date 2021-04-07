@@ -1,3 +1,4 @@
+import { ShareAltOutlined } from '@ant-design/icons';
 import { Form, Icon, Input } from 'antd';
 import _ from 'lodash';
 import { withRouter } from 'next/router';
@@ -11,6 +12,8 @@ import { getUserName, isValidNumber, notEmptyLength, objectRemoveEmptyValue } fr
 import { loginMode } from '../../redux/actions/app-actions';
 import { setUser } from '../../redux/actions/user-actions';
 import EmojiPickerButton from '../general/EmojiPickerButton';
+import ShareButtonDialog from '../general/ShareButtonDialog';
+import FollowButton from '../profile/FollowButton';
 import { defaultGifts, defaultReactions, liveIcon, LIVE_TEXT_TEMPLATE } from './config';
 import ReactionButtonList from './reaction-button-list';
 import SadVideo from './sadvideo';
@@ -49,6 +52,9 @@ const LiveBox = (props) => {
   const [canSendChat, setCanSendChat] = useState(true);
 
 
+  useEffect(() => {
+    console.log(props.data);
+  }, [props.data])
 
   useEffect(() => {
 
@@ -218,28 +224,28 @@ const LiveBox = (props) => {
 
   function pushUserChat() {
     // if (canSendChat) {
-      if (_.trim(_.toString(commentText))) {
-        let data = {
-          text: commentText,
-          userId: props.user.authenticated ? props.user.info.user._id : null,
-          userName: props.user.authenticated ? getUserName(_.get(props.user, ['info', 'user']), 'fullName') : 'Ccar User',
-          userAvatar: props.user.authenticated ? props.user.info.user.avatar : null,
-        }
-
-        checkNeedKeepBottom();
-        // setChats(_.cloneDeep(chats).concat([data]))
-        setCommentText('');
-        setCanSendChat(false);
-        setTimeout(() => {
-          setCanSendChat(true);
-        }, chatRestrictTime);
-
-        if (props.onNewChat) {
-          props.onNewChat({ text: commentText });
-        }
-
-
+    if (_.trim(_.toString(commentText))) {
+      let data = {
+        text: commentText,
+        userId: props.user.authenticated ? props.user.info.user._id : null,
+        userName: props.user.authenticated ? getUserName(_.get(props.user, ['info', 'user']), 'fullName') : 'Ccar User',
+        userAvatar: props.user.authenticated ? props.user.info.user.avatar : null,
       }
+
+      checkNeedKeepBottom();
+      // setChats(_.cloneDeep(chats).concat([data]))
+      setCommentText('');
+      setCanSendChat(false);
+      setTimeout(() => {
+        setCanSendChat(true);
+      }, chatRestrictTime);
+
+      if (props.onNewChat) {
+        props.onNewChat({ text: commentText });
+      }
+
+
+    }
     // } else {
     //   message.warning('You are typing too fast...');
     // }
@@ -247,9 +253,9 @@ const LiveBox = (props) => {
 
   const _renderLiveChat = (chat) => {
     var isAnonymous;
-    if(chat.type === "anonymous-joined" || chat.type === "anonymous-left"){
+    if (chat.type === "anonymous-joined" || chat.type === "anonymous-left") {
       isAnonymous = true;
-    }else {
+    } else {
       isAnonymous = false;
     }
 
@@ -334,7 +340,7 @@ const LiveBox = (props) => {
     setCommentText('');
   }, _.get(props, "router.query.id"))
 
-  
+
 
   return (
     <React.Fragment>
@@ -361,32 +367,60 @@ const LiveBox = (props) => {
           <div className="absolute-center fill-parent" >
             <div className='relative-wrapper fill-parent'>
               {/* video header */}
-              <div className="width-80 flex-justify-start flex-items-align-center padding-x-lg padding-y-sm " style={{ position: 'absolute', top: 0, left: 0, height: defaultHeaderHeight, overflow: 'auto',
+              <span className="d-inline-block flex-justify-space-between  background-grey-opacity-50 flex-items-align-center padding-x-sm" style={{
+                position: 'absolute', top: 10, left: 10, overflow: 'auto', maxWidth: '50%', borderRadius: '1000px'
               }} >
-                <UserAvatar 
-                  redirectProfile size={defaultHeaderHeight * 0.5} 
-                  // data={props.data}
-                  data={{ 
-                    avatar: props.data.dealerAvatar, 
-                    name: props.data.dealerDisplayName 
-                  }}
-                />
-                <span className='d-inline-block subtitle1 white font-weight-normal margin-x-sm' >
-                  <div className='font-weight-bold'>
-                    {props.data.title ? props.data.title : null}
-                  </div>
-                  <div>
-                    {`${props.data.name ? props.data.name : ''}`}
-                  </div>
+                <span className='flex-items-align-center flex-justify-start margin-right-md' >
+                  <UserAvatar
+                    size={defaultHeaderHeight * 0.5}
+                    // data={props.data}
+                    data={{
+                      avatar: props.data.dealerAvatar,
+                      name: props.data.dealerDisplayName
+                    }}
+                  />
+                  <span className='d-inline-block margin-x-sm' >
+                    <div className='font-weight-bold ccar-button-yellow subtitle1 text-overflow-break'>
+                      {props.data.title ? props.data.title : null}
+                    </div>
+                    <div className="flex-justify-start flex-items-align-center">
+                      <span className='d-inline-block margin-right-md caption font-weight-light white text-overflow-break' >
+                        {`by: ${props.data.name ? props.data.name : ''}`}
+                      </span>
+                    </div>
+                  </span>
                 </span>
-                <img src={liveIcon} style={{ width: '60px', height: '60px' }} />
-                <div className="background-grey-darken-4 opacity-80 round-border-light flex-items-align-center flex-justify-center padding-sm margin-x-sm">
+
+                <span className='d-inline-block ' >
+                  <FollowButton type="user" userId={_.get(props.data, ['dealerDbId'])} followerId={_.get(props.user, ['info', 'user', '_id'])} followButton={() => {
+                    return (
+                      <span className=" d-inline-block round-border background-ccar-button-yellow black caption padding-x-md padding-y-sm">
+                        Follow
+                      </span>
+                    )
+                  }}
+                    followingButton={() => {
+                      return (
+                        <span className='d-inline-block round-border background-white ccar-button-yellow caption padding-x-md padding-y-sm' >
+                          Following
+                        </span>
+                      )
+                    }}
+                    notify
+                  ></FollowButton>
+                </span>
+              </span>
+              <span className="d-inline-block flex-justify-end flex-items-align-center padding-x-lg padding-y-sm" style={{
+                position: 'absolute', top: 0, right: 0, height: defaultHeaderHeight, overflow: 'auto',
+              }} >
+                <span className=" d-inline-block background-grey-darken-4 opacity-80 round-border-light flex-items-align-center flex-justify-center padding-sm margin-x-sm">
                   <Icon type="eye" theme="filled" className='margin-right-sm white' style={{ fontSize: '20px' }} />
                   <span className='d-inline-block white subtitle2' >
                     {props.numberOfConnectedUsers}
                   </span>
-                </div>
-              </div>
+                </span>
+                <img src={liveIcon} style={{ width: '60px', height: '60px' }} />
+              </span>
 
               {/* video body */}
               <div className="width-80 padding-x-md padding-top-xl" style={{ position: 'absolute', top: defaultHeaderHeight, left: 0, height: (height - defaultHeaderHeight - defaultFooterHeight) }} >
@@ -461,12 +495,12 @@ const LiveBox = (props) => {
 
               }} className='flex-justify-space-between flex-items-align-end padding-x-lg padding-y-md width-100'>
                 <span className='flex-justify-start flex-items-align-center width-70' style={{
-                  }}>
-                  <UserAvatar 
-                  redirectProfile 
-                  size={defaultFooterHeight * 0.5} 
-                  data={props.user.authenticated ? props.user.info.user : {}} 
-                  className='margin-right-md'></UserAvatar>
+                }}>
+                  <UserAvatar
+                    redirectProfile
+                    size={defaultFooterHeight * 0.5}
+                    data={props.user.authenticated ? props.user.info.user : {}}
+                    className='margin-right-md'></UserAvatar>
                   <span className='d-inline-block width-80' >
 
                     <div className='subtitle1 white font-weight-bold text-truncate margin-bottom-xs' >
@@ -519,6 +553,9 @@ const LiveBox = (props) => {
                   </span>
                 </span>
                 <span className='flex-items-align-center flex-justify-end' >
+                  <ShareButtonDialog>
+                    <ShareAltOutlined style={{ fontSize: 30 }} className="white margin-x-xs" />
+                  </ShareButtonDialog>
                   {
                     !isFullScreen ?
                       <Icon type="fullscreen" className='cursor-pointer white margin-x-xs' style={{ fontSize: 30 }} onClick={(e) => {
