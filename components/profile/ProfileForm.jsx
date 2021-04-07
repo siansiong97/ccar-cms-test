@@ -29,8 +29,10 @@ const ProfileForm = (props) => {
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [isValidUsername, setIsValidUsername] = useState(true);
     const [isValidFreakId, setIsValidFreakId] = useState(true);
+    const [isValidUserUrlId, setIsValidUserUrlId] = useState(true);
     // Only show error after a field is touched.
-    const freakIdError = (isFieldTouched('freakId') || !isFieldValidating('freakId')) && getFieldError('freakId') || !isValidUsername ? 'This freakId already used by others.' : '';
+    const freakIdError = (isFieldTouched('freakId') || !isFieldValidating('freakId')) && getFieldError('freakId') || !isValidFreakId ? 'This freakId already used by others.' : '';
+    const userurlIdError = (isFieldTouched('userurlId') || !isFieldValidating('userurlId')) && getFieldError('userurlId') || !isValidUserUrlId ? 'This user url already used by others.' : '';
     const usernameError = (isFieldTouched('username') || !isFieldValidating('username')) && getFieldError('username') || !isValidUsername ? 'This username already used by others.' : '';
     const firstNameError = (isFieldTouched('firstName') || !isFieldValidating('firstName')) && getFieldError('firstName');
     const lastNameError = (isFieldTouched('lastName') || !isFieldValidating('lastName')) && getFieldError('lastName');
@@ -51,6 +53,7 @@ const ProfileForm = (props) => {
     useEffect(() => {
         // props.form.setFieldsValue(userForm)
         props.form.setFieldsValue({
+            userurlId: userForm.userurlId,
             freakId: userForm.freakId,
             username: userForm.username,
             lastName: userForm.lastName,
@@ -174,22 +177,35 @@ const ProfileForm = (props) => {
 
     // }
 
-    function checkIsValidFreakId() {
+    function checkIsValid() {
 
-        if (_.get(userForm, ['_id']) && _.get(userForm, ['freakId'])) {
+        if (_.get(userForm, ['_id']) && _.get(userForm, ['freakId']) && _.get(userForm, ['userurlId'])) {
             props.loading(true)
-            axios.get(`${client.io.io.uri}checkUniqueFreakId`, {
+            let promises = [];
+            promises.push(axios.get(`${client.io.io.uri}checkUniqueFreakId`, {
                 params: {
                     id: userForm._id,
-                    freakId: userForm.freakId
+                    freakId: _.get(userForm, 'freakId')
                 }
-            }).then(res => {
+            }))
+
+            promises.push(axios.get(`${client.io.io.uri}checkUniqueUserUrlId`, {
+                params: {
+                    id: userForm._id,
+                    userurlId: _.get(userForm, 'userurlId')
+                }
+            }))
+            Promise.all(promises).then(responses => {
                 props.loading(false)
-                if (_.get(res, ['data', 'status']) == 'used') {
-                    setIsValidUsername(isValidFreakId => false);
+                if (_.get(responses, [0, 'data', 'status']) == 'used') {
+                    setIsValidFreakId(false);
                     message.error('FreakId has been used. Please select another FreakId.')
+                } else if (_.get(responses, [1, 'data', 'status']) == 'used') {
+                    setIsValidUserUrlId(false);
+                    message.error('User url has been used. Please select another user url.')
                 } else {
-                    setIsValidUsername(isValidFreakId => true);
+                    setIsValidFreakId(true);
+                    setIsValidUserUrlId(true);
                     handleSubmit();
                 }
 
@@ -200,7 +216,6 @@ const ProfileForm = (props) => {
         } else {
             message.error('FreakId Not Found!')
         }
-
     }
     function handleSubmit(e) {
         props.form.validateFields((err, values) => {
@@ -213,7 +228,7 @@ const ProfileForm = (props) => {
                         let fileList = userForm.imageList;
                         let promiseArr = [];
 
-                        if(_.isArray(fileList) && !_.isEmpty(fileList)){
+                        if (_.isArray(fileList) && !_.isEmpty(fileList)) {
                             for (let i = 0; i < fileList.length; i++) {
 
                                 if (!fileList[i].url) {
@@ -223,14 +238,14 @@ const ProfileForm = (props) => {
                                         useWebWorker: true,
                                         maxWidthOrHeight: 1920,
                                     }
-    
+
                                     let imageFile = Compress(imgObj, options)
                                         .then(compressedBlob => {
                                             compressedBlob.lastModifiedDate = new Date()
                                             const convertedBlobFile = new File([compressedBlob], imgObj.name, { type: imgObj.type, lastModified: Date.now() })
                                             return convertedBlobFile
                                         })
-    
+
                                     promiseArr.push(imageFile.then((res) => {
                                         fileList[i].originFileObj = res
                                         return fileList[i]
@@ -278,7 +293,7 @@ const ProfileForm = (props) => {
 
                                 Promise.all(uploadPromiseArr).then((res) => {
                                     let finalData = _.cloneDeep(userForm) || {};
-                                    if(_.get(res , [0, 0, 'url'])){
+                                    if (_.get(res, [0, 0, 'url'])) {
                                         finalData.avatar = res[0][0].url;
                                     }
                                     updateUser(finalData)
@@ -313,6 +328,7 @@ const ProfileForm = (props) => {
                         avatar: userForm.avatar,
                         username: userForm.username,
                         freakId: userForm.freakId,
+                        userurlId: userForm.userurlId,
                         firstName: userForm.firstName,
                         lastName: userForm.lastName,
                         birthdayDay: userForm.birthdayDay,
@@ -383,6 +399,29 @@ const ProfileForm = (props) => {
                                     style={{ height: '40px' }}
                                     placeholder="FreakId"
                                     onChange={(e) => { setUserForm({ ...userForm, freakId: e.target.value }) }}
+                                />
+                            )}
+                        </Form.Item>
+
+                        <Form.Item required={false} label="User Url" validateStatus={userurlIdError ? 'error' : ''} help={userurlIdError || ''}>
+                            {getFieldDecorator('userurlId', {
+                                rules: [{ required: false }, {
+                                    validator: (rule, value, callback) => {
+
+                                        if (!value) {
+                                            callback('Please input your user url.');
+                                        } else if (!isValidFreakId) {
+                                            callback('This user url already used by others.');
+                                        } else {
+                                            callback();
+                                        }
+                                    }
+                                }],
+                            })(
+                                <Input
+                                    style={{ height: '40px' }}
+                                    placeholder="FreakId"
+                                    onChange={(e) => { setUserForm({ ...userForm, userurlId: e.target.value }) }}
                                 />
                             )}
                         </Form.Item>
@@ -537,7 +576,7 @@ const ProfileForm = (props) => {
                                 props.onProfileCancel();
                             }
                         }}>Cancel</Button>
-                        <Button style={{ backgroundColor: '#F9A825', borderColor: '#F9A825' }} className="margin-right-lg" onClick={(e) => { checkIsValidFreakId() }} disabled={buttonDisabled}>Save Changes</Button>
+                        <Button style={{ backgroundColor: '#F9A825', borderColor: '#F9A825' }} className="margin-right-lg" onClick={(e) => { checkIsValid() }} disabled={buttonDisabled}>Save Changes</Button>
 
                     </Col>
 

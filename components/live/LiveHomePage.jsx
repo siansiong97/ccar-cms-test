@@ -19,6 +19,7 @@ import LiveBoxPreview1 from './live-box-preview-1';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import { isIOS, isMobile } from 'react-device-detect'
+import BroadCasterListScroll from './BroadCasterListScroll';
 
 TweenOne.plugins.push(BezierPlugin);
 
@@ -559,7 +560,7 @@ class LiveIndex extends React.Component {
                   </div> */}
                   <div className="width-100 background-white padding-md">
                     <div className="width-100 ">
-                      <BroadcasterList
+                      <BroadCasterListScroll
                         showName={true}
                         activeBroadcasters={notEmptyLength(this.state.filteredBroadcasters) ? this.state.filteredBroadcasters : []}
                         allowSearch

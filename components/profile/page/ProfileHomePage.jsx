@@ -69,7 +69,7 @@ const ProfileHomePage = (props) => {
         props.loading(true);
         client.service('users').find({
             query: {
-                _id: props.router.query.id,
+                userurlId: props.router.query.id,
                 $populate: [
                     {
                         path: 'companyId',

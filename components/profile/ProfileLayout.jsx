@@ -103,7 +103,7 @@ const ProfileLayout = (props) => {
             case 'wishlists':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details/wishlists`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/wishlists`}>
                             <a>My Wishlist</a>
                         </Link>
                     </Breadcrumb.Item>
@@ -112,7 +112,7 @@ const ProfileLayout = (props) => {
             case 'address-book':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
                             <a>
                                 My Address Book
                                 </a>
@@ -123,13 +123,13 @@ const ProfileLayout = (props) => {
             case 'address-book-create':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
                             <a>
                                 My Address Book
                                 </a></Link>
                     </Breadcrumb.Item>,
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details/address-book-create`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book-create`}>
                             <a>
                                 Add Address
                                 </a></Link>
@@ -139,13 +139,13 @@ const ProfileLayout = (props) => {
             case 'address-book-edit':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details/address-book`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
                             <a>
                                 My Address Book
                                 </a></Link>
                     </Breadcrumb.Item>,
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
                             <a>
                                 Edit Address
                                 </a></Link>
@@ -156,7 +156,7 @@ const ProfileLayout = (props) => {
             default:
                 setNavItems([
                     <Breadcrumb.Item key='editprofile'>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}/details`}>
+                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details`}>
                             <a>
                                 Edit Profile
                             </a>
@@ -171,10 +171,12 @@ const ProfileLayout = (props) => {
 
     function getProfile() {
         props.loading(true);
-        if (_.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == props.router.query.id) {
+        console.log(_.get(props.user, ['info', 'user', 'userurlId']));
+        console.log(props.router.query.id);
+        if (_.get(props.user, ['info', 'user', 'userurlId']) == props.router.query.id) {
             client.service('users').find({
                 query: {
-                    _id: props.router.query.id,
+                    userurlId: props.router.query.id,
                     $populate: [
                         {
                             path: 'companyId',
@@ -194,7 +196,7 @@ const ProfileLayout = (props) => {
             });
         } else {
             message.error('Profile Not Found.');
-            props.router.push('/');
+            // props.router.push('/');
         }
     }
 
@@ -203,8 +205,8 @@ const ProfileLayout = (props) => {
         return menuItems.map((item, index) => {
             return (
                 <a key={'path' + index} onClick={() => {
-                    if (_.get(profile, ['_id'])) {
-                        let path = item.path.replace(':id', profile._id);
+                    if (_.get(profile, ['userurlId'])) {
+                        let path = item.path.replace(':id', profile.userurlId);
                         props.router.push(path);
                     }
                 }}>
@@ -237,7 +239,7 @@ const ProfileLayout = (props) => {
                                 </Link>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <Link shallow={false} href={`/profile/${_.get(profile, ['_id'])}`}>
+                                <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}`}>
                                     <a>
                                         Profile
                                     </a>
@@ -298,8 +300,8 @@ const ProfileLayout = (props) => {
                                     {/* <Col span={24}>
                                         <div className=" round-border thin-border padding-sm">
                                             <Row type="flex"   justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
-                                                if (_.get(profile, ['_id'])) {
-                                                    props.router.push(`/profile/${profile._id}/details/settings`);
+                                                if (_.get(profile, ['userurlId'])) {
+                                                    props.router.push(`/profile/${profile.userurlId}/details/settings`);
                                                 }
                                             }}>
                                                 <Col span={24}>
@@ -322,7 +324,7 @@ const ProfileLayout = (props) => {
                                         <div className="round-border thin-border padding-sm">
                                             <Row type="flex" justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
                                                 if (_.get(profile, ['_id'])) {
-                                                    props.router.push(`/profile/${profile._id}/details`);
+                                                    props.router.push(`/profile/${profile.userurlId}/details`);
                                                 }
                                             }}>
                                                 <Col span={24}>

@@ -11,6 +11,7 @@ import { Form } from '@ant-design/compatible';
 import { notEmptyLength, arrayLengthCount } from '../../common-function';
 import Loading from '../general/Loading';
 import { SmallDashOutlined } from '@ant-design/icons';
+import { allIcon } from '../../icon';
 
 
 
@@ -204,11 +205,13 @@ const SocialNewTabs = (props) => {
     const _renderAuthorList = (data) => {
 
         if (notEmptyLength(data)) {
-            let allIcon = (
+            let allIconHtml = (
                 <div key='authorList' className={!isSelectedAuthor(null, selectedAuthor) ? "padding-md flex-justify-center flex-items-align-center" : "padding-md flex-justify-center flex-items-align-center border-selected-yellow thin-border"}>
                     <Tooltip title="All" placement="right">
                         <a onClick={() => { setFilterGroup({ ...filterGroup, authorId: null, language: null }); setSelectedAuthor(null); }}>
-                            <Avatar size={50} icon={<SmallDashOutlined></SmallDashOutlined>} />
+                            <span className='d-inline-block avatar background-grey-lighten-2 overflow-hidden relative-wrapper' style={{ width : 50, height : 50 }} >
+                              <img src={allIcon} className="width-50 height-50 absolute-center" />
+                            </span>
                         </a>
                     </Tooltip>
                 </div>
@@ -228,7 +231,7 @@ const SocialNewTabs = (props) => {
 
             });
 
-            list.unshift(allIcon);
+            list.unshift(allIconHtml);
             return (
                 <Loading spinning={authorLoading}>
                     {list}

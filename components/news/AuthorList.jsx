@@ -164,7 +164,7 @@ const AuthorList = (props) => {
 
                 }
                 <Scrollbars style={{ height: showMore ? 120 : 'auto', }} autoHide autoHeight={!showMore}>
-                    <div className="width-100 padding-x-xs">
+                    <div className="width-100 padding-x-md">
                         <Row gutter={props.gutter ? props.gutter : [10, 20]} type="flex" align="middle" justify="start">
                             {
                                 _.isArray(authors) && notEmptyLength(authors) ?

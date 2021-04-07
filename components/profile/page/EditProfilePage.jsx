@@ -16,9 +16,9 @@ const EditProfilePage = (props) => {
 
     const [profile, setProfile] = useState({})
 
-    function backProfileHome() {
-        if (_.get(profile, ['_id'])) {
-            props.router.push(`/profile/${profile._id}`)
+    function backProfileHome(profile) {
+        if (_.get(profile, ['userurlId'])) {
+            props.router.push(`/profile/${profile.userurlId}`)
         }
     }
 
@@ -35,8 +35,8 @@ const EditProfilePage = (props) => {
                 backProfileHome()
             }}
                 onProfileSuccess={(data) => {
- 
-                    backProfileHome()
+                    setProfile(data);
+                    backProfileHome(data)
                 }}
             />
         </ProfileLayout>

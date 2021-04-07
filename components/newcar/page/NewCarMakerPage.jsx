@@ -333,22 +333,22 @@ class Maker extends React.Component {
                         <div className="container">
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/" passHref>
+                                    <Link shallow={false} href="/" passHref>
                                         <a>Home</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar" passHref>
+                                    <Link shallow={false} href="/newcar" passHref>
                                         <a>New Car</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar/filter" passHref>
+                                    <Link shallow={false} href="/newcar/filter" passHref>
                                         <a>Filter</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar/maker" passHref>
+                                    <Link shallow={false} href="/newcar/maker" passHref>
                                         <a>
                                             {_.capitalize(_.get(this.props, ['router', 'query', 'id']) || '')}
                                         </a>
@@ -488,7 +488,22 @@ class Maker extends React.Component {
 
                                     <Col className="stick-column" xs={0} sm={0} md={5} lg={5} xl={5}>
                                         <Affix offsetTop={65}>
-                                            <BrandFiltering brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList} />
+                                            {
+                                                _.isArray(this.state.filterCarBrands) && !_.isEmpty(this.state.filterCarBrands) ?
+                                                    <BrandFiltering
+                                                        brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : []}
+                                                    // onSelect={(e) => { this.setState({ ...this.state.filterGroup, make: _.toLower(e) }) }}
+                                                    // selected={
+                                                    //     this.props.newCars ? this.state.filterGroup
+                                                    //         ? this.state.filterGroup.make
+                                                    //             ? this.state.filterGroup.make
+                                                    //             : ''
+                                                    //         : ''
+                                                    //         : ''}
+                                                    />
+                                                    :
+                                                    null
+                                            }
                                         </Affix>
                                     </Col>
                                 </Row>
@@ -636,26 +651,26 @@ class Maker extends React.Component {
                 </Desktop>
 
                 <Tablet>
-                <div className="section-version3" style={{ marginTop: '20px' }}>
+                    <div className="section-version3" style={{ marginTop: '20px' }}>
                         <div className="container-version3 padding-x-sm">
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/" passHref>
+                                    <Link shallow={false} href="/" passHref>
                                         <a>Home</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar" passHref>
+                                    <Link shallow={false} href="/newcar" passHref>
                                         <a>New Car</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar/filter" passHref>
+                                    <Link shallow={false} href="/newcar/filter" passHref>
                                         <a>Filter</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar/maker" passHref>
+                                    <Link shallow={false} href="/newcar/maker" passHref>
                                         <a>
                                             {_.capitalize(_.get(this.props, ['router', 'query', 'id']) || '')}
                                         </a>

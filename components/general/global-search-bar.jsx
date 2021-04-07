@@ -249,8 +249,8 @@ const GlobalSearchBar = (props) => {
                                         group.children.map((opt, index) => (
                                             <Option key={`${group.title}-${index}`} value={`${opt.freakId || ''}`} onClick={() => {
                                                 if (_.isPlainObject(opt) && !_.isEmpty(opt)) {
-                                                    if (opt._id) {
-                                                        props.router.push(`/profile/${opt._id}`);
+                                                    if (opt.userurlId) {
+                                                        props.router.push(`/profile/${opt.userurlId}`);
                                                     }
                                                 }
                                             }}>
@@ -398,7 +398,7 @@ const GlobalSearchBar = (props) => {
                             {
                                 _.isArray(_.get(group, ['children'])) && !_.isEmpty(_.get(group, ['children'])) ?
                                     group.children.map((opt, index) => (
-                                        <Option key={`${group.title}-${index}`} onClick={() => { props.router.push('/profile/' + opt._id); }}>
+                                        <Option key={`${group.title}-${index}`} onClick={() => { props.router.push('/profile/' + opt.userurlId); }}>
                                             <Highlighter
                                                 style={{ padding: '0px 10px' }}
                                                 highlightStyle={{ color: '#ffc069', padding: 0 }}
