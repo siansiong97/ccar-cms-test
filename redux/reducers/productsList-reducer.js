@@ -25,7 +25,7 @@ import {
   SET_PRODUCT_LIST_LOADING,
 } from '../actions/productsList-actions';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj, persistRedux } from '../config';
 
 const INITIAL_STATE = {
   productListLoading: false,
@@ -47,38 +47,48 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-  checkNeedPersist(_.get(action, 'type'), 'productsList', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+  // checkNeedPersist(_.get(action, 'type'), 'productsList', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
+  let persistStates = _.get(localStorage.get('redux') || {}, 'productsList') || INITIAL_STATE;
+  state = {
+    ...state,
+    ...persistStates,
+  }
   switch (action.type) {
     case FETCH_PRODUCTSLIST:
-      return {
+      state = {
         ...state,
         productsList: action.payload
       }
+      break;
     case FETCH_PRODUCTSLIST_HOME:
-      return {
+      state = {
         ...state,
         productsListHome: action.payload
       }
+      break;
     case PUSH_PRODUCTSLIST:
-      return {
+      state = {
         ...state,
-        productsList: [action.payload, ...state.products]
+        productsList: [action.payload, ...state.productsList]
       }
+      break;
     case REMOVE_PRODUCTSLIST:
-      return {
+      state = {
         ...state,
         productsList: [...state.productsList.filter((item) => item._id !== action.payload._id)]
       }
+      break;
     case UPDATE_PRODUCTSLIST:
       let index = _.findIndex(state.productsList, { '_id': action.payload._id })
       state.productsList.splice(index, 1, action.payload)
-      return {
+      state = {
         ...state,
         productsList: state.productsList
       }
+      break;
     case UPDATE_ACTIVE_ID_PRODUCTS_LIST:
-      return {
+      state = {
         ...state,
         activeId: action.id,
         activeproductList: _.pick(_.find(state.productsList, { '_id': action.id }), [
@@ -107,6 +117,7 @@ export default function (state = INITIAL_STATE, action) {
           '_id'
         ])
       }
+      break;
     case ADD_COMPARE__PRODUCT_ID:
 
       if (!state.compareIds) {
@@ -114,107 +125,123 @@ export default function (state = INITIAL_STATE, action) {
       }
       if (state.compareIds.length < state.compareLimit) {
         let checkIfExist = _.findIndex(state.compareIds, function (item) {
-          return item == action.payload;
+          state = item == action.payload;
         })
         if (checkIfExist == -1) {
           let temp = _.cloneDeep(state.compareIds)
           temp.push(action.payload)
-          return {
+          state = {
             ...state,
             compareIds: temp
           }
         } else {
-          return {
+          state = {
             ...state,
           }
         }
       } else {
-        return {
+        state = {
           ...state,
         }
       }
+      break;
     case REMOVE_COMPARE_PRODUCT_ID:
       let temp = state.compareIds.filter((item) => item !== action.payload);
 
-      return {
+      state = {
         ...state,
         compareIds: temp,
       }
+      break;
     case PATCH_COMPARE_PRODUCT_IDS:
       if (!Array.isArray(action.payload)) {
         action.payload = [];
       }
-      return {
+      state = {
         ...state,
         compareIds: action.payload
       }
+      break;
     case CLEAR_COMPARE_PRODUCT_IDS:
-      return {
+      state = {
         ...state,
         compareIds: []
       }
+      break;
     case FETCH_FILTERED_COMPARE_DATA:
-      return {
+      state = {
         ...state,
         filteredCompareData: action.payload
       }
     case FETCH_FEATURES_LIST:
-      return {
+      state = {
         ...state,
         featuresList: action.payload,
       }
+      break;
     case UPDATE_CHECKED_FEATURES_DATE:
-      return {
+      state = {
         ...state,
         checkedFeaturesDate: moment(action.payload),
       }
+      break;
     case FETCH_COMPARE_LIMIT:
-      return {
+      state = {
         ...state,
         compareLimit: action.payload,
       }
+      break;
     case FETCH_PRODUCT_FILTER_OPTIONS:
-      return {
+      state = {
         ...state,
         filterOptions: action.payload,
       }
     case CLEAR_PRODUCT_FILTER_OPTIONS:
-      return {
+      state = {
         ...state,
         filterOptions: {},
       }
+      break;
     case FETCH_PRODUCT_FILTER_GROUP:
-      return {
+      state = {
         ...state,
         filterGroup: action.payload,
       }
+      break;
     case CLEAR_PRODUCT_FILTER_GROUP:
-      return {
+      state = {
         ...state,
         filterGroup: {},
       }
+      break;
     case FETCH_PRODUCT_FILTER_CONFIG:
-      return {
+      state = {
         ...state,
         config: action.payload,
       }
+      break;
     case CLEAR_PRODUCT_FILTER_CONFIG:
-      return {
+      state = {
         ...state,
         config: {},
       }
+      break;
     case FETCH_FILTER_MODAL_STATE:
-      return {
+      state = {
         ...state,
         isFilterModalOpen: action.payload,
       }
     case SET_PRODUCT_LIST_LOADING:
-      return {
+      state = {
         ...state,
         productListLoading: action.payload,
       }
+      break;
     default:
-      return state
-
+      state = state
   }
+
+
+  persistRedux('productsList', state)
+  return state;
 }

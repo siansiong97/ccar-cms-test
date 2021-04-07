@@ -3,7 +3,7 @@ import moment from 'moment'
 import { FETCH_REVISION_ANSWERED_QUESTIONS } from '../actions/kpp-actions';
 import { isValidNumber } from '../../common-function';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj, persistRedux } from '../config';
 
 
 const INITIAL_STATE = {
@@ -18,19 +18,28 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-    checkNeedPersist(_.get(action, 'type'), 'kpp', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+    // checkNeedPersist(_.get(action, 'type'), 'kpp', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
+    let persistStates = _.get(localStorage.get('redux') || {}, 'kpp') || INITIAL_STATE;
+    state = {
+      ...state,
+      ...persistStates,
+    }
     switch (action.type) {
         case FETCH_REVISION_ANSWERED_QUESTIONS:
             if (!action.payload || !isValidNumber(action.payload.group) || !action.payload.language) {
-                return state;
+                state = state;
             } else {
                 state[`answered${_.upperFirst(action.payload.language)}RevisionSection${String.fromCharCode(65 + parseInt(action.payload.group))}Paper`] = action.payload.data;
-                return {
+                state = {
                     ...state
                 };
             }
+            break;
         default:
-            return state
+            state = state
+            break;
     }
+    persistRedux('kpp', state)
+    return state;
 }

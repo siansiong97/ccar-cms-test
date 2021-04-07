@@ -4,6 +4,7 @@ import _ from 'lodash';
 import localStorage from 'local-storage';
 import { isValidNumber } from '../../common-function';
 
+
 const INITIAL_STATE = {
   info: {
     user: {
@@ -17,11 +18,15 @@ const INITIAL_STATE = {
   cardForm: {},
   bankForm: {},
 }
-
 export default function (state = INITIAL_STATE, action) {
 
 
-  checkNeedPersist(_.get(action, 'type'), 'user', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+  let persistStates = _.get(localStorage.get('redux') || {}, 'user') || INITIAL_STATE;
+  state = {
+    ...state,
+    ...persistStates
+  }
+  // checkNeedPersist(_.get(action, 'type'), 'user', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
   
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
@@ -69,8 +74,7 @@ export default function (state = INITIAL_STATE, action) {
       break;
   }
 
-  // persistRedux('user', state);
+  persistRedux('user', state);
   return state;
-
 
 }

@@ -403,3 +403,11 @@ video {
 .ql-editor{
     padding: 5px 15px !important;
 }
+
+.pop-over-body-no-padding .ant-popover-inner-content{
+    padding : 0px !important;
+}
+
+.pop-over-title-no-padding .ant-popover-title{
+    padding : 0px !important;
+}

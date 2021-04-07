@@ -123,14 +123,14 @@ class ViewCarDetailsPage extends React.Component {
   }
   componentDidUpdate() {
 
-    if (typeof (window) != undefined) {
-      window.addEventListener('scroll', this.handleScroll, { passive: true });
+    // if (typeof (window) != undefined) {
+    //   window.addEventListener('scroll', this.handleScroll, { passive: true });
 
-      return () => {
+    //   return () => {
 
-        window.removeEventListener('scroll', this.handleScroll);
-      };
-    }
+    //     window.removeEventListener('scroll', this.handleScroll);
+    //   };
+    // }
   }
 
   onClickShow = () => {
@@ -783,14 +783,6 @@ class ViewCarDetailsPage extends React.Component {
                   </Col>
                 </Row>
 
-                {/* <Row gutter={[10, 10]}>
-                                    <Col className="gutter-row" xs={24} sm={24} md={7} lg={7} xl={7}>
-                                    </Col>
-                                    <Col className="gutter-row" xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    </Col>
-                                    <Col className="gutter-row" xs={24} sm={24} md={7} lg={7} xl={7}>
-                                    </Col>
-                                </Row> */}
 
                 <Row gutter={[20, 10]}>
                   <Col className="gutter-row" xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -922,6 +914,7 @@ class ViewCarDetailsPage extends React.Component {
                 </div>
               </Col>
             </Row>
+          
           </div>
         </div>
 

@@ -52,15 +52,21 @@ import {
 
   SET_MENU_HEIGHT,
   SET_NOTIFICATION_TOKEN,
+  SET_NOTIFICATION_TOKEN_TIME_OUT_DATE,
   SET_INITED_REDUX,
+  SET_DISABLE_WINDOW_SCROLL,
 } from '../actions/app-actions';
 
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj, persistRedux } from '../config';
 import _ from 'lodash';
+import app from 'next/app';
+
 
 const INITIAL_STATE = {
   notificationToken: null,
+  notificationTokenTimeOutDate: null,
+  disableWindowScroll: false,
 
   initedRedux: false,
   loading: false,
@@ -129,304 +135,374 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
 
 
-  checkNeedPersist(_.get(action, 'type'), 'app', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+  // checkNeedPersist(_.get(action, 'type'), 'app', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
+  let persistStates = _.get(localStorage.get('redux') || {}, 'app') || INITIAL_STATE;
+  state = {
+    ...state,
+    ...persistStates,
+  }
   switch (action.type) {
     case LOADING:
-      return {
+      state = {
         ...state,
         loading: action.payload,
-      }
+      };
+      break;
     case ADVANCE_MODE:
-      return {
+      state = {
         ...state,
         advanceMode: action.payload,
-      }
+      };
+      break;
     case LOGIN_MODE:
-      return {
+      state = {
         ...state,
         loginMode: action.data
       };
+      break;
     case REGISTER_MODE:
-      return {
+      state = {
         ...state,
         registerMode: action.data
       };
+      break;
     case UPDATE_ACTIVE_MENU:
-      return {
+      state = {
         ...state,
         activeMenu: action.data
       };
+      break;
 
     //
     case FILTER_CAR_BRANDS:
-      return {
+      state = {
         ...state,
         carBrands: action.data
       };
+      break;
     case FILTER_CAR_MODELS:
-      return {
+      state = {
         ...state,
         carModels: action.data
       };
+      break;
     case FILTER_COLORS:
-      return {
+      state = {
         ...state,
         colors: action.data
       };
+      break;
     case FILTER_BODY_TYPES:
-      return {
+      state = {
         ...state,
         bodyTypes: action.data
       };
+      break;
     case FILTER_DRIVEN_WHEELS:
-      return {
+      state = {
         ...state,
         drivenWheels: action.data
       };
+      break;
     case FILTER_FUEL_TYPES:
-      return {
+      state = {
         ...state,
         fuelTypes: action.data
       };
+      break;
     case FILTER_STATES:
-      return {
+      state = {
         ...state,
         states: action.data
       };
+      break;
     // filter car
     //.......................................
     case FILTER_CAR_BRAND_MODE:
-      return {
+      state = {
         ...state,
         filterCarBrandMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_CAR_BRAND_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedCarBrandData: action.data,
           filterCarSelectedCarBrandIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedCarBrandData: action.data
         };
+        break;
       }
     case FILTER_CAR_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterCarSearchKeywords: action.data
       };
+      break;
     // end filter car ..............................
 
     // filter car
     //.......................................
     case FILTER_CAR_MODEL_MODE:
-      return {
+      state = {
         ...state,
         filterCarModelMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_CAR_MODEL_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedCarModelData: action.data,
           filterCarSelectedCarModelIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedCarModelData: action.data
         };
+        break;
       }
     case FILTER_CAR_MODEL_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterCarModelSearchKeywords: action.data
       };
+      break;
     // end filter model ..............................
 
     // filter color
     //.......................................
     case FILTER_COLOR_MODE:
-      return {
+      state = {
         ...state,
         filterColorMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_COLOR_MODEL_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedColorData: action.data,
           filterCarSelectedColorIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedColorData: action.data
         };
+        break;
       }
     case FILTER_COLOR_MODEL_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterColorSearchKeywords: action.data
       };
+      break;
     // end filter model ..............................
 
     // filter body type
     //.......................................
     case FILTER_BODY_TYPE_MODE:
-      return {
+      state = {
         ...state,
         filterBodyTypeMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_BODY_TYPE_MODEL_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedBodyTypeData: action.data,
           filterCarSelectedBodyTypeIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedBodyTypeData: action.data
         };
+        break;
       }
     case FILTER_BODY_TYPE_MODEL_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterBodyTypeSearchKeywords: action.data
       };
+      break;
     // end filter model ..............................
 
     // filter driven wheels
     //.......................................
     case FILTER_DRIVEN_WHEELS_MODE:
-      return {
+      state = {
         ...state,
         filterDrivenWheelMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_DRIVEN_WHEELS_MODEL_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedDrivenWheelData: action.data,
           filterCarSelectedDrivenWheelIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedDrivenWheelData: action.data
         };
+        break;
       }
     case FILTER_DRIVEN_WHEELS_MODEL_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterDrivenWheelSearchKeywords: action.data
       };
+      break;
     // end filter driven wheels ..............................
 
     // filter driven wheels
     //.......................................
     case FILTER_FUEL_TYPE_MODE:
-      return {
+      state = {
         ...state,
         filterFuelTypeMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_FUEL_TYPE_MODEL_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedFuelTypeData: action.data,
           filterCarSelectedFuelTypeIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedFuelTypeData: action.data
         };
+        break;
       }
     case FILTER_FUEL_TYPE_MODEL_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterFuelTypeSearchKeywords: action.data
       };
+      break;
     // end filter driven wheels ..............................
 
     // filter driven wheels
     //.......................................
     case FILTER_STATE_MODE:
-      return {
+      state = {
         ...state,
         filterStateMode: action.data
       };
+      break;
     case FILTER_CAR_SELECTED_STATE_MODEL_ROW:
       if (action.index) {
-        return {
+        state = {
           ...state,
           filterCarSelectedStateData: action.data,
           filterCarSelectedStateIndex: action.index
         };
+        break;
       } else {
-        return {
+        state = {
           ...state,
           filterCarSelectedStateData: action.data
         };
+        break;
       }
     case FILTER_STATE_MODEL_SEARCH_KEYWORDS:
-      return {
+      state = {
         ...state,
         filterStateSearchKeywords: action.data
       };
+      break;
     // end filter driven wheels ..............................
 
     case QUICK_SEARCH_PRODUCTS_LIST:
-      return {
+      state = {
         ...state,
         quickSearchMode: action.mode,
         quickSearchCarSpecsData: action.quickSearchCarSpecsData,
         quickSearchProductadsData: action.quickSearchProductadsData,
         values: action.values
       };
+      break;
     case SHOW_CONTACT_LIST:
-      return {
+      state = {
         ...state,
         showContact: action.boolean
       };
+      break;
     case SET_APPLY_YEAR:
-      return {
+      state = {
         ...state,
         applyYear: action.data
       };
+      break;
     case SET_APPLY_PRICE:
-      return {
+      state = {
         ...state,
         applyPrice: action.data
       };
+      break;
     case SET_APPLY_MILEAGE:
-      return {
+      state = {
         ...state,
         applyMileage: action.data
       };
+      break;
     case SET_MENU_HEIGHT:
-      return {
+      state = {
         ...state,
         menuHeight: action.data
       };
+      break;
     case SET_NOTIFICATION_TOKEN:
-      return {
+      state = {
         ...state,
         notificationToken: action.data
       };
+      break;
+    case SET_NOTIFICATION_TOKEN_TIME_OUT_DATE:
+      state = {
+        ...state,
+        notificationTokenTimeOutDate: action.data
+      };
+      break;
     case SET_INITED_REDUX:
-      return {
+      state = {
         ...state,
         initedRedux: action.data
       };
+      break;
+      case SET_DISABLE_WINDOW_SCROLL:
+        state = {
+          ...state,
+          disableWindowScroll: action.data == true ? true : false,
+        };
+        break;
     default:
-      return state
+      state = state
+      break;
   }
+
+
+  persistRedux('app', state)
+  return state;
 }

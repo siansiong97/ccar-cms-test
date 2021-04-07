@@ -1,4 +1,4 @@
-import {  } from 'antd';
+import { } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -6,6 +6,7 @@ import Lightbox from 'react-image-lightbox';
 import { connect } from 'react-redux';
 import { Form } from '@ant-design/compatible';
 import { isValidNumber } from '../../common-function';
+import WindowScrollDisableWrapper from './WindowScrollDisableWrapper';
 
 
 const LightBoxGallery = (props) => {
@@ -32,7 +33,7 @@ const LightBoxGallery = (props) => {
     }, [currentIndex])
 
     useEffect(() => {
-        if(isValidNumber(parseInt(props.currentIndex))){
+        if (isValidNumber(parseInt(props.currentIndex))) {
             setCurrentIndex(props.currentIndex)
         }
     }, [props.currentIndex])
@@ -40,38 +41,44 @@ const LightBoxGallery = (props) => {
     return (
 
         <React.Fragment>
-            {
-                props.children ?
-                    props.children({ images, currentIndex, visible }, setCurrentIndex, setVisible)
-                    :
-                    <Scrollbars style={{ width: '100%', height: '100px' }}>
-                        <div className="flex-justify-start flex-items-align-center fill-parent">
-                            {
-                                _.map(images, function (v, index) {
-                                    return <span className='d-inline-block margin-right-md cursor-pointer' onClick={(e) => { setCurrentIndex(index); setVisible(true) }} >
-                                        <img src={v} style={{ width: props.size || 70, height: props.size || 70 }} />
-                                    </span>
-                                })
-                            }
-                        </div>
-                    </Scrollbars>
-            }
-            {visible && (
-                <Lightbox
-                    mainSrc={images[currentIndex]}
-                    nextSrc={images[(currentIndex + 1) % images.length]}
-                    prevSrc={images[(currentIndex + images.length - 1) % images.length]}
-                    onCloseRequest={() => { setVisible(false) }}
-                    onMovePrevRequest={() => {
-                        setCurrentIndex((currentIndex + images.length - 1) % images.length)
-                    }
-                    }
-                    onMoveNextRequest={() => {
-                        setCurrentIndex((currentIndex + 1) % images.length)
-                    }
-                    }
-                />
-            )}
+            <WindowScrollDisableWrapper disabled={visible}>
+                {
+                    props.children ?
+                        props.children({ images, currentIndex, visible }, setCurrentIndex, setVisible)
+                        :
+                        <Scrollbars style={{ width: '100%', height: '100px' }}>
+                            <div className="flex-justify-start flex-items-align-center fill-parent">
+                                {
+                                    _.map(images, function (v, index) {
+                                        return <span className='d-inline-block margin-right-md cursor-pointer' onClick={(e) => { setCurrentIndex(index); setVisible(true) }} >
+                                            <img src={v} style={{ width: props.size || 70, height: props.size || 70 }} />
+                                        </span>
+                                    })
+                                }
+                            </div>
+                        </Scrollbars>
+                }
+                {visible && (
+                    <Lightbox
+                        mainSrc={images[currentIndex]}
+                        nextSrc={images[(currentIndex + 1) % images.length]}
+                        prevSrc={images[(currentIndex + images.length - 1) % images.length]}
+                        onCloseRequest={() => {
+                            setTimeout(() => {
+                                setVisible(false)
+                            }, 500);
+                        }}
+                        onMovePrevRequest={() => {
+                            setCurrentIndex((currentIndex + images.length - 1) % images.length)
+                        }
+                        }
+                        onMoveNextRequest={() => {
+                            setCurrentIndex((currentIndex + 1) % images.length)
+                        }
+                        }
+                    />
+                )}
+            </WindowScrollDisableWrapper>
         </React.Fragment>
     );
 }

@@ -64,9 +64,9 @@ export const statePersistActions = [
 
 export function persistRedux(reducer, data) {
 
-  if(reducer && _.isPlainObject(data) && !_.isEmpty(data)){
+  if (reducer && _.isPlainObject(data) && !_.isEmpty(data)) {
     let reduxStates = localStorage.get('redux');
-    if(!_.isPlainObject(reduxStates)){
+    if (!_.isPlainObject(reduxStates)) {
       reduxStates = {};
     }
 
