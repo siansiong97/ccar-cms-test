@@ -119,14 +119,14 @@ const CarFreakLayout = (props) => {
                                         <a>
                                             <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `}  >
                                                 Social Board
-                                    </span>
+                                            </span>
                                         </a>
                                     </Link>
                                     <Link shallow={false}  href={'/social-club'}>
                                         <a>
                                             <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
                                                 CarFreaks Club
-                                    </span>
+                                            </span>
                                         </a>
                                     </Link>
                                 </span>

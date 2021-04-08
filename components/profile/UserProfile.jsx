@@ -90,7 +90,7 @@ const UserProfile = (props) => {
                         }
                         onChange={(res) => {
                             if (props.onChange) {
-                                props.onChange(res);
+                                props.onChange(res); 
                             }
                         }
                         }

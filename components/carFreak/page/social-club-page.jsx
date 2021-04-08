@@ -207,7 +207,7 @@ const SocialClubPage = (props) => {
                             {
                                 tabKey == 'myClub' ?
                                     <React.Fragment>
-                                        <MyClubBox userId={_.get(props.user, ['info', 'user', '_id'])} />
+                                        <MyClubBox userId={_.get(props.user, ['info', 'user', '_id'])} /> 
                                     </React.Fragment>
                                     :
                                     tabKey == 'myClubInvitation' ?

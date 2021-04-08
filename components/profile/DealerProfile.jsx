@@ -129,10 +129,10 @@ const DealerProfile = (props) => {
                         {
                             _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']) ?
                                 <TabPane tab="Saved CarFreaks" key="4">
-                                    <Col xs={18} sm={18} md={18} lg={18} xl={18}>
+                                    <Col xs={18} sm={18} md={24} lg={18} xl={18}>
                                         <UserSavedCarFreakPosts data={profile} className="margin-y-lg" />
                                     </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    <Col xs={6} sm={6} md={0} lg={6} xl={6}>
                                         {_renderDealerDetailsBox()}
                                     </Col>
                                 </TabPane>
@@ -142,10 +142,10 @@ const DealerProfile = (props) => {
                         {
                             _.get(props.user, ['info', 'user', '_id']) && _.get(props.user, ['info', 'user', '_id']) == _.get(profile, ['_id']) ?
                                 <TabPane tab="Saved Social Board" key="5">
-                                    <Col xs={18} sm={18} md={18} lg={18} xl={18}>
+                                    <Col xs={18} sm={18} md={24} lg={18} xl={18}>
                                         <UserSavedSocialBoard data={profile} className="margin-y-lg" />
                                     </Col>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    <Col xs={6} sm={6} md={0} lg={6} xl={6}>
                                         {_renderDealerDetailsBox()}
                                     </Col>
                                 </TabPane>
