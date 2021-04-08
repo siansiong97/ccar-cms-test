@@ -178,7 +178,7 @@ class Details extends React.Component {
         return <NewCarOverview changeTabs={this.changeTabs} ></NewCarOverview>  
         break;
       case 'specs':
-        return <CompareNewCarIndex />
+        return <CompareNewCarIndex /> 
         break;
       default:
         return null;

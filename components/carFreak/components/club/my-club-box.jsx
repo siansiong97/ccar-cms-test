@@ -132,7 +132,7 @@ const MyClubBox = (props) => {
     return (
         <React.Fragment>
             <Row gutter={[20, 0]}>
-                <Col xs={18} sm={18} md={18} lg={18} xl={18}>
+                <Col xs={18} sm={18} md={24} lg={18} xl={18}>
                     <React.Fragment>
                         <Card
                             title="My Clubs"
@@ -208,7 +208,7 @@ const MyClubBox = (props) => {
                         </Card>
                     </React.Fragment>
                 </Col>
-                <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+                <Col xs={6} sm={6} md={0} lg={6} xl={6}>
                     <Card
                         title="Other CarFreaks Clubs"
                     >

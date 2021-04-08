@@ -13,6 +13,24 @@ import ClubBackdrop from './club-backdrop';
 import { loading } from '../../../../redux/actions/app-actions';
 import WindowScrollLoadWrapper from '../../../general/WindowScrollLoadWrapper';
 import { arrayLengthCount } from '../../../../common-function';
+import { useMediaQuery } from 'react-responsive';
+
+const Desktop = ({ children }) => {
+    const isDesktop = useMediaQuery({ minWidth: 992 })
+    return isDesktop ? children : null
+}
+const Tablet = ({ children }) => {
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 })
+    return isTablet ? children : null
+}
+const Mobile = ({ children }) => {
+    const isMobile = useMediaQuery({ maxWidth: 767 })
+    return isMobile ? children : null
+}
+const Default = ({ children }) => {
+    const isNotMobile = useMediaQuery({ minWidth: 768 })
+    return isNotMobile ? children : null
+}
 
 
 const PAGE_SIZE = 10;
@@ -178,6 +196,7 @@ const ClubDiscussionBox = (props) => {
     return (
         <React.Fragment>
 
+            <Desktop>
             <ClubBackdrop viewType={viewType}>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -240,10 +259,78 @@ const ClubDiscussionBox = (props) => {
                         </div>
 
                     </Col>
+                </Row>
+            </ClubBackdrop>
+            </Desktop>
+
+            <Tablet>
+            <ClubBackdrop viewType={viewType}>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <div className="flex-justify-end flex-items-align-center">
+                            <span className='d-inline-block ' >
+                                <Button size="medium" className="border-ccar-yellow" onClick={(e) => {
+                                    setWritePostEditMode(false);
+                                    setWritePostVisible(true);
+                                }}  ><Icon type="edit" /> Write a Post</Button>
+                            </span>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <WindowScrollLoadWrapper scrollRange={document.body.scrollHeight * 0.5} onScrolledBottom={() => {
+                            if (arrayLengthCount(posts) < postTotal) {
+                                setPostPage(postPage + 1);
+                            }
+                        }}>
+                            <div className="padding-md">
+                                {
+                                    _.isArray(posts) && !_.isEmpty(posts) ?
+                                        _.map(posts, function (post) {
+                                            return (
+                                                <div className="margin-bottom-md">
+                                                    <PostCollapse
+                                                        data={post}
+                                                        postLike={_.find(userChatLikes, { chatId: post._id })}
+                                                        onEditClick={(data) => {
+                                                            if (_.isPlainObject(data) && !_.isEmpty(data)) {
+                                                                setWritePostEditMode(true);
+                                                                setSelectedPost(data);
+                                                                setWritePostVisible(true);
+                                                            }
+                                                        }}
+                                                        clubId={clubId}
+                                                        onRemoveClick={(data) => {
+                                                            confirmDelete(data)
+                                                        }}
+                                                    ></PostCollapse>
+                                                </div>
+                                            )
+                                        })
+                                        :
+                                        <div className="padding-md flex-items-align-center flex-justify-center">
+                                            <Empty></Empty>
+                                        </div>
+                                }
+                            </div>
+                        </WindowScrollLoadWrapper>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                        <div className="flex-justify-center flex-items-align-center" style={{ height: 30 }}>
+                            {
+                                isLoading ?
+                                    <Icon type="loading" style={{ fontSize: 30 }} />
+                                    :
+                                    null
+                            }
+                        </div>
+
+                    </Col>
 
 
                 </Row>
             </ClubBackdrop>
+            </Tablet>
 
             <WritePostModal1
                 visible={writePostVisible}

@@ -134,7 +134,7 @@ class Maker extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-        this.props.updateActiveMenu('1')
+        this.props.updateActiveMenu('3')
         this.getData(0);
         this.props.loading(true)
         client.service('news').find({
@@ -254,8 +254,7 @@ class Maker extends React.Component {
                 item.rowKey = rowKey
                 list.push(
                     <React.Fragment>
-                        <Col xs={24} sm={24} md={12} lg={6} xl={6} key={i} >
-
+                        <Col xs={24} sm={24} md={12} lg={8} xl={6} key={i} >
                             <div>
                                 <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }} onClick={(e) => {
                                     this.props.router.push(`/newcar/details/${item.make + '/' + item.model}`)
@@ -356,9 +355,8 @@ class Maker extends React.Component {
                                 </Breadcrumb.Item>
                             </Breadcrumb>
 
-                            <Desktop>
                                 <Row gutter={[20, 0]}>
-                                    <Col xs={24} sm={24} md={19} lg={19} xl={19}>
+                                    <Col xs={24} sm={24} md={18} lg={18} xl={19}>
                                         {/* <Row>
                             <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
                                 <span className='d-inline-block h6 font-weight-bold grey-darken-3 capitalize' >
@@ -486,7 +484,7 @@ class Maker extends React.Component {
                                     </Col>
 
 
-                                    <Col className="stick-column" xs={0} sm={0} md={5} lg={5} xl={5}>
+                                    <Col className="stick-column" xs={0} sm={0} md={6} lg={6} xl={5}>
                                         <Affix offsetTop={65}>
                                             {
                                                 _.isArray(this.state.filterCarBrands) && !_.isEmpty(this.state.filterCarBrands) ?
@@ -507,145 +505,6 @@ class Maker extends React.Component {
                                         </Affix>
                                     </Col>
                                 </Row>
-                            </Desktop>
-
-                            <Tablet>
-                                <Row>
-                                    <Col xs={24} sm={24} md={16} lg={19} xl={19} style={{ paddingLeft: '5px' }}>
-                                        {/* <Row>
-                            <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
-                                <span className='d-inline-block h6 font-weight-bold grey-darken-3 capitalize' >
-                                    {this.props.newCars.brands[0]?this.props.newCars.brands[0].make:''}
-                                </span>
-                            </Col>
-                            </Row> */}
-                                        <Row className="maker-details padding-lg">
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
-                                                <img style={{ width: '15%' }} src={getCarBrandsIcon(_.get(this.props, ['router', 'query', 'id']) || '')}></img>
-                                            </Col>
-                                            {/* <Col xs={24} sm={24} md={20} lg={20} xl={20}>
-                                    <p style={{marginBottom:'10px'}} className="h6 font-weight-bold grey-darken-3 uppercase"> {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : ''} </p>
-                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
-                                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    </p>
-                                    </Col> */}
-                                        </Row>
-
-                                        <Col className="gutter-row text-align-center" xs={18} sm={18} md={24} lg={20} xl={20} >
-                                            <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase ' >
-                                                {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
-                                    </span>
-                                        </Col>
-
-                                        <Row className="maker-list-car" type="flex" >
-                                            {this._renderVariants()}
-                                        </Row>
-
-                                        {
-                                            this.state.total > PAGESIZE ?
-                                                <div className="flex-justify-center margin-md">
-                                                    <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
-                                                </div>
-                                                :
-                                                null
-                                        }
-
-                                        {/* <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
-
-                                <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase' >
-                                    {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : ''} News in Malaysia
-                        </span>
-                            </Col> */}
-
-                                        {/* <div className="maker-page"> */}
-                                        {/* <Row gutter={[10, 10]}>
-                                {this.props.newCars.news.map(function (item, i) {
-                                    return (
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <a href={item.originalUrl}>
-                                                <Row className="fnews1">
-                                                    <Col span={12} className="inews">
-                                                        <img src={item.thumbnailUrl} style={{ width: "100%" }} />
-                                                    </Col>
-                                                    <Col span={12} className="ftitle">
-                                                        <h4>{item.title}</h4>
-                                                        <p>
-                                                            {item.content}
-                                                        </p>
-
-                                                        <span style={{ textTransform: 'capitalize' }}>{item.publisher} | {moment(item.createdAt).format('DD-MM-YYYY')}</span>
-                                                    </Col>
-                                                </Row>
-                                            </a>
-                                        </Col>
-                                    )
-                                })
-                                }
-                            </Row> */}
-                                        {/* </div> */}
-
-                                        {/* temporary remark */}
-                                        {/* <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
-                            
-            <span className='d-inline-block h6 font-weight-bold grey-darken-3' >
-              CAR TIPS & TRICKS
-                        </span>
-                            </Col> */}
-
-                                        {/* <div className="tips">
-                                <Row gutter={[10, 10]}>
-                                    <Col span={12}>
-                                        <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
-                                            <h3> #1 Why does my car hydroplane?</h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Card>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
-                                            <h3> #2 Why does my car hydroplane?</h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Card>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
-                                            <h3> #3 Why does my car hydroplane?</h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Card>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
-                                            <h3> #4 Why does my car hydroplane?</h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Card>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
-                                            <h3> #5 Why does my car hydroplane?</h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Card>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
-                                            <h3> #6 Why does my car hydroplane?</h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </Card>
-                                    </Col>
-                                </Row>
-                            </div>
-          */}
-                                        {/* -----temporary remark */}
-                                    </Col>
-
-
-                                    <Col className="stick-column" xs={0} sm={0} md={8} lg={5} xl={5}>
-                                        <Affix offsetTop={65}>
-                                            <BrandFiltering brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList} />
-                                        </Affix>
-                                    </Col>
-                                </Row>
-
-                            </Tablet>
                         </div>
                     </div>
                 </Desktop>
@@ -678,7 +537,6 @@ class Maker extends React.Component {
                                 </Breadcrumb.Item>
                             </Breadcrumb>
 
-                            <Tablet>
                                 <Row>
                                     <Col xs={24} sm={24} md={16} lg={19} xl={19} style={{ paddingLeft: '5px' }}>
                                         <Row className="maker-details padding-lg">
@@ -713,8 +571,6 @@ class Maker extends React.Component {
                                         </Affix>
                                     </Col>
                                 </Row>
-
-                            </Tablet>
                         </div>
                     </div>
                 </Tablet>

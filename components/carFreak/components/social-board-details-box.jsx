@@ -14,6 +14,7 @@ import WritePostModal from './write-post-modal';
 import UserAvatar from '../../general/UserAvatar';
 import { arrayLengthCount, getUserName, notEmptyLength, sortByDateDesc, getObjectId } from '../../../common-function';
 import ParseTag from '../../general/ParseTag';
+import { loading, updateActiveMenu } from '../../../redux/actions/app-actions'
 
 
 
@@ -31,6 +32,10 @@ const SocialBoardDetailsBox = (props) => {
 
     const [writeModalVisible, setWriteModalVisible] = useState(false)
     const [selectedPost, setSelectedPost] = useState({})
+
+    useEffect(() => {
+        props.updateActiveMenu('6');
+    }, [])
 
     useEffect(() => {
         setMessages([]);
@@ -405,6 +410,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+    updateActiveMenu: updateActiveMenu,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(SocialBoardDetailsBox)));

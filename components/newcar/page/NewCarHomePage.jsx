@@ -683,26 +683,24 @@ class NewCarVersion3 extends React.Component {
                         }}
                     />
                 </Element> */}
+        <Element
+          prefixCls="banner-user-elem"
+          key="web3"
+        >
+          <BgElement
+            id="banner-1"
+            className="bg"
+            style={{
+              backgroundImage: 'url(/banner/Website-Banner-360-02.jpg)',
+              backgroundSize: 'fit',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              maxInlineSize: '-webkit-fill-available',
+            }}
+          />
+        </Element>
 
                 {/* <Element
-                    prefixCls="banner-user-elem"
-                    key="web1"
-                >
-                    <BgElement
-                        key="webbg"
-                        className="bg"
-                        style={{
-                            backgroundImage: 'url(/banner/2560x250-smarter-way-to-find-cars.png)',
-                            backgroundSize: 'fit',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                            maxInlineSize: '-webkit-fill-available',
-
-                        }}
-                    />
-                </Element> */}
-
-                <Element
                     prefixCls="banner-user-elem"
                     key="web2"
                 >
@@ -722,9 +720,26 @@ class NewCarVersion3 extends React.Component {
                     }} >
                         <source src="/banner/360-web-banner-2560x250.mp4" type="video/mp4"></source>
                     </video>
-                </Element>
+                </Element> */}
 
-                <Element
+        <Element
+          prefixCls="banner-user-elem"
+          key="web2"
+        >
+          <BgElement
+            id="banner-1"
+            className="bg"
+            style={{
+              backgroundImage: 'url(/banner/Website-Banner-02-02.jpg)',
+              backgroundSize: 'fit',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              maxInlineSize: '-webkit-fill-available',
+            }}
+          />
+        </Element>
+
+                {/* <Element
                     prefixCls="banner-user-elem"
                     key="web3"
                 >
@@ -744,69 +759,8 @@ class NewCarVersion3 extends React.Component {
                     }} >
                         <source src="/banner/2560x250-4.mp4" type="video/mp4"></source>
                     </video>
-                </Element>
+                </Element> */}
             </BannerAnim>);
-        // <BannerAnim prefixCls="banner-user-web" autoPlay>
-        //   <Element
-        //     prefixCls="banner-user-elem"
-        //     key="web0"
-        //   >
-        //     <BgElement
-        //       key="bg"
-        //       className="bg"
-        //       style={{ width: '100%', height: '100px' }}
-        //     />
-
-        //     <video autoPlay style={{ maxInlineSize: '-webkit-fill-available' }}   >
-        //       <source src="/banner/ccar-banner.mp4" type="video/mp4"></source>
-        //     </video>
-        //   </Element>
-        //   <Element
-        //     prefixCls="banner-user-elem"
-        //     key="web1"
-        //   >
-        //     <BgElement
-        //       key="bg"
-        //       className="bg"
-        //       style={{
-        //         backgroundImage: 'url(/banner/slogan-banner-2.png)',
-        //         backgroundSize:'fit',
-        //         backgroundPosition: 'center',
-        //         backgroundRepeat: 'no-repeat',
-        //         maxInlineSize: '-webkit-fill-available'
-        //       }}
-        //     />
-        //   </Element>
-        //   <Element
-        //     prefixCls="banner-user-elem"
-        //     key="web2"
-        //   >
-        //     <BgElement
-        //       key="webbg"
-        //       className="bg"
-        //       style={{
-        //         backgroundImage: 'url(/banner/banner-2.png)',
-        //         backgroundSize:'fit',
-        //         backgroundPosition: 'center',
-        //         backgroundRepeat: 'no-repeat',
-        //         maxInlineSize: '-webkit-fill-available',
-
-        //       }}
-        //     />
-        //   </Element>
-        //   <Element
-        //     prefixCls="banner-user-elem"
-        //     key="web3"
-        //   >
-        //     <BgElement
-        //       key="webbg"
-        //       className="bg"
-        //     />
-        //     <video autoPlay style={{ maxInlineSize: '-webkit-fill-available' }} >
-        //       <source src="/banner/banner-3.mp4" type="video/mp4"></source>
-        //     </video>
-        //   </Element>
-        // </BannerAnim>);
     }
 
     _renderCarBrandsList = (data) => {
