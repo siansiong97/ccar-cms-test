@@ -18,7 +18,9 @@ import { carFreakGlobalSearch, getViewType } from '../config';
 import LayoutV2 from '../../general/LayoutV2';
 import ClubFreaksBox from '../components/club/ClubFreaksBox';
 import ClubSocialBoardBox from '../components/club/ClubSocialBoardBox';
-
+import {
+    updateActiveMenu
+} from '../../../redux/actions/app-actions';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -73,6 +75,10 @@ const SocialClubProfilePage = (props) => {
     const [club, setClub] = useState({})
     const [tabKey, setTabKey] = useState(tabs[0].value);
     const [clubJoin, setClubJoin] = useState({});
+
+    useEffect(() => {
+        props.updateActiveMenu('6');
+    }, [])
 
     useEffect(() => {
         let query = props.router.query;
@@ -137,7 +143,7 @@ const SocialClubProfilePage = (props) => {
     const _renderView = (value) => {
         switch (value) {
             case 'carfreaks':
-                return <ClubFreaksBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
+                return <ClubFreaksBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} /> 
                 break;
             case 'socialboard':
                 return <ClubSocialBoardBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
@@ -152,7 +158,6 @@ const SocialClubProfilePage = (props) => {
                 return <ClubEventBox viewType={getViewType(clubJoin)} data={club} />
                 break;
             case 'media':
-
                 break;
             default:
                 break;
@@ -211,7 +216,7 @@ const SocialClubProfilePage = (props) => {
                                     if (_.isPlainObject(data) && !_.isEmpty(data)) {
                                         setClub(data);
                                     }
-                                }}></ClubProfolioBanner>
+                                }}></ClubProfolioBanner> 
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Scrollbars style={{ width: '100%' }} autoHide autoHeight>
@@ -258,6 +263,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+    updateActiveMenu: updateActiveMenu,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(SocialClubProfilePage)));

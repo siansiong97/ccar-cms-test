@@ -146,8 +146,7 @@ class LiveIndex extends React.Component {
 
     if (isIOS && isMobile) {
       setTimeout(function () { window.location = `https://apps.apple.com/my/app/ccar-my/id1526288072`; }, 25);
-      window.location = "ccarmy:/" + this.props.location.pathname
-    }
+      window.location = "ccarmy:/" + this.props.router.asPath    }
 
     this.componentCleanup();
     window.removeEventListener('beforeunload', this.componentCleanup); // remove the event handler for normal unmounting
@@ -565,7 +564,7 @@ class LiveIndex extends React.Component {
                       <BroadCasterListScroll
                         showName={true}
                         activeBroadcasters={notEmptyLength(this.state.filteredBroadcasters) ? this.state.filteredBroadcasters : []}
-                        allowSearch
+                        // allowSearch
                       />
                     </div>
                   </div>

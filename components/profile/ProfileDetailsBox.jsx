@@ -282,7 +282,6 @@ const ProfileDetailsBox = (props) => {
 
     return (
         <React.Fragment>
-
             <div className='relative-wrapper' style={{ backgroundImage: `url("${_.get(profile, ['profileCoverPhoto']) || defaultProfileBackground}")`, backgroundRepeat: 'no-repeat', backgroundSize: _.get(profile, ['profileCoverPhoto']) ? 'cover' : '100% 100%', }} >
                 <div className='background-black opacity-60 absolute-center'>
                 </div>
@@ -538,7 +537,7 @@ const ProfileDetailsBox = (props) => {
                                 <Row type="flex" align="middle">
                                     <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                                         <div className='fill-parent flex-justify-start flex-items-align-center'>
-                                            <UserAvatar showPreview data={profile} size={100} /> 
+                                            <UserAvatar showPreview data={profile} size={80} /> 
                                         </div>
                                     </Col>
                                     <Col xs={20} sm={20} md={20} lg={20} xl={20}>
@@ -571,6 +570,7 @@ const ProfileDetailsBox = (props) => {
                                                 :
                                                 null
                                         }
+
                                         <div className='flex-justify-start flex-items-align-center fill-parent '>
                                             <span className='d-inline-block' >
                                                 <div className='white font-weight-light h6 text-align-center'>

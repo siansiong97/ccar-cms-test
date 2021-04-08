@@ -147,6 +147,10 @@ class LivePage extends React.Component {
 
   }
 
+  UNSAFE_componentWillMount() {
+    this.props.updateActiveMenu('4');
+  }
+
   componentDidMount = () => {
     window.addEventListener('beforeunload', () => {
       // this event might be triggered before the refresh occurs...
@@ -742,7 +746,7 @@ class LivePage extends React.Component {
                     LIVE
                   </div> */}
                   <div className="padding-md background-white margin-top-md">
-                    <BroadCasterListScroll activeBroadcasters={this.state.activeBroadcasters} showName allowSearch />
+                    <BroadCasterListScroll activeBroadcasters={this.state.activeBroadcasters} showName />
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
