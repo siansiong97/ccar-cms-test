@@ -14,9 +14,12 @@ export default function (state = INITIAL_STATE, action) {
     // checkNeedPersist(_.get(action, 'type'), 'variant', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
     let persistStates = _.get(localStorage.get('redux') || {}, 'variant') || INITIAL_STATE;
-    state = {
-      ...state,
-      ...persistStates,
+    let newState = {
+        ...state,
+        ...persistStates
+    }
+    if(!_.isEqual(state, newState)){
+      state = newState;
     }
     switch (action.type) {
         case FETCH_VARIANT:
@@ -38,5 +41,6 @@ export default function (state = INITIAL_STATE, action) {
 
     }
     persistRedux('variant', state)
+
     return state;
 }

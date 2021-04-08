@@ -22,12 +22,15 @@ export default function (state = INITIAL_STATE, action) {
 
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'user') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
     ...persistStates
   }
   // checkNeedPersist(_.get(action, 'type'), 'user', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
-  
+
+  if(!_.isEqual(state, newState)){
+    state = newState;
+  }
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
       state = {

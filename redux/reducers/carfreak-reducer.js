@@ -16,9 +16,12 @@ export default function (state = INITIAL_STATE, action) {
     // checkNeedPersist(_.get(action, 'type'), 'carfreak', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
     let persistStates = _.get(localStorage.get('redux') || {}, 'carfreak') || INITIAL_STATE;
-    state = {
-      ...state,
-      ...persistStates,
+    let newState = {
+        ...state,
+        ...persistStates
+    }
+    if(!_.isEqual(state, newState)){
+      state = newState;
     }
     switch (action.type) {
         case SET_POST_MODAL_LIKE_REFRESH_ID:
@@ -45,5 +48,6 @@ export default function (state = INITIAL_STATE, action) {
     }
 
     persistRedux('carfreak', state)
+
     return state;
 }

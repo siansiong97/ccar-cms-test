@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setInitedRedux } from '../../redux/actions/app-actions';
-import { dynamicDispatch, getLocalStoragePersistStates } from '../../redux/config';
+import { dynamicDispatch, getLocalStoragePersistStates, restoreRedux } from '../../redux/config';
 import localStorage from 'local-storage';
 
 
@@ -20,8 +20,9 @@ const ReduxPersistWrapper = (props) => {
         //     _.forEach(persistStates, function (persistState) {
         //         props.dynamicDispatch(_.get(persistState, ['persistObj', 'action']), _.get(persistState, ['data']))
         //     })
-        console.log(localStorage.get('redux'));
-            props.setInitedRedux(true);
+        // console.log(localStorage.get('redux'));
+        props.restoreRedux(localStorage.get('redux') || {});
+        props.setInitedRedux(true);
         // }
 
     }, [props.cookie])
@@ -47,6 +48,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
+    restoreRedux: restoreRedux,
     dynamicDispatch: dynamicDispatch,
     setInitedRedux: setInitedRedux,
 };

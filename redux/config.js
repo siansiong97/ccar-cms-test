@@ -153,12 +153,23 @@ export function getLocalStoragePersistStates(reducer) {
 
 }
 
+
 export function dynamicDispatch(action, data) {
   return (dispatch) => {
     dispatch({
       type: action,
       payload: data,
       isRestoreData: true,
+    });
+  }
+}
+
+export const RESTORE_REDUX = 'RESTORE_REDUX';
+export function restoreRedux(data) {
+  return (dispatch) => {
+    dispatch({
+      type: RESTORE_REDUX,
+      payload: data,
     });
   }
 }

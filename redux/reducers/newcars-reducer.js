@@ -62,9 +62,12 @@ export default function (state = INITIAL_STATE, action) {
   // checkNeedPersist(_.get(action, 'type'), 'newCars', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'newCars') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
-    ...persistStates,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
   }
   switch (action.type) {
     case FETCH_NEWS:
@@ -236,5 +239,6 @@ export default function (state = INITIAL_STATE, action) {
   }
 
   persistRedux('newCars', state)
+
   return state;
 }

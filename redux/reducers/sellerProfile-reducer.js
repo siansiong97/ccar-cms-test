@@ -17,9 +17,12 @@ const appReducer = (state = INITIAL_STATE, action) => {
   // checkNeedPersist(_.get(action, 'type'), 'sellerProfile', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'sellerProfile') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
-    ...persistStates,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
   }
   switch (action.type) {
     case UPDATE_SELLER_PROFILE:
@@ -31,6 +34,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
       break;
   }
   persistRedux('sellerProfile', state)
+
   return state;
 };
 

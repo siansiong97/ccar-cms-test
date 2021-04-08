@@ -21,9 +21,12 @@ export default function (state = INITIAL_STATE, action) {
     // checkNeedPersist(_.get(action, 'type'), 'kpp', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
     let persistStates = _.get(localStorage.get('redux') || {}, 'kpp') || INITIAL_STATE;
-    state = {
-      ...state,
-      ...persistStates,
+    let newState = {
+        ...state,
+        ...persistStates
+    }
+    if(!_.isEqual(state, newState)){
+      state = newState;
     }
     switch (action.type) {
         case FETCH_REVISION_ANSWERED_QUESTIONS:
@@ -41,5 +44,6 @@ export default function (state = INITIAL_STATE, action) {
             break;
     }
     persistRedux('kpp', state)
+
     return state;
 }

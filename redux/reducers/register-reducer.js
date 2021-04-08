@@ -17,9 +17,12 @@ const appReducer = (state = INITIAL_STATE, action) => {
   // checkNeedPersist(_.get(action, 'type'), 'register', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'productsList') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
-    ...persistStates,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
   }
   switch (action.type) {
     case STEPS_PROPS_CURRENT:
@@ -33,6 +36,7 @@ const appReducer = (state = INITIAL_STATE, action) => {
       break;
   }
   persistRedux('register', state)
+
   return state;
 };
 

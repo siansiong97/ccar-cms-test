@@ -23,9 +23,12 @@ export default function (state = INITIAL_STATE, action) {
   // checkNeedPersist(_.get(action, 'type'), 'userlikes', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'userlikes') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
-    ...persistStates,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
   }
   if (typeof state === 'undefined') {
     state = {}
@@ -91,5 +94,6 @@ export default function (state = INITIAL_STATE, action) {
       break;
   }
   persistRedux('userlikes', state)
+
   return state;
 }

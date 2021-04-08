@@ -11,11 +11,14 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
 
     // checkNeedPersist(_.get(action, 'type'), 'live', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
-    
+
     let persistStates = _.get(localStorage.get('redux') || {}, 'live') || INITIAL_STATE;
-    state = {
-      ...state,
-      ...persistStates,
+    let newState = {
+        ...state,
+        ...persistStates
+    }
+    if(!_.isEqual(state, newState)){
+      state = newState;
     }
     switch (action.type) {
         case FETCH_CLIENT_SOCKET_IO:
@@ -35,5 +38,6 @@ export default function (state = INITIAL_STATE, action) {
             break;
     }
     persistRedux('live', state)
+
     return state;
 }

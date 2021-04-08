@@ -12,18 +12,21 @@ export default function (state = INITIAL_STATE, action) {
   // checkNeedPersist(_.get(action, 'type'), 'socketRefresh', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'socketRefresh') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
-    ...persistStates,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
   }
   switch (action.type) {
     case UPDATE_SOCKET_INFO:
       state = action.payload;
-    // state = {
-    //   ...state,
-    //   shouldRefresh: action.payload
-    // }
-    //not really used we can just update with falsh
+      // state = {
+      //   ...state,
+      //   shouldRefresh: action.payload
+      // }
+      //not really used we can just update with falsh
       break;
     case DELETE_SOCKET_INFO:
       state = {
@@ -35,5 +38,6 @@ export default function (state = INITIAL_STATE, action) {
       break;
   }
   persistRedux('socketRefresh', state)
+
   return state;
 }

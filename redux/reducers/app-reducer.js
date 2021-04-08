@@ -138,9 +138,13 @@ export default function (state = INITIAL_STATE, action) {
   // checkNeedPersist(_.get(action, 'type'), 'app', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
 
   let persistStates = _.get(localStorage.get('redux') || {}, 'app') || INITIAL_STATE;
-  state = {
+  let newState = {
     ...state,
-    ...persistStates,
+    ...persistStates
+  }
+
+  if(!_.isEqual(state, newState)){
+    state = newState;
   }
   switch (action.type) {
     case LOADING:
@@ -491,12 +495,12 @@ export default function (state = INITIAL_STATE, action) {
         initedRedux: action.data
       };
       break;
-      case SET_DISABLE_WINDOW_SCROLL:
-        state = {
-          ...state,
-          disableWindowScroll: action.data == true ? true : false,
-        };
-        break;
+    case SET_DISABLE_WINDOW_SCROLL:
+      state = {
+        ...state,
+        disableWindowScroll: action.data == true ? true : false,
+      };
+      break;
     default:
       state = state
       break;

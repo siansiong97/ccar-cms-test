@@ -190,6 +190,7 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
+            console.log(this.props.app.notificationTokenTimeOutDate);
             if (token != this.props.app.notificationToken || !this.props.app.notificationTokenTimeOutDate || moment().diff(moment(this.props.app.notificationTokenTimeOutDate), 'days', true) > 1 || reauthenticate) {
 
                 this.props.setNotificationToken(token);
@@ -663,7 +664,7 @@ class LayoutV2 extends React.Component {
                      </div>
                 }
                 content={
-                    <div className="width-100">
+                    <div  style={{ width: NOTIFICATION_BOX_WIDTH }}>
                         {/* <div className="flex-justify-start flex-items-align-center">
                             {
                                 _.map(tabs, function (tab) {
@@ -695,14 +696,14 @@ class LayoutV2 extends React.Component {
                                             })
                                         }
                                     }}>
-                                    <div className="width-100" style={{ maxWidth: NOTIFICATION_BOX_WIDTH }}>
+                                    <div >
                                         {
                                             _.map(this.state.notifications, function (notification) {
                                                 if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
                                                     return (
                                                         <Link href={notification.path || '/'}>
                                                             <a>
-                                                                <div className={`flex-justify-start flex-items-align-center hover-background-yellow-lighten-2 padding-x-md cursor-pointer grey-darken-1 width-100 ${_.some(self.state.seenNotifications, ['notificationId', notification._id]) ? '' : 'background-blue-lighten-2'}`}>
+                                                                <div className={`flex-justify-start flex-items-align-center hover-background-yellow-lighten-2 padding-x-md cursor-pointer grey-darken-1 width-100 ${_.some(self.state.seenNotifications, ['notificationId', notification._id]) ? '' : 'background-light-blue-lighten-5'}`}>
                                                                     <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
                                                                     <span className='d-inline-block width-80' >
                                                                         <div className=" body2 text-truncate-twoline grey-darken-3">
@@ -751,9 +752,17 @@ class LayoutV2 extends React.Component {
                 }
 
             >
-                <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
-                    <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 20 }} /></Badge>
-                </span>
+                <Desktop>
+                    <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
+                        <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 20 }} /></Badge>
+                    </span>
+                </Desktop>
+
+                <Tablet>
+                    <span className="flex-justify-start flex-items-align-center" id="notification-menu-item">
+                        <Badge dot><Icon type="bell" theme="filled" className="white cursor-pointer" style={{ fontSize: 25 }} /></Badge>
+                    </span>
+                </Tablet>
             </Popover>
         )
     }
