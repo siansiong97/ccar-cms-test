@@ -654,7 +654,7 @@ class LayoutV2 extends React.Component {
                     }
                 }}
                 overlayClassName="pop-over-body-no-padding pop-over-title-no-padding"
-                overlayStyle={{position : 'fixed'}}
+                overlayStyle={{ position: 'fixed' }}
                 trigger="click"
                 arrowPointAtCenter
                 placement="bottomLeft"
@@ -664,7 +664,7 @@ class LayoutV2 extends React.Component {
                      </div>
                 }
                 content={
-                    <div  style={{ width: NOTIFICATION_BOX_WIDTH }}>
+                    <div style={{ width: NOTIFICATION_BOX_WIDTH }}>
                         {/* <div className="flex-justify-start flex-items-align-center">
                             {
                                 _.map(tabs, function (tab) {
@@ -703,7 +703,25 @@ class LayoutV2 extends React.Component {
                                                     return (
                                                         <Link href={notification.path || '/'}>
                                                             <a>
-                                                                <div className={`flex-justify-start flex-items-align-center hover-background-yellow-lighten-2 padding-x-md cursor-pointer grey-darken-1 width-100 ${_.some(self.state.seenNotifications, ['notificationId', notification._id]) ? '' : 'background-light-blue-lighten-5'}`}>
+                                                                <div className={`flex-justify-start flex-items-align-center hover-background-yellow-lighten-2 padding-x-md cursor-pointer grey-darken-1 width-100 ${_.some(self.state.seenNotifications, ['notificationId', notification._id]) ? '' : 'background-light-blue-lighten-5'}`} onClick={(e) => {
+                                                                    if(!_.some(self.state.seenNotifications, ['notificationId', notification._id])){
+                                                                        client.service('notificationseen').create({
+                                                                            userId: _.get(self.props.user, ['info', 'user', '_id']),
+                                                                            notificationId: notification._id,
+                                                                        }, {
+                                                                            query: {
+                                                                                userId: _.get(self.props.user, ['info', 'user', '_id']),
+                                                                                notificationId: notification._id,
+                                                                            },
+                                                                        }).then(res => {
+                                                                            console.log(res);
+                                                                            self.setState({
+                                                                                seenNotifications: _.concat([res], self.state.seenNotifications),
+                                                                            })
+                                                                        })
+                                                                    }
+                                                                }}
+                                                                >
                                                                     <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
                                                                     <span className='d-inline-block width-80' >
                                                                         <div className=" body2 text-truncate-twoline grey-darken-3">
