@@ -23,12 +23,14 @@ const WindowScrollDisableWrapper = (props) => {
                 console.log(scrollY);
                 document.body.style.top = `-${scrollY}px`;
             } else {
-                document.body.style.position = '';
-                console.log(parseInt(document.body.style.top || '0') * -1);
-                window.scrollTo({
-                    top : parseInt(document.body.style.top || '0') * -1,
-                    behavior : 'auto'
-                });
+                if(props.disabled === false){
+                    document.body.style.position = '';
+                    console.log(parseInt(document.body.style.top || '0') * -1);
+                    window.scrollTo({
+                        top : parseInt(document.body.style.top || '0') * -1,
+                        behavior : 'auto'
+                    });
+                }
             }
         }
 
