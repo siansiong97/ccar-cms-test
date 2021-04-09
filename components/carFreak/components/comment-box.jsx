@@ -278,7 +278,7 @@ const CommentBox = (props) => {
     return (
         notEmptyLength(objectRemoveEmptyValue(comment)) ?
             <React.Fragment>
-                <div className={`${props.theme == 'pin' ? 'background-yellow-lighten-4' : ' thin-border background-white '} relative-wrapper round-border flex-items-align-start flex-justify-start  box-shadow-heavy padding-md `} style={props.theme == 'pin' ? { border: '3px solid #FFCC32' } : { ...props.style }}>
+                <div className={`${props.theme == 'pin' ? 'background-yellow-lighten-4' : ' thin-border'} relative-wrapper round-border flex-items-align-start flex-justify-start  box-shadow-heavy padding-md ${props.className || ''} `} style={props.theme == 'pin' ? { border: '3px solid #FFCC32' } : { ...props.style }}>
                     {
                         props.theme == 'pin' ?
                             <img src={pinIcon} style={{ position: 'absolute', right: -15, top: -10, width: 35, height: 35 }} />

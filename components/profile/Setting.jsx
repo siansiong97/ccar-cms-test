@@ -11,6 +11,58 @@ import { setUser } from '../../redux/actions/user-actions';
 
 const { Option } = Select;
 const profilePic = "/assets/profile/profilePic.jpg";
+const notificationTypes = [
+    {
+        name: 'Master',
+        value: 'master',
+        editable: false,
+    },
+    {
+        name: 'CarMarket',
+        value: 'carMarket',
+        editable: true,
+    },
+    {
+        name: 'CarFreaks',
+        value: 'carFreaks',
+        editable: true,
+    },
+    {
+        name: 'CarFreaks Social Board',
+        value: 'carFreaksSocial',
+        editable: true,
+    },
+    {
+        name: 'CarFreaks Social Club',
+        value: 'carFreaksClub',
+        editable: true,
+    },
+    {
+        name: 'Profile',
+        value: 'profile',
+        editable: true,
+    },
+    {
+        name: 'Live',
+        value: 'live',
+        editable: true,
+    },
+    {
+        name: 'Petrol Price',
+        value: 'petrol',
+        editable: true,
+    },
+    {
+        name: 'Social News & Videos',
+        value: 'socialNew',
+        editable: true,
+    },
+    {
+        name: 'Profile',
+        value: 'profile',
+        editable: true,
+    },
+];
 
 const profileImage = "/assets/profile/profile-image.png";
 
@@ -75,28 +127,35 @@ const Setting = (props) => {
 
     useEffect(() => {
 
+        let finalNotificationTypes = {};
+        _.forEach(notificationTypes, function (notificationType) {
+            finalNotificationTypes[notificationType.value] = true;
+        })
         if (_.isPlainObject(_.get(profile, ['pushNotificationSettings']))) {
-            setPushNotificationSettings(_.get(profile, ['pushNotificationSettings']))
-        } else {
-            setPushNotificationSettings({
-                promotions: false,
-                orders: false,
-                alertsAndReminders: false,
-                chat: false,
+            let userNotificationTypes = Object.keys(profile.pushNotificationSettings);
+            _.forEach(userNotificationTypes, function (userNotificationType) {
+                if (_.some(notificationTypes, ['value', userNotificationType]) && (profile.pushNotificationSettings[userNotificationType] === true || profile.pushNotificationSettings[userNotificationType] === false)) {
+                    console.log('here');
+                    finalNotificationTypes[userNotificationType] = profile.pushNotificationSettings[userNotificationType]
+                }
             })
         }
+        console.log(_.get(profile, ['pushNotificationSettings']));
+        console.log(finalNotificationTypes);
+        setPushNotificationSettings(finalNotificationTypes)
     }, [profile])
 
     useEffect(() => {
 
-        if ((!profile.pushNotificationSettings || !deepEqual(profile.pushNotificationSettings, pushNotificationSettings)) && profile._id) {
+        if ((!profile.pushNotificationSettings || !_.isEqual(profile.pushNotificationSettings, pushNotificationSettings)) && profile._id) {
             props.loading(true);
             client.authenticate()
                 .then((res) => {
                     client.service('users').patch(profile._id, { pushNotificationSettings: pushNotificationSettings }).then((res) => {
+                        console.log(res);
                         message.success('Updated Successful');
                         props.loading(false);
-                        if(props.onSuccess){
+                        if (props.onSuccess) {
                             props.onSuccess(res)
                         }
                     })
@@ -114,53 +173,28 @@ const Setting = (props) => {
     const _renderNotificationBox = () => {
 
         return (
-            <Card className="thin-border round-border" title="Push Notification">
-                <Row type="flex" justify="center" align="center">
-                    <Col span={20}>
-                        <div className="subtitle1 font-weight-bold margin-sm">Promotions</div>
-                        <div className="headline   margin-sm">Receive regular updates on great deals and steals</div>
-                    </Col>
-                    <Col span={4} className="">
-                        <div className="flex-justify-center flex-items-align-center  fill-parent">
-                            <Switch size={200} className=""
-                                checked={pushNotificationSettings.promotions}
-                                onClick={(c) => { setPushNotificationSettings({ ...pushNotificationSettings, promotions: c }); }} />
-                        </div>
-                    </Col>
-                    <Col span={20}>
-                        <div className="subtitle1 font-weight-bold margin-sm">Orders</div>
-                        <div className="headline   margin-sm">Get the latest status in your order</div>
-                    </Col>
-                    <Col span={4} className="">
-                        <div className="flex-justify-center flex-items-align-center  fill-parent">
-                            <Switch size={200} className=""
-                                checked={pushNotificationSettings.orders}
-                                onClick={(c) => { setPushNotificationSettings({ ...pushNotificationSettings, orders: c }) }} />
-                        </div>
-                    </Col>
-                    <Col span={20}>
-                        <div className="subtitle1 font-weight-bold margin-sm">Alerts & Reminders</div>
-                        <div className="headline   margin-sm">Updates on price drops, Feed and other in web events</div>
-                    </Col>
-                    <Col span={4} className="">
-                        <div className="flex-justify-center flex-items-align-center  fill-parent">
-                            <Switch size={200} className=""
-                                checked={pushNotificationSettings.alertsAndReminders}
-                                onClick={(c) => { setPushNotificationSettings({ ...pushNotificationSettings, alertsAndReminders: c }) }} />
-                        </div>
-                    </Col>
-                    <Col span={20}>
-                        <div className="subtitle1 font-weight-bold margin-sm">Chat</div>
-                        <div className="headline   margin-sm">Get notification when you receive a private chat messages</div>
-                    </Col>
-                    <Col span={4} className="">
-                        <div className="flex-justify-center flex-items-align-center  fill-parent">
-                            <Switch className=""
-                                checked={pushNotificationSettings.chat}
-                                onClick={(c) => { setPushNotificationSettings({ ...pushNotificationSettings, chat: c }) }} />
-                        </div>
-                    </Col>
-                </Row>
+            <Card className="thin-border round-border" title="Get notification when you receive a messages">
+                {
+                    _.map(notificationTypes, function (notificationType) {
+                        return (
+                            notificationType.editable ?
+                                <Row type="flex" justify="center" align="center">
+                                    <Col span={20}>
+                                        <div className="subtitle1 font-weight-bold margin-sm">{notificationType.name}</div>
+                                    </Col>
+                                    <Col span={4} className="">
+                                        <div className="flex-justify-center flex-items-align-center  fill-parent">
+                                            <Switch size={200} className=""
+                                                checked={pushNotificationSettings[notificationType.value]}
+                                                onClick={(c) => { setPushNotificationSettings({ ...pushNotificationSettings, [notificationType.value]: c }); }} />
+                                        </div>
+                                    </Col>
+                                </Row>
+                                :
+                                null
+                        )
+                    })
+                }
             </Card>
         );
     }
@@ -210,9 +244,9 @@ const Setting = (props) => {
                 <Col span={24}>
                     {_renderNotificationBox()}
                 </Col>
-                <Col span={24}>
+                {/* <Col span={24}>
                     {_renderCountryBox()}
-                </Col>
+                </Col> */}
             </Row>
         </div>
     );
