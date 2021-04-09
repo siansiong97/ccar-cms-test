@@ -208,7 +208,7 @@ const SocialBoardDetailsBox = (props) => {
     return (
         <React.Fragment>
 
-            <div className={`padding-md background-transparent ${props.className ? props.className : ''}`} style={{ ...props.style }}>
+            <div className={`padding-md ${props.className ? props.className : ''}`} style={{ ...props.style }}>
                 <Row gutter={[10, 15]}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="font-weight-black subtitle1 black">
@@ -288,6 +288,7 @@ const SocialBoardDetailsBox = (props) => {
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} key={`social-board-comment-${index}`}>
                                         <CommentBox
                                             data={v}
+                                            className="background-white-opacity-70"
                                             pinnedComments={pinnedComments}
                                             pinnable={getObjectId(_.get(post, ['userId'])) && _.get(props.user, ['info', 'user', '_id']) == getObjectId(_.get(post, ['userId']))}
                                             theme="pin"
@@ -321,6 +322,7 @@ const SocialBoardDetailsBox = (props) => {
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} key={`social-board-comment-${index}`}>
                                         <CommentBox
                                             data={v}
+                                            className="background-white-opacity-50 box-shadow-thin"
                                             pinnedComments={pinnedComments}
                                             pinnable={arrayLengthCount(pinnedCommentIds) < 3 && getObjectId(_.get(post, ['userId'])) && _.get(props.user, ['info', 'user', '_id']) == getObjectId(_.get(post, ['userId']))}
                                             onEditClick={(data) => {
@@ -347,7 +349,7 @@ const SocialBoardDetailsBox = (props) => {
                                 null
                                 :
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className="width-100 padding-md background-white">
+                                    <div className="width-100 padding-md background-white-opacity-50">
                                         <Empty description="No comment yet..." />
                                     </div>
                                 </Col>

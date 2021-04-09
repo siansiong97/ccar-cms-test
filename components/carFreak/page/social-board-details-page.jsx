@@ -79,16 +79,20 @@ const SocialBoardDetailsPage = (props) => {
                         <CarFreakLayout>
                             <Row gutter={[10, 10]}>
                                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                    <SocialBoardDetailsBox data={post} />
+                                    <div className="relative-wrapper padding-y-md">
+                                        <div className="fill-parent background-white-opacity-40 backdrop-blur absolute-center">
+                                        </div>
+                                        <SocialBoardDetailsBox data={post} />
+                                    </div>
                                 </Col>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
-                                    if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
-                                        props.router.push(`/social-board/${data._id}`, undefined, { shallow : false })
-                                    }
-                                }} />
-                            </Col>
-                        </Row>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                    <TrendingSocialBoardBox redirectToSocialBoard={(data) => {
+                                        if (_.isPlainObject(data) && !_.isEmpty(data) && _.get(data, ['_id'])) {
+                                            props.router.push(`/social-board/${data._id}`, undefined, { shallow: false })
+                                        }
+                                    }} />
+                                </Col>
+                            </Row>
                         </CarFreakLayout>
                     </div>
                 </div>
@@ -107,7 +111,7 @@ const SocialBoardDetailsPage = (props) => {
                     </div>
                 </div>
             </Tablet>
-            
+
         </LayoutV2 >
     )
 

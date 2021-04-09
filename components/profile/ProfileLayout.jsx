@@ -297,7 +297,7 @@ const ProfileLayout = (props) => {
                                     </Col>
 
                                     {/* Setting */}
-                                    {/* <Col span={24}>
+                                    <Col span={24}>
                                         <div className=" round-border thin-border padding-sm">
                                             <Row type="flex"   justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
                                                 if (_.get(profile, ['userurlId'])) {
@@ -319,7 +319,7 @@ const ProfileLayout = (props) => {
                                                 </Col>
                                             </Row>
                                         </div>
-                                    </Col> */}
+                                    </Col>
                                     <Col span={24}>
                                         <div className="round-border thin-border padding-sm">
                                             <Row type="flex" justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
