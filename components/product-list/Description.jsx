@@ -91,11 +91,12 @@ const Description = (props) => {
     const [ownRating, setOwnRating] = useState([])
     const [displayContact, setDisplayContact] = useState(false)
 
+    const [count, setCount] = useState(0)
+
     useEffect(() => {
         if (props.productDetails._id != id) {
             setId(props.productDetails._id)
             setProductDetails(props.productDetails)
-
             setCompanyId(props.productDetails.companys._id)
 
             let uniqSpec = _.uniqBy(props.productDetails.carspecsAll.specification, 'category')
@@ -131,9 +132,6 @@ const Description = (props) => {
         }
     }, []);
 
-    useEffect(() => {
-        getRatings(0);
-    }, [productDetails])
 
 
     useEffect(() => {
@@ -144,14 +142,25 @@ const Description = (props) => {
 
     useEffect(() => {
         init();
-    }, [productDetails, props.user])
+    }, [productDetails])
+
+    useEffect(() => {
+        setCount(count + 1);
+        if (count < 10) {
+            console.log(props.user);
+            props.loading(!props.app.loading)
+        }
+    }, [props.user])
 
 
 
     function init() {
-        setRatingPage(1);
+        if (ratingPage == 1) {
+            getRatings(0);
+        } else {
+            setRatingPage(1);
+        }
         setRatingTotal(0);
-        getRatings(0);
         getOwnRating();
     }
 
@@ -620,6 +629,7 @@ const Description = (props) => {
 
 const mapStateToProps = state => ({
     user: state.user,
+    app: state.app,
     productsList: state.productsList,
 });
 

@@ -285,6 +285,7 @@ video {
 .no-border-input .ant-mentions {
     border: none !important;
 }
+
 .no-border-input .ant-mentions-focused {
     border: none !important;
     box-shadow: none !important;
@@ -334,72 +335,87 @@ video {
     border-radius: 0px 12px 12px 0px;
 }
 
-.radio-button-space-around .ant-radio-button-wrapper:not(:first-child)::before{
+.radio-button-space-around .ant-radio-button-wrapper:not(:first-child)::before {
     background-color: transparent;
-    border-left :1px;
+    border-left: 1px;
 }
 
-.radio-button-space-around .ant-radio-button-wrapper{
-    border-left  : 1px solid #FFCC32;
-    border : 1px solid #FFCC32;
+.radio-button-space-around .ant-radio-button-wrapper {
+    border-left: 1px solid #FFCC32;
+    border: 1px solid #FFCC32;
 }
 
-.radio-button-space-around .ant-radio-group{
+.radio-button-space-around .ant-radio-group {
     display: flex !important;
     align-items: center !important;
     justify-content: space-around !important;
-    width : 100%;
+    width: 100%;
 }
 
 .ant-radio-group .round-border-big {
     border-radius: 15px !important;
 }
 
-
-.collapse-no-header  .ant-collapse-item .ant-collapse-header {
-    padding : 0px;
+.collapse-no-header .ant-collapse-item .ant-collapse-header {
+    padding: 0px;
 }
+
 .collapse-no-header .ant-collapse-item {
-    border : none !important;
+    border: none !important;
 }
 
 .collapse-body-no-padding .ant-collapse-content-box {
-    padding : 0px;
+    padding: 0px;
 }
 
 .collapse-body-padding-top-sm .ant-collapse-content-box {
-    padding-top : 2px;
+    padding-top: 2px;
 }
 
 .collapse-body-overflow-visible .ant-collapse-content {
-    overflow : visible;
+    overflow: visible;
 }
 
 .collapse-body-no-padding .ant-collapse-content {
-    border : none
+    border: none
 }
 
 .emoji-mart-small .emoji-mart-scroll {
-    height : 150px;
+    height: 150px;
 }
 
 .emoji-mart-normal .emoji-mart-scroll {
-    height : 300px;
+    height: 300px;
 }
+
 .emoji-mart-big .emoji-mart-scroll {
-    height : 600px;
+    height: 600px;
 }
+
 .ReactModal__Overlay--after-open {
     z-index: 9999 !important;
 }
 
-.no-margin .public-DraftStyleDefault-block{
-    margin : 0px !important;
+.no-margin .public-DraftStyleDefault-block {
+    margin: 0px !important;
 }
-.ant-typography{
+
+.ant-typography {
     margin-bottom: 0px !important;
 }
 
-.ql-editor{
+.ql-editor {
     padding: 5px 15px !important;
+}
+
+.pop-over-body-no-padding .ant-popover-inner-content {
+    padding: 0px !important;
+}
+
+.pop-over-title-no-padding .ant-popover-title {
+    padding: 0px !important;
+}
+
+.form-line-height-unset .ant-form-item-control {
+    line-height: unset !important;
 }

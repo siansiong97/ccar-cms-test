@@ -1140,3 +1140,48 @@
 .pre-wrap {
     white-space: pre-wrap;
 }
+
+.blur{
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+.blur-light{
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
+.blur-thin{
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+}
+.blur-heavy{
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+
+.backdrop-blur{
+    backdrop-filter: blur(5px);
+}
+.backdrop-gray{
+    backdrop-filter: grayscale(1);
+}
+.backdrop-brightness{
+    backdrop-filter: brightness(1.5);
+}
+.backdrop-contrast{
+    backdrop-filter: contrast(.8);
+}
+.backdrop-invert{
+    backdrop-filter: invert(.7);
+}
+.backdrop-opacity{
+    backdrop-filter: opacity(.4);
+}
+.backdrop-sepia{
+    backdrop-filter: sepia(.4);
+}
+.backdrop-saturate{
+    backdrop-filter: saturate(1.8);
+}
+.backdrop-hue-rotate{
+    backdrop-filter: hue-rotate(120deg);
+}

@@ -50,7 +50,7 @@ export function getFaceBookId(url) {
   if (url==='http://localhost:3030/'){appId = '694458901283391'}
   else if (url==='https://uat2-api.ccar.my/'){appId = '703731107216979'}
   else if (url==='https://api.ccar.my/'){appId = '747178012753410'}
-  else if (url==='https://preprod.ccar.my/'){appId = '747178012753410'}
+  else if (url==='https://preprod-api.ccar.my/'){appId = '703731107216979'}
   else  {appId = '747178012753410'} //default prod
 
   return  appId
@@ -65,6 +65,7 @@ export function getGoogleId(url) {
   // clientId="182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com"//uat2
 
   if (url==='http://localhost:3030/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
+  else if (url==='https://preprod-api.ccar.my/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
   else if (url==='https://uat2-api.ccar.my/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
   else if (url==='https://preprod-api.ccar.my/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
   else if (url==='https://api.ccar.my/'){clientId = '827147986430-e28c63qftj91sp506r8km2v1snccnt36.apps.googleusercontent.com'}
@@ -125,6 +126,7 @@ export function checkEnv(url) {
   let env = '';
   if (url==='http://localhost:3030/'){env = 'local'}
   else if (url==='https://uat2-api.ccar.my/'){env = 'uat'}
+  else if (url==='https://preprod-api.ccar.my/'){env = 'preprod'}
   else if (url==='https://api.ccar.my/'){env = 'prod'}
   else  {env='prod'} 
   return  env
@@ -142,6 +144,10 @@ export function checkEnvReturnWebAdmin(url) {
   else if (url==='https://uat2-api.ccar.my/')
   {
     frontEndUrl = 'http://uat2-adm.ccar.my/'
+  }
+  else if (url==='https://preprod-api.ccar.my/')
+  {
+    frontEndUrl = 'http://preprod-adm.ccar.my/'
   }
   else if (url==='https://api.ccar.my/')
   {
@@ -162,6 +168,10 @@ export function checkEnvReturnCmsUrl(url) {
   else if (url==='https://uat2-api.ccar.my/')
   {
     frontEndUrl = 'https://uat2ssr.ccar.my'
+  }
+  else if (url==='https://preprod-api.ccar.my/')
+  {
+    frontEndUrl = 'https://preprod-api.ccar.my'
   }
   else if (url==='https://api.ccar.my/')
   {

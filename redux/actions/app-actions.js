@@ -2,6 +2,8 @@ export const LOADING = 'LOADING';
 
 export const SET_INITED_REDUX = 'SET_INITED_REDUX';
 
+export const SET_DISABLE_WINDOW_SCROLL = 'SET_DISABLE_WINDOW_SCROLL';
+
 export const ADVANCE_MODE = 'ADVANCE_MODE';
 export const LOGIN_MODE = 'LOGIN_MODE';
 export const REGISTER_MODE = 'REGISTER_MODE';
@@ -54,6 +56,8 @@ export const FILTER_STATES = 'FILTER_STATES';
 export const SET_MENU_HEIGHT = 'SET_MENU_HEIGHT';
 
 export const SET_NOTIFICATION_TOKEN = 'SET_NOTIFICATION_TOKEN';
+export const SET_NOTIFICATION_TOKEN_TIME_OUT_DATE = 'SET_NOTIFICATION_TOKEN_TIME_OUT_DATE';
+
 
 
 //fetch quick filter
@@ -446,11 +450,28 @@ export function setNotificationToken(data){
     })
   }
 }
+export function setNotificationTokenTimeOutDate(data){
+  return (dispatch) => {
+    dispatch({
+      type: SET_NOTIFICATION_TOKEN_TIME_OUT_DATE,
+      data,
+    })
+  }
+}
 
 export function setInitedRedux(data){
   return (dispatch) => {
     dispatch({
       type: SET_INITED_REDUX,
+      data,
+    })
+  }
+}
+
+export function setDisableWindowScroll(data){
+  return (dispatch) => {
+    dispatch({
+      type: SET_DISABLE_WINDOW_SCROLL,
       data,
     })
   }

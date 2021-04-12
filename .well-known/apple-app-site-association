@@ -1,0 +1,10 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [{
+            "appID": "<TeamID>.com.example.myapp",
+            "paths": ["live/*", "dealer/*", "viewCar/*", "profile/*"]
+            }
+        ]
+    }
+}

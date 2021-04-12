@@ -23,7 +23,7 @@ import {
   RESET_NEW_CAR_FILTER_GROUP,
 } from '../actions/newcars-actions';
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj, persistRedux } from '../config';
 
 const INITIAL_STATE = {
   news: [],
@@ -59,135 +59,161 @@ const INITIAL_STATE = {
 
 export default function (state = INITIAL_STATE, action) {
 
-  checkNeedPersist(_.get(action, 'type'), 'newCars', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
-    
+  // checkNeedPersist(_.get(action, 'type'), 'newCars', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+
+  let persistStates = _.get(localStorage.get('redux') || {}, 'newCars') || INITIAL_STATE;
+  let newState = {
+    ...state,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
+  }
   switch (action.type) {
     case FETCH_NEWS:
-      return {
+      state = {
         ...state,
         news: action.payload
       }
+      break;
     case FETCH_CLUB:
-      return {
+      state = {
         ...state,
         club: action.payload
       }
+      break;
 
     case FETCH_PRICE:
-      return {
+      state = {
         ...state,
         price: action.payload
       }
+      break;
 
     case FETCH_POPULAR:
-      return {
+      state = {
         ...state,
         popular: action.payload
       }
+      break;
 
     case FETCH_POPULARCARS:
-      return {
+      state = {
         ...state,
         popularCars: action.payload
       }
 
     case FETCH_CARNAME:
-      return {
+      state = {
         ...state,
         CarName: action.payload
       }
+      break;
 
     case FETCH_CARDETAILS:
-      return {
+      state = {
         ...state,
         details: action.payload
       }
+      break;
 
     case FETCH_BRANDS:
-      return {
+      state = {
         ...state,
         brands: action.payload
       }
+      break;
 
     case FETCH_BRANDDETAIL:
-      return {
+      state = {
         ...state,
         brandDetail: action.payload
       }
+      break;
 
     case FETCH_BRANDCARS:
-      return {
+      state = {
         ...state,
         brandCars: action.payload
       }
+      break;
     case FETCH_DETAILS:
-      return {
+      state = {
         ...state,
         details: action.payload
       }
+      break;
 
     case FETCH_FUEL:
-      return {
+      state = {
         ...state,
         fuel: action.payload
       }
+      break;
     case FETCH_FILTERED_COMPARE_DATA:
-      return {
+      state = {
         ...state,
         filteredCompareData: action.payload
       }
+      break;
     case FETCH_COMPARE_NEWCAR_IDS:
-      return {
+      state = {
         ...state,
         compareIds: action.payload
       }
+      break;
     case FETCH_COMPARE__NEWCAR_LIMIT:
-      return {
+      state = {
         ...state,
         compareLimit: action.payload
       }
+      break;
     case ADD_COMPARE_NEWCAR_ID:
       if (state.compareIds.length < state.compareLimit) {
         let checkIfExist = _.findIndex(state.compareIds, function (item) {
-          return item == action.payload;
+          state = item == action.payload;
         })
         if (checkIfExist == -1) {
           let temp = _.cloneDeep(state.compareIds)
           temp.push(action.payload)
-          return {
+          state = {
             ...state,
             compareIds: temp
           }
         } else {
-          return {
+          state = {
             ...state,
           }
         }
       } else {
-        return {
+        state = {
           ...state,
         }
       }
+      break;
     case REMOVE_COMPARE_NEWCAR_ID:
       let temp = state.compareIds.filter((item) => item !== action.payload);
 
-      return {
+      state = {
         ...state,
         compareIds: temp,
       }
+      break;
 
     case FETCH_PEER_COMPARE_CARS:
-      return {
+      state = {
         ...state,
         peerComp: action.payload
       }
+      break;
     case FETCH_NEW_CAR_FILTER_GROUP:
-      return {
+      state = {
         ...state,
         newCarFilterGroup: action.payload
       }
+      break;
     case RESET_NEW_CAR_FILTER_GROUP:
-      return {
+      state = {
         ...state,
         newCarFilterGroup: {
           make: '',
@@ -204,9 +230,15 @@ export default function (state = INITIAL_STATE, action) {
           engineCapacityRange: [],
         },
       }
+      break;
 
     default:
-      return state
+      state = state
+      break;
 
   }
+
+  persistRedux('newCars', state)
+
+  return state;
 }

@@ -8,74 +8,92 @@ import {
 } from '../actions/userlikes-actions';
 import _ from "lodash"
 import localStorage from 'local-storage';
-import { checkIsNeedPersist, checkNeedPersist, getPersistObj } from '../config';
+import { checkIsNeedPersist, checkNeedPersist, getPersistObj, persistRedux } from '../config';
 
 const INITIAL_STATE = {
   allLike: [],
   allBookmark: [],
-  allLikeMsg:[],
+  allLikeMsg: [],
 }
 
 
 export default function (state = INITIAL_STATE, action) {
 
- 
-  checkNeedPersist(_.get(action, 'type'), 'userlikes', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
-  
+
+  // checkNeedPersist(_.get(action, 'type'), 'userlikes', _.get(action, 'payload'), _.get(action, 'isRestoreData'));
+
+  let persistStates = _.get(localStorage.get('redux') || {}, 'userlikes') || INITIAL_STATE;
+  let newState = {
+    ...state,
+    ...persistStates
+  }
+  if(!_.isEqual(state, newState)){
+    state = newState;
+  }
   if (typeof state === 'undefined') {
-    return {}
+    state = {}
   }
 
   switch (action.type) {
 
     case ADD_LIKE:
-      if(!state.allLike){state.allLike=[]}
+      if (!state.allLike) { state.allLike = [] }
       state.allLike.push(action.value)
-      return {
+      state = {
         ...state,
       }
+      break;
     case REMOVE_LIKE:
       _.remove(state.allLike, {
         chatId: action.value.chatId,
         userId: action.value.userId
       });
-      return {
+      state = {
+        ...state,
+      }
+      break;
+
+    case ADD_BOOKMARK:
+      if (!state.allBookmark) { state.allBookmark = [] }
+
+      state.allBookmark.push(action.value)
+      state = {
+        ...state,
+      }
+      break;
+    case REMOVE_BOOKMARK:
+      _.remove(state.allBookmark, {
+        chatId: action.value.chatId,
+        userId: action.value.userId
+      });
+      state = {
+        ...state,
+      }
+      break;
+
+    case ADD_LIKE_MSG:
+      if (!state.allLikeMsg) { state.allLikeMsg = [] }
+      state.allLikeMsg.push(action.value)
+      state = {
+        ...state,
+      }
+      break;
+    case REMOVE_LIKE_MSG:
+      _.remove(state.allLikeMsg, {
+        chatId: action.value.chatId,
+        messageId: action.value.chatId,
+        userId: action.value.userId
+      });
+      state = {
         ...state,
       }
 
-      case ADD_BOOKMARK:
-        if(!state.allBookmark){state.allBookmark=[]}
-        
-        state.allBookmark.push(action.value)
-        return {
-          ...state,
-        }
-      case REMOVE_BOOKMARK:
-        _.remove(state.allBookmark, {
-          chatId: action.value.chatId,
-          userId: action.value.userId
-        });
-        return {
-          ...state,
-        }
-
-        case ADD_LIKE_MSG:
-          if(!state.allLikeMsg){state.allLikeMsg=[]}
-          state.allLikeMsg.push(action.value)
-          return {
-            ...state,
-          }
-        case REMOVE_LIKE_MSG:
-          _.remove(state.allLikeMsg, {
-            chatId: action.value.chatId,
-            messageId: action.value.chatId,
-            userId: action.value.userId
-          });
-          return {
-            ...state,
-          }
-
+      break;
     default:
-      return state
+      state = state
+      break;
   }
+  persistRedux('userlikes', state)
+
+  return state;
 }

@@ -64,9 +64,9 @@ export const statePersistActions = [
 
 export function persistRedux(reducer, data) {
 
-  if(reducer && _.isPlainObject(data) && !_.isEmpty(data)){
+  if (reducer && _.isPlainObject(data) && !_.isEmpty(data)) {
     let reduxStates = localStorage.get('redux');
-    if(!_.isPlainObject(reduxStates)){
+    if (!_.isPlainObject(reduxStates)) {
       reduxStates = {};
     }
 
@@ -153,12 +153,23 @@ export function getLocalStoragePersistStates(reducer) {
 
 }
 
+
 export function dynamicDispatch(action, data) {
   return (dispatch) => {
     dispatch({
       type: action,
       payload: data,
       isRestoreData: true,
+    });
+  }
+}
+
+export const RESTORE_REDUX = 'RESTORE_REDUX';
+export function restoreRedux(data) {
+  return (dispatch) => {
+    dispatch({
+      type: RESTORE_REDUX,
+      payload: data,
     });
   }
 }
