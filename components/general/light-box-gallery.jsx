@@ -42,7 +42,7 @@ const LightBoxGallery = (props) => {
     return (
 
         <React.Fragment>
-            <WindowScrollDisableWrapper disabled={inited ? visible : null}>
+            {/* <WindowScrollDisableWrapper disabled={inited ? visible : null}> */}
                 {
                     props.children ?
                         props.children({ images, currentIndex, visible }, setCurrentIndex, setVisible)
@@ -79,7 +79,7 @@ const LightBoxGallery = (props) => {
                         }
                     />
                 )}
-            </WindowScrollDisableWrapper>
+            {/* </WindowScrollDisableWrapper> */}
         </React.Fragment>
     );
 }

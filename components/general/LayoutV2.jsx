@@ -894,7 +894,7 @@ class LayoutV2 extends React.Component {
 
         return (
             <Layout>
-                <WindowScrollDisableWrapper>
+                {/* <WindowScrollDisableWrapper> */}
                     <div className="relative-wrapper">
                         <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} >
@@ -1216,7 +1216,7 @@ class LayoutV2 extends React.Component {
                         By continuing to browse this website, you accept cookies which are used for several reasons such as personalizing content/ads and analyzing how this website is used.
 
                     </CookieConsent>
-                </WindowScrollDisableWrapper>
+                {/* </WindowScrollDisableWrapper> */}
             </Layout>
         )
     }
