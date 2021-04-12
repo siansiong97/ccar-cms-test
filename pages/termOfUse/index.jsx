@@ -10,16 +10,14 @@ const Index = (props) => {
 
 
     return (
-        // <ReduxPersistWrapper cookie={props.cookie}>
-        <>
+        <ReduxPersistWrapper cookie={props.cookie}>
             {
                 props.app.initedRedux ?
                     <TermOfUseIndex />
                     :
                     null
             }
-            </>
-        // </ReduxPersistWrapper>
+        </ReduxPersistWrapper>
     )
 }
 
