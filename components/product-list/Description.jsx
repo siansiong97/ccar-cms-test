@@ -11,6 +11,10 @@ import { loading } from '../../redux/actions/app-actions';
 import { fetchFeaturesList, updateCheckedFeaturesDate } from '../../redux/actions/productsList-actions';
 import CarspecsCompareTable from '../compare/CarspecsCompareTable';
 import { isIOS, isMobile } from 'react-device-detect'
+import OverallRating from '../rating/OverallRating';
+import RatingProgress from '../rating/RatingProgress';
+import WriteReviewButton from '../rating/WriteReviewButton';
+import ReviewList2 from '../rating/ReviewList2';
 
 
 const { TabPane } = Tabs;
@@ -142,15 +146,15 @@ const Description = (props) => {
 
     useEffect(() => {
         init();
-    }, [productDetails])
+    }, [productDetails, props.user])
 
-    useEffect(() => {
-        setCount(count + 1);
-        if (count < 10) {
-            console.log(props.user);
-            props.loading(!props.app.loading)
-        }
-    }, [props.user])
+    // useEffect(() => {
+    //     setCount(count + 1);
+    //     if (count < 10) {
+    //         console.log(props.user);
+    //         props.loading(!props.app.loading)
+    //     }
+    // }, [props.user])
 
 
 
@@ -165,15 +169,16 @@ const Description = (props) => {
     }
 
     function getRatings(skip) {
-        if (productDetails._id) {
+        console.log('get ratings');
+        if (_.get(productDetails, ['carspecsId', '_id'])) {
 
             let query = {
-                productId: productDetails._id,
-                type: 'product',
+                carspecId: _.get(productDetails, ['carspecsId', '_id']),
+                type: 'carspec',
                 $populate: [
                     {
-                        path: 'companyId',
-                        ref: 'companys'
+                        path: 'carspecId',
+                        ref: 'carspecs'
                     },
                     {
                         path: 'reviewerId',
@@ -197,6 +202,8 @@ const Description = (props) => {
             client.service('rating').find({
                 query
             }).then((res) => {
+                console.log('res');
+                console.log(res);
                 props.loading(false);
                 if (notEmptyLength(res.data)) {
                     let data = ratings.concat(res.data);
@@ -216,17 +223,18 @@ const Description = (props) => {
 
 
     function getOwnRating() {
-        if (productDetails._id && props.user.authenticated) {
+        if (_.get(productDetails, ['carspecsId', '_id']) && props.user.authenticated) {
 
             props.loading(true);
             client.service('rating').find({
                 query: {
-                    productId: productDetails._id,
+                    type: 'carspec',
+                    carspecId: _.get(productDetails, ['carspecsId', '_id']),
                     reviewerId: props.user.info.user._id,
                     $populate: [
                         {
-                            path: 'companyId',
-                            ref: 'companys'
+                            path: 'carspecId',
+                            ref: 'carspecs'
                         },
                         {
                             path: 'reviewerId',
@@ -539,17 +547,17 @@ const Description = (props) => {
                             <CarspecsCompareTable findById data={!productDetails.carspecsAll || !productDetails.carspecsAll._id ? [] : [productDetails.carspecsAll._id]} />
                         </div>
                     </TabPane>
-                    {/* <TabPane tab="Rating & Reviews" key="4">
+                    <TabPane tab="Rating & Reviews" key="4">
                         <Row gutter={[0, 10]} type="flex" justify="center" align="stretch">
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Row>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <OverallRating rating={!notEmptyLength(props.productDetails) || !props.productDetails.avgRating ? 0 : props.productDetails.avgRating} total={!notEmptyLength(props.productDetails) || !props.productDetails.totalRating ? 0 : props.productDetails.totalRating} />
+                                        <OverallRating rating={_.get(productDetails , ['carspecsId', 'avgRating']) || 0} total={_.get(productDetails , ['carspecsId', 'totalRating']) || 0} />
                                     </Col>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <RatingProgress
-                                            data={!notEmptyLength(props.productDetails) || !props.productDetails.ratingCategory ? [] : props.productDetails.ratingCategory}
-                                            total={!notEmptyLength(props.productDetails) || !props.productDetails.totalRating ? null : props.productDetails.totalRating}
+                                            data={_.get(productDetails , ['carspecsId', 'ratingCategory']) || []}
+                                            total={_.get(productDetails , ['carspecsId', 'totalRating']) || 0}
                                             startFrom={1}
                                             size={5}
                                         />
@@ -563,7 +571,8 @@ const Description = (props) => {
                                         {
                                             !notEmptyLength(ownRating) ?
                                                 <WriteReviewButton
-                                                    data={{ type: 'product', productId: !notEmptyLength(props.productDetails) || !props.productDetails._id ? null : props.productDetails._id, reviewerId: props.user.authenticated ? props.user.info.user._id : null }}
+                                                    title={_.trim(`Review on ${_.get(productDetails, ['carspecsId', 'make']) || ''} ${_.get(productDetails, ['carspecsId', 'model']) || ''} ${_.get(productDetails, ['carspecsId', 'variant']) || ''}`)}
+                                                    data={{ type: 'carspec', carspecId: _.get(productDetails, ['carspecsId', '_id']) || '', reviewerId: props.user.authenticated ? props.user.info.user._id : null }}
                                                     mode="add"
                                                     handleError={(e) => { message.error(e.message) }}
                                                     readOnly={props.readOnly}
@@ -580,13 +589,13 @@ const Description = (props) => {
                                     notEmptyLength(ratings) || notEmptyLength(ownRating) ?
                                         <React.Fragment>
                                             <div className="fill-parent" style={{ paddingRight: '3%' }}>
-                                                <ReviewList data={notEmptyLength(ownRating) ? ownRating : []} handleChange={(v) => { init() }} />
+                                                <ReviewList2 data={notEmptyLength(ownRating) ? ownRating : []} handleChange={(v) => { init() }} />
                                             </div>
                                             {
                                                 notEmptyLength(ratings) ?
 
                                                     <div className="fill-parent padding-right-md wrapBorderRed" style={{ display: 'inline-block', overflowX: 'hidden', overflowY: "scroll", maxHeight: '500px', border: 'none' }}>
-                                                        <ReviewList data={ratings} handleChange={(v) => { init() }} />
+                                                        <ReviewList2 data={ratings} handleChange={(v) => { init() }} />
                                                         {
                                                             ratings.length < ratingTotal ?
                                                                 <div className="text-align-center subtitle1 font-weight-bold"><a onClick={() => { setRatingPage(ratingPage + 1) }}>Load More</a></div>
@@ -620,7 +629,7 @@ const Description = (props) => {
                                 }
                             </div>
                         </Row>
-                    </TabPane> */}
+                    </TabPane>
                 </Tabs>
             </Card>
         </div >

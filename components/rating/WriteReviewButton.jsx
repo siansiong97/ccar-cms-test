@@ -165,10 +165,10 @@ const WriteReviewButton = (props) => {
 
         let form = _.cloneDeep(reviewForm);
         form.selection = reviewForm[reviewForm.type + 'Id'];
-        if (visible && props.data.reviewerId ) {
-            props.form.setFieldsValue({selection:form.selection});
+        if (visible && props.data.reviewerId) {
+            props.form.setFieldsValue({ selection: form.selection });
         }
-        
+
     }, [reviewForm])
 
     useEffect(() => {
@@ -738,6 +738,14 @@ const WriteReviewButton = (props) => {
                                 :
                                 null
                         }
+                        {
+                            _.isPlainObject(_.get(props.data, 'carspecId')) && !_.isEmpty(_.get(props.data, 'carspecId')) ?
+                                <div className="headline font-weight-bold">
+                                    {_.trim(`${_.get(props.data, 'carspecId.make') || ''} ${_.get(props.data, 'carspecId.model') || ''} ${_.get(props.data, 'carspecId.variant') || ''}`)}
+                                </div>
+                                :
+                                null
+                        }
                         <div className="headline  ">
                             How awesome this?
                         </div>
@@ -936,7 +944,7 @@ const WriteReviewButton = (props) => {
                         <img alt="example" style={{ width: '100%' }} src={previewImage.url} />
                 }
             </Modal>
-            <a onClick={ props.readOnly ? null : reviewModalVisible}>
+            <a onClick={props.readOnly ? null : reviewModalVisible}>
 
                 {
                     props.button ?

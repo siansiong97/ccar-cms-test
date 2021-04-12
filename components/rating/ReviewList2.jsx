@@ -8,6 +8,7 @@ import ReactPlayer from 'react-player';
 import { connect } from 'react-redux';
 import { isObject, notEmptyLength } from '../../common-function';
 import LightBoxGallery from '../general/light-box-gallery';
+import UserAvatar from '../general/UserAvatar';
 import HideReviewButton from './HideReviewButton';
 import RemoveReviewButton from './RemoveReviewButton';
 import WriteReviewButton from './WriteReviewButton';
@@ -210,75 +211,60 @@ const ReviewList = (props) => {
         if (notEmptyLength(data)) {
             list = data.map(function (item, i) {
                 return (
-                    <div key={'divReview1' + i} className="review1" >
-                        <Row>
-                            <Col span={18}>
-                                <Row gutter={[30, 0]}>
-                                    <Col span={24}>
-                                        <div className="flex-justify-start flex-items-align-center padding-x-sm">
-                                            <Avatar src={!item.reviewerId || !item.reviewerId.avatar ? null : item.reviewerId.avatar} icon={!item.reviewerId || !item.reviewerId.avatar ? 'user' : null}></Avatar>
-                                            <span className="headline   margin-x-md text-overflow-break">
-                                                {!item.reviewerId ? null : item.reviewerId.firstName + ' ' + item.reviewerId.lastName}
-                                            </span>
-                                            {
-                                                item.state ?
-                                                    <span className="headline blue">
-                                                        {item.state}
-                                                    </span>
-                                                    :
-                                                    null
-                                            }
-                                        </div>
-                                    </Col>
+                    <div key={'divReview1' + i} className="review1 relative-wrapper" >
+                        <div className="flex-justify-start flex-items-align-start">
+                            <span className='d-inline-block margin-right-md' >
+                                <UserAvatar size={props.size || 50} data={item.reviewerId}></UserAvatar>
+                            </span>
+                            <span className='d-inline-block ' >
+                                <div className="flex-justify-start flex-items-align-center">
+                                    <span className="subtitle-1 margin-right-md text-overflow-break font-weight-bold grey-darken-1">
+                                        {!item.reviewerId ? null : item.reviewerId.firstName + ' ' + item.reviewerId.lastName}
+                                    </span>
                                     {
-                                        _.isPlainObject(_.get(item, ['carspecId'])) && !_.isEmpty(_.get(item, ['carspecId'])) ?
-                                            <div className="info flex-justify-start flex-items-align-center">
-                                                {
-                                                    props.renderCarspec ?
-                                                        props.renderCarspec(item)
-                                                        :
-                                                        <div className="font-weight-bold padding-left-md padding-top-md subtitle1">{_.trim(`${_.get(item, 'carspecId.make') || ''} ${_.get(item, 'carspecId.model') || ''} ${_.get(item, 'carspecId.variant') || ''}`)}</div>
-                                                }
-                                            </div>
+                                        item.state ?
+                                            <span className="headline blue">
+                                                {item.state}
+                                            </span>
                                             :
                                             null
                                     }
-                                    <Col span={24}>
-                                        <div className="info flex-justify-start flex-items-align-center">
+                                </div>
+                                <div className="headline">
+                                    {moment(item.createdAt).format('D MMMM Y')}
+                                </div>
+                                {
+                                    _.isPlainObject(_.get(item, ['carspecId'])) && !_.isEmpty(_.get(item, ['carspecId'])) ?
+                                        <div className="flex-justify-start flex-items-align-center">
                                             {
-                                                props.renderRate ?
-                                                    props.renderRate(item)
+                                                props.renderCarspec ?
+                                                    props.renderCarspec(item)
                                                     :
-                                                    <div><Rate allowHalf value={item.rating} disabled /></div>
+                                                    <div className="font-weight-black padding-top-md subtitle1">{_.trim(`${_.get(item, 'carspecId.make') || ''} ${_.get(item, 'carspecId.model') || ''} ${_.get(item, 'carspecId.variant') || ''}`)}</div>
                                             }
                                         </div>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col span={6}>
-                                <div className="review2">
-                                    <span className="headline   margin-x-sm d-inline-block">{moment(item.createdAt).format('D MMMM Y')}</span>
-                                    <Dropdown overlay={menu(item)} placement="bottomRight">
-                                        <a className="ant-dropdown-link " onClick={e => e.preventDefault()}>
-                                            <img src="https://img.icons8.com/material-rounded/24/000000/menu-2.png" />
-                                        </a>
-                                    </Dropdown>
+                                        :
+                                        null
+                                }
+                                <div className="flex-justify-start flex-items-align-center">
+                                    {
+                                        props.renderRate ?
+                                            props.renderRate(item)
+                                            :
+                                            <div><Rate allowHalf value={item.rating} disabled /></div>
+                                    }
                                 </div>
-                            </Col>
-                            {
-                                item.title && item.comment ?
-                                    <div>
-                                        <Col span={24}>
-                                            <div className="subtitle1 font-weight-bold margin-bottom-sm padding-x-sm">
+                                {
+                                    item.title && item.comment ?
+                                        [
+                                            <div className="subtitle1 margin-y-sm">
                                                 {item.title}
-                                            </div>
-                                        </Col>
-                                        <Col span={24}>
-                                            <div style={{ overflowX: "hidden", maxWidth: '97%' }} className="padding-x-sm" ref={containerRef}>
-                                                <span ref={item.textRef} className={item.showText ? "headline   text-overflow-break d-inline-block" : "headline   text-truncate d-inline-block "}>
+                                            </div>,
+                                            <div style={{ overflowX: "hidden", maxWidth: '97%' }} ref={containerRef}>
+                                                <span ref={item.textRef} className={item.showText ? "headline text-overflow-break d-inline-block" : "headline   text-truncate d-inline-block font-weight-thin "}>
                                                     {item.comment}
                                                 </span>
-                                            </div>
+                                            </div>,
                                             <div>
                                                 {
                                                     item.seeMore && !item.showText ?
@@ -293,61 +279,66 @@ const ReviewList = (props) => {
                                                         null
                                                 }
                                             </div>
-                                        </Col>
-                                    </div>
-                                    :
-                                    null
-                            }
-                            {
-                                notEmptyLength(item.images) || notEmptyLength(item.videos) ?
-                                    <Col span={24}>
-                                        <div key='imageDiv' className="padding-x-sm margin-top-md">
-                                            <ScrollContainer className="d-flex" vertical={false}>
-                                                {
-                                                    notEmptyLength(item.videos) ?
-                                                        item.videos.map(function (video, i) {
-                                                            return (
-                                                                <span key={'videoDiv' + i} className="d-inline-block margin-sm flex-items-no-shrink " style={{ width: "150px", height: '100px', border: 'solid', borderColor: 'rgba(150, 150, 150, 0.5)' }}>
-                                                                    <ReactPlayer width='100%' height="100%" controls url={video.url} />
-                                                                </span>
-                                                            )
-                                                        })
-                                                        :
-                                                        null
-                                                }
-                                                {
-                                                    notEmptyLength(item.images) ?
-                                                        <LightBoxGallery images={_.compact(_.map(item.images, function (v) {
-                                                            return _.get(v, ['url']) || null;
-                                                        }))}>
-                                                            {
-                                                                (state, setCurrentIndex, setVisible) => {
-                                                                    return (
-                                                                        <Scrollbars style={{ width: '100%', height: '120px' }}>
-                                                                            <div className="flex-justify-start flex-items-align-center fill-parent">
-                                                                                {
-                                                                                    _.map(state.images, function (v, index) {
-                                                                                        return <span className='d-inline-block margin-right-md cursor-pointer' onClick={(e) => { setCurrentIndex(index); setVisible(true) }} >
-                                                                                            <img src={v} style={{ width: 100, height: 100 }} className=" img-cover" />
-                                                                                        </span>
-                                                                                    })
-                                                                                }
-                                                                            </div>
-                                                                        </Scrollbars>
-                                                                    )
-                                                                }
+                                        ]
+                                        :
+                                        null
+                                }
+                                {
+                                    notEmptyLength(item.images) || notEmptyLength(item.videos) ?
+                                        <div key='imageDiv' className="margin-top-md">
+                                            {
+                                                notEmptyLength(item.videos) ?
+                                                    item.videos.map(function (video, i) {
+                                                        return (
+                                                            <span key={'videoDiv' + i} className="d-inline-block margin-sm flex-items-no-shrink " style={{ width: "150px", height: '100px', border: 'solid', borderColor: 'rgba(150, 150, 150, 0.5)' }}>
+                                                                <ReactPlayer width='100%' height="100%" controls url={video.url} />
+                                                            </span>
+                                                        )
+                                                    })
+                                                    :
+                                                    null
+                                            }
+                                            {
+                                                notEmptyLength(item.images) ?
+                                                    <LightBoxGallery images={_.compact(_.map(item.images, function (v) {
+                                                        return _.get(v, ['url']) || null;
+                                                    }))}>
+                                                        {
+                                                            (state, setCurrentIndex, setVisible) => {
+                                                                return (
+                                                                    <Scrollbars style={{ width: '100%', height: '120px' }} autoHide autoHeight>
+                                                                        <div className="flex-justify-start flex-items-align-center fill-parent">
+                                                                            {
+                                                                                _.map(state.images, function (v, index) {
+                                                                                    return <span className='d-inline-block margin-right-md cursor-pointer' onClick={(e) => { setCurrentIndex(index); setVisible(true) }} >
+                                                                                        <img src={v} style={{ width: 100, height: 100 }} className=" img-cover" />
+                                                                                    </span>
+                                                                                })
+                                                                            }
+                                                                        </div>
+                                                                    </Scrollbars>
+                                                                )
                                                             }
-                                                        </LightBoxGallery>
-                                                        :
-                                                        null
-                                                }
-                                            </ScrollContainer>
+                                                        }
+                                                    </LightBoxGallery>
+                                                    :
+                                                    null
+                                            }
                                         </div>
-                                    </Col>
-                                    :
-                                    null
-                            }
-                        </Row>
+                                        :
+                                        null
+                                }
+
+                            </span>
+                        </div>
+
+                        <span className='d-inline-block ' style={{ position: 'absolute', top: 10, right: 10 }} >
+                            <Dropdown overlay={menu(item)} placement="bottomRight">
+                                <a className="ant-dropdown-link " onClick={e => e.preventDefault()}>
+                                    <img src="https://img.icons8.com/material-rounded/24/000000/menu-2.png" />
+                                </a>
+                            </Dropdown>
+                        </span>
                     </div >
 
                 );

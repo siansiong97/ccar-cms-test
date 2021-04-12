@@ -2,7 +2,8 @@ import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
 import { connect } from 'react-redux';
 import ReduxPersistWrapper from '../../components/general/ReduxPersistWrapper';
-import CarReviewHomePage from '../../components/car-review/page/CarReviewHomePage';
+import ContactUsHomePage from '../../components/contact-us/page/ContactUsHomePage';
+import CarReviewFormPage from '../../components/car-review/page/CarReviewFormPage';
 
 
 const searchBarRef = React.createRef();
@@ -13,7 +14,7 @@ const Index = (props) => {
         <ReduxPersistWrapper cookie={props.cookie}>
             {
                 props.app.initedRedux ?
-                    <CarReviewHomePage />
+                    <CarReviewFormPage />
                     :
                     null
             }
