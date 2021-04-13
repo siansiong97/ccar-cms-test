@@ -1,9 +1,10 @@
-import { Empty } from 'antd';
+import { Empty, Tooltip } from 'antd';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Scrollbars from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import { arrayLengthCount, isValidNumber } from '../../common-function';
+import { allIcon } from '../../icon';
 import { carBrandsList } from '../../params/carBrandsList';
 import { emptyIcon } from '../../params/common';
 
@@ -13,6 +14,8 @@ const BrandList = (props) => {
 
     const [brands, setBrands] = useState(carBrandsList)
     const [limit, setLimit] = useState(-1)
+    const [tooltipVisible, setTooltipVisible] = useState({});
+
 
     useEffect(() => {
         let limit = props.limit;
@@ -42,7 +45,8 @@ const BrandList = (props) => {
 
             setBrands(limit != -1 ? _.slice(brands, 0, limit) : brands);
         } else {
-            setBrands(limit != -1 ? _.sampleSize(carBrandsList, limit) : _.sampleSize(carBrandsList, arrayLengthCount(carBrandsList)));
+            setBrands([])
+            // setBrands(limit != -1 ? _.sampleSize(carBrandsList, limit) : _.sampleSize(carBrandsList, arrayLengthCount(carBrandsList)));
         }
 
     }, [props.data])
@@ -53,27 +57,58 @@ const BrandList = (props) => {
             <Scrollbars style={{ width: '100%' }} autoHide autoHeight>
                 {
                     _.isArray(brands) && !_.isEmpty(brands) ?
-                        <div className="flex-justify-space-between flex-items-align-center padding-sm">
+                        <div className={`d-flex ${props.wrapperClassName || 'flex-justify-space-between flex-items-align-center padding-sm'}`}>
                             {
-                                _.map(brands, function (brand,i) {
-                                    return (
-                                        <span key={'brand'+i} className='d-inline-block relative-wrapper flex-items-no-shrink cursor-pointer'
+                                props.showAllIcon === true ?
+                                    <Tooltip title={`All Brands`} visible={props.showTooltip === true ? _.get(tooltipVisible , ['allIcon']) : false} onVisibleChange={(v) => {
+                                        setTooltipVisible({
+                                            ...tooltipVisible,
+                                            allIcon : v,
+                                        });
+                                    }}>
+                                        <span key={'all-brand'} className={`d-inline-block ${props.avatarClassName || ''} background-grey-lighten-2 avatar relative-wrapper flex-items-no-shrink cursor-pointer`}
                                             style={{ width: props.size || 50, height: props.size || 50 }}
                                             onClick={() => {
                                                 if (props.onClickBrand) {
-                                                    props.onClickBrand(brand)
+                                                    props.onClickBrand({ value: 'all' })
                                                 }
                                             }} >
-                                            <img src={brand.icon || emptyIcon} className=" absolute-center-img-no-stretch"></img>
+                                            <img src={allIcon} style={{ width: (props.size || 50) * 0.5, height: (props.size || 50) * 0.5 }} className="absolute-center" ></img>
                                         </span>
+                                    </Tooltip>
+                                    :
+                                    null
+                            }
+                            {
+                                _.map(brands, function (brand, i) {
+                                    return (
+                                        <Tooltip title={`${brand.value}`} visible={props.showTooltip === true ? _.get(tooltipVisible , [brand.value]) : false} onVisibleChange={(v) => {
+                                            setTooltipVisible({
+                                                ...tooltipVisible,
+                                                [brand.value || ''] : v,
+                                            });
+                                        }}>
+                                            <span key={'brand' + i} className={`d-inline-block ${props.avatarClassName || ''} relative-wrapper flex-items-no-shrink cursor-pointer`}
+                                                style={{ width: props.size || 50, height: props.size || 50 }}
+                                                onClick={() => {
+                                                    if (props.onClickBrand) {
+                                                        props.onClickBrand(brand)
+                                                    }
+                                                }} >
+                                                <img src={brand.icon || emptyIcon} className=" absolute-center-img-no-stretch"></img>
+                                            </span>
+                                        </Tooltip>
                                     )
                                 })
                             }
                         </div>
                         :
-                        <div className="flex-justify-center flex-items-align-center padding-md">
-                            <Empty></Empty>
-                        </div>
+                        props.emptyView != undefined || props.emptyView === null ?
+                            props.emptyView
+                            :
+                            <div className="flex-justify-center flex-items-align-center padding-md">
+                                <Empty></Empty>
+                            </div>
                 }
             </Scrollbars>
         </div>

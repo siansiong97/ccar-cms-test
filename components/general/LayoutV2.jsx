@@ -1,4 +1,3 @@
-
 import { CaretUpOutlined } from '@ant-design/icons';
 import { Affix, Button, Col, Divider, Dropdown, Layout, Menu, Row, Icon, message, Drawer, Badge, Avatar, notification, Popover } from 'antd';
 import _ from 'lodash';
@@ -218,7 +217,7 @@ class LayoutV2 extends React.Component {
         const messaging = firebase.messaging();
         messaging.onMessage((message) => {
             this._renderNotification(message);
-            if (_.get(message, 'data._id')) {
+            if (_.get(message, 'data._id') && _.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id']) ) {
                 client.service('notifications').find({
                     query: {
                         _id: message.data._id,
@@ -653,17 +652,19 @@ class LayoutV2 extends React.Component {
                         })
                     }
                 }}
+                overlayClassName="pop-over-body-no-padding pop-over-title-no-padding"
+                overlayStyle={{ position: 'fixed' }}
                 trigger="click"
                 arrowPointAtCenter
                 placement="bottomLeft"
                 title={
-                    <div className=" h6 font-weight-bold grey-darken-1" style={{ width: NOTIFICATION_BOX_WIDTH }}>
+                    <div className=" h6 font-weight-bold grey-darken-1 padding-x-md padding-y-xs" style={{ width: NOTIFICATION_BOX_WIDTH }}>
                         Notifications
                      </div>
                 }
                 content={
-                    <div className="padding-y-sm" style={{ width: NOTIFICATION_BOX_WIDTH }}>
-                        <div className="flex-justify-start flex-items-align-center">
+                    <div style={{ width: NOTIFICATION_BOX_WIDTH }}>
+                        {/* <div className="flex-justify-start flex-items-align-center">
                             {
                                 _.map(tabs, function (tab) {
                                     return (
@@ -677,7 +678,7 @@ class LayoutV2 extends React.Component {
                                     )
                                 })
                             }
-                        </div>
+                        </div> */}
                         {
                             _.isArray(self.state.notifications) && !_.isEmpty(self.state.notifications) ?
                                 <ScrollLoadWrapper getRef={(ref) => {
@@ -685,8 +686,8 @@ class LayoutV2 extends React.Component {
                                         notificationBoxRef: ref,
                                     })
                                 }}
-                                autoHide
-                                 scrollRangeUsePercentage scrollRange={50} autoHide autoHeight autoHeightMax={400}
+                                    autoHide
+                                    scrollRangeUsePercentage scrollRange={50} autoHide autoHeight autoHeightMax={400}
                                     onScrolledBottom={() => {
                                         if (arrayLengthCount(this.state.notifications) < this.state.notificationTotal && !this.state.notificationLoading) {
                                             self.setState({
@@ -694,14 +695,32 @@ class LayoutV2 extends React.Component {
                                             })
                                         }
                                     }}>
-                                    <div className="width-100 padding-x-xs">
+                                    <div >
                                         {
                                             _.map(this.state.notifications, function (notification) {
                                                 if (_.isPlainObject(notification) && !_.isEmpty(notification)) {
                                                     return (
                                                         <Link href={notification.path || '/'}>
                                                             <a>
-                                                                <div className="flex-justify-start flex-items-align-center margin-y-sm hover-background-yellow-lighten-2 cursor-pointer grey-darken-1 width-100">
+                                                                <div className={`flex-justify-start flex-items-align-center hover-background-yellow-lighten-2 padding-x-md cursor-pointer grey-darken-1 width-100 ${_.some(self.state.seenNotifications, ['notificationId', notification._id]) ? '' : 'background-light-blue-lighten-5'}`} onClick={(e) => {
+                                                                    if (!_.some(self.state.seenNotifications, ['notificationId', notification._id])) {
+                                                                        client.service('notificationseen').create({
+                                                                            userId: _.get(self.props.user, ['info', 'user', '_id']),
+                                                                            notificationId: notification._id,
+                                                                        }, {
+                                                                            query: {
+                                                                                userId: _.get(self.props.user, ['info', 'user', '_id']),
+                                                                                notificationId: notification._id,
+                                                                            },
+                                                                        }).then(res => {
+                                                                            console.log(res);
+                                                                            self.setState({
+                                                                                seenNotifications: _.concat([res], self.state.seenNotifications),
+                                                                            })
+                                                                        })
+                                                                    }
+                                                                }}
+                                                                >
                                                                     <img src={notification.avatar || ccarLogo} style={{ width: 50, height: 50 }} className="margin-right-md avatar" />
                                                                     <span className='d-inline-block width-80' >
                                                                         <div className=" body2 text-truncate-twoline grey-darken-3">
@@ -792,6 +811,11 @@ class LayoutV2 extends React.Component {
         let innerMenu = [
             {
                 icon: '',
+                text: 'Car Review',
+                path: '/car-review'
+            },
+            {
+                icon: '',
                 text: 'Social News & Videos',
                 path: '/socialNewsAndVideo'
             },
@@ -870,7 +894,7 @@ class LayoutV2 extends React.Component {
 
         return (
             <Layout>
-                <WindowScrollDisableWrapper>
+                {/* <WindowScrollDisableWrapper> */}
                     <div className="relative-wrapper">
                         <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} >
@@ -1039,7 +1063,6 @@ class LayoutV2 extends React.Component {
                                     </Row>
                                 </div>
                             </Tablet>
-
                                 <Mobile>
                                     <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
                                         <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
@@ -1193,7 +1216,7 @@ class LayoutV2 extends React.Component {
                         By continuing to browse this website, you accept cookies which are used for several reasons such as personalizing content/ads and analyzing how this website is used.
 
                     </CookieConsent>
-                </WindowScrollDisableWrapper>
+                {/* </WindowScrollDisableWrapper> */}
             </Layout>
         )
     }

@@ -19,7 +19,6 @@ export const uploadPhoto = '/assets/upload_photo.png';
 export const calendarIcon = '/assets/car-freak/calendar.png';
 export const pinIcon = '/assets/car-freak/pin.png';
 
-
 //Car Market
 export const carspecNotFoundImage = '/coming-soon.png'
 export const flameRed = '/assets/CarListingIcon/Fire-04(NoShadow).gif'
@@ -78,5 +77,8 @@ export const cstarListImg = '/assets/faq/sell-a-car.png';
 export const cstarAnimationImg = '/assets/faq/sell-a-car.png';
 
 //Notification
-
 export const bellInactive = '/assets/notification/bell.png';
+
+
+//Review
+export const ratingBanner = '/assets/car-review/rating.png';

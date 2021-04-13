@@ -14,6 +14,7 @@ const LightBoxGallery = (props) => {
     const [visible, setVisible] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0);
     const [images, setImages] = useState()
+    const [inited, setInited] = useState(false)
 
 
     useEffect(() => {
@@ -41,7 +42,7 @@ const LightBoxGallery = (props) => {
     return (
 
         <React.Fragment>
-            <WindowScrollDisableWrapper disabled={visible}>
+            {/* <WindowScrollDisableWrapper disabled={inited ? visible : null}> */}
                 {
                     props.children ?
                         props.children({ images, currentIndex, visible }, setCurrentIndex, setVisible)
@@ -78,7 +79,7 @@ const LightBoxGallery = (props) => {
                         }
                     />
                 )}
-            </WindowScrollDisableWrapper>
+            {/* </WindowScrollDisableWrapper> */}
         </React.Fragment>
     );
 }
