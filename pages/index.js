@@ -67,6 +67,7 @@ const Index = (props) => {
               key="0"
             >
               <BgElement
+                onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
                 key="bg"
                 className="bg"
                 style={{
@@ -240,6 +241,7 @@ const Index = (props) => {
         <Element
           prefixCls="banner-user-elem"
           key="web0"
+          onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
         >
           {/* <BgElement
             id="banner-1"
