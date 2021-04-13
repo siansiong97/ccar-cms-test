@@ -97,7 +97,7 @@ class Filter extends React.Component {
 
     UNSAFE_componentWillMount() {
 
-        this.props.updateActiveMenu('1');
+        this.props.updateActiveMenu('3');
         this.getDataFromUrl();
         this.updateFilterGroupFromUrl();
         this.props.loading(true)

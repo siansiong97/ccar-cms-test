@@ -417,7 +417,7 @@ class NewCarVersion3 extends React.Component {
                 this.props.newCars.popularCars.map(function (item, i) {
                     return (
                         <Col xs={{ span: 22, offset: 1 }} sm={{ span: 22, offset: 1 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }} xl={{ span: 6, offset: 0 }} key={i}>
-
+                            <Desktop>
                             <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
                                 <a>
                                     <div className="newcars-uniqBy-model cursor-pointer" style={{ height: 320 }} >
@@ -440,6 +440,32 @@ class NewCarVersion3 extends React.Component {
 
                                 </a>
                             </Link>
+                            </Desktop>
+
+                            <Tablet>
+                            <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                                <a>
+                                    <div className="newcars-uniqBy-model cursor-pointer" style={{ height: 230 }} >
+                                        <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
+                                        <div className="newcars-wrap-p">
+                                            <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
+                                            <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 600 }}>
+                                                {
+                                                    !item.minPrice && !item.maxPrice ?
+                                                        'TBC'
+                                                        :
+                                                        item.minPrice == item.maxPrice ?
+                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'}`
+                                                        :
+                                                            `${item.minPrice ? 'RM ' + formatNumber(item.minPrice) : 'TBC'} - ${item.maxPrice ? 'RM ' + formatNumber(item.maxPrice) : 'TBC'}`
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </Link>
+                            </Tablet>
+                            
                             {/* <div className="car-tab">
                   <img src={item.uri} style={{ width: "100%", padding:'10px'}} />
                   <p className="overlay-car-name" style={{textTransform:'capitalize', textAlign:'center', fontSize:'18px'}}> {item.make} {item.model}</p>
@@ -483,7 +509,7 @@ class NewCarVersion3 extends React.Component {
                             key="bg"
                             className="bg"
                             style={{
-                                backgroundImage: 'url(/banner/CCAR-Tab-Banner-TBH-March-2021.jpg)',
+                                backgroundImage: 'url(/banner/CCAR-Ramadan-Tab-Banner-01.jpg)',
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -654,7 +680,7 @@ class NewCarVersion3 extends React.Component {
                     prefixCls="banner-user-elem"
                     key="web0"
                 >
-                    <BgElement
+                    {/* <BgElement
                         key="bg"
                         className="bg"
                         style={{
@@ -664,7 +690,10 @@ class NewCarVersion3 extends React.Component {
                             backgroundRepeat: 'no-repeat',
                             maxInlineSize: '-webkit-fill-available'
                         }}
-                    />
+                    /> */}
+                    <div className="width-100 relative-wrapper" style={{height : 250}}>
+                        <img src={'/banner/CCAR-Ramadan-Website-Banner-01.jpg'} className="absolute-center"/>
+                    </div>
                 </Element>
                 {/* <Element
                     prefixCls="banner-user-elem"
@@ -980,18 +1009,18 @@ class NewCarVersion3 extends React.Component {
 
                 <Tablet>
                 <div className="section-version3">
-                        <div className="container-version3" style={{ touchAction: 'pan-y' }}>
-                            <Row>
-                                <Col span={24} className="overlay-search-bar-res text-align-center certain-category-search ">
-                                    <Row >
-                                        <Col xs={{ span: 12, offset: 6 }} sm={{ span: 12, offset: 6 }} md={{ span: 10, offset: 7 }} lg={{ span: 10, offset: 7 }} xl={{ span: 10, offset: 7 }}  >
-                                            <div ref={searchBarRef}>
-                                                <GlobalSearchBar searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </Row>
+                    <div className="container-version3" style={{ touchAction: 'pan-y' }}>
+                        <Row>
+                            <Col span={24} className="overlay-search-bar-res text-align-center certain-category-search ">
+                                <Row>
+                                    <Col xs={{ span: 12, offset: 6 }} sm={{ span: 12, offset: 6 }} md={{ span: 10, offset: 7 }} lg={{ span: 10, offset: 7 }} xl={{ span: 10, offset: 7 }}  >
+                                        <div ref={searchBarRef}>
+                                            <GlobalSearchBar searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
                             <Row className="background-white padding-top-md ">
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} >
                                     <div className="brand-header">
@@ -1032,7 +1061,7 @@ class NewCarVersion3 extends React.Component {
                                     {/* <span style={{float:'right', marginRight:'10px'}}> <Link shallow={false}  href={'/newcar/filter'}>See More</Link> </span> */}
                                 </Col>
                                 <Col span={24}>
-                                    <div className="brand-header">
+                                    <div className="brand-header ">
                                         <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow={false}  href={'/newcar/filter'} passHref>
                                             <a>See More</a></Link>}>
                                             <TabPane tab="RM20K - RM60K" key="5">
