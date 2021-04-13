@@ -506,6 +506,7 @@ class NewCarVersion3 extends React.Component {
                         key="0"
                     >
                         <BgElement
+                            onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
                             key="bg"
                             className="bg"
                             style={{
@@ -679,6 +680,7 @@ class NewCarVersion3 extends React.Component {
                 <Element
                     prefixCls="banner-user-elem"
                     key="web0"
+                    onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
                 >
                     {/* <BgElement
                         key="bg"
