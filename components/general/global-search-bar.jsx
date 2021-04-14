@@ -115,7 +115,7 @@ const GlobalSearchBar = (props) => {
                         filterType: _.map(searchTypes, 'value'),
                     }
                 }).then(res => {
-                    console.log(res);
+                 
                     let dataSource = [];
 
                     _.forEach(searchTypes, function (v) {

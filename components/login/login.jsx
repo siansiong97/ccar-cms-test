@@ -70,9 +70,16 @@ class LoginModal extends React.Component {
       access_token: response.accessToken
     })
       .then((res) => {
+        console.log(res);
+        if(res.user.status==='disabled'){
+          this.props.loading(false);
+          message.error('User Has Been Disabled.')
+          this.props.loginMode(false)
+        }else{
         this.props.loading(false);
         this.props.loginSuccessful(res);
         this.props.loginMode(false)
+        }
       })
       .catch((err) => {
         this.props.loading(false);

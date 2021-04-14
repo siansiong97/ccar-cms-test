@@ -61,6 +61,7 @@ const CarspecsCompareTable = (props) => {
                         title: `${_.capitalize(item.make)} ${_.capitalize(item.model)} ${_.capitalize(item.variant)}`,
                         dataIndex: `compare${index}`,
                         key: `compare${index}`,
+                        width: arrayLengthCount(data) > 4 ? '250px' : null,
                         render: (text, row) => {
                             if (notEmptyLength(row.children)) {
                                 return {
@@ -90,9 +91,10 @@ const CarspecsCompareTable = (props) => {
 
     useEffect(() => {
 
+        console.log(props.data);
         if (notEmptyLength(props.data)) {
-            let data = props.data;
-            if (!isNaN(parseInt(props.limit)) && props.data.length > parseInt(props.limit)) {
+            let data = _.cloneDeep(props.data);
+            if (!isNaN(parseInt(props.limit)) && data.length > parseInt(props.limit)) {
                 data = _.slice(data, 0, parseInt(props.limit));
                 message.warning(`Maximum ${parseInt(props.limit)} items to compare. Removed overflow items.`)
             }
@@ -102,10 +104,11 @@ const CarspecsCompareTable = (props) => {
                 client.service('carspecs').find({
                     query: {
                         _id: {
-                            $in: props.data,
+                            $in: data,
                         }
                     }
                 }).then(res => {
+                    console.log(res);
                     props.loading(false);
  
                     if (notEmptyLength(res.data)) {
@@ -120,12 +123,12 @@ const CarspecsCompareTable = (props) => {
                 });
 
             } else {
-                setCarspecs(props.data);
+                setCarspecs(data);
             }
         } else {
             setCarspecs([]);
         }
-    }, [props.data, props.findById])
+    }, [props.data])
 
     useEffect(() => {
         if (notEmptyLength(carspecs)) {

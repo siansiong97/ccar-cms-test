@@ -189,7 +189,6 @@ class LayoutV2 extends React.Component {
         try {
 
             const token = await initFirebaseToken();
-            console.log(this.props.app.notificationTokenTimeOutDate);
             if (token != this.props.app.notificationToken || !this.props.app.notificationTokenTimeOutDate || moment().diff(moment(this.props.app.notificationTokenTimeOutDate), 'days', true) > 1 || reauthenticate) {
 
                 this.props.setNotificationToken(token);
@@ -713,7 +712,6 @@ class LayoutV2 extends React.Component {
                                                                                 notificationId: notification._id,
                                                                             },
                                                                         }).then(res => {
-                                                                            console.log(res);
                                                                             self.setState({
                                                                                 seenNotifications: _.concat([res], self.state.seenNotifications),
                                                                             })

@@ -93,12 +93,9 @@ const UserSavedCarFreakPosts = (props) => {
                 setPostLoading(false);
                 if (notEmptyLength(res.data)) {
                     setPosts(postPage == 1 ? _.map(res.data, 'chatId') : posts.concat(_.map(res.data, 'chatId')));
-                    setPostTotal(res.total)
                     getUserChatLikes(_.map(res.data, 'chatId._id'), true)
-                } else {
-                    setPosts([]);
-                    setPostTotal(0);
                 }
+                setPostTotal(res.total)
             }).catch(err => {
                 setPostLoading(false);
                 message.error(err.message)
