@@ -94,6 +94,7 @@ const Description = (props) => {
     const [ratingTotal, setRatingTotal] = useState(0)
     const [ownRating, setOwnRating] = useState([])
     const [displayContact, setDisplayContact] = useState(false)
+    const [carspecIds, setCarspecIds] = useState([])
 
     const [count, setCount] = useState(0)
 
@@ -146,6 +147,7 @@ const Description = (props) => {
 
     useEffect(() => {
         init();
+        setCarspecIds(_.compact([_.get(productDetails , 'carspecsAll._id')]));
     }, [productDetails, props.user])
 
     // useEffect(() => {
@@ -544,7 +546,7 @@ const Description = (props) => {
                     <TabPane tab="Specification" key="3">
                         <div style={{ minHeight: 500 }}>
                             <p> *The actual specifications for this vehicle may be differ, please confirm with the sales agent. </p>
-                            <CarspecsCompareTable findById data={!productDetails.carspecsAll || !productDetails.carspecsAll._id ? [] : [productDetails.carspecsAll._id]} />
+                            <CarspecsCompareTable findById data={carspecIds} />
                         </div>
                     </TabPane>
                     <TabPane tab="Rating & Reviews" key="4">

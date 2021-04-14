@@ -118,6 +118,7 @@ const SocialInput = (props) => {
     }, [searchWord, prefix, suggestListPage])
 
     useEffect(() => {
+        console.log(aliasCode);
         updateAliasText();
     }, [aliasCode])
 
@@ -170,7 +171,9 @@ const SocialInput = (props) => {
             finalText = finalText.replace(/\n/g, "");
         }
         if (props.onSubmit && finalText) {
+            console.log(aliasCode);
             finalText = parseToTagString(finalText, aliasCode)
+            console.log(finalText);
             props.onSubmit(finalText);
             reset();
             focus();

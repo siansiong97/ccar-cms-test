@@ -54,7 +54,7 @@ export default function (state = INITIAL_STATE, action) {
     ...state,
     ...persistStates
   }
-  if(!_.isEqual(state, newState)){
+  if (!_.isEqual(state, newState)) {
     state = newState;
   }
   switch (action.type) {
@@ -176,6 +176,7 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         filteredCompareData: action.payload
       }
+      break;
     case FETCH_FEATURES_LIST:
       state = {
         ...state,
@@ -199,6 +200,7 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         filterOptions: action.payload,
       }
+      break;
     case CLEAR_PRODUCT_FILTER_OPTIONS:
       state = {
         ...state,
@@ -234,6 +236,7 @@ export default function (state = INITIAL_STATE, action) {
         ...state,
         isFilterModalOpen: action.payload,
       }
+      break;
     case SET_PRODUCT_LIST_LOADING:
       state = {
         ...state,
@@ -241,10 +244,9 @@ export default function (state = INITIAL_STATE, action) {
       }
       break;
     default:
-      state = state
+      state = state;
+      break;
   }
-
-
   persistRedux('productsList', state)
 
   return state;

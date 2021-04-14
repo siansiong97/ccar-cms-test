@@ -20,6 +20,8 @@ import { withRouter } from 'next/router';
 import BroadCasterListScroll from './BroadCasterListScroll';
 
 
+
+
 TweenOne.plugins.push(BezierPlugin);
 
 
@@ -52,11 +54,7 @@ class LivePage extends React.Component {
     }
     this.componentCleanup = this.componentCleanup.bind(this);
 
-    // if (this.props.refreshSocket) {
-    //   this.props.updateSocketInfo(false);
-    //   this.props.router.replace("/live")
-    // }
-
+ 
     if (_.isPlainObject(this.props.socketRefresh) && !_.isEmpty(this.props.socketRefresh)) {
       this.props.updateSocketInfo(false);
       this.props.router.replace("/live")
