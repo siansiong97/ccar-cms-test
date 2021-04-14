@@ -682,20 +682,20 @@ class NewCarVersion3 extends React.Component {
                     key="web0"
                     onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
                 >
-                    {/* <BgElement
+                    <BgElement
                         key="bg"
                         className="bg"
                         style={{
-                            backgroundImage: 'url(/banner/CCAR-Website-Banner-TBH-March-2021-2.jpg)',
+                            backgroundImage: 'url(/banner/CCAR-Ramadan-Website-Banner-01.jpg)',
                             backgroundSize: 'fit',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
                             maxInlineSize: '-webkit-fill-available'
                         }}
-                    /> */}
-                    <div className="width-100 relative-wrapper" style={{height : 250}}>
+                    />
+                    {/* <div className="width-100 relative-wrapper" style={{height : 250}}>
                         <img src={'/banner/CCAR-Ramadan-Website-Banner-01.jpg'} className="absolute-center"/>
-                    </div>
+                    </div> */}
                 </Element>
                 {/* <Element
                     prefixCls="banner-user-elem"
