@@ -141,11 +141,7 @@ const ProductsListFilterForm = (props) => {
             getOrigOptions();
         }
     }, []);
-
-    useEffect(() => {
-        console.log(dropDownSearchValue)
-    }, [dropDownSearchValue])
-
+    
     useEffect(() => {
 
         if (filterGroup.title) {

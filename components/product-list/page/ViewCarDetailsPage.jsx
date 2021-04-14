@@ -465,7 +465,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={12} lg={10} xl={12}>
                       <Row style={{ marginTop: '9px' }}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                          <WhatsAppButton mobileNumber={this.state.productDetails} />
+                          <WhatsAppButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
                           <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />
@@ -475,7 +475,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={12} lg={14} xl={12}>
                       <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                         <span className="d-inline-block">
-                          <Wishlist type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                          <Wishlist readOnly={_.get(this.state , 'productDetails.status') != 'approved'} type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
                             savedButton={
                               () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
                             }
@@ -487,7 +487,7 @@ class ViewCarDetailsPage extends React.Component {
                           />
                         </span>
                         <span className="d-inline-block" style={{ marginRight: '5px' }}>
-                          <ShareButtonDialog title={`CCAR.my | ${this.state.productDetails.title}`} />
+                          <ShareButtonDialog readOnly={_.get(this.state , 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
                         </span>
                         <span className="d-inline-block margin-xs">
                           <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
@@ -515,7 +515,7 @@ class ViewCarDetailsPage extends React.Component {
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
-                          <AddCompareProductButton data={this.state.productDetails} saveButton={() => {
+                          <AddCompareProductButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
                             return (
                               <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
                             );
@@ -604,7 +604,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={6} lg={12} xl={12}>
                       <Row style={{ marginTop: '9px' }}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                          <WhatsAppButton mobileNumber={this.state.productDetails} />
+                          <WhatsAppButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
                           <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />
@@ -614,7 +614,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col span={18}>
                       <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                         <span className="d-inline-block">
-                          <Wishlist type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                          <Wishlist readOnly={_.get(this.state , 'productDetails.status') != 'approved'} type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
                             savedButton={
                               () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
                             }
@@ -626,7 +626,7 @@ class ViewCarDetailsPage extends React.Component {
                           />
                         </span>
                         <span className="d-inline-block" style={{ marginRight: '5px' }}>
-                          <ShareButtonDialog title={`CCAR.my | ${this.state.productDetails.title}`} />
+                          <ShareButtonDialog readOnly={_.get(this.state , 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
                         </span>
                         <span className="d-inline-block margin-xs">
                           <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
@@ -654,7 +654,7 @@ class ViewCarDetailsPage extends React.Component {
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
-                          <AddCompareProductButton data={this.state.productDetails} saveButton={() => {
+                          <AddCompareProductButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
                             return (
                               <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
                             );
@@ -765,7 +765,7 @@ class ViewCarDetailsPage extends React.Component {
                   <Col span={12}>
                     <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                       <span className="d-inline-block">
-                        <Wishlist type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                        <Wishlist readOnly={_.get(this.state , 'productDetails.status') != 'approved'}t type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
                           savedButton={
                             () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
                           }
@@ -777,7 +777,7 @@ class ViewCarDetailsPage extends React.Component {
                         />
                       </span>
                       <span className="d-inline-block">
-                        <ShareButtonDialog title={`CCAR.my | ${this.state.productDetails.title}`} />
+                        <ShareButtonDialog readOnly={_.get(this.state , 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
                       </span>
                     </div>
                   </Col>
@@ -791,7 +791,7 @@ class ViewCarDetailsPage extends React.Component {
                         <div className="relative-wrapper width-100" style={{ height: '34em' }}>
 
                           <LightBoxGallery
-                            images={_.isArray(_.get(this.state.productDetails, ['carUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['carUrl'])) ? _.map(_.get(this.state.productDetails, ['carUrl']), 'url') : []}
+                            images={_.isArray(_.get(this.state.productDetails, ['carUrl'])) && !_.isEmpty(_.get(this.state.productDetails, ['carUrl'])) ? _.map(_.get(this.state.productDetails, ['carUrl']) || [], 'url') : []}
                             onChange={(currentIndex) => {
                               this.setState({
                                 currentImg: currentIndex,
@@ -837,7 +837,7 @@ class ViewCarDetailsPage extends React.Component {
 
                     <Row gutter={[10, 10]}>
                       <Col className="gutter-row" xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Description productDetails={this.state.productDetails} />
+                        <Description readOnly={_.get(this.state , 'productDetails.status') != 'approved'} productDetails={this.state.productDetails} />
                       </Col>
                     </Row>
                   </Col>
@@ -871,7 +871,7 @@ class ViewCarDetailsPage extends React.Component {
                         </span>
 
                         <span className="d-inline-block">
-                          <AddCompareProductButton data={this.state.productDetails} saveButton={() => {
+                          <AddCompareProductButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
                             return (
                               <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
                             );
@@ -897,10 +897,10 @@ class ViewCarDetailsPage extends React.Component {
 
                     <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
 
-                    <SellerBusinessCard data={this.state.productDetails.companys} data1={this.state.productDetails.createdBy} />
+                    <SellerBusinessCard readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails.companys} data1={this.state.productDetails.createdBy} />
                     <Row className="padding-top-sm">
                       <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                        <WhatsAppButton mobileNumber={this.state.productDetails} />
+                        <WhatsAppButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
                       </Col>
                       <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
                         <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />

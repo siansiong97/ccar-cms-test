@@ -112,7 +112,6 @@ const CarMarketPage = (props) => {
                     config: mainConfig
                 }).then(res => {
                     setAvailableFilterOption(res);
-
                 }).catch(err => {
                 });
             }, 500);
@@ -440,7 +439,7 @@ const CarMarketPage = (props) => {
                                                         <span className='flex-justify-center flex-items-align-center margin-x-sm' >
                                                             <span className='d-inline-block ' >
                                                                 Mileage
-                                                        </span>
+                                                            </span>
                                                             <span className='flex-justify-center flex-items-align-center'>
                                                                 {
                                                                     _.get(mainConfig, ['sorting', 'mileageFilter']) == 1 ?

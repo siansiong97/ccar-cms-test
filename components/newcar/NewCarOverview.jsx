@@ -831,9 +831,9 @@ const NewCarOverview = (props) => {
                                     <Col key={'keyDetails' + idx} xs={12} sm={12} md={6} lg={6} xl={6} >
                                         <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
                                             <a>
-                                        <div className="newcars-uniqBy-model cursor-pointer">
+                                        <div className="cursor-pointer">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
-                                            <div className="newcars-wrap-p">
+                                            <div className="">
                                                 <p style={{ textTransform: 'capitalize', textAlign: 'center', fontSize: '16px', fontWeight: '600', marginBottom: '0px', color: "rgba(0, 0, 0, 0.65)" }}> {item.make}  {item.model}</p>
                                                 <p style={{ textAlign: 'center', color: '#FBB040', fontSize: '16px', fontWeight: 500 }}>
                                                     {
