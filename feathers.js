@@ -10,7 +10,7 @@ const socket = io('https://preprod-api.ccar.my/');   // live
  
 const client = feathers();
 
-client.configure(socketio(socket),{pingTimeOut:60000});
+client.configure(socketio(socket), { pingTimeOut: 60000 });
 // client.configure(authentication({
 //   storage: window.localStorage
 // }));

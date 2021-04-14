@@ -67,10 +67,11 @@ const Index = (props) => {
               key="0"
             >
               <BgElement
+                onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
                 key="bg"
                 className="bg"
                 style={{
-                  backgroundImage: 'url(/banner/CCAR-Tab-Banner-TBH-March-2021.jpg)',
+                  backgroundImage: 'url(/banner/CCAR-Ramadan-Tab-Banner-01.jpg)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
@@ -240,18 +241,22 @@ const Index = (props) => {
         <Element
           prefixCls="banner-user-elem"
           key="web0"
+          onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
         >
-          <BgElement
+          {/* <BgElement
             id="banner-1"
             className="bg"
             style={{
-              backgroundImage: 'url(/banner/CCAR-Website-Banner-TBH-March-2021-2.jpg)',
+              backgroundImage: 'url(/banner/CCAR-Ramadan-Website-Banner-01.jpg)',
               backgroundSize: 'fit',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               maxInlineSize: '-webkit-fill-available'
             }}
-          />
+          /> */}
+          <div className="width-100 relative-wrapper" style={{height : 250}}>
+            <img src={'/banner/CCAR-Ramadan-Website-Banner-01.jpg'} className="absolute-center"/>
+          </div>
         </Element>
 
         {/* <Element

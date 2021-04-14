@@ -315,7 +315,12 @@ const AnswerPaperForm = (props) => {
                                     </span>
                                 </div>
                                 <div className='subtitle1 black text-overflow-break width-100 text-align-center margin-y-lg'>
-                                    {_.upperCase(props.language) == 'BM' ? 'Anda telah berjaya menyelesaikan Ujian Komputer Lesen Memandu' : 'You have successfully completed Driving License Computer Test'}
+                                    {
+                                        isPassed ? 
+                                            _.upperCase(props.language) == 'BM' ? 'Anda telah berjaya menyelesaikan Ujian Komputer Lesen Memandu' : 'You have successfully completed Driving License Computer Test'
+                                            :
+                                            _.upperCase(props.language) == 'BM' ? 'Anda tidak berjaya menyelesaikan Ujian Komputer Lesen Memandu' : 'You have failed to complete Driving License Computer Test'
+                                    }
                                 </div>
                                 <div className='flex-items-align-center flex-justify-center width-100 margin-y-lg'>
                                     <span className='d-inline-block margin-x-md' >

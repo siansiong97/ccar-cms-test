@@ -548,11 +548,13 @@ class Maker extends React.Component {
                                         <Col className="gutter-row text-align-center" xs={18} sm={18} md={24} lg={20} xl={20} >
                                             <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase ' >
                                                 {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
-                                    </span>
+                                            </span>
                                         </Col>
 
-                                        <Row className="maker-list-car" type="flex" >
-                                            {this._renderVariants()}
+                                        <Row className="maker-list-car" type="flex">
+                                            <Col span={24}>
+                                                {this._renderVariants()}
+                                            </Col>
                                         </Row>
 
                                         {
