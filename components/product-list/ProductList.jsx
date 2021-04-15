@@ -367,7 +367,7 @@ const ProductList = (props) => {
           return (
             <div className="wrap-product-ads-price">
               <span style={{ textDecoration: 'line-through', fontSize: '12px', marginLeft: '10px', color: '#ffffff' }}>RM {formatMoney((v.price).toString())}</span> {_renderDiscount(v)}
-              <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((addon.discountedPrice).toString())}</h4>
+              <h4 style={{ marginLeft: '10px', color: '#FBB040' }}>RM {formatMoney((addon.discountedPrice).toString())}</h4>
               {/* <Row>
                 <Col xs={14} sm={14} md={16} lg={16} xl={16}>
                   <p style={{ marginLeft: '10px', color: '#a9d46f' }}>RM {formatMoney((calMonth(addon.discountedPrice)).toString())}/month</p>

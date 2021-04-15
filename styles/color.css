@@ -11,6 +11,17 @@
 .background-grey-opacity-80{ background-color: rgba(102, 102, 102, 0.8); }
 .background-grey-opacity-90{ background-color: rgba(102, 102, 102, 0.9); }
 
+
+.background-grey-opacity-10-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.1), transparent) }
+.background-grey-opacity-20-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.2), transparent) }
+.background-grey-opacity-30-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.3), transparent) }
+.background-grey-opacity-40-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.4), transparent) }
+.background-grey-opacity-50-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.5), transparent) }
+.background-grey-opacity-60-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.6), transparent) }
+.background-grey-opacity-70-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.7), transparent) }
+.background-grey-opacity-80-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.8), transparent) }
+.background-grey-opacity-90-gradient-bottom{ background-image : linear-gradient(rgba(102, 102, 102, 0.9), transparent) }
+
 .background-black-opacity-10{ background-color: rgba(0, 0, 0, 0.1); }
 .background-black-opacity-20{ background-color: rgba(0, 0, 0, 0.2); }
 .background-black-opacity-30{ background-color: rgba(0, 0, 0, 0.3); }
@@ -20,6 +31,16 @@
 .background-black-opacity-70{ background-color: rgba(0, 0, 0, 0.7); }
 .background-black-opacity-80{ background-color: rgba(0, 0, 0, 0.8); }
 .background-black-opacity-90{ background-color: rgba(0, 0, 0, 0.9); }
+
+.background-black-opacity-10-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.1), transparent) }
+.background-black-opacity-20-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.2), transparent) }
+.background-black-opacity-30-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.3), transparent) }
+.background-black-opacity-40-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.4), transparent) }
+.background-black-opacity-50-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.5), transparent) }
+.background-black-opacity-60-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.6), transparent) }
+.background-black-opacity-70-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.7), transparent) }
+.background-black-opacity-80-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.8), transparent) }
+.background-black-opacity-90-gradient-bottom{ background-image : linear-gradient(rgba(0, 0, 0, 0.9), transparent) }
 
 .background-white-opacity-10{ background-color: rgba(255, 255, 255, 0.1); }
 .background-white-opacity-20{ background-color: rgba(255, 255, 255, 0.2); }

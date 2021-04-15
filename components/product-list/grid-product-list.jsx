@@ -200,7 +200,7 @@ const GridProductList = (props) => {
                 <div className="wrap-product-ads-price">
                     <span className='gridMoneyText'>RM {formatMoney((price).toString())}</span>
                     <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{(((100 * (price - discountedPrice) / price) * -1).toFixed(1).toString()).replace(pattern, '') + '%'}</span>
-                    <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((discountedPrice).toString())}</h4>
+                    <h4 style={{ marginLeft: '10px', color: '#FBB040' }}>RM {formatMoney((discountedPrice).toString())}</h4>
                     {/* <Row>
           <Col xs={14} sm={14} md={16} lg={16} xl={16}>
             <p style={{ marginLeft: '10px', color: '#a9d46f' }}>RM {formatMoney((calMonth(discountedPrice)).toString())}/month</p>

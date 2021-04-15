@@ -270,27 +270,27 @@ class ViewCarDetails2Page extends React.Component {
     _renderCondition = (v) => {
         if (v.condition === 'new') {
             return (
-                <div className="wrap-condition wrap-condition-new">
-                    <p>{v.condition}</p>
-                </div>
+                <span className="avatar wrap-condition-new capitalize white flex-items-align-center flex-justify-center" style={{ width : 50, height : 50 }}>
+                    {v.condition}
+                </span>
             )
         } else if (v.condition === 'used') {
             return (
-                <div className="wrap-condition wrap-condition-used">
-                    <p>{v.condition}</p>
-                </div>
+                <span className="avatar wrap-condition-used capitalize white flex-items-align-center flex-justify-center" style={{ width : 50, height : 50 }}>
+                    {v.condition}
+                </span>
             )
         } else if (v.condition === 'recon') {
             return (
-                <div className="wrap-condition wrap-condition-recon">
-                    <p>{v.condition}</p>
-                </div>
+                <span className="avatar wrap-condition-recon capitalize white flex-items-align-center flex-justify-center" style={{ width : 50, height : 50 }}>
+                    {v.condition}
+                </span>
             )
         } else {
             return (
-                <div className="wrap-condition wrap-condition-default">
-                    <p>{v.condition}</p>
-                </div>
+                <span className="avatar wrap-condition-default capitalize white flex-items-align-center flex-justify-center" style={{ width : 50, height : 50 }}>
+                    {v.condition}
+                </span>
             )
         }
     }
@@ -763,29 +763,11 @@ class ViewCarDetails2Page extends React.Component {
                         </Breadcrumb>
 
                         <div className="width-100 relative-wrapper thin-border round-border margin-y-md" style={{ height: 150, }}>
-                            <img src={ccarWebLogo400X150} className="absolute-center-img-no-stretch" />
+                            <img src={_.get(this.state.productDetails , 'companys.bannerUrl[0]') || ccarWebLogo400X150} className="absolute-center-img-no-stretch" />
                         </div>
 
                         <Row gutter={[0, 0]} className="margin-top-sm">
                             <Col className="gutter-row" xs={24} sm={24} md={24} lg={18} xl={18} >
-                                <Row gutter={[0, 0]}>
-                                    <Col span={12}>
-                                        <div className="text-truncate-twoline">
-                                            <h1 style={{ marginBottom: '0px', fontWeight: '700', fontSize: '18px' }}>
-                                                {this.state.productDetails.title}
-                                            </h1>
-                                        </div>
-                                    </Col>
-                                    <Col span={12}>
-                                        <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
-                                            <span className="d-inline-block">
-                                            </span>
-                                            <span className="d-inline-block">
-                                            </span>
-                                        </div>
-                                    </Col>
-                                </Row>
-
 
                                 <Row gutter={[20, 10]}>
                                     <Col className="gutter-row" xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -813,28 +795,40 @@ class ViewCarDetails2Page extends React.Component {
                                                             }
                                                         }
                                                     </LightBoxGallery>
-                                                    <div className="flex-justify-space-between flex-items-align-start width-100 padding-sm" style={{ position: 'absolute', top: 0, left: 0 }}>
-                                                        <span className='d-inline-block width-70' >
-                                                            <div className="width-100 text-overflow-break h6 white font-weight-normal">
-                                                                {this.state.productDetails.title}
-                                                            </div>
-                                                            <div className="font-weight-thin subtitle1 white">
-                                                                Posted on {moment(this.state.productDetails.createdAt).format("Do MMM YYYY")}
-                                                            </div>
-                                                        </span>
-                                                        <span className=' flex-items-align-center flex-justify-end width-30' >
-                                                            <Wishlist readOnly={_.get(this.state, 'productDetails.status') != 'approved'} t type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
-                                                                savedButton={
-                                                                    () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
-                                                                }
-                                                                saveButton={
-                                                                    () => <Button className="padding-x-sm margin-xs" ><HeartOutlined />Save</Button>
-                                                                }
-                                                                handleError={(e) => { message.error(e.message) }}
-                                                                handleSuccess={(e) => { message.success(e.type === 'remove' ? 'Removed from wishlist' : 'Saved to wishlist') }}
-                                                            />
-                                                            <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
-                                                        </span>
+                                                    <div className="width-100 padding-sm background-black-opacity-70-gradient-bottom padding-bottom-xl" style={{ position: 'absolute', top: 0, left: 0 }}>
+                                                        <div className="flex-justify-space-between flex-items-align-start ">
+                                                            <span className='d-inline-block width-70' >
+                                                                <div className="width-100 text-overflow-break h6 white font-weight-normal">
+                                                                    {this.state.productDetails.title}
+                                                                </div>
+                                                                <div className="font-weight-thin subtitle1 white">
+                                                                    Posted on {moment(this.state.productDetails.createdAt).format("Do MMM YYYY")}
+                                                                </div>
+                                                            </span>
+                                                            <span className=' flex-items-align-center flex-justify-end width-30' >
+                                                                <Wishlist readOnly={_.get(this.state, 'productDetails.status') != 'approved'} t type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                                                                    savedButton={
+                                                                        () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
+                                                                    }
+                                                                    saveButton={
+                                                                        () => <Button className="padding-x-sm margin-xs" ><HeartOutlined />Save</Button>
+                                                                    }
+                                                                    handleError={(e) => { message.error(e.message) }}
+                                                                    handleSuccess={(e) => { message.success(e.type === 'remove' ? 'Removed from wishlist' : 'Saved to wishlist') }}
+                                                                />
+                                                                <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex-justify-start flex-items-align-center margin-y-xs">
+                                                            <img
+                                                                src={stateName}
+                                                                style={{ width: 50, height: 50 }}
+                                                                className="avatar margin-right-md"
+                                                                alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
+                                                            <span className="d-inline-block" >
+                                                                {this._renderCondition(this.state.productDetails)}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     {/* <img
                                                         src={stateName}
