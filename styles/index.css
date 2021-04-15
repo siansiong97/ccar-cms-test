@@ -1963,3 +1963,9 @@ code {
   height: 0px;
   margin: 0px;
 }
+
+.contactHide{
+  cursor:pointer;
+  color: #178fc7;
+  border-bottom: 6px double #178fc7;
+}

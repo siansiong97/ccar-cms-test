@@ -70,8 +70,7 @@ export default async function (modal, data) {
 
         data.filterGroup = objectRemoveEmptyValue(data.filterGroup);
         let match = { $match: { ...data.filterGroup } }
-        console.log('match');
-        console.log(match);
+ 
         let promises = [];
         _.forEach(modal, function (modal) {
             promises.push(
@@ -88,7 +87,7 @@ export default async function (modal, data) {
                     options[`${modal[index]}List`] = response.data.uniqueInfo[`${modal[index]}List`];
                 })
 
-                console.log(options);
+             
                 return options;
 
             }

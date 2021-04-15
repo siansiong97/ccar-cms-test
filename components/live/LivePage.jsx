@@ -54,7 +54,7 @@ class LivePage extends React.Component {
     }
     this.componentCleanup = this.componentCleanup.bind(this);
 
-    console.log(this.props.refreshSocket);
+ 
     if (_.isPlainObject(this.props.socketRefresh) && !_.isEmpty(this.props.socketRefresh)) {
       this.props.updateSocketInfo(false);
       this.props.router.replace("/live")

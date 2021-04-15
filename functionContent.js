@@ -67,6 +67,7 @@ export function getGoogleId(url) {
   if (url==='http://localhost:3030/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
   else if (url==='https://preprod-api.ccar.my/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
   else if (url==='https://uat2-api.ccar.my/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
+  else if (url==='https://preprod-api.ccar.my/'){clientId = '182924119044-53k3g8cuv45u5j67cticevvo15g7846i.apps.googleusercontent.com'}
   else if (url==='https://api.ccar.my/'){clientId = '827147986430-e28c63qftj91sp506r8km2v1snccnt36.apps.googleusercontent.com'}
   else {clientId = '827147986430-e28c63qftj91sp506r8km2v1snccnt36.apps.googleusercontent.com'}
 

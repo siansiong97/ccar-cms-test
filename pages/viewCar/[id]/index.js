@@ -55,11 +55,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))
 
 export async function getServerSideProps({ req, res, }) {
     try {
+
         const { id } = req.params
         let carInfo = {
             condition: '', companys: {}, carspecsAll: {}, registrationUrl: {}
         };
         let basePath = checkEnvReturnCmsUrl(client.io.io.uri)
+        
         if (id) {
 
             carInfo = await client.service('product-ads').find({

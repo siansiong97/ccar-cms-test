@@ -243,7 +243,7 @@ const Index = (props) => {
           key="web0"
           onClick={(e) => {window.location='https://www.facebook.com/ccar.malaysia/shop/?referral_code=page_shop_tab&preview=1&ref=page_internal'}}
         >
-          {/* <BgElement
+          <BgElement
             id="banner-1"
             className="bg"
             style={{
@@ -253,10 +253,10 @@ const Index = (props) => {
               backgroundRepeat: 'no-repeat',
               maxInlineSize: '-webkit-fill-available'
             }}
-          /> */}
-          <div className="width-100 relative-wrapper" style={{height : 250}}>
+          />
+          {/* <div className="width-100 relative-wrapper" style={{height : 250}}>
             <img src={'/banner/CCAR-Ramadan-Website-Banner-01.jpg'} className="absolute-center"/>
-          </div>
+          </div> */}
         </Element>
 
         {/* <Element
