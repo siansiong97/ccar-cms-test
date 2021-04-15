@@ -551,9 +551,13 @@ const ProductList = (props) => {
             <div className={`${_renderLayout(v)} margin-y-sm round-border padding-md relative-wrapper`} id={_renderTextTitle(v)}>
               {
                 v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' || v.priority === 'addonKingadType3' ?
-                  <span className="d-inline-block" style={{ position: 'absolute', top: 0, left: 40, zIndex: 2 }}>
-                    <img src={rayaLamp} style={{ width: 230, height: 230 }} />
-                  </span>
+                  <Link href={'/viewCar/' + v._id} >
+                    <a target="_blank">
+                      <span className="d-inline-block" style={{ position: 'absolute', top: 0, left: 40, zIndex: 2 }}>
+                        <img src={rayaLamp} style={{ width: 230, height: 230 }} />
+                      </span>
+                    </a>
+                  </Link>
                   :
                   null
               }
@@ -628,10 +632,10 @@ const ProductList = (props) => {
                         <div className="relative-wrapper" style={{ height: '120px', lineHeight: '1.6', marginBottom: '0px' }}>
                           {
                             v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
-                              <img src={rayaMosque}  style={{ width: 150, height: 150, position: 'absolute', bottom: -70, right: 0 }} />
+                              <img src={rayaMosque} style={{ width: 150, height: 150, position: 'absolute', bottom: -70, right: 0 }} />
                               :
                               v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
-                                <img src={rayaPeople}  style={{ width: 150, height: 150, position: 'absolute', bottom: -70, right: 0 }} />
+                                <img src={rayaPeople} style={{ width: 150, height: 150, position: 'absolute', bottom: -70, right: 0 }} />
                                 :
                                 null
                           }
