@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 import { getStateIcon } from '../../params/stateList';
-import { flameRedShadow, flameRed } from '../../icon';
+import { flameRedShadow, flameRed, rayaFlame, rayaFood, rayaLamp, rayaMosque, rayaPeople } from '../../icon';
 import { formatMoney, renderMileageRange, calMonth } from '../../functionContent';
 import { isValidNumber, notEmptyLength } from '../../common-function';
 import { loading } from '../../redux/actions/app-actions';
@@ -27,17 +27,99 @@ const ProductList = (props) => {
   const [descriptionIndex, setDescriptionIndex] = useState(-1)
   const [productList, setProductList] = useState([])
 
-  useEffect(() => {
 
-    if (notEmptyLength(props.data)) {
-      let data = props.data.map(function (item) {
-        item.currentImg = 0;
-        item.seeMore = false;
-        return item;
-      })
-      setProductList(data);
-    }
+  useEffect(() => {
+    // processAddonProduct()
+    processAddonProduct()
+    var interval2 = setInterval(() => {
+      processAddonProduct()
+    }, 60000);
+    return () => clearInterval(interval2);
+
   }, [props.data])
+
+  function processAddonProduct() {
+    let currentDateTime = moment().format()
+    if (notEmptyLength(props.data)) {
+      if (props.data != productList) {
+        setProductList([]);
+        let inputDataList = _.cloneDeep(props.data)
+
+        inputDataList.map(function (v) {
+
+          v.currentImg = 0;
+          v.seeMore = false;
+
+          v.addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
+          v.addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
+          v.addonKingadType = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'show' })
+          v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
+          v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
+          let priority = ''
+          v.priority = '';
+          if (priority === '') {
+
+            if (v.addonKingadType) {
+              if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
+                priority = 'addonKingadType'
+                v.priority = 'addonKingadType'
+                v.addonKingadType.endDate = moment(v.addonKingadType.endDate).format()
+                v.addonKingadType.startDate = moment(v.addonKingadType.startDate).format()
+              }
+            }
+          }
+
+          if (priority === '') {
+            if (v.addonKingadType2) {
+              if (currentDateTime > moment(v.addonKingadType2.startDate).format() && currentDateTime < moment(v.addonKingadType2.endDate).format()) {
+                priority = 'addonKingadType2'
+                v.priority = 'addonKingadType2'
+                v.addonKingadType2.startDate = moment(v.addonKingadType2.startDate).format()
+                v.addonKingadType2.endDate = moment(v.addonKingadType2.endDate).format()
+              }
+            }
+          }
+
+          if (priority === '') {
+            if (v.addonKingadType3) {
+              if (currentDateTime > moment(v.addonKingadType3.startDate).format() && currentDateTime < moment(v.addonKingadType3.endDate).format()) {
+                priority = 'addonKingadType3'
+                v.priority = 'addonKingadType3'
+                v.addonKingadType3.startDate = moment(v.addonKingadType3.startDate).format()
+                v.addonKingadType3.endDate = moment(v.addonKingadType3.endDate).format()
+              }
+            }
+          }
+
+          if (priority === '') {
+            if (v.addonSpicydeal) {
+              if (currentDateTime > moment(v.addonSpicydeal.startDate).format() && currentDateTime < moment(v.addonSpicydeal.endDate).format()) {
+                priority = 'addonSpicydeal'
+                v.priority = 'addonSpicydeal'
+                v.addonSpicydeal.startDate = moment(v.addonSpicydeal.startDate).format()
+                v.addonSpicydeal.endDate = moment(v.addonSpicydeal.endDate).format()
+              }
+            }
+          }
+
+          if (priority === '') {
+            if (v.addonSpotlight) {
+              if (currentDateTime > moment(v.addonSpotlight.startDate).format() && currentDateTime < moment(v.addonSpotlight.endDate).format()) {
+                priority = 'addonSpotlight'
+                v.priority = 'addonSpotlight'
+                v.addonSpotlight.startDate = moment(v.addonSpotlight.startDate).format()
+                v.addonSpotlight.endDate = moment(v.addonSpotlight.endDate).format()
+              }
+            }
+          }
+
+          return v
+        })
+        setProductList(inputDataList);
+      }
+    }
+
+  }
 
   function setCurrentImg(id, imgIndex) {
 
@@ -88,7 +170,7 @@ const ProductList = (props) => {
     if (notEmptyLength(v.carUrl)) {
       if (v.currentImg != null && v.currentImg < v.carUrl.length) {
         return (
-          <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
+          <Link shallow={false} passHref href={'/viewCar/' + v._id} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -100,7 +182,7 @@ const ProductList = (props) => {
         )
       } else {
         return (
-          <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
+          <Link shallow={false} passHref href={'/viewCar/' + v._id} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -117,7 +199,7 @@ const ProductList = (props) => {
       }
     } else {
       return (
-        <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
+        <Link shallow={false} passHref href={'/viewCar/' + v._id} >
           <a>
             <React.Fragment>
               <div className="wrap-product-ads-img-horizontal">
@@ -451,129 +533,30 @@ const ProductList = (props) => {
   }
 
   const _renderLayout = (v) => {
-    const addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
-    const addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
-    const addonKingad = _.find(v.addon, { 'addonType': 'kingad' })
-    const addonKingadType = _.find(v.addon, { 'showPrice': 'show' })
-    const addonKingadType2 = _.find(v.addon, { 'showPrice': 'hide' })
-    const addonKingadType3 = _.find(v.addon, { 'showPrice': 'highlight' })
-    const currentDateTime = moment().format();
 
-    let addon = v.addon
-    let addonType = false
-    let addonTypeMulti = false;
-
-    if (v.addon) {
-      if (addon.length > 1) {
-        for (var i = 0; i < addon.length; i++) {
-          if (addon[i].addonType === 'spotlight') {
-            addonType = true
-          }
-        }
-
-        if (addonType === true) {
-          for (var i = 0; i < addon.length; i++) {
-            if (addon[i].addonType === 'spicydeal') {
-              addonTypeMulti = true
-              break
-            }
-          }
-        }
-      }
-    }
-
-    if (v.addon) {
-      if (addonTypeMulti === true) {
-        if (currentDateTime < addonSpotlight.endDate && currentDateTime < addonSpicydeal.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spotlight-spicydeal'
-          )
-        } else if (currentDateTime < addonSpotlight.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spotlight'
-          )
-        } else if (currentDateTime < addonSpicydeal.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spicydeal-1'
-          )
-        } else {
-          return (
-            'wrap-product-ads-horizontal'
-          )
-        }
-      } else if (v.addon && addonSpotlight) {
-        if (currentDateTime < addonSpotlight.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spotlight'
-          )
-        } else {
-          return (
-            'wrap-product-ads-horizontal'
-          )
-        }
-      } else if (v.addon && addonSpicydeal) {
-        if (currentDateTime < addonSpicydeal.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spicydeal-1'
-          )
-        } else {
-          return (
-            'wrap-product-ads-horizontal'
-          )
-        }
-      } else if (v.addon && addonKingad && addonKingadType) {
-        if (currentDateTime < addonKingad.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spicydeal-1'
-          )
-        } else {
-          return (
-            'wrap-product-ads-horizontal'
-          )
-        }
-      } else if (v.addon && addonKingad && addonKingadType2) {
-        if (currentDateTime < addonKingad.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spicydeal-1'
-          )
-        } else {
-          return (
-            'wrap-product-ads-horizontal'
-          )
-        }
-      }
-      else if (v.addon && addonKingad && addonKingadType3) {
-        if (currentDateTime < addonKingad.endDate) {
-          return (
-            'wrap-product-ads-horizontal-spotlight'
-          )
-        } else {
-          return (
-            'wrap-product-ads-horizontal'
-          )
-        }
-      }
-      else {
-        return (
-          'wrap-product-ads-horizontal'
-        )
-      }
-    } else {
-      return (
-        'wrap-product-ads-horizontal'
-      )
-    }
+    if (!v.priority) { return ('wrap-product-ads') }
+    if (v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3') { return ('wrap-product-ads-spotlight') }
+    else if (v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2') { return ('wrap-product-ads-spicydeal') }
+    else { return ('wrap-product-ads') }
   }
 
   const _renderList = (data) => {
 
     if (notEmptyLength(data)) {
-  
+
       return (
         data.map((v, i) =>
           <Col key={i} xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '0px' }}>
             {/* <div className="wrap-product-ads-horizontal"> */}
-            <div className={_renderLayout(v)} id={_renderTextTitle(v)}>
+            <div className={`${_renderLayout(v)} margin-y-sm round-border padding-md relative-wrapper`} id={_renderTextTitle(v)}>
+              {
+                v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' || v.priority === 'addonKingadType3' ?
+                  <span className="d-inline-block" style={{ position: 'absolute', top: 0, left: 40, zIndex: 2 }}>
+                    <img src={rayaLamp} style={{ width: 230, height: 230 }} />
+                  </span>
+                  :
+                  null
+              }
               <Row>
                 <Col span={7}>
                   <div className="relative-wrapper">
@@ -584,10 +567,23 @@ const ProductList = (props) => {
                     <span className='d-inline-block' style={{ position: 'absolute', top: 0, right: 0 }} >
                       <img src={getStateIcon(v.state)} style={{ height: 30, width: 50, borderRadius: '5px' }} />
                     </span>
-                  </div>
-                  <div className="overlay-price-productList" >
-                    {_renderPrice(v)}
-                    {_renderImage(v)}
+
+                    <div className="width-100 background-black-opacity-50 cursor-pointer flex-justify-space-between flex-items-align-center" style={{ position: 'absolute', bottom: 0, zIndex: 2 }}>
+                      <span className='d-inline-block width-80' >
+                        {_renderPrice(v)}
+                      </span>
+                      <span className='d-inline-block width-20 padding-right-sm' >
+                        {
+                          v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
+                            <img src={rayaFlame} style={{ width: 50, height: 50 }} />
+                            :
+                            v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
+                              <img src={rayaFood} style={{ width: 50, height: 50 }} />
+                              :
+                              <img src="/assets/Ccar-Spotlight.gif" style={{ width: 40, height: 40 }} />
+                        }
+                      </span>
+                    </div>
                   </div>
                   {_renderImgList(v, i)}
                 </Col>
@@ -629,17 +625,28 @@ const ProductList = (props) => {
                             : ''}
                         </p>
                         {/* <p style={!v.seeMore ? { maxHeight: '120px', overflow: 'hidden', lineHeight: '1.6', marginBottom: '0px', textOverflow: 'ellipsis' } : {}}>{v.description}</p> */}
-                        <p className=" text-truncate-fiveline" style={{ maxHeight: '120px', lineHeight: '1.6', marginBottom: '0px' }}>{v.description}</p>
+                        <div className="relative-wrapper" style={{ height: '120px', lineHeight: '1.6', marginBottom: '0px' }}>
+                          {
+                            v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
+                              <img src={rayaMosque}  style={{ width: 150, height: 150, position: 'absolute', bottom: -70, right: 0 }} />
+                              :
+                              v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
+                                <img src={rayaPeople}  style={{ width: 150, height: 150, position: 'absolute', bottom: -70, right: 0 }} />
+                                :
+                                null
+                          }
+                          <div className=" text-truncate-fiveline" >{v.description}</div>
+                        </div>
                       </div>
                     </Col>
                     <Col span={10}>
-                      <div className="wrap-product-ads-carSpecs-horizontal thin-border padding-xs" >
+                      <div className="wrap-product-ads-carSpecs-horizontal round-border thin-border padding-xs background-white-opacity-40 backdrop-blur" >
                         <Row>
                           <Col xs={2} sm={2} md={2} lg={0} xl={2}>
                             <img src="/assets/carDetails/Transmission@3x.png" />
                           </Col>
                           <Col xs={{ span: 10, offset: 0 }} sm={{ span: 10, offfset: 0 }} md={{ span: 10, offset: 0 }} lg={{ span: 12, offfset: 0 }} xl={{ span: 10, offset: 0 }}>
-                            <p>Transmission</p>
+                            <div className="grey-darken-3">Transmission</div>
                           </Col>
                           <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                             <h4 style={{ textTransform: 'capitalize' }}>{v.carspecsAll.transmission}</h4>
@@ -650,7 +657,7 @@ const ProductList = (props) => {
                             <img src="/assets/carDetails/Mileage@3x.png" />
                           </Col>
                           <Col xs={10} sm={10} md={10} lg={12} xl={10}>
-                            <p> Mileage</p>
+                            <div className="grey-darken-3"> Mileage</div>
                           </Col>
                           <Col span={12}>
                             <h4 style={{ textTransform: 'capitalize' }}>{renderMileageRange(v.mileage, v.mileage2)}</h4>
@@ -661,7 +668,7 @@ const ProductList = (props) => {
                             <img src="/assets/carDetails/Car Color@3x.png" />
                           </Col>
                           <Col xs={10} sm={10} md={10} lg={12} xl={10}>
-                            <p>Color</p>
+                            <div className="grey-darken-3">Color</div>
                           </Col>
                           <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                             <h4 style={{ textTransform: 'capitalize' }}>{v.color}</h4>
@@ -772,10 +779,10 @@ const ProductList = (props) => {
                         </Row>
                       </div>
                     </Col>
-                    
+
                     <Col span={10}>
-                      <div style={{marginTop:9}}>
-                        <SellerBusinessCard data={v.companys} data1={v.createdBy}/>
+                      <div style={{ marginTop: 9 }}>
+                        <SellerBusinessCard className="background-white-opacity-40 round-border backdrop-blur" data={v.companys} data1={v.createdBy} />
                       </div>
                     </Col>
                   </Row>

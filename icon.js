@@ -24,6 +24,12 @@ export const carspecNotFoundImage = '/coming-soon.png'
 export const flameRed = '/assets/CarListingIcon/Fire-04(NoShadow).gif'
 export const flameRedShadow = '/assets/CarListingIcon/Fire-04.gif'
 export const flame = '/assets/carDetails/flame.gif'
+export const soldOutIcon = '/sold out@3x.png'
+export const rayaFlame = '/assets/productList/Flame_01.gif'
+export const rayaFood = '/assets/productList/Food(Final)_1.gif'
+export const rayaLamp = '/assets/productList/Lamp_Final_.gif'
+export const rayaMosque = '/assets/productList/Mosque(Final).gif'
+export const rayaPeople = '/assets/productList/Orang(Final).gif'
 
 
 
