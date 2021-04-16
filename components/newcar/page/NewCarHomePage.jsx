@@ -762,7 +762,7 @@ class NewCarVersion3 extends React.Component {
             id="banner-1"
             className="bg"
             style={{
-              backgroundImage: 'url(/banner/Website-Banner-02-02.jpg)',
+              backgroundImage: 'url(/banner/Website-Banner-02-01.jpg)',
               backgroundSize: 'fit',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',

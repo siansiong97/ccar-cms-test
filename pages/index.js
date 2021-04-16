@@ -79,8 +79,8 @@ const Index = (props) => {
                 }}
               />
               {/* <div className="width-100 relative-wrapper" style={{height : 250}}>
-                            <img src={'/banner/CCAR-Tab-Banner-TBH-March-2021.jpg'} className="absolute-center"/>
-                        </div> */}
+                  <img src={'/banner/CCAR-Tab-Banner-TBH-March-2021.jpg'} className="absolute-center"/>
+              </div> */}
             </Element>
             <Element
               prefixCls="banner-user-elem"
@@ -316,7 +316,7 @@ const Index = (props) => {
             id="banner-1"
             className="bg"
             style={{
-              backgroundImage: 'url(/banner/Website-Banner-02-02.jpg)',
+              backgroundImage: 'url(/banner/Website-Banner-02-01.jpg)',
               backgroundSize: 'fit',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -355,7 +355,7 @@ const Index = (props) => {
       <React.Fragment>
         <Row gutter={[10, 10]}>
           {props.productsList.productsListHome.length > 0 ?
-            <GridProductList data={props.productsList.productsListHome} xs={0} sm={0} md={0} lg={8} xl={6} />
+            <GridProductList data={props.productsList.productsListHome} xs={0} sm={0} md={0} lg={8} xl={6} />  
             :
             <div style={{ height: '30em' }}>
               <Empty
@@ -435,7 +435,7 @@ const Index = (props) => {
                     path = `/newcar/maker/${_.toLower(brand.value)}`
                   }
                   props.router.push(path);
-                } else {
+                } else { 
                   message.error('Brand Not Found!')
                 }
               }} />
@@ -528,7 +528,7 @@ const Index = (props) => {
                       <Divider> <span className='d-inline-block h6 font-weight-bold grey-darken-3' style={{ marginLeft: '10px' }} >Social News</span></Divider>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                      <SocialNewTabs />
+                      <SocialNewTabs /> 
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className="margin-top-md margin-bottom-md text-align-center">
                       <a href="/socialNewsAndVideo"><Button type="primary"> Show More </Button></a>

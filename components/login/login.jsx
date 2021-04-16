@@ -240,7 +240,7 @@ class LoginModal extends React.Component {
 
           </div>
           <Divider orientation="center" style={{ color: '#333', fontWeight: 'normal', paddingLeft: '50px', paddingRight: '40px' }}>
-            <div><p style={{ marginBottom: 0, color: 'rgb(142, 142, 142)' }}>or</p></div>
+            <div><p style={{ marginBottom: 0, color: '#ffffff' }}>or</p></div>
           </Divider>
 
           <div className="wrap-register-link">
@@ -295,7 +295,7 @@ class LoginModal extends React.Component {
 
 
           {/* <img src={tbhCny} style={{ width: 283, height: 400,position: 'absolute', left: -115, bottom: -30, margin : 'auto' }}></img> */}
-          <img src={tbh} style={{ width: 166, height: 330, position: 'absolute', left: -90, bottom: 0, margin: 'auto' }}></img>
+          <img src={tbh} style={{ width: 200, height: 330, position: 'absolute', left: -120, bottom: 0, margin: 'auto' }}></img>
           {/* <img src={tbh2Cny} style={{ width: 150, height: 100,position: 'absolute', left: -15, bottom: 8, margin : 'auto' }}></img> */}
           {/* <img src={cnyLionHead} style={{ width: 100, height: 150, position: 'absolute', right: -30, top: -95 }}></img> */}
         </div>

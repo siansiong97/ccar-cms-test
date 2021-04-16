@@ -907,8 +907,8 @@ class LayoutV2 extends React.Component {
                                                 <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
                                                     <Link shallow={false} href={routePaths.home.to || '/'} as={typeof (routePaths.home.as) == 'function' ? routePaths.home.as() : '/'}  >
                                                         <a>
-                                                            <span className='d-inline-block margin-right-md cursor-pointer padding-y-sm'>
-                                                                <img alt="ccar" src={ccarWebLogo2} style={{ height: '50px', width: '242px' }} />
+                                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' >
+                                                                <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
                                                             </span>
                                                         </a>
                                                     </Link>
@@ -985,8 +985,8 @@ class LayoutV2 extends React.Component {
                                             <div className='flex-justify-start flex-items-align-center topnav-child'>
                                                 <Link shallow={false} href={`/`}  >
                                                     <a>
-                                                        <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
-                                                            <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
+                                                        <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' >
+                                                            <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
                                                         </span>
                                                     </a>
                                                 </Link>
@@ -1063,161 +1063,161 @@ class LayoutV2 extends React.Component {
                                     </Row>
                                 </div>
                             </Tablet>
-                            <Mobile>
-                                <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
-                                    <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
-                                        <Col xs={20} sm={20} md={14} lg={12} xl={12}>
-                                            <div className='flex-justify-start flex-items-align-center topnav-child'  >
-                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' style={{ height: '62px', width: '120px' }} onClick={(e) => { this.props.router.push('/') }}>
-                                                    <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
-                                                </span>
-                                                {
-                                                    this.props.hideSearchBar ?
-                                                        null
-                                                        :
-                                                        <span className='d-inline-block' style={{ width: '150px', overflow: 'visible' }} >
-                                                            <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
-                                                        </span>
-                                                }
-                                            </div>
-                                        </Col>
-                                        <Col xs={4} sm={4} md={10} lg={12} xl={12}>
-                                            <div style={{ width: '300' }}>
-                                                <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
-                                                    <Icon type="menu" />
-                                                </Button>
-                                                <Drawer
-                                                    title="Main Menu"
-                                                    placement="right"
-                                                    closable={true}
-                                                    onClose={this.onClose}
-                                                    visible={this.state.visible}
-                                                >
-                                                    <div className="margin-bottom-md">
-                                                        {this._renderUserRes(profileMenu)}
-                                                    </div>
-                                                    {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
+                                <Mobile>
+                                    <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                                        <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
+                                            <Col xs={20} sm={20} md={14} lg={12} xl={12}>
+                                                <div className='flex-justify-start flex-items-align-center topnav-child'  >
+                                                    <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' onClick={(e) => { this.props.router.push('/') }}>
+                                                        <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
+                                                    </span>
+                                                    {
+                                                        this.props.hideSearchBar ?
+                                                            null
+                                                            :
+                                                            <span className='d-inline-block' style={{ width: '150px', overflow: 'visible' }} >
+                                                                <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                                            </span>
+                                                    }
+                                                </div>
+                                            </Col>
+                                            <Col xs={4} sm={4} md={10} lg={12} xl={12}>
+                                                <div style={{ width: '300' }}>
+                                                    <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
+                                                        <Icon type="menu" />
+                                                    </Button>
+                                                    <Drawer
+                                                        title="Main Menu"
+                                                        placement="right"
+                                                        closable={true}
+                                                        onClose={this.onClose}
+                                                        visible={this.state.visible}
+                                                    >
+                                                        <div className="margin-bottom-md">
+                                                            {this._renderUserRes(profileMenu)}
+                                                        </div>
+                                                        {/* <p style={{ color: '#1890ff' }} className='flex-items-align-center subtitle1 cursor-pointer ' onClick={() => { this.props.loginMode(true) }}>
                                                     <img src="/assets/CarListingIcon/login@3x.png" style={{ width: 20 }} className="margin-right-xs" />
                                                     Register/Login
                                                 </p> */}
-                                                    <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
-                                                    <p> <a href="/newcar"> All-NewCar</a> </p>
-                                                    <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
-                                                    <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
-                                                    <p> <a href="/car-freaks"> CarFreaks </a> </p>
-                                                    <p> <a href="/petrolprice"> Petrol Price </a>  </p>
-                                                    <p> <a href="/kpp"> Driving School </a> </p>
-                                                    <p> <a href="/about-us"> About Us </a> </p>
-                                                    <p> <a href="/contact-us"> Contact Us </a> </p>
-                                                    {currentEnv !== 'prod' ?
-                                                        <React.Fragment>
-                                                            <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
-                                                            <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
-                                                        </React.Fragment>
-                                                        : ''}
+                                                <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
+                                                <p> <a href="/newcar"> All-NewCar</a> </p>
+                                                <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
+                                                <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
+                                                <p> <a href="/car-freaks"> CarFreaks </a> </p>
+                                                <p> <a href="/petrolprice"> Petrol Price </a>  </p>
+                                                <p> <a href="/kpp"> Driving School </a> </p>
+                                                <p> <a href="/about-us"> About Us </a> </p>
+                                                <p> <a href="/contact-us"> Contact Us </a> </p>
+                                                {currentEnv !== 'prod' ?
+                                                    <React.Fragment>
+                                                        <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
+                                                        <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
+                                                    </React.Fragment>
+                                                    : ''}
 
-                                                </Drawer>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Mobile>
+                                            </Drawer>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Mobile>
 
                         </Col>
                     </Row>
 
 
+                {
+                    _.get(this.props, ['app', 'loading']) ?
+                        <div className='background-grey-opacity-50 fill-parent absolute-center' style={{ zIndex: 1002 }}>
+                            <Affix offsetTop={(this.state.window.innerHeight || 500) / 2}>
+                                <div className="flex-justify-center width-100">
+                                    <img src="/loading.gif" style={{ width: 100, height: 100 }} />
+                                </div>
+                            </Affix>
+                        </div>
+                        :
+                        null
+                }
+
+                {/* </Content> */}
+                <div style={this.props.backgroundImage ? { minHeight: this.state.window.innerHeight || 500 - 180, ...this.state.backgroundStyle } : { minHeight: this.state.window.innerHeight || 500 - 90 }}>
+                    {this.props.children}
+                </div>
+
+                {/* <BackTop/> */}
+
+                {this._renderFooter()}
+                <div className='width-100' style={{ position: '-webkit-sticky', position: 'sticky', bottom: 0, zIndex: 1002 }}>
                     {
-                        _.get(this.props, ['app', 'loading']) ?
-                            <div className='background-grey-opacity-50 fill-parent absolute-center' style={{ zIndex: 1002 }}>
-                                <Affix offsetTop={(this.state.window.innerHeight || 500) / 2}>
-                                    <div className="flex-justify-center width-100">
-                                        <img src="/loading.gif" style={{ width: 100, height: 100 }} />
-                                    </div>
-                                </Affix>
-                            </div>
+                        this.props.footerOverLay ?
+                            this.props.footerOverLay
+                            :
+                            this.props.hideOpenApp ?
+                                null
+                                :
+                                <React.Fragment>
+                                    <NotWebDevice>
+                                        <div className="padding-md background-black flex-items-align-center flex-justify-space-between">
+                                            <span className=' flex-items-align-center' >
+                                                <img src={ccarLogo} style={{ height: 30, width: 30 }} className="margin-right-md flex-items-no-shrink" />
+                                                <div className="caption white">
+                                                    A place to connect car lovers' souls
+                                                </div>
+                                            </span>
+                                            <span className='d-inline-block ' >
+                                                <Button className=" background-ccar-button-yellow black caption" style={{ borderColor: '#FFCC32' }} onClick={(e) => { this.openApp() }}>Open App</Button>
+                                            </span>
+                                        </div>
+                                    </NotWebDevice>
+                                </React.Fragment>
+                    }
+                </div>
+                <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, left: 20, zIndex: 1002 }}  >
+                    {
+                        this.state.scrollY > 300 ?
+                            <Affix offsetBottom={100}>
+                                <div className="wrap-scrolltoTop">
+                                    <Button onClick={() => this.state.window.scrollTo(0, 0)}><CaretUpOutlined /></Button>
+                                </div>
+                            </Affix>
                             :
                             null
                     }
+                </span>
 
-                    {/* </Content> */}
-                    <div style={this.props.backgroundImage ? { minHeight: this.state.window.innerHeight || 500 - 180, ...this.state.backgroundStyle } : { minHeight: this.state.window.innerHeight || 500 - 90 }}>
-                        {this.props.children}
-                    </div>
-
-                    {/* <BackTop/> */}
-
-                    {this._renderFooter()}
-                    <div className='width-100' style={{ position: '-webkit-sticky', position: 'sticky', bottom: 0, zIndex: 1002 }}>
-                        {
-                            this.props.footerOverLay ?
-                                this.props.footerOverLay
-                                :
-                                this.props.hideOpenApp ?
-                                    null
-                                    :
-                                    <React.Fragment>
-                                        <NotWebDevice>
-                                            <div className="padding-md background-black flex-items-align-center flex-justify-space-between">
-                                                <span className=' flex-items-align-center' >
-                                                    <img src={ccarLogo} style={{ height: 30, width: 30 }} className="margin-right-md flex-items-no-shrink" />
-                                                    <div className="caption white">
-                                                        A place to connect car lovers' souls
-                                                </div>
-                                                </span>
-                                                <span className='d-inline-block ' >
-                                                    <Button className=" background-ccar-button-yellow black caption" style={{ borderColor: '#FFCC32' }} onClick={(e) => { this.openApp() }}>Open App</Button>
-                                                </span>
-                                            </div>
-                                        </NotWebDevice>
-                                    </React.Fragment>
-                        }
-                    </div>
-                    <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, left: 20, zIndex: 1002 }}  >
-                        {
-                            this.state.scrollY > 300 ?
-                                <Affix offsetBottom={100}>
-                                    <div className="wrap-scrolltoTop">
-                                        <Button onClick={() => this.state.window.scrollTo(0, 0)}><CaretUpOutlined /></Button>
-                                    </div>
-                                </Affix>
-                                :
-                                null
-                        }
-                    </span>
-
-                    <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, right: 20, zIndex: 1002 }}  >
-                        {
-                            this.props.showCompareCarButton != undefined && this.props.showCompareCarButton == false && this.props.showCompareCarButton != null ?
-                                null
-                                :
-                                <Affix offsetBottom={95} className='affix-element-show-on-modal-1'>
-                                    <CompareFloatingButton />
-                                </Affix>
-                        }
-                    </span>
+                <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, right: 20, zIndex: 1002 }}  >
+                    {
+                        this.props.showCompareCarButton != undefined && this.props.showCompareCarButton == false && this.props.showCompareCarButton != null ?
+                            null
+                            :
+                            <Affix offsetBottom={95} className='affix-element-show-on-modal-1'>
+                                <CompareFloatingButton />
+                            </Affix>
+                    }
+                </span>
                 </div>
-                {/* <style jsx="true" global="true">{``}</style> */}
-                <LoginModal />
-                {/* <RegisterModal/> */}
-                <CookieConsent
-                    location="bottom"
-                    buttonText="Got it !"
-                    cookieName="consent"
-                    cookieValue={true}
-                    style={{ background: "#2B373B" }}
-                    buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
-                    expires={365}
-                    onAccept={() => {
-                        Cookies.set('consent', v4())
-                    }}
-                    acceptOnScroll={true}
-                >
-                    By continuing to browse this website, you accept cookies which are used for several reasons such as personalizing content/ads and analyzing how this website is used.
+                {/* <style jsx="true" global="true">{``}</style> */ }
+        <LoginModal />
+        {/* <RegisterModal/> */ }
+        <CookieConsent
+            location="bottom"
+            buttonText="Got it !"
+            cookieName="consent"
+            cookieValue={true}
+            style={{ background: "#2B373B" }}
+            buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+            expires={365}
+            onAccept={() => {
+                Cookies.set('consent', v4())
+            }}
+            acceptOnScroll={true}
+        >
+            By continuing to browse this website, you accept cookies which are used for several reasons such as personalizing content/ads and analyzing how this website is used.
 
                     </CookieConsent>
-                {/* </WindowScrollDisableWrapper> */}
-            </Layout>
+        {/* </WindowScrollDisableWrapper> */ }
+            </Layout >
         )
     }
 }
