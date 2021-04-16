@@ -13,7 +13,7 @@ import { loading } from '../../redux/actions/app-actions';
 import { calMonth, formatMoney, renderMileageRange } from '../../functionContent';
 import AddCompareProductButton from '../general/add-compare-product-button';
 import Car360ViewButton from '../general/car-360-view-button';
-import { flameRed } from '../../icon';
+import { flameRed, rayaFlame, rayaFood, rayaLamp, rayaMosque, rayaPeople } from '../../icon';
 import Loading from '../general/Loading';
 import WhatsAppButton from '../general/whatapps-button';
 import ContactList from '../general/contactList';
@@ -33,90 +33,90 @@ const GridProductList = (props) => {
         // processAddonProduct()
         processAddonProduct()
         var interval2 = setInterval(() => {
-          processAddonProduct()
+            processAddonProduct()
         }, 60000);
         return () => clearInterval(interval2);
-    
-      }, [props.data])
+
+    }, [props.data])
 
     function processAddonProduct() {
         let currentDateTime = moment().format()
         if (notEmptyLength(props.data)) {
-          if (props.data != productList) {
-            setProductList([]);
-            let inputDataList = _.cloneDeep(props.data)
-    
-            inputDataList.map(function (v) {
-              v.addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
-              v.addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
-              v.addonKingadType = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'show' })
-              v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
-              v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
-              let priority = ''
-              v.priority = '';
-              if (priority === '') {
-    
-                if (v.addonKingadType) {
-                  if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
-                    priority = 'addonKingadType'
-                    v.priority = 'addonKingadType'
-                    v.addonKingadType.endDate = moment(v.addonKingadType.endDate).format()
-                    v.addonKingadType.startDate = moment(v.addonKingadType.startDate).format()
-                  }
-                }
-              }
-    
-              if (priority === '') {
-                if (v.addonKingadType2) {
-                  if (currentDateTime > moment(v.addonKingadType2.startDate).format() && currentDateTime < moment(v.addonKingadType2.endDate).format()) {
-                    priority = 'addonKingadType2'
-                    v.priority = 'addonKingadType2'
-                    v.addonKingadType2.startDate = moment(v.addonKingadType2.startDate).format()
-                    v.addonKingadType2.endDate = moment(v.addonKingadType2.endDate).format()
-                  }
-                }
-              }
-    
-              if (priority === '') {
-                if (v.addonKingadType3) {
-                  if (currentDateTime > moment(v.addonKingadType3.startDate).format() && currentDateTime < moment(v.addonKingadType3.endDate).format()) {
-                    priority = 'addonKingadType3'
-                    v.priority = 'addonKingadType3'
-                    v.addonKingadType3.startDate = moment(v.addonKingadType3.startDate).format()
-                    v.addonKingadType3.endDate = moment(v.addonKingadType3.endDate).format()
-                  }
-                }
-              }
-    
-              if (priority === '') {
-                if (v.addonSpicydeal) {
-                  if (currentDateTime > moment(v.addonSpicydeal.startDate).format() && currentDateTime < moment(v.addonSpicydeal.endDate).format()) {
-                    priority = 'addonSpicydeal'
-                    v.priority = 'addonSpicydeal'
-                    v.addonSpicydeal.startDate = moment(v.addonSpicydeal.startDate).format()
-                    v.addonSpicydeal.endDate = moment(v.addonSpicydeal.endDate).format()
-                  }
-                }
-              }
-    
-              if (priority === '') {
-                if (v.addonSpotlight) {
-                  if (currentDateTime > moment(v.addonSpotlight.startDate).format() && currentDateTime < moment(v.addonSpotlight.endDate).format()) {
-                    priority = 'addonSpotlight'
-                    v.priority = 'addonSpotlight'
-                    v.addonSpotlight.startDate = moment(v.addonSpotlight.startDate).format()
-                    v.addonSpotlight.endDate = moment(v.addonSpotlight.endDate).format()
-                  }
-                }
-              }
-    
-              return v
-            })
-            setProductList(inputDataList);
-          }
+            if (props.data != productList) {
+                setProductList([]);
+                let inputDataList = _.cloneDeep(props.data)
+
+                inputDataList.map(function (v) {
+                    v.addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
+                    v.addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
+                    v.addonKingadType = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'show' })
+                    v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
+                    v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
+                    let priority = ''
+                    v.priority = '';
+                    if (priority === '') {
+
+                        if (v.addonKingadType) {
+                            if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
+                                priority = 'addonKingadType'
+                                v.priority = 'addonKingadType'
+                                v.addonKingadType.endDate = moment(v.addonKingadType.endDate).format()
+                                v.addonKingadType.startDate = moment(v.addonKingadType.startDate).format()
+                            }
+                        }
+                    }
+
+                    if (priority === '') {
+                        if (v.addonKingadType2) {
+                            if (currentDateTime > moment(v.addonKingadType2.startDate).format() && currentDateTime < moment(v.addonKingadType2.endDate).format()) {
+                                priority = 'addonKingadType2'
+                                v.priority = 'addonKingadType2'
+                                v.addonKingadType2.startDate = moment(v.addonKingadType2.startDate).format()
+                                v.addonKingadType2.endDate = moment(v.addonKingadType2.endDate).format()
+                            }
+                        }
+                    }
+
+                    if (priority === '') {
+                        if (v.addonKingadType3) {
+                            if (currentDateTime > moment(v.addonKingadType3.startDate).format() && currentDateTime < moment(v.addonKingadType3.endDate).format()) {
+                                priority = 'addonKingadType3'
+                                v.priority = 'addonKingadType3'
+                                v.addonKingadType3.startDate = moment(v.addonKingadType3.startDate).format()
+                                v.addonKingadType3.endDate = moment(v.addonKingadType3.endDate).format()
+                            }
+                        }
+                    }
+
+                    if (priority === '') {
+                        if (v.addonSpicydeal) {
+                            if (currentDateTime > moment(v.addonSpicydeal.startDate).format() && currentDateTime < moment(v.addonSpicydeal.endDate).format()) {
+                                priority = 'addonSpicydeal'
+                                v.priority = 'addonSpicydeal'
+                                v.addonSpicydeal.startDate = moment(v.addonSpicydeal.startDate).format()
+                                v.addonSpicydeal.endDate = moment(v.addonSpicydeal.endDate).format()
+                            }
+                        }
+                    }
+
+                    if (priority === '') {
+                        if (v.addonSpotlight) {
+                            if (currentDateTime > moment(v.addonSpotlight.startDate).format() && currentDateTime < moment(v.addonSpotlight.endDate).format()) {
+                                priority = 'addonSpotlight'
+                                v.priority = 'addonSpotlight'
+                                v.addonSpotlight.startDate = moment(v.addonSpotlight.startDate).format()
+                                v.addonSpotlight.endDate = moment(v.addonSpotlight.endDate).format()
+                            }
+                        }
+                    }
+
+                    return v
+                })
+                setProductList(inputDataList);
+            }
         }
-    
-      }
+
+    }
 
     useEffect(() => {
         setInitLoading(props.productsList.productListLoading)
@@ -126,7 +126,7 @@ const GridProductList = (props) => {
         let value = _.get(v, ['companys', 'state'])
 
         let value2 = _.get(v, ['createdBy', 'userstate'])
-        if(_.isEmpty(value2)===false){
+        if (_.isEmpty(value2) === false) {
             value = value2
         }
         return (
@@ -200,7 +200,7 @@ const GridProductList = (props) => {
                 <div className="wrap-product-ads-price">
                     <span className='gridMoneyText'>RM {formatMoney((price).toString())}</span>
                     <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{(((100 * (price - discountedPrice) / price) * -1).toFixed(1).toString()).replace(pattern, '') + '%'}</span>
-                    <h4 style={{ marginLeft: '10px', color: '#d62828' }}>RM {formatMoney((discountedPrice).toString())}</h4>
+                    <h4 style={{ marginLeft: '10px', color: '#FBB040' }}>RM {formatMoney((discountedPrice).toString())}</h4>
                     {/* <Row>
           <Col xs={14} sm={14} md={16} lg={16} xl={16}>
             <p style={{ marginLeft: '10px', color: '#a9d46f' }}>RM {formatMoney((calMonth(discountedPrice)).toString())}/month</p>
@@ -285,10 +285,12 @@ const GridProductList = (props) => {
         if (v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2'
             // ||  v.priority === 'addonKingadType3'
         ) {
-            return (<div className="red-flame"><img src={flameRed} /></div>)
+            // return (<div className="red-flame"><img src={flameRed} /></div>)
+            return (<div className="red-flame"><img src={rayaFlame} style={{ width: 50, height: 50 }} /></div>)
         }
         else {
-            return (<div className="spotlight"><img src="/assets/Ccar-Spotlight.gif" /></div>)
+            // return (<div className="spotlight"><img src="/assets/Ccar-Spotlight.gif" /></div>)
+            return (<div className="spotlight"><img src={rayaFood} style={{ width: 50, height: 50 }} /></div>)
         }
     }
 
@@ -305,13 +307,13 @@ const GridProductList = (props) => {
                             let companyName = v.companys ? v.companys.name : null
                             let areaName = v.companys ? v.companys.area : null
 
-                            let userCompany = _.get(v, ['createdBy', 'usercompanyName'])||''
-                            if(_.isEmpty(userCompany)===false){
+                            let userCompany = _.get(v, ['createdBy', 'usercompanyName']) || ''
+                            if (_.isEmpty(userCompany) === false) {
                                 companyName = userCompany
                             }
 
-                            let userarea = _.get(v, ['createdBy', 'userarea'])||''
-                            if(_.isEmpty(userarea)===false){
+                            let userarea = _.get(v, ['createdBy', 'userarea']) || ''
+                            if (_.isEmpty(userarea) === false) {
                                 areaName = userarea
                             }
 
@@ -331,7 +333,7 @@ const GridProductList = (props) => {
 
                                         <div className={_renderLayout(v)}>
                                             <div className="wrap-product-ads-img">
-                                                <Link shallow={false}  passHref href={'/viewCar/' + v._id}>
+                                                <Link shallow={false} passHref href={'/viewCar/' + v._id}>
                                                     <a>
                                                         <React.Fragment>
                                                             <div className="overlay-condition">
@@ -340,9 +342,29 @@ const GridProductList = (props) => {
                                                             <div className="overlay-state">
                                                                 {_renderState(v)}
                                                             </div>
-                                                            <div className="overlay-price">
-                                                                {_renderImage(v)}
-                                                                {_renderPrice(v)}
+                                                            {
+                                                                v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' || v.priority === 'addonKingadType3' ?
+                                                                    <div className="flex-justify-center flex-items-align-start width-100" style={{ position: 'absolute', top: 0, zIndex: 2 }}>
+                                                                        <img src={rayaLamp} style={{ width: 200, height: 200 }} />
+                                                                    </div>
+                                                                    :
+                                                                    null
+                                                            }
+                                                            <div className="width-100 background-black-opacity-50 cursor-pointer flex-justify-space-between flex-items-align-center" style={{ position: 'absolute', bottom: 0, zIndex: 2 }}>
+                                                                <span className='d-inline-block ' >
+                                                                    {_renderPrice(v)}
+                                                                </span>
+                                                                <span className='d-inline-block margin-x-sm ' >
+                                                                    {
+                                                                        v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
+                                                                            <img src={rayaFlame} style={{ width: 50, height: 50 }} />
+                                                                            :
+                                                                            v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
+                                                                                <img src={rayaFood} style={{ width: 50, height: 50 }} />
+                                                                                :
+                                                                                <img src="/assets/Ccar-Spotlight.gif" style={{ width: 40, height: 40 }} />
+                                                                    }
+                                                                </span>
                                                             </div>
                                                             <div>
                                                                 {
@@ -363,9 +385,19 @@ const GridProductList = (props) => {
                                                         : null
                                                 }
                                             </div>
-                                            <div className="wrap-product-ads-text">
+                                            <div className="wrap-product-ads-text relative-wrapper">
+
+                                                {
+                                                    v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
+                                                        <img src={rayaMosque}  style={{ width: 100, height: 100, position : 'absolute', bottom : 50 , right : 10}} />
+                                                        :
+                                                        v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
+                                                            <img src={rayaPeople} style={{ width: 100, height: 100, position : 'absolute', bottom : 50 , right : 10 }} />
+                                                            :
+                                                            null
+                                                }
                                                 <div className="wrap-product-ads-title">
-                                                    <Link shallow={false}  passHref href={'/viewCar/' + v._id} >
+                                                    <Link shallow={false} passHref href={'/viewCar/' + v._id} >
                                                         <a>
                                                             <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
                                                         </a>

@@ -4,7 +4,7 @@ import {
   LeftOutlined,
   RightOutlined, UpOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Card, Col, Divider, Icon, Input, message, Row, Tooltip } from 'antd';
+import { Breadcrumb, Button, Card, Col, Divider, Icon, Input, message, Modal, Row, Tooltip } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
@@ -13,7 +13,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { bindActionCreators } from "redux";
-import { flame } from '../../../icon';
+import { flame, soldOutIcon } from '../../../icon';
 import { loading, quickSearchProductsList, showContactList, updateActiveMenu } from '../../../redux/actions/app-actions';
 import { updateActiveIdProductList } from '../../../redux/actions/productsList-actions';
 import { calMonth, formatMoney } from '../../../functionContent';
@@ -26,7 +26,7 @@ import AddCompareProductButton from '../../general/add-compare-product-button';
 import CalculatorModal from '../../general/calculator-modal';
 import Car360ViewButton from '../../general/car-360-view-button';
 import LightBoxGallery from '../../general/light-box-gallery';
-import { convertParameterToProductListUrl, formatNumber, notEmptyLength } from '../../../common-function';
+import { convertParameterToProductListUrl, formatNumber, getUserName, notEmptyLength } from '../../../common-function';
 import SellerBusinessCard from '../../seller/SellerBusinessCard';
 import WhatsAppButton from '../../general/whatapps-button';
 import ContactList from '../../general/contactList';
@@ -83,14 +83,18 @@ class ViewCarDetailsPage extends React.Component {
       scrollYPosition: 0,
       dealerTotalAds: 0,
       window: {},
+      soldOutModalVisible: false,
     }
   }
 
   componentDidMount() {
 
+    console.log(this.state.productDetails);
     this.setState({
       window: window,
+      soldOutModalVisible: _.get(this.state.productDetails, ['status']) == 'sold',
     })
+
   }
 
   UNSAFE_componentWillMount() {
@@ -98,7 +102,6 @@ class ViewCarDetailsPage extends React.Component {
     this.setState({
 
       typingTimeout: setTimeout(() => {
-
         axios.post(`${client.io.io.uri}processCTR`,
           {
             params: {
@@ -106,7 +109,6 @@ class ViewCarDetailsPage extends React.Component {
               source: 'web',
             }
           })
-
         let inputProductList = [{ productAdsId: this.state.productDetails._id }]
         axios.post(`${client.io.io.uri}processImpression`,
           {
@@ -118,10 +120,9 @@ class ViewCarDetailsPage extends React.Component {
 
 
       }, 3000)
-
     })
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
 
     // if (typeof (window) != undefined) {
     //   window.addEventListener('scroll', this.handleScroll, { passive: true });
@@ -131,6 +132,16 @@ class ViewCarDetailsPage extends React.Component {
     //     window.removeEventListener('scroll', this.handleScroll);
     //   };
     // }
+
+    if (!_.isEqual(prevState.productDetails, this.state.productDetails)) {
+      if (_.get(this.state.productDetails, ['status']) == 'sold') {
+        this.setState({
+          soldOutModalVisible: true,
+        })
+      }
+    }
+
+
   }
 
   onClickShow = () => {
@@ -465,7 +476,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={12} lg={10} xl={12}>
                       <Row style={{ marginTop: '9px' }}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                          <WhatsAppButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
+                          <WhatsAppButton readOnly={_.get(this.state, 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
                           <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />
@@ -475,7 +486,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={12} lg={14} xl={12}>
                       <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                         <span className="d-inline-block">
-                          <Wishlist readOnly={_.get(this.state , 'productDetails.status') != 'approved'} type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                          <Wishlist readOnly={_.get(this.state, 'productDetails.status') != 'approved'} type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
                             savedButton={
                               () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
                             }
@@ -487,7 +498,7 @@ class ViewCarDetailsPage extends React.Component {
                           />
                         </span>
                         <span className="d-inline-block" style={{ marginRight: '5px' }}>
-                          <ShareButtonDialog readOnly={_.get(this.state , 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
+                          <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
                         </span>
                         <span className="d-inline-block margin-xs">
                           <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
@@ -515,7 +526,7 @@ class ViewCarDetailsPage extends React.Component {
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
-                          <AddCompareProductButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
+                          <AddCompareProductButton readOnly={_.get(this.state, 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
                             return (
                               <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
                             );
@@ -604,7 +615,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={6} lg={12} xl={12}>
                       <Row style={{ marginTop: '9px' }}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                          <WhatsAppButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
+                          <WhatsAppButton readOnly={_.get(this.state, 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
                           <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />
@@ -614,7 +625,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col span={18}>
                       <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                         <span className="d-inline-block">
-                          <Wishlist readOnly={_.get(this.state , 'productDetails.status') != 'approved'} type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                          <Wishlist readOnly={_.get(this.state, 'productDetails.status') != 'approved'} type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
                             savedButton={
                               () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
                             }
@@ -626,7 +637,7 @@ class ViewCarDetailsPage extends React.Component {
                           />
                         </span>
                         <span className="d-inline-block" style={{ marginRight: '5px' }}>
-                          <ShareButtonDialog readOnly={_.get(this.state , 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
+                          <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
                         </span>
                         <span className="d-inline-block margin-xs">
                           <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
@@ -654,7 +665,7 @@ class ViewCarDetailsPage extends React.Component {
                           </Car360ViewButton>
                         </span>
                         <span className="d-inline-block">
-                          <AddCompareProductButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
+                          <AddCompareProductButton readOnly={_.get(this.state, 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
                             return (
                               <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
                             );
@@ -718,8 +729,8 @@ class ViewCarDetailsPage extends React.Component {
 
     const { comments, submitting, value } = this.state;
     let stateName = getStateIcon(_.get(this.state.productDetails, ['companys', 'state']) || imageNotFoundIcon)
-    let userstate = _.get(this.state.productDetails, ['createdBy', 'userstate'])||''
-    if(_.isEmpty(userstate)===false){stateName = getStateIcon(userstate)||imageNotFoundIcon}
+    let userstate = _.get(this.state.productDetails, ['createdBy', 'userstate']) || ''
+    if (_.isEmpty(userstate) === false) { stateName = getStateIcon(userstate) || imageNotFoundIcon }
 
     return (
       <LayoutV2
@@ -765,7 +776,7 @@ class ViewCarDetailsPage extends React.Component {
                   <Col span={12}>
                     <div className="flex-justify-end flex-items-align-center flex-wrap" style={{ marginTop: '5px' }}>
                       <span className="d-inline-block">
-                        <Wishlist readOnly={_.get(this.state , 'productDetails.status') != 'approved'}t type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
+                        <Wishlist readOnly={_.get(this.state, 'productDetails.status') != 'approved'} t type="product" productId={this.state.productDetails._id} saverId={this.props.user.authenticated ? this.props.user.info.user._id : null}
                           savedButton={
                             () => <Button className="padding-x-sm margin-xs" style={{ borderColor: '#F9A825' }}><Icon type="heart" theme="filled" style={{ color: '#F9A825' }} /> <span style={{ color: '#F9A825' }}>Saved</span></Button>
                           }
@@ -777,7 +788,7 @@ class ViewCarDetailsPage extends React.Component {
                         />
                       </span>
                       <span className="d-inline-block">
-                        <ShareButtonDialog readOnly={_.get(this.state , 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
+                        <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
                       </span>
                     </div>
                   </Col>
@@ -802,20 +813,18 @@ class ViewCarDetailsPage extends React.Component {
 
                             {
                               (data, setCurrentIndex, setVisible) => {
-
                                 return (
                                   <div show={this.state.show} className="code-box-shape" >
                                     <img className="fade-in cursor-pointer absolute-center-img-no-stretch" onClick={() => { setVisible(true) }} id="my-element" src={_.get(data, ['images', data.currentIndex])} alt={`${_.get(this.state.productDetails, 'carspec.make') || ''} ${_.get(this.state.productDetails, 'carspec.model') || ''} Image ${data.currentIndex + 1}`} />
                                   </div>
-
                                 )
                               }
                             }
                           </LightBoxGallery>
-                          <img 
-                          src={stateName} 
-                          style={{ width: 70, height: '30px', position: 'absolute', top: 0, right: 0 }} 
-                          alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
+                          <img
+                            src={stateName}
+                            style={{ width: 70, height: '30px', position: 'absolute', top: 0, right: 0 }}
+                            alt={`${_.get(this.state.productDetails, ['companys', 'state']) || 'State Icon'}`} />
                           <span className="d-inline-block width-20" style={{ position: 'absolute', top: 0, left: 0 }} >
                             {this._renderCondition(this.state.productDetails)}
                           </span>
@@ -837,7 +846,7 @@ class ViewCarDetailsPage extends React.Component {
 
                     <Row gutter={[10, 10]}>
                       <Col className="gutter-row" xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Description readOnly={_.get(this.state , 'productDetails.status') != 'approved'} productDetails={this.state.productDetails} />
+                        <Description readOnly={_.get(this.state, 'productDetails.status') != 'approved'} productDetails={this.state.productDetails} />
                       </Col>
                     </Row>
                   </Col>
@@ -871,7 +880,7 @@ class ViewCarDetailsPage extends React.Component {
                         </span>
 
                         <span className="d-inline-block">
-                          <AddCompareProductButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
+                          <AddCompareProductButton readOnly={_.get(this.state, 'productDetails.status') != 'approved'} data={this.state.productDetails} saveButton={() => {
                             return (
                               <Button type="normal" className="padding-x-sm margin-xs ads-purchase-compare-btn" style={{ minWidth: '50px' }}><img src="/assets/CarListingIconMobile/car-compare.png" style={{ width: '25px', height: '25px' }} alt="compare" /></Button>
                             );
@@ -897,10 +906,10 @@ class ViewCarDetailsPage extends React.Component {
 
                     <Divider style={{ marginTop: '10px', marginBottom: '10px' }} />
 
-                    <SellerBusinessCard readOnly={_.get(this.state , 'productDetails.status') != 'approved'} data={this.state.productDetails.companys} data1={this.state.productDetails.createdBy} />
+                    <SellerBusinessCard readOnly={_.get(this.state, 'productDetails.status') != 'approved'} data={this.state.productDetails.companys} data1={this.state.productDetails.createdBy} />
                     <Row className="padding-top-sm">
                       <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
-                        <WhatsAppButton readOnly={_.get(this.state , 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
+                        <WhatsAppButton readOnly={_.get(this.state, 'productDetails.status') != 'approved'} mobileNumber={this.state.productDetails} />
                       </Col>
                       <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ padding: '0px 5px' }}>
                         <ContactList companys={this.state.productDetails.companys} contactPerson={notEmptyLength(this.state.productDetails.createdBy) ? this.state.productDetails.createdBy : null} />
@@ -914,7 +923,7 @@ class ViewCarDetailsPage extends React.Component {
                 </div>
               </Col>
             </Row>
-          
+
           </div>
         </div>
 
@@ -924,6 +933,36 @@ class ViewCarDetailsPage extends React.Component {
                 `}</style>
 
 
+        <Modal
+          closable
+          visible={this.state.soldOutModalVisible}
+          onCancel={() => {
+            this.setState({
+              soldOutModalVisible: false,
+            })
+          }}
+          centered
+          footer={null}
+        >
+          <div className="padding-md flex-justify-center flex-items-align-center">
+            <img src={soldOutIcon} style={{ width: 200, height: 200 }} />
+          </div>
+          <div className="padding-y-sm h6 flex-justify-center flex-items-align-center">
+            This car has been sold.
+          </div>
+          <div className="padding-y-sm flex-justify-center flex-items-align-center">
+            <span className='d-inline-block width-50' >
+              <Link href={`/dealer/${_.get(this.state.productDetails , 'createdBy.companyurlId') || ''}/${_.get(this.state.productDetails , 'createdBy.userurlId') || ''}`}>
+                <a>
+                <Button block className="black background-ccar-button-yellow" >More Information</Button>
+                </a>
+              </Link>
+            </span>
+          </div>
+          <div className="padding-y-sm text-align-center text-overflow-break">
+            Posted by <b>{_.trim(`${_.get(this.state.productDetails, ['createdBy.namePrefix']) || ''} ${getUserName(_.get(this.state.productDetails, ['createdBy']) || {}) || ''}`)}</b>
+          </div>
+        </Modal>
       </LayoutV2 >
     );
   }
