@@ -316,7 +316,7 @@ const Index = (props) => {
             id="banner-1"
             className="bg"
             style={{
-              backgroundImage: 'url(/banner/Website-Banner-02-02.jpg)',
+              backgroundImage: 'url(/banner/Website-Banner-02-01.jpg)',
               backgroundSize: 'fit',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
@@ -435,7 +435,7 @@ const Index = (props) => {
                     path = `/newcar/maker/${_.toLower(brand.value)}`
                   }
                   props.router.push(path);
-                } else {
+                } else { 
                   message.error('Brand Not Found!')
                 }
               }} />
