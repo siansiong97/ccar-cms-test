@@ -277,7 +277,8 @@ code {
 }
 
 .wrap-register-link a {
-  color: rgb(142, 142, 142);
+  /* color: rgb(142, 142, 142); */
+  color: #ffffff;
 }
 
 .wrap-register-link a:hover {
@@ -293,6 +294,7 @@ code {
   border-radius: 5px;
   text-align: center;
   border: solid 1px rgb(237, 236, 234);
+  background: #ffffff;
 }
 
 .facebook-btn {
@@ -996,7 +998,8 @@ code {
 }
 
 .yellow-divider .ant-divider-horizontal.ant-divider-with-text-center::before, .ant-divider-horizontal.ant-divider-with-text-left::before, .ant-divider-horizontal.ant-divider-with-text-right::before, .ant-divider-horizontal.ant-divider-with-text-center::after, .ant-divider-horizontal.ant-divider-with-text-left::after, .ant-divider-horizontal.ant-divider-with-text-right::after {
-  border-top: 2px solid #FFCC32;
+  /* border-top: 2px solid #FFCC32; */
+  border-top: 1px solid #e8e8e8;
 }
 
 .kpp-background {

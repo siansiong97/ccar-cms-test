@@ -28,7 +28,7 @@ const SellerBusinessCard = (props) => {
 
 
     return (
-        <div className="thin-border">
+        <div className={`thin-border ${props.className || ''}`}>
             <a href={props.readOnly ? null : !props.data1 || !props.data1._id ? null : '/dealer/' + (props.data1.companyurlId || '') + '/' + (props.data1.userurlId || '')} className="grey-darken-2 font-weight-normal">
                 <Row>
                     <Col span={12}>
@@ -59,8 +59,8 @@ const SellerBusinessCard = (props) => {
                                 <img src="/assets/profile/address-work.png" className="fill-parent" style={{ width: '50%' }}></img>
                             </Col>
                             <Col span={20}>
-                                <p style={{ marginBottom: '0px', color: 'rgb(173, 173, 173)', fontSize: '13px', fontWeight: '500', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', marginLeft: '-4px' }}>
-                                        {companyName}</p>
+                                <div style={{ marginBottom: '0px', fontSize: '13px', fontWeight: '500', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', marginLeft: '-4px' }}>
+                                        {companyName}</div>
                             </Col>
                         </Row>
 

@@ -105,8 +105,10 @@
 
 .wrap-product-ads-spotlight {
     /* background-color: #ffe9c8; */
-    background: linear-gradient(-45deg, #F7DA00 , #EFA600, #F5F54B);
-    background-size: 400% 400%;
+    /* background: linear-gradient(-45deg, #F7DA00 , #EFA600, #F5F54B); */
+
+    background: linear-gradient(90deg, #78F3FB , #44A6C7, #1A4F67);
+    background-size: 250% 200%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 5s ease infinite;
     animation: Gradient 5s ease infinite;
@@ -130,8 +132,9 @@
 
 .wrap-product-ads-spicydeal {
     /* background: linear-gradient(-45deg, #ff3145 , #ff884e, #f732c5); */
-    background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5);
-    background-size: 400% 400%;
+    /* background: linear-gradient(-45deg, #FF0011 , #FD8800, #f732c5); */
+    background: linear-gradient(90deg, #FAEB03 , #FEBB00, #FF4A04);
+    background-size: 150% 300%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 5s ease infinite;
     animation: Gradient 5s ease infinite;
