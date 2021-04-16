@@ -905,8 +905,8 @@ class LayoutV2 extends React.Component {
                                                     <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
                                                         <Link shallow={false} href={`/`}  >
                                                             <a>
-                                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
-                                                                    <img alt="ccar" className="fill-parent absolute-center" src={"/assets/Artboard-3-2.svg"} />
+                                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' >
+                                                                    <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
                                                                 </span>
                                                             </a>
                                                         </Link>
@@ -983,8 +983,8 @@ class LayoutV2 extends React.Component {
                                             <div className='flex-justify-start flex-items-align-center topnav-child'>
                                                 <Link shallow={false} href={`/`}  >
                                                     <a>
-                                                        <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer' style={{ height: '62px', width: '214px' }}>
-                                                            <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
+                                                        <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' >
+                                                            <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
                                                         </span>
                                                     </a>
                                                 </Link>
@@ -1066,8 +1066,8 @@ class LayoutV2 extends React.Component {
                                         <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
                                             <Col xs={20} sm={20} md={14} lg={12} xl={12}>
                                                 <div className='flex-justify-start flex-items-align-center topnav-child'  >
-                                                    <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' style={{ height: '62px', width: '120px' }} onClick={(e) => { this.props.router.push('/') }}>
-                                                        <img alt="ccar" className="fill-parent absolute-center" src="/assets/Artboard-3-2.svg" />
+                                                    <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' onClick={(e) => { this.props.router.push('/') }}>
+                                                        <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
                                                     </span>
                                                     {
                                                         this.props.hideSearchBar ?
