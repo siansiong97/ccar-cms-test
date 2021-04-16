@@ -37,6 +37,7 @@ import RegisterCard from '../../general/registerCard';
 import KeyCarDetails from '../KeyCarDetails';
 import Link from 'next/link';
 import Description from '../Description';
+import { routePaths } from '../../../route';
 
 
 const { TextArea } = Input;
@@ -961,7 +962,7 @@ class ViewCarDetails2Page extends React.Component {
             </div>
                     <div className="padding-y-sm flex-justify-center flex-items-align-center">
                         <span className='d-inline-block width-50' >
-                            <Link href={`/dealer/${_.get(this.state.productDetails, 'createdBy.companyurlId') || ''}/${_.get(this.state.productDetails, 'createdBy.userurlId') || ''}`}>
+                            <Link  href={routePaths.dealerProfile.to || '/'} as={typeof (routePaths.dealerProfile.as) == 'function' ? routePaths.dealerProfile.as(_.get(this.state.productDetails , `createdBy`)) : '/'} >
                                 <a>
                                     <Button block className="black background-ccar-button-yellow" >More Information</Button>
                                 </a>

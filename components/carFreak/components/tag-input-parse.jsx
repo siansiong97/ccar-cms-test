@@ -8,6 +8,7 @@ import { darkThemeColorList } from '../../../params/darkThemeColorList';
 import { isValidNumber } from '../../profile/common-function';
 import { parseTagStringToArray } from '../config';
 import Link from 'next/link';
+import { routePaths } from '../../../route';
 
 
 const TagInputParse = (props) => {
@@ -52,7 +53,7 @@ const TagInputParse = (props) => {
                             return user._id == v.id;
                         })
                         if (_.get(user, ['userurlId'])) {
-                            return <Link shallow={false} href={`/profile/${user.userurlId}`}>
+                            return <Link href={routePaths.profile.to || '/'} as={typeof (routePaths.profile.as) == 'function' ? routePaths.profile.as(user) : '/'}>
                                 <a>
                                     <span className="font-weight-bold blue cursor-pointer">
                                         {v.value}

@@ -5,6 +5,7 @@ import { carBrandsList } from '../../params/carBrandsList';
 import _ from 'lodash';
 import { notEmptyLength } from '../../common-function';
 import Link from 'next/link';
+import { routePaths } from '../../route';
 
 
 function getWindowDimensions() {
@@ -121,7 +122,7 @@ const BrandFiltering = (props) => {
                                     {item.data.map(function (row2, childIndex) {
                                         return (
                                             <Menu.Item className={props.selected == _.toLower(row2.value) ? 'brandpics background-yellow-lighten-5' : "brandpics"} id={parentsIndex + '' + childIndex} key={parentsIndex + '' + childIndex}>
-                                                <Link shallow={false}  href={`/newcar/maker/${_.toLower(row2.value)}`} passHref>
+                                                <Link shallow={false} href={routePaths.newCarMakerDetails.to || '/'} as={typeof (routePaths.newCarMakerDetails.as) == 'function' ? routePaths.newCarMakerDetails.as({make : row2.value}) : '/'} passHref>
                                                     <a>
                                                         <div className={props.selected == _.toLower(row2.value) ? 'flex-items-align-center cursor-pointer ccar-yellow' : 'flex-items-align-center cursor-pointer'}
                                                         // onClick={(e) => { onSelect(row2.value) }}

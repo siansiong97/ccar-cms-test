@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { notEmptyLength } from '../../../../common-function';
 import { imageNotFound } from '../../../profile/config';
 import Link from 'next/link';
+import { routePaths } from '../../../../route';
 
 
 
@@ -32,7 +33,7 @@ const AllClubBox = (props) => {
                                     if (i === 0) {
                                         return (
                                             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                                <Link shallow={false}  href={`/social-club/${v._id}`} >
+                                                <Link shallow={false}  href={routePaths.socialClub.to || '/'} as={typeof (routePaths.socialClub.as) == 'function' ? routePaths.socialClub.as(v) : '/'} >
                                                     <a>
                                                         <div className="width-100 relative-wrapper cursor-pointer" style={{ height: 400 }}>
                                                             <img src={_.get(v, ['clubAvatar']) || imageNotFound} className="fill-parent absolute-center img-cover" ></img>
@@ -50,7 +51,7 @@ const AllClubBox = (props) => {
                                     }
                                     return (
                                         <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-                                            <Link shallow={false}  href={`/social-club/${v._id}`}>
+                                            <Link shallow={false} href={routePaths.socialClub.to || '/'} as={typeof (routePaths.socialClub.as) == 'function' ? routePaths.socialClub.as(v) : '/'}>
                                                 <a>
                                                     <div className="width-100 relative-wrapper cursor-pointer" style={{ height: 200 }}>
                                                         <img src={_.get(v, ['clubAvatar']) || imageNotFound} className="fill-parent absolute-center img-cover" ></img>

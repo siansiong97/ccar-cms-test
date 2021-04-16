@@ -27,13 +27,15 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
 
 
-    const { id } = context.req.params;
+    let id = context.req.params.id || context.req.query.id || '';
+    id = id.replace('?', '');
+    console.log(id);
     let data = {};
     let seoData = {};
     if (id) {
         data = await client.service('chats').find({
             query: {
-                _id: id,
+                _id: `${id}`,
                 chatType : 'carfreaks',
                 $populate : 'userId'
             }

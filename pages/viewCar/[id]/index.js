@@ -56,7 +56,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))
 export async function getServerSideProps({ req, res, }) {
     try {
 
-        const { id } = req.params
+        let id = _.get(req, `params.id`) || _.get(req, `query.id`);
         let carInfo = {
             condition: '', companys: {}, carspecsAll: {}, registrationUrl: {}
         };

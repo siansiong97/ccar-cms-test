@@ -20,6 +20,7 @@ import ContactList from '../general/contactList';
 import RegisterCard from '../general/registerCard';
 import CalculatorModal from '../general/calculator-modal';
 import GridProductSkeleton from '../skeleton-loader/GridProductSkeleton';
+import { routePaths } from '../../route';
 
 
 const currentDateTime = moment().format()
@@ -333,7 +334,7 @@ const GridProductList = (props) => {
 
                                         <div className={_renderLayout(v)}>
                                             <div className="wrap-product-ads-img">
-                                                <Link shallow={false} passHref href={'/viewCar/' + v._id}>
+                                                <Link shallow={false}  href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'}>
                                                     <a>
                                                         <React.Fragment>
                                                             <div className="overlay-condition">
@@ -397,7 +398,7 @@ const GridProductList = (props) => {
                                                             null
                                                 }
                                                 <div className="wrap-product-ads-title">
-                                                    <Link shallow={false} passHref href={'/viewCar/' + v._id} >
+                                                    <Link shallow={false} passHref href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
                                                         <a>
                                                             <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
                                                         </a>

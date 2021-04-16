@@ -26,11 +26,9 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
 
 
-    console.log(context.req.params);
-    console.log(context.req.query);
-    const { id } = context.req.params 
+    let id = _.get(context, `req.params.id`) || _.get(context, `req.query.id`);
     const { user, title, companyName } = context.req.query
-    let broadCastInfo = {user, title, id, companyName}
+    let broadCastInfo = { user, title, id, companyName }
 
     let seoData = getLiveSeoData(broadCastInfo);
     return {

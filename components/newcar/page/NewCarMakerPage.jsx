@@ -15,6 +15,7 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import { carBrandsList, getCarBrandsIcon } from '../../../params/carBrandsList';
 import BrandFiltering from '../BrandFiltering';
+import { routePaths } from '../../../route';
 
 
 const Desktop = ({ children }) => {
@@ -337,17 +338,17 @@ class Maker extends React.Component {
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar" passHref>
+                                    <Link shallow={false} href={routePaths.newCar.to || '/'} as={typeof (routePaths.newCar.as) == 'function' ? routePaths.newCar.as() : '/'} passHref>
                                         <a>New Car</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar/filter" passHref>
+                                    <Link shallow={false} href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'} passHref>
                                         <a>Filter</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar/maker" passHref>
+                                    <Link shallow={false} href={routePaths.newCarMakerDetails.to || '/'} as={typeof (routePaths.newCarMakerDetails.as) == 'function' ? routePaths.newCarMakerDetails.as({ make: _.get(this.props, ['router', 'query', 'id']) || '' }) : '/'} passHref>
                                         <a>
                                             {_.capitalize(_.get(this.props, ['router', 'query', 'id']) || '')}
                                         </a>
@@ -355,57 +356,57 @@ class Maker extends React.Component {
                                 </Breadcrumb.Item>
                             </Breadcrumb>
 
-                                <Row gutter={[20, 0]}>
-                                    <Col xs={24} sm={24} md={18} lg={18} xl={19}>
-                                        {/* <Row>
+                            <Row gutter={[20, 0]}>
+                                <Col xs={24} sm={24} md={18} lg={18} xl={19}>
+                                    {/* <Row>
                             <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
                                 <span className='d-inline-block h6 font-weight-bold grey-darken-3 capitalize' >
                                     {this.props.newCars.brands[0]?this.props.newCars.brands[0].make:''}
                                 </span>
                             </Col>
                             </Row> */}
-                                        <Row className="maker-details padding-lg">
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
-                                                <img style={{ width: '10%' }} src={getCarBrandsIcon(_.get(this.props, ['router', 'query', 'id']) || '')}></img>
-                                            </Col>
-                                            {/* <Col xs={24} sm={24} md={20} lg={20} xl={20}>
+                                    <Row className="maker-details padding-lg">
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
+                                            <img style={{ width: '10%' }} src={getCarBrandsIcon(_.get(this.props, ['router', 'query', 'id']) || '')}></img>
+                                        </Col>
+                                        {/* <Col xs={24} sm={24} md={20} lg={20} xl={20}>
                                     <p style={{marginBottom:'10px'}} className="h6 font-weight-bold grey-darken-3 uppercase"> {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : ''} </p>
                                     <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
                                         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
                                         dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                     </p>
                                     </Col> */}
-                                        </Row>
+                                    </Row>
 
-                                        <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
+                                    <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
 
-                                            <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase' >
-                                                {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
+                                        <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase' >
+                                            {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
                                             </span>
-                                        </Col>
+                                    </Col>
 
-                                        <Row className="maker-list-car" type="flex" >
-                                            {this._renderVariants()}
-                                        </Row>
+                                    <Row className="maker-list-car" type="flex" >
+                                        {this._renderVariants()}
+                                    </Row>
 
-                                        {
-                                            this.state.total > PAGESIZE ?
-                                                <div className="flex-justify-center margin-md">
-                                                    <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
-                                                </div>
-                                                :
-                                                null
-                                        }
+                                    {
+                                        this.state.total > PAGESIZE ?
+                                            <div className="flex-justify-center margin-md">
+                                                <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
+                                            </div>
+                                            :
+                                            null
+                                    }
 
-                                        {/* <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
+                                    {/* <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
 
                                 <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase' >
                                     {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : ''} News in Malaysia
                         </span>
                             </Col> */}
 
-                                        {/* <div className="maker-page"> */}
-                                        {/* <Row gutter={[10, 10]}>
+                                    {/* <div className="maker-page"> */}
+                                    {/* <Row gutter={[10, 10]}>
                                 {this.props.newCars.news.map(function (item, i) {
                                     return (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -429,17 +430,17 @@ class Maker extends React.Component {
                                 })
                                 }
                             </Row> */}
-                                        {/* </div> */}
+                                    {/* </div> */}
 
-                                        {/* temporary remark */}
-                                        {/* <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
+                                    {/* temporary remark */}
+                                    {/* <Col className="gutter-row" xs={18} sm={18} md={20} lg={20} xl={20}>
                             
             <span className='d-inline-block h6 font-weight-bold grey-darken-3' >
               CAR TIPS & TRICKS
                         </span>
                             </Col> */}
 
-                                        {/* <div className="tips">
+                                    {/* <div className="tips">
                                 <Row gutter={[10, 10]}>
                                     <Col span={12}>
                                         <Card hoverable src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png">
@@ -480,31 +481,31 @@ class Maker extends React.Component {
                                 </Row>
                             </div>
           */}
-                                        {/* -----temporary remark */}
-                                    </Col>
+                                    {/* -----temporary remark */}
+                                </Col>
 
 
-                                    <Col className="stick-column" xs={0} sm={0} md={6} lg={6} xl={5}>
-                                        <Affix offsetTop={65}>
-                                            {
-                                                _.isArray(this.state.filterCarBrands) && !_.isEmpty(this.state.filterCarBrands) ?
-                                                    <BrandFiltering
-                                                        brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : []}
-                                                    // onSelect={(e) => { this.setState({ ...this.state.filterGroup, make: _.toLower(e) }) }}
-                                                    // selected={
-                                                    //     this.props.newCars ? this.state.filterGroup
-                                                    //         ? this.state.filterGroup.make
-                                                    //             ? this.state.filterGroup.make
-                                                    //             : ''
-                                                    //         : ''
-                                                    //         : ''}
-                                                    />
-                                                    :
-                                                    null
-                                            }
-                                        </Affix>
-                                    </Col>
-                                </Row>
+                                <Col className="stick-column" xs={0} sm={0} md={6} lg={6} xl={5}>
+                                    <Affix offsetTop={65}>
+                                        {
+                                            _.isArray(this.state.filterCarBrands) && !_.isEmpty(this.state.filterCarBrands) ?
+                                                <BrandFiltering
+                                                    brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : []}
+                                                // onSelect={(e) => { this.setState({ ...this.state.filterGroup, make: _.toLower(e) }) }}
+                                                // selected={
+                                                //     this.props.newCars ? this.state.filterGroup
+                                                //         ? this.state.filterGroup.make
+                                                //             ? this.state.filterGroup.make
+                                                //             : ''
+                                                //         : ''
+                                                //         : ''}
+                                                />
+                                                :
+                                                null
+                                        }
+                                    </Affix>
+                                </Col>
+                            </Row>
                         </div>
                     </div>
                 </Desktop>
@@ -519,17 +520,17 @@ class Maker extends React.Component {
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar" passHref>
+                                    <Link shallow={false} href={routePaths.newCar.to || '/'} as={typeof (routePaths.newCar.as) == 'function' ? routePaths.newCar.as() : '/'} passHref>
                                         <a>New Car</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar/filter" passHref>
+                                    <Link shallow={false} href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'} passHref>
                                         <a>Filter</a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar/maker" passHref>
+                                    <Link shallow={false} href={routePaths.newCarMakerDetails.to || '/'} as={typeof (routePaths.newCarMakerDetails.as) == 'function' ? routePaths.newCarMakerDetails.as({ make: _.get(this.props, ['router', 'query', 'id']) || '' }) : '/'} passHref>
                                         <a>
                                             {_.capitalize(_.get(this.props, ['router', 'query', 'id']) || '')}
                                         </a>
@@ -537,42 +538,42 @@ class Maker extends React.Component {
                                 </Breadcrumb.Item>
                             </Breadcrumb>
 
-                                <Row>
-                                    <Col xs={24} sm={24} md={16} lg={19} xl={19} style={{ paddingLeft: '5px' }}>
-                                        <Row className="maker-details padding-lg">
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
-                                                <img style={{ width: '15%' }} src={getCarBrandsIcon(_.get(this.props, ['router', 'query', 'id']) || '')}></img>
-                                            </Col>
-                                        </Row>
-
-                                        <Col className="gutter-row text-align-center" xs={18} sm={18} md={24} lg={20} xl={20} >
-                                            <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase ' >
-                                                {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
-                                            </span>
+                            <Row>
+                                <Col xs={24} sm={24} md={16} lg={19} xl={19} style={{ paddingLeft: '5px' }}>
+                                    <Row className="maker-details padding-lg">
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ textAlign: 'center' }}>
+                                            <img style={{ width: '15%' }} src={getCarBrandsIcon(_.get(this.props, ['router', 'query', 'id']) || '')}></img>
                                         </Col>
+                                    </Row>
 
-                                        <Row className="maker-list-car" type="flex">
-                                            <Col span={24}>
-                                                {this._renderVariants()}
-                                            </Col>
-                                        </Row>
-
-                                        {
-                                            this.state.total > PAGESIZE ?
-                                                <div className="flex-justify-center margin-md">
-                                                    <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
-                                                </div>
-                                                :
-                                                null
-                                        }
+                                    <Col className="gutter-row text-align-center" xs={18} sm={18} md={24} lg={20} xl={20} >
+                                        <span className='d-inline-block h6 font-weight-bold grey-darken-3 uppercase ' >
+                                            {this.props.newCars.brands[0] ? this.props.newCars.brands[0].make : 0} Cars in Malaysia
+                                            </span>
                                     </Col>
 
-                                    <Col className="stick-column" xs={0} sm={0} md={8} lg={5} xl={5}>
-                                        <Affix offsetTop={65}>
-                                            <BrandFiltering brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList} />
-                                        </Affix>
-                                    </Col>
-                                </Row>
+                                    <Row className="maker-list-car" type="flex">
+                                        <Col span={24}>
+                                            {this._renderVariants()}
+                                        </Col>
+                                    </Row>
+
+                                    {
+                                        this.state.total > PAGESIZE ?
+                                            <div className="flex-justify-center margin-md">
+                                                <Pagination simple pageSize={PAGESIZE} current={this.state.page} total={this.state.total} onChange={(e) => { this.setState({ page: e }) }} />
+                                            </div>
+                                            :
+                                            null
+                                    }
+                                </Col>
+
+                                <Col className="stick-column" xs={0} sm={0} md={8} lg={5} xl={5}>
+                                    <Affix offsetTop={65}>
+                                        <BrandFiltering brands={notEmptyLength(this.state.filterCarBrands) ? this.state.filterCarBrands : carBrandsList} />
+                                    </Affix>
+                                </Col>
+                            </Row>
                         </div>
                     </div>
                 </Tablet>

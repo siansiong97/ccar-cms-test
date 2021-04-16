@@ -9,6 +9,7 @@ import client from '../../../../feathers';
 import { notEmptyLength } from '../../../../common-function';
 import { imageNotFound } from '../../../profile/config';
 import Link from 'next/link';
+import { routePaths } from '../../../../route';
 
 
 const PAGE_SIZE = 3;
@@ -59,7 +60,7 @@ const OtherClubsBox = (props) => {
                                 _.map(clubs, function (club) {
                                     return (
                                     <span className='d-inline-block relative-wrapper flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: '100%', overflow: 'hidden' }}>
-                                        <Link shallow={false}  href={`/social-club/${club._id}`} >
+                                        <Link shallow={false} href={routePaths.socialClubDetails.to || '/'} as={typeof (routePaths.socialClubDetails.as) == 'function' ? routePaths.socialClubDetails.as(club) : '/'} >
                                             <a>
 
                                                 <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
