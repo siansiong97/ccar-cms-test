@@ -33,7 +33,7 @@ export const ccarLogo = '/logo192.png'
 export const ccarLogo2 = '/assets/Ccar-logo.png'
 
 //Login
-export const loginBackground = '/assets/login/background.png';
+export const loginBackground = '/assets/login/ramadhan.png';
 export const tbhCny = '/assets/login/tbh.png';
 export const tbh1Cny = '/assets/login/tbh-01.png';
 export const tbh2Cny = '/assets/login/tbh-02.png';
@@ -41,7 +41,7 @@ export const cnyLionHead = '/assets/login/lion-dance.png';
 export const cnyLogo = '/assets/login/ccar-cny-logo.png';
 export const googleLogo = '/google.png';
 export const cnyLogo2 = '/ccar cny 2.svg';
-export const tbh = '/assets/login/tbh-2.PNG';
+export const tbh = '/assets/login/fara.png';
 
 
 //Profile
