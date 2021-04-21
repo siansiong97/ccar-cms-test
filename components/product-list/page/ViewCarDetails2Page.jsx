@@ -452,7 +452,7 @@ class ViewCarDetails2Page extends React.Component {
                                         <Col xs={12} sm={12} md={18} lg={18} xl={18}>
                                             <div className="text-truncate-twoline">
                                                 <h1 style={{ marginBottom: '0px', fontWeight: '700', fontSize: '18px' }}>
-                                                    {this.state.productDetails.title}
+                                                    {this.state.productDetails.title} 
                                                     {/* {this.state.productDetails.carspecsAll ?
                                   this.state.productDetails.carspecsAll.year + ' ' +
                                   this.state.productDetails.carspecsAll.make + ' ' +
