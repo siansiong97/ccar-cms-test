@@ -8,6 +8,7 @@ import client from '../../../feathers'
 import { withRouter } from 'next/router'
 import { checkEnvReturnCmsUrl } from '../../../functionContent'
 import { connect } from 'react-redux'
+import ViewCarDetails2Page from '../../../components/product-list/page/ViewCarDetails2Page'
 var moment = require('moment');
 const App = (props) => {
     const carInfo = _.get(props, 'carInfo') || {};
@@ -29,7 +30,8 @@ const App = (props) => {
             <ReduxPersistWrapper cookie={props.cookie}>
                 {
                     props.app.initedRedux ?
-                        <ViewCarDetailsPage data={carInfo || {}} />
+                        // <ViewCarDetailsPage data={carInfo || {}} />
+                        <ViewCarDetails2Page data={carInfo || {}} />
                         :
                         null
                 }

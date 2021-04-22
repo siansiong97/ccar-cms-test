@@ -46,35 +46,14 @@ export const routePaths = {
         as: (item, query = {}) => ({ pathname: `/car-review`, query: { ...query } })
     },
     carsOnSale: {
-        to: `/cars-on-sale`,
+        to: `/cars-on-sale/[parameter1]`,
         as: (query = {}, ...parameters) => {
-            if (arrayLengthCount(parameters) < 0) {
-                let url = convertParameterToProductListUrl();
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
-            if (arrayLengthCount(parameters) > 0) {
-                let url = `/cars-on-sale`;
-                _.forEach(parameters, function (parameter) {
-                    url += `/${parameter || ''}`;
-                })
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
+            let url = `/cars-on-sale/malaysia`;
             return {
-                pathname: '/',
+                pathname: url,
                 query: {
-                    ...query,
+                    view: 'gridView',
+                    page: 1,
                 }
             };
         },
@@ -137,10 +116,13 @@ export const routePaths = {
     },
     kppRevision: {
         to: `/kpp/kpp-revision/[group]/[language]`,
-        as: (item, query = {}) => ({ pathname: `/kpp/kpp-revision/${_.get(item , `group`)}/${_.get(item , `language`) || ''}`, query: {
-            group : _.get(item , `group`) || '',
-            language :  _.get(item , `language`) || '',
-            ...query } })
+        as: (item, query = {}) => ({
+            pathname: `/kpp/kpp-revision/${_.get(item, `group`)}/${_.get(item, `language`) || ''}`, query: {
+                group: _.get(item, `group`) || '',
+                language: _.get(item, `language`) || '',
+                ...query
+            }
+        })
     },
     live: {
         to: `/live`,
@@ -160,35 +142,14 @@ export const routePaths = {
         as: (item, query = {}) => ({ pathname: `/logout`, query: { ...query } })
     },
     newCarsOnSale: {
-        to: `/new-cars-on-sale`,
+        to: `/new-cars-on-sale/[parameter1]`,
         as: (query = {}, ...parameters) => {
-            if (arrayLengthCount(parameters) < 0) {
-                let url = convertParameterToProductListUrl({ condition: 'new' });
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
-            if (arrayLengthCount(parameters) > 0) {
-                let url = `/new-cars-on-sale`;
-                _.forEach(parameters, function (parameter) {
-                    url += `/${parameter || ''}`;
-                })
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
+            let url = `/new-cars-on-sale/malaysia`;
             return {
-                pathname: '/',
+                pathname: url,
                 query: {
-                    ...query,
+                    view: 'gridView',
+                    page: 1,
                 }
             };
         },
@@ -268,35 +229,14 @@ export const routePaths = {
         })
     },
     reconCarsOnSale: {
-        to: `/recon-cars-on-sale`,
+        to: `/recon-cars-on-sale/[parameter1]`,
         as: (query = {}, ...parameters) => {
-            if (arrayLengthCount(parameters) < 0) {
-                let url = convertParameterToProductListUrl({ condition: 'recon' });
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
-            if (arrayLengthCount(parameters) > 0) {
-                let url = `/recon-cars-on-sale`;
-                _.forEach(parameters, function (parameter) {
-                    url += `/${parameter || ''}`;
-                })
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
+            let url = `/recon-cars-on-sale/malaysia`;
             return {
-                pathname: '/',
+                pathname: url,
                 query: {
-                    ...query,
+                    view: 'gridView',
+                    page: 1,
                 }
             };
         },
@@ -342,35 +282,14 @@ export const routePaths = {
         as: (item, query = {}) => ({ pathname: `/termsOfUse`, query: { ...query } })
     },
     usedCarsOnSale: {
-        to: `/used-cars-on-sale`,
+        to: `/used-cars-on-sale/[parameter1]`,
         as: (query = {}, ...parameters) => {
-            if (arrayLengthCount(parameters) < 0) {
-                let url = convertParameterToProductListUrl({ condition: 'used' });
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
-            if (arrayLengthCount(parameters) > 0) {
-                let url = `/used-cars-on-sale`;
-                _.forEach(parameters, function (parameter) {
-                    url += `/${parameter || ''}`;
-                })
-                return {
-                    pathname: url,
-                    query: {
-                        ...query,
-                    }
-                };
-            }
-
+            let url = `/used-cars-on-sale/malaysia`;
             return {
-                pathname: '/',
+                pathname: url,
                 query: {
-                    ...query,
+                    view: 'gridView',
+                    page: 1,
                 }
             };
         },

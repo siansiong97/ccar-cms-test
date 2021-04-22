@@ -31,6 +31,7 @@ const GridProductList = (props) => {
     const [initLoading, setInitLoading] = useState(true);
 
     useEffect(() => {
+        console.log(props.data);
         // processAddonProduct()
         processAddonProduct()
         var interval2 = setInterval(() => {
@@ -116,7 +117,6 @@ const GridProductList = (props) => {
                 setProductList(inputDataList);
             }
         }
-
     }
 
     useEffect(() => {
@@ -301,7 +301,7 @@ const GridProductList = (props) => {
         if (notEmptyLength(data)) {
             return (
 
-                <Row type="flex" >
+                <Row >
                     {data.map((v, i) => {
                         if (v) {
 
@@ -331,10 +331,9 @@ const GridProductList = (props) => {
                                     lg={props.lg ? props.lg : 8}
                                     xl={props.xl ? props.xl : 8} >
                                     <div className="box-shadow-thin" key={'listDiv' + i} >
-
                                         <div className={_renderLayout(v)}>
                                             <div className="wrap-product-ads-img">
-                                                <Link shallow={false}  href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'}>
+                                                <Link shallow={false} href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'}>
                                                     <a>
                                                         <React.Fragment>
                                                             <div className="overlay-condition">
@@ -389,110 +388,118 @@ const GridProductList = (props) => {
                                             <div className="wrap-product-ads-text relative-wrapper">
 
                                                 {
-                                                    v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
-                                                        <img src={rayaMosque}  style={{ width: 100, height: 100, position : 'absolute', bottom : 50 , right : 10}} />
+
+                                                    props.body ?
+                                                        props.body(v)
                                                         :
-                                                        v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
-                                                            <img src={rayaPeople} style={{ width: 100, height: 100, position : 'absolute', bottom : 50 , right : 10 }} />
-                                                            :
+                                                        props.body === null ?
                                                             null
+                                                            :
+                                                            <React.Fragment>
+
+                                                                {
+                                                                    v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
+                                                                        <img src={rayaMosque} style={{ width: 100, height: 100, position: 'absolute', bottom: 50, right: 10 }} />
+                                                                        :
+                                                                        v.priority === 'addonSpotlight' || v.priority === 'addonKingadType3' ?
+                                                                            <img src={rayaPeople} style={{ width: 100, height: 100, position: 'absolute', bottom: 50, right: 10 }} />
+                                                                            :
+                                                                            null
+                                                                }
+                                                                <div className="wrap-product-ads-title">
+                                                                    <Link shallow={false} passHref href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
+                                                                        <a>
+                                                                            <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
+                                                                        </a>
+                                                                    </Link>
+                                                                </div>
+
+                                                                <div className="wrap-product-ads-title-p text-overflow-break">
+                                                                    <Row>
+                                                                        <Col span={20}>
+                                                                            <p>
+                                                                                {v.carspecsAll ?
+                                                                                    v.carspecsAll.transmission + ' | ' +
+                                                                                    renderMileageRange(v.mileage, v.mileage2) + ' | ' +
+                                                                                    (v.color ? v.color.toUpperCase() : '')
+                                                                                    : ''}
+                                                                            </p>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </div>
+
+                                                                <Row className="margin-bottom-xs">
+                                                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} >
+                                                                        <Row >
+                                                                            <Col className="icon-res" span={3} style={{ marginTop: '-3px' }}>{_renderIcon(v)}</Col>
+                                                                            <Col span={20}>
+                                                                                <p className='gridDealerName'>{v.createdBy ? v.createdBy.namePrefix : null}
+                                                                                    {v.createdBy ? v.createdBy.firstName : null}
+                                                                                    {v.createdBy ? v.createdBy.lastName : null} </p>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col className="icon-res" span={3} >{_renderIcon(v, 'company')}</Col>
+                                                                            <Col span={20}>
+                                                                                <p style={{ marginLeft: '5px', fontSize: '14px' }} className="product-ads-company">{companyName} </p>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col span={3} className="flex-justify-center flex-align-center flex-items-align-center icon-res">
+                                                                                {_renderIcon(v, 'area')}
+                                                                            </Col>
+                                                                            <Col span={20}>
+                                                                                <p style={{ marginLeft: '5px', fontSize: '14px', textTransform: 'uppercase' }} className="product-ads-company">{areaName} </p>
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </Col>
+                                                                </Row>
+
+                                                            </React.Fragment>
+
                                                 }
-                                                <div className="wrap-product-ads-title">
-                                                    <Link shallow={false} passHref href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
-                                                        <a>
-                                                            <div className='text-truncate-twoline'><label style={{ fontSize: 16 }}>{v.title}</label></div>
-                                                        </a>
-                                                    </Link>
-                                                </div>
-
-                                                <div className="wrap-product-ads-title-p text-overflow-break">
-                                                    <Row>
-                                                        <Col span={20}>
-                                                            <p>
-                                                                {v.carspecsAll ?
-                                                                    v.carspecsAll.transmission + ' | ' +
-                                                                    renderMileageRange(v.mileage, v.mileage2) + ' | ' +
-                                                                    (v.color ? v.color.toUpperCase() : '')
-                                                                    : ''}
-                                                            </p>
-                                                        </Col>
-                                                    </Row>
-                                                </div>
-
-                                                <Row className="margin-bottom-xs">
-                                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} >
-                                                        <Row >
-                                                            <Col className="icon-res" span={3} style={{ marginTop: '-3px' }}>{_renderIcon(v)}</Col>
-                                                            <Col span={20}>
-                                                                <p className='gridDealerName'>{v.createdBy ? v.createdBy.namePrefix : null}
-                                                                    {v.createdBy ? v.createdBy.firstName : null}
-                                                                    {v.createdBy ? v.createdBy.lastName : null} </p>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col className="icon-res" span={3} >{_renderIcon(v, 'company')}</Col>
-                                                            <Col span={20}>
-                                                                <p style={{ marginLeft: '5px', fontSize: '14px' }} className="product-ads-company">{companyName} </p>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col span={3} className="flex-justify-center flex-align-center flex-items-align-center icon-res">
-                                                                {_renderIcon(v, 'area')}
-                                                            </Col>
-                                                            <Col span={20}>
-                                                                <p style={{ marginLeft: '5px', fontSize: '14px', textTransform: 'uppercase' }} className="product-ads-company">{areaName} </p>
-                                                            </Col>
-                                                        </Row>
-                                                    </Col>
-                                                </Row>
-
-                                                {/* <Row style={{ height: '35px' }} >
-                          <Col className="flex-justify-center flex-align-center flex-items-align-center icon-res location" xs={{ span: 3, offset: 1 }} sm={{ span: 3, offset: 1 }} md={{ span: 3, offset: 0 }} lg={{ span: 3, offset: 0 }} xl={{ span: 3, offset: 0 }} style={{marginLeft:'-3px'}}>
-                            {_renderIcon(v, 'area')}
-                          </Col>
-                          <Col className="location-res flex-justify-start flex-align-start flex-items-align-center" xs={16} sm={16} md={16} lg={16} xl={16} >
-                            <p style={{ fontWeight: '500', marginBottom: '0px', marginTop:'2px' }}>{_.get(v, ['companys', 'area'])} </p>
-                          </Col>
-                        </Row> */}
 
                                                 {
                                                     props.footer ?
                                                         props.footer(v)
                                                         :
-                                                        <Row type="flex" justify="start" align="middle" className='w-100' gutter={[2.5, 0]}>
-                                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}><WhatsAppButton mobileNumber={v ? v : null} /></Col>
-                                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}><ContactList companys={v.companys ? v.companys : null} contactPerson={notEmptyLength(v.createdBy) ? v.createdBy : null} /></Col>
-                                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}><AddCompareProductButton data={v} /></Col>
-                                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                                <Car360ViewButton id={v.xmlUrl ? v._id : null}>
-                                                                    {/* <Tooltip title="360&deg; View"> */}
-                                                                    <Button type="normal" className={`w-100 ads-purchase-button ${v.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" /></Button>
-                                                                    {/* </Tooltip> */}
-                                                                </Car360ViewButton>
-                                                            </Col>
-                                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                                {
-                                                                    _.isArray(v.registrationUrl) && notEmptyLength(v.registrationUrl) ?
-                                                                        <RegisterCard key='register' button={
-                                                                            // [<Tooltip key='tooltipsregister' title="Registration Card">
-                                                                            //   <Button type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(209 ,110, 132)', borderColor: 'rgb(209 ,110, 132)' }}><img src="/assets/CarListingIconMobile/registration-card.png" /></Button>
-                                                                            // </Tooltip>]
-                                                                            [
-                                                                                <Button key='btnRegister' type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(209 ,110, 132)', borderColor: 'rgb(209 ,110, 132)' }}><img src="/assets/profile/icon-list/carmarket-bar-icon/reg-card.png" /></Button>
-                                                                            ]
-                                                                        } registrationUrl={v.registrationUrl} />
-                                                                        :
-                                                                        <div className="width-100">
-                                                                            {/* <Tooltip key='tooltipsregister' title="Registration Card"> */}
-                                                                            <Button type="normal" className="width-100 ads-purchase-button cursor-not-allowed" style={{ padding: 0, background: 'rgb(237, 236, 234)', borderColor: 'rgb(237, 236, 234)' }}><img src="/assets/profile/icon-list/carmarket-bar-icon/reg-card.png" /></Button>
-                                                                            {/* </Tooltip> */}
-                                                                        </div>
-                                                                }
-                                                            </Col>
-                                                            <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-                                                                <CalculatorModal key='calculator' data={{ price: v.searchPrice, downpayment: v.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }} />
-                                                            </Col>
-                                                        </Row>
+                                                        props.footer === null ?
+                                                            null
+                                                            :
+                                                            <Row type="flex" justify="start" align="middle" className='w-100' gutter={[2.5, 0]}>
+                                                                <Col xs={4} sm={4} md={4} lg={4} xl={4}><WhatsAppButton mobileNumber={v ? v : null} /></Col>
+                                                                <Col xs={4} sm={4} md={4} lg={4} xl={4}><ContactList companys={v.companys ? v.companys : null} contactPerson={notEmptyLength(v.createdBy) ? v.createdBy : null} /></Col>
+                                                                <Col xs={4} sm={4} md={4} lg={4} xl={4}><AddCompareProductButton data={v} /></Col>
+                                                                <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                                    <Car360ViewButton id={v.xmlUrl ? v._id : null}>
+                                                                        {/* <Tooltip title="360&deg; View"> */}
+                                                                        <Button type="normal" className={`w-100 ads-purchase-button ${v.xmlUrl ? 'cursor-pointer' : 'cursor-not-allowed '}`} style={{ padding: 0, background: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)', borderColor: v.xmlUrl ? 'rgb(85,204,212)' : 'rgb(237, 236, 234)' }}><img src="/assets/profile/icon-list/Ccar-360_1.gif" /></Button>
+                                                                        {/* </Tooltip> */}
+                                                                    </Car360ViewButton>
+                                                                </Col>
+                                                                <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                                    {
+                                                                        _.isArray(v.registrationUrl) && notEmptyLength(v.registrationUrl) ?
+                                                                            <RegisterCard key='register' button={
+                                                                                // [<Tooltip key='tooltipsregister' title="Registration Card">
+                                                                                //   <Button type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(209 ,110, 132)', borderColor: 'rgb(209 ,110, 132)' }}><img src="/assets/CarListingIconMobile/registration-card.png" /></Button>
+                                                                                // </Tooltip>]
+                                                                                [
+                                                                                    <Button key='btnRegister' type="normal" className="w-100 ads-purchase-button" style={{ padding: 0, background: 'rgb(209 ,110, 132)', borderColor: 'rgb(209 ,110, 132)' }}><img src="/assets/profile/icon-list/carmarket-bar-icon/reg-card.png" /></Button>
+                                                                                ]
+                                                                            } registrationUrl={v.registrationUrl} />
+                                                                            :
+                                                                            <div className="width-100">
+                                                                                {/* <Tooltip key='tooltipsregister' title="Registration Card"> */}
+                                                                                <Button type="normal" className="width-100 ads-purchase-button cursor-not-allowed" style={{ padding: 0, background: 'rgb(237, 236, 234)', borderColor: 'rgb(237, 236, 234)' }}><img src="/assets/profile/icon-list/carmarket-bar-icon/reg-card.png" /></Button>
+                                                                                {/* </Tooltip> */}
+                                                                            </div>
+                                                                    }
+                                                                </Col>
+                                                                <Col xs={4} sm={4} md={4} lg={4} xl={4}>
+                                                                    <CalculatorModal key='calculator' data={{ price: v.searchPrice, downpayment: v.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }} />
+                                                                </Col>
+                                                            </Row>
                                                 }
                                             </div>
                                         </div>
