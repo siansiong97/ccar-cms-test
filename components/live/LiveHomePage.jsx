@@ -20,6 +20,7 @@ import { withRouter } from 'next/router';
 import Link from 'next/link';
 import { isIOS, isMobile } from 'react-device-detect'
 import BroadCasterListScroll from './BroadCasterListScroll';
+import { routePaths } from '../../route';
 
 TweenOne.plugins.push(BezierPlugin);
 
@@ -518,7 +519,7 @@ class LiveIndex extends React.Component {
           return (
             <React.Fragment>
               <Col xs={24} sm={24} md={12} lg={8} xl={8} >
-                <Link shallow={false} href={`/live/${broadcaster.dealerSocketId}`} >
+                <Link shallow={false} href={routePaths.liveDetails.to || '/'} as={typeof (routePaths.liveDetails.as) == 'function' ? routePaths.liveDetails.as(broadcaster) : '/'} >
                   <a>
                     <LiveBoxPreview1
                       data={broadcaster}

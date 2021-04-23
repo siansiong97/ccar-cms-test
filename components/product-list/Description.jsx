@@ -171,7 +171,6 @@ const Description = (props) => {
     }
 
     function getRatings(skip) {
-        console.log('get ratings');
         if (_.get(productDetails, ['carspecsId', '_id'])) {
 
             let query = {
@@ -204,8 +203,6 @@ const Description = (props) => {
             client.service('rating').find({
                 query
             }).then((res) => {
-                console.log('res');
-                console.log(res);
                 props.loading(false);
                 if (notEmptyLength(res.data)) {
                     let data = ratings.concat(res.data);

@@ -1880,7 +1880,7 @@ code {
   height: 5px;
   position: absolute;
   bottom: 0;
-  right: 0;
+  left: 0;
   z-index: 3;
   color: '#F9A825';
 }

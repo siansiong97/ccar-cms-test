@@ -18,6 +18,7 @@ import LayoutV2 from '../../general/LayoutV2';
 import SocialNewTabs from '../../news/social-new-tabs';
 import SocialVideoTabs from '../../news/social-video-tabs';
 import { formatNumber, isValidNumber, notEmptyLength, queryStringifyNestedObject, arrayLengthCount } from '../../../common-function';
+import { routePaths } from '../../../route';
 
 const BgElement = Element.BgElement;
 var PAGESIZE = 8
@@ -418,7 +419,7 @@ class NewCarVersion3 extends React.Component {
                     return (
                         <Col xs={{ span: 22, offset: 1 }} sm={{ span: 22, offset: 1 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }} xl={{ span: 6, offset: 0 }} key={i}>
                             <Desktop>
-                            <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                            <Link shallow={false}  href={routePaths.newCarDetails.to || '/'} as={typeof (routePaths.newCarDetails.as) == 'function' ? routePaths.newCarDetails.as(item) : '/'} passHref >
                                 <a>
                                     <div className="newcars-uniqBy-model cursor-pointer" style={{ height: 320 }} >
                                         <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
@@ -443,7 +444,7 @@ class NewCarVersion3 extends React.Component {
                             </Desktop>
 
                             <Tablet>
-                            <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                            <Link shallow={false}  href={routePaths.newCarDetails.to || '/'} as={typeof (routePaths.newCarDetails.as) == 'function' ? routePaths.newCarDetails.as(item) : '/'} passHref >
                                 <a>
                                     <div className="newcars-uniqBy-model cursor-pointer" style={{ height: 230 }} >
                                         <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
@@ -806,7 +807,7 @@ class NewCarVersion3 extends React.Component {
                         data.map(function (item) {
                             return (
                                 <Col xs={4} sm={4} md={2} lg={2} xl={2} className="col-centered" style={{ margin: '0px 10px' }}>
-                                    <Link shallow={false}  href={`/newcar/maker/${_.toLower(item.value)}`} passHref>
+                                    <Link shallow={false}  href={routePaths.newCarMakerDetails.to || '/'} as={typeof (routePaths.newCarMakerDetails.as) == 'function' ? routePaths.newCarMakerDetails.as({make : item.value}) : '/'} passHref>
                                         <a>
                                             <div className="wrap-newCar-brand cursor-pointer" onClick={(e) => { self.filterByBrand(item.value); }}>
                                                 <img src={getCarBrandsIcon(_.toLower(item.value))} className="type w-100" />
@@ -820,7 +821,7 @@ class NewCarVersion3 extends React.Component {
                     }
                     <Col xs={4} sm={4} md={2} lg={2} xl={2} className="col-centered" style={{ margin: '0px 10px' }}>
                         <div className="wrap-newCar-brand">
-                            <Link shallow={false}  href={'/newcar/filter'} passHref >
+                            <Link shallow={false} href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'} passHref >
                                 <a>
                                     <img src="/assets/add file.png" style={{ width: '70%' }} className="type" />
                                     <p>More</p>
@@ -908,7 +909,7 @@ class NewCarVersion3 extends React.Component {
                                 </Col>
                                 <Col span={24}>
                                     <div className="brand-header">
-                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow={false}  href={'/newcar/filter'} passHref>
+                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow={false} href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'} passHref>
                                             <a>See More</a></Link>}>
                                             {/* <TabPane tab="Popular Cars" key="1">
                     <Row>
@@ -1064,7 +1065,7 @@ class NewCarVersion3 extends React.Component {
                                 </Col>
                                 <Col span={24}>
                                     <div className="brand-header ">
-                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow={false}  href={'/newcar/filter'} passHref>
+                                        <Tabs defaultActiveKey="1" onChange={this.callback} tabBarExtraContent={<Link shallow={false}  href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'} passHref>
                                             <a>See More</a></Link>}>
                                             <TabPane tab="RM20K - RM60K" key="5">
                                                 <Row>

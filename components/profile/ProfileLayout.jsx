@@ -8,6 +8,7 @@ import { notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { filterCarBrandMode, filterCarModelMode, filterCarSearchKeywords, loading, loginMode, quickSearchProductsList, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchProductsList, updateActiveIdProductList } from '../../redux/actions/productsList-actions';
+import { routePaths } from '../../route';
 import LayoutV2 from '../general/LayoutV2';
 import UserAvatar from '../general/UserAvatar';
 import { ccarLogo, facebookLogo, googleLogo } from '../profile/config';
@@ -103,60 +104,60 @@ const ProfileLayout = (props) => {
             case 'wishlists':
                 setNavItems([
                     <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/wishlists`}>
+                        <Link shallow={false} href={routePaths.profileWishLists.to || '/'} as={typeof (routePaths.profileWishLists.as) == 'function' ? routePaths.profileWishLists.as(profile) : '/'} >
                             <a>My Wishlist</a>
                         </Link>
                     </Breadcrumb.Item>
                 ])
                 break;
-            case 'address-book':
-                setNavItems([
-                    <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
-                            <a>
-                                My Address Book
-                                </a>
-                        </Link>
-                    </Breadcrumb.Item>
-                ])
-                break;
-            case 'address-book-create':
-                setNavItems([
-                    <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
-                            <a>
-                                My Address Book
-                                </a></Link>
-                    </Breadcrumb.Item>,
-                    <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book-create`}>
-                            <a>
-                                Add Address
-                                </a></Link>
-                    </Breadcrumb.Item>
-                ])
-                break;
-            case 'address-book-edit':
-                setNavItems([
-                    <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
-                            <a>
-                                My Address Book
-                                </a></Link>
-                    </Breadcrumb.Item>,
-                    <Breadcrumb.Item>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
-                            <a>
-                                Edit Address
-                                </a></Link>
-                    </Breadcrumb.Item>
-                ])
-                break;
+            // case 'address-book':
+            //     setNavItems([
+            //         <Breadcrumb.Item>
+            //             <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
+            //                 <a>
+            //                     My Address Book
+            //                     </a>
+            //             </Link>
+            //         </Breadcrumb.Item>
+            //     ])
+            //     break;
+            // case 'address-book-create':
+            //     setNavItems([
+            //         <Breadcrumb.Item>
+            //             <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
+            //                 <a>
+            //                     My Address Book
+            //                     </a></Link>
+            //         </Breadcrumb.Item>,
+            //         <Breadcrumb.Item>
+            //             <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book-create`}>
+            //                 <a>
+            //                     Add Address
+            //                     </a></Link>
+            //         </Breadcrumb.Item>
+            //     ])
+            //     break;
+            // case 'address-book-edit':
+            //     setNavItems([
+            //         <Breadcrumb.Item>
+            //             <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book`}>
+            //                 <a>
+            //                     My Address Book
+            //                     </a></Link>
+            //         </Breadcrumb.Item>,
+            //         <Breadcrumb.Item>
+            //             <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details/address-book-edit/${props.router.query.address_id || ''}`}>
+            //                 <a>
+            //                     Edit Address
+            //                     </a></Link>
+            //         </Breadcrumb.Item>
+            //     ])
+            //     break;
 
             default:
                 setNavItems([
                     <Breadcrumb.Item key='editprofile'>
-                        <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}/details`}>
+                        <Link shallow={false} href={routePaths.manageProfile.to || '/'} as={typeof (routePaths.manageProfile.as) == 'function' ? routePaths.manageProfile.as(profile) : '/'} >
                             <a>
                                 Edit Profile
                             </a>
@@ -239,7 +240,7 @@ const ProfileLayout = (props) => {
                                 </Link>
                             </Breadcrumb.Item>
                             <Breadcrumb.Item>
-                                <Link shallow={false} href={`/profile/${_.get(profile, ['userurlId'])}`}>
+                                <Link shallow={false} href={routePaths.profile.to || '/'} as={typeof (routePaths.profile.as) == 'function' ? routePaths.profile.as(profile) : '/'}>
                                     <a>
                                         Profile
                                     </a>
@@ -299,7 +300,7 @@ const ProfileLayout = (props) => {
                                     {/* Setting */}
                                     <Col span={24}>
                                         <div className=" round-border thin-border padding-sm">
-                                            <Row type="flex"   justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
+                                            <Row type="flex" justify="start" gutter={[0, 0]} className="padding-left-md" onClick={() => {
                                                 if (_.get(profile, ['userurlId'])) {
                                                     props.router.push(`/profile/${profile.userurlId}/details/settings`);
                                                 }

@@ -9,6 +9,7 @@ import { arrayLengthCount, objectRemoveEmptyValue } from '../../../common-functi
 import client from '../../../feathers';
 import { ccarLogo, ratingBanner } from '../../../icon';
 import { loading, loginMode, updateActiveMenu } from '../../../redux/actions/app-actions';
+import { routePaths } from '../../../route';
 import InfiniteScrollWrapper from '../../general/InfiniteScrollWrapper';
 import LayoutV2 from '../../general/LayoutV2';
 import BrandList from '../../product-list/brand-list';
@@ -161,7 +162,7 @@ const CarReviewHomePage = (props) => {
                             <span className='d-inline-block ' >
                             </span>
                             <span className='d-inline-block ' >
-                                <Link href="/write-car-review" passHref>
+                                <Link href={routePaths.writeCarReview.to || '/'} as={typeof(routePaths.writeCarReview.as) == 'function' ? routePaths.writeCarReview.as() : '/'} passHref>
                                     <a>
                                         <Button style={{ color: '#F57F17' }}  ><Avatar src={'/assets/add-post/create-post.png'} shape="square" size="small" /></Button>
                                     </a>

@@ -11,7 +11,7 @@ import { v4 } from 'uuid';
 import { arrayLengthCount, convertParameterToProductListUrl, notEmptyLength } from '../../common-function';
 import client from '../../feathers';
 import { checkEnv, checkEnvReturnWebAdmin } from '../../functionContent';
-import { ccarLogo, bellInactive, wishList, wishlistIconActived } from '../../icon';
+import { ccarLogo, bellInactive, wishList, wishlistIconActived, ccarWebLogo2 } from '../../icon';
 import { loading, loginMode, quickSearchProductsList, registerMode, setApplyMileage, setApplyPrice, setApplyYear, setDisableWindowScroll, setMenuHeight, setNotificationToken, setNotificationTokenTimeOutDate, updateActiveMenu } from '../../redux/actions/app-actions';
 import { fetchCompareNewCarLimit } from '../../redux/actions/newcars-actions';
 import { clearProductFilterOptions, fetchCompareCarLimit } from '../../redux/actions/productsList-actions';
@@ -29,6 +29,7 @@ import ScrollLoadWrapper from './ScrollLoadWrapper';
 import Scrollbars from 'react-custom-scrollbars';
 import moment from 'moment';
 import WindowScrollDisableWrapper from './WindowScrollDisableWrapper';
+import { routePaths } from '../../route';
 
 
 const NOTIFICATION_BOX_WIDTH = 400
@@ -216,7 +217,7 @@ class LayoutV2 extends React.Component {
         const messaging = firebase.messaging();
         messaging.onMessage((message) => {
             this._renderNotification(message);
-            if (_.get(message, 'data._id') && _.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id']) ) {
+            if (_.get(message, 'data._id') && _.get(this.props.user, ['authenticated']) && _.get(this.props.user, ['info', 'user', '_id'])) {
                 client.service('notifications').find({
                     query: {
                         _id: message.data._id,
@@ -418,7 +419,7 @@ class LayoutV2 extends React.Component {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
                                             <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
-                                                <Link shallow={false} href={menu.path || ''}   >
+                                                <Link shallow={false} href={menu.to || '/'} as={typeof (menu.as) == 'function' ? menu.as(_.get(self.props.user, ['info', 'user'])) : '/'}   >
                                                     <a>
                                                         {
                                                             menu.render ?
@@ -488,7 +489,7 @@ class LayoutV2 extends React.Component {
                                     _.map(profileMenu, function (menu, index) {
                                         return (
                                             <Menu.Item key={`profile-menu-${++index}`} className='padding-sm'>
-                                                <Link shallow={false} href={menu.path || ''}   >
+                                                <Link shallow={false} href={menu.to || '/'} as={typeof (menu.as) == 'function' ? menu.as(_.get(self.props.user, ['info', 'user'])) : '/'}    >
                                                     <a>
                                                         <div className="flex-justify-start flex-items-align-center">
                                                             <span className='d-inline-block margin-x-sm'>
@@ -609,7 +610,7 @@ class LayoutV2 extends React.Component {
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} style={{ fontSize: '15px', textAlign: 'right' }}>
                                             <div className="flex-justify-end flex-items-align-center main-footer">
                                                 {/* Terms of Use | Privacy Policy */}
-                                                <Link shallow={false} href={`/termsOfUse`}  >Terms of Use | Privacy Policy</Link>
+                                                <Link shallow={false} href={routePaths.termsOfUse.to || '/'} as={typeof (routePaths.termsOfUse.as) == 'function' ? routePaths.termsOfUse.as() : '/'}   >Terms of Use | Privacy Policy</Link>
                                             </div>
                                         </Col>
                                     </Row>
@@ -789,58 +790,59 @@ class LayoutV2 extends React.Component {
             {
                 icon: '',
                 text: 'CarMarket',
-                path: convertParameterToProductListUrl()
+                ...routePaths.carsOnSale,
             },
             {
                 icon: '',
                 text: 'All-NewCar',
-                path: '/newcar'
+                ...routePaths.newCar,
             },
             {
                 icon: '',
                 text: <span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} >
                     LIVE
     </span>,
-                path: '/live'
+                ...routePaths.live
             },
         ];
+
 
 
         let innerMenu = [
             {
                 icon: '',
                 text: 'Car Review',
-                path: '/car-review'
+                ...routePaths.carReview,
             },
             {
                 icon: '',
                 text: 'Social News & Videos',
-                path: '/socialNewsAndVideo'
+                ...routePaths.socialNewsAndVideo,
             },
             {
                 icon: '',
                 text: 'CarFreaks',
-                path: '/car-freaks'
+                ...routePaths.carFreaks,
             },
             {
                 icon: '',
                 text: 'Petrol Price',
-                path: '/petrolprice'
+                ...routePaths.petrolPrice,
             },
             {
                 icon: '',
                 text: 'Driving School',
-                path: '/kpp'
+                ...routePaths.kpp,
             },
             {
                 icon: '',
                 text: 'About Us',
-                path: '/about-us'
+                ...routePaths.aboutUs,
             },
             {
                 icon: '',
                 text: 'Contact Us',
-                path: '/contact-us'
+                ...routePaths.contactUs,
             },
 
         ];
@@ -872,111 +874,111 @@ class LayoutV2 extends React.Component {
                     <Icon type="user" style={{ fontSize: '12px', color: 'white' }} />
                 </span>,
                 text: 'Profile',
-                path: `/profile/${_.get(this.props.user, ['info', 'user', 'userurlId'])}`
+                ...routePaths.profile
             },
             {
                 icon: <span className='flex-items-align-center flex-justify-center' >
                     <img src={wishList} style={{ width: '20px', height: '20px' }} />
                 </span>,
                 text: 'My Wishlist',
-                path: `/profile/${_.get(this.props.user, ['info', 'user', 'userurlId'])}/details/wishlists`
+                ...routePaths.profile
             },
             {
                 icon: (<span className='d-inline-block relative-wrapper' style={{ width: '20px', height: '20px' }} >
                     <img src='/logout icon.svg' className='fill-parent absolute-center'></img>
                 </span>),
                 text: 'Log out',
-                path: '/logout'
+                ...routePaths.logout
             },
         ];
 
         return (
             <Layout>
                 {/* <WindowScrollDisableWrapper> */}
-                    <div className="relative-wrapper">
-                        <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} >
-                                <Desktop>
-                                    <div id="menu-bar" className="topnav" style={{ backgroundColor: '#000000' }}>
-                                        <div className="fixed-container">
-                                            <Row type="flex" align="middle" className='padding-x-md' >
-                                                <Col xs={12} sm={12} md={12} lg={11} xl={12}>
-                                                    {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
-                                                    <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
-                                                        <Link shallow={false} href={`/`}  >
-                                                            <a>
-                                                                <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' >
-                                                                    <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
-                                                                </span>
-                                                            </a>
-                                                        </Link>
-                                                        {
-                                                            this.props.hideSearchBar ?
-                                                                null
-                                                                :
-                                                                <span className='d-inline-block' style={{ minWidth: '300px', overflow: 'visible' }} >
-                                                                    <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
-                                                                </span>
-                                                        }
-                                                    </div>
-                                                </Col>
+                <div className="relative-wrapper">
+                    <Row style={{ position: 'sticky', top: 0, zIndex: '99', height: '61px' }}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+                            <Desktop>
+                                <div id="menu-bar" className="topnav" style={{ backgroundColor: '#000000' }}>
+                                    <div className="fixed-container">
+                                        <Row type="flex" align="middle" className='padding-x-md' >
+                                            <Col xs={12} sm={12} md={12} lg={11} xl={12}>
+                                                {/* <Button onClick={(e) => { this.sendTestMessage('Testing Notification') }}>Send Message</Button> */}
+                                                <div className='flex-justify-start flex-items-align-center padding-x-md topnav-child' >
+                                                    <Link shallow={false} href={routePaths.home.to || '/'} as={typeof (routePaths.home.as) == 'function' ? routePaths.home.as() : '/'}  >
+                                                        <a>
+                                                            <span className='d-inline-block relative-wrapper margin-right-md cursor-pointer padding-md' >
+                                                                <img alt="ccar" style={{ height: '40px', width: '197px' }} src={"/assets/web-ccar-logo.png"} />
+                                                            </span>
+                                                        </a>
+                                                    </Link>
+                                                    {
+                                                        this.props.hideSearchBar ?
+                                                            null
+                                                            :
+                                                            <span className='d-inline-block' style={{ minWidth: '300px', overflow: 'visible' }} >
+                                                                <GlobalSearchBar enterSearchCarFreaks={this.props.enterSearchCarFreaks} searchTypes={this.props.searchTypes || ['productAds', 'carspec', 'dealerWithAds']} />
+                                                            </span>
+                                                    }
+                                                </div>
+                                            </Col>
 
-                                                <Col xs={12} sm={12} md={12} lg={13} xl={12}>
-                                                    <div className='width-100 flex-justify-end flex-items-align-center topnav-child'>
-                                                        {
-                                                            notEmptyLength(outterMenu) ?
-                                                                _.map(outterMenu, function (menu, i) {
-                                                                    return (
-                                                                        <Link shallow={false} href={menu.path}  >
-                                                                            <a>
-                                                                                <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
-                                                                                    {menu.text}
-                                                                                </span>
-                                                                            </a>
-                                                                        </Link>
-                                                                    )
-                                                                })
-                                                                :
-                                                                null
-                                                        }
-                                                        <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" overlayStyle={{ width: '250px' }} overlay={() => {
-                                                            return (
-                                                                <Menu >
-                                                                    {
-                                                                        _.map(innerMenu, function (menu, index) {
-                                                                            return (
-                                                                                <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
-                                                                                    <Link shallow={false} href={menu.path}  >
-                                                                                        <a>
-                                                                                            <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
-                                                                                                {menu.text}
-                                                                                            </span>
-                                                                                        </a>
-                                                                                    </Link>
-                                                                                </Menu.Item>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </Menu>
-                                                            )
-                                                        }}>
-                                                            <span className='d-inline-block margin-x-md white subtitle1  cursor-pointer relative-wrapper' >
-                                                                Menu
+                                            <Col xs={12} sm={12} md={12} lg={13} xl={12}>
+                                                <div className='width-100 flex-justify-end flex-items-align-center topnav-child'>
+                                                    {
+                                                        notEmptyLength(outterMenu) ?
+                                                            _.map(outterMenu, function (menu, i) {
+                                                                return (
+                                                                    <Link shallow={false} href={menu.to || '/'} as={typeof (menu.as) == 'function' ? menu.as(_.get(self.props.user, ['info', 'user'])) : '/'}  >
+                                                                        <a>
+                                                                            <span key={'outterMenu' + i} className='d-inline-block white subtitle1  margin-x-md cursor-pointer' >
+                                                                                {menu.text}
+                                                                            </span>
+                                                                        </a>
+                                                                    </Link>
+                                                                )
+                                                            })
+                                                            :
+                                                            null
+                                                    }
+                                                    <Dropdown placement="bottomRight" overlayClassName="padding-top-lg" overlayStyle={{ width: '250px' }} overlay={() => {
+                                                        return (
+                                                            <Menu >
+                                                                {
+                                                                    _.map(innerMenu, function (menu, index) {
+                                                                        return (
+                                                                            <Menu.Item key={`inner-menu-${++index}`} className='padding-sm'>
+                                                                                <Link shallow={false} href={menu.to || '/'} as={typeof (menu.as) == 'function' ? menu.as() : '/'} >
+                                                                                    <a>
+                                                                                        <span className='d-inline-block black headline subtitle1  cursor-pointer margin-x-sm' >
+                                                                                            {menu.text}
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </Link>
+                                                                            </Menu.Item>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </Menu>
+                                                        )
+                                                    }}>
+                                                        <span className='d-inline-block margin-x-md white subtitle1  cursor-pointer relative-wrapper' >
+                                                            Menu
                                                     </span>
 
-                                                        </Dropdown>
+                                                    </Dropdown>
 
-                                                        <div className="topnav-child">
-                                                            {this._renderUser(profileMenu)}
-                                                        </div>
+                                                    <div className="topnav-child">
+                                                        {this._renderUser(profileMenu)}
                                                     </div>
-                                                </Col>
-                                            </Row>
-                                        </div>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                     </div>
-                                </Desktop>
+                                </div>
+                            </Desktop>
 
-                                <Tablet>
+                            <Tablet>
                                 <div id="menu-bar" className="topnav" style={{ position: 'sticky', top: 0, zIndex: '99', height: '65px' }}>
                                     <Row type="flex" align="middle" className='padding-x-md' style={{ backgroundColor: '#000000' }}>
                                         <Col xs={12} sm={12} md={14} lg={12} xl={12}>
@@ -1000,14 +1002,14 @@ class LayoutV2 extends React.Component {
                                         </Col>
                                         <Col xs={12} sm={12} md={10} lg={12} xl={12}>
                                             <div className='flex-justify-end flex-items-align-center topnav-child' style={{ width: '300' }}>
-                                            {
-                                                _.get(this.props, ['user', 'authenticated']) ?
-                                                    <span className='d-inline-block' style={{marginRight:'20px'}}>
-                                                        {/* {this._renderNotificationBox()} */}
-                                                    </span>
-                                                :
-                                                null
-                                            }
+                                                {
+                                                    _.get(this.props, ['user', 'authenticated']) ?
+                                                        <span className='d-inline-block' style={{ marginRight: '20px' }}>
+                                                            {this._renderNotificationBox()}
+                                                        </span>
+                                                        :
+                                                        null
+                                                }
                                                 <Button type="primary" onClick={this.showDrawer} style={{ marginBottom: 0, float: 'right' }} >
                                                     <Icon type="menu" />
                                                 </Button>
@@ -1098,124 +1100,124 @@ class LayoutV2 extends React.Component {
                                                     <img src="/assets/CarListingIcon/login@3x.png" style={{ width: 20 }} className="margin-right-xs" />
                                                     Register/Login
                                                 </p> */}
-                                                        <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
-                                                        <p> <a href="/newcar"> All-NewCar</a> </p>
-                                                        <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
-                                                        <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
-                                                        <p> <a href="/car-freaks"> CarFreaks </a> </p>
-                                                        <p> <a href="/petrolprice"> Petrol Price </a>  </p>
-                                                        <p> <a href="/kpp"> Driving School </a> </p>
-                                                        <p> <a href="/about-us"> About Us </a> </p>
-                                                        <p> <a href="/contact-us"> Contact Us </a> </p>
-                                                        {currentEnv !== 'prod' ?
-                                                            <React.Fragment>
-                                                                <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
-                                                                <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
-                                                            </React.Fragment>
-                                                            : ''}
+                                                <p> <a href={convertParameterToProductListUrl()}> CarMarket</a> </p>
+                                                <p> <a href="/newcar"> All-NewCar</a> </p>
+                                                <p> <a href="/live"><span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} > LIVE </span></a> </p>
+                                                <p> <a href="/socialNewsAndVideo">Social News & Videos</a></p>
+                                                <p> <a href="/car-freaks"> CarFreaks </a> </p>
+                                                <p> <a href="/petrolprice"> Petrol Price </a>  </p>
+                                                <p> <a href="/kpp"> Driving School </a> </p>
+                                                <p> <a href="/about-us"> About Us </a> </p>
+                                                <p> <a href="/contact-us"> Contact Us </a> </p>
+                                                {currentEnv !== 'prod' ?
+                                                    <React.Fragment>
+                                                        <p> <a href="/roadtax-insurance"> Road Tax & Insurance </a> </p>
+                                                        <p> <a href="/extended-warranty"> Extended Warranty </a> </p>
+                                                    </React.Fragment>
+                                                    : ''}
 
-                                                    </Drawer>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </Mobile>
-
-                            </Col>
-                        </Row>
-
-
-                        {
-                            _.get(this.props, ['app', 'loading']) ?
-                                <div className='background-grey-opacity-50 fill-parent absolute-center' style={{ zIndex: 1002 }}>
-                                    <Affix offsetTop={(this.state.window.innerHeight || 500) / 2}>
-                                        <div className="flex-justify-center width-100">
-                                            <img src="/loading.gif" style={{ width: 100, height: 100 }} />
+                                            </Drawer>
                                         </div>
-                                    </Affix>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Mobile>
+
+                        </Col>
+                    </Row>
+
+
+                {
+                    _.get(this.props, ['app', 'loading']) ?
+                        <div className='background-grey-opacity-50 fill-parent absolute-center' style={{ zIndex: 1002 }}>
+                            <Affix offsetTop={(this.state.window.innerHeight || 500) / 2}>
+                                <div className="flex-justify-center width-100">
+                                    <img src="/loading.gif" style={{ width: 100, height: 100 }} />
                                 </div>
-                                :
+                            </Affix>
+                        </div>
+                        :
+                        null
+                }
+
+                {/* </Content> */}
+                <div style={this.props.backgroundImage ? { minHeight: this.state.window.innerHeight || 500 - 180, ...this.state.backgroundStyle } : { minHeight: this.state.window.innerHeight || 500 - 90 }}>
+                    {this.props.children}
+                </div>
+
+                {/* <BackTop/> */}
+
+                {this._renderFooter()}
+                <div className='width-100' style={{ position: '-webkit-sticky', position: 'sticky', bottom: 0, zIndex: 1002 }}>
+                    {
+                        this.props.footerOverLay ?
+                            this.props.footerOverLay
+                            :
+                            this.props.hideOpenApp ?
                                 null
-                        }
-
-                        {/* </Content> */}
-                        <div style={this.props.backgroundImage ? { minHeight: this.state.window.innerHeight || 500 - 180, ...this.state.backgroundStyle } : { minHeight: this.state.window.innerHeight || 500 - 90 }}>
-                            {this.props.children}
-                        </div>
-
-                        {/* <BackTop/> */}
-
-                        {this._renderFooter()}
-                        <div className='width-100' style={{ position: '-webkit-sticky', position: 'sticky', bottom: 0, zIndex: 1002 }}>
-                            {
-                                this.props.footerOverLay ?
-                                    this.props.footerOverLay
-                                    :
-                                    this.props.hideOpenApp ?
-                                        null
-                                        :
-                                        <React.Fragment>
-                                            <NotWebDevice>
-                                                <div className="padding-md background-black flex-items-align-center flex-justify-space-between">
-                                                    <span className=' flex-items-align-center' >
-                                                        <img src={ccarLogo} style={{ height: 30, width: 30 }} className="margin-right-md flex-items-no-shrink" />
-                                                        <div className="caption white">
-                                                            A place to connect car lovers' souls
+                                :
+                                <React.Fragment>
+                                    <NotWebDevice>
+                                        <div className="padding-md background-black flex-items-align-center flex-justify-space-between">
+                                            <span className=' flex-items-align-center' >
+                                                <img src={ccarLogo} style={{ height: 30, width: 30 }} className="margin-right-md flex-items-no-shrink" />
+                                                <div className="caption white">
+                                                    A place to connect car lovers' souls
                                                 </div>
-                                                    </span>
-                                                    <span className='d-inline-block ' >
-                                                        <Button className=" background-ccar-button-yellow black caption" style={{ borderColor: '#FFCC32' }} onClick={(e) => { this.openApp() }}>Open App</Button>
-                                                    </span>
-                                                </div>
-                                            </NotWebDevice>
-                                        </React.Fragment>
-                            }
-                        </div>
-                        <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, left: 20, zIndex: 1002 }}  >
-                            {
-                                this.state.scrollY > 300 ?
-                                    <Affix offsetBottom={100}>
-                                        <div className="wrap-scrolltoTop">
-                                            <Button onClick={() => this.state.window.scrollTo(0, 0)}><CaretUpOutlined /></Button>
+                                            </span>
+                                            <span className='d-inline-block ' >
+                                                <Button className=" background-ccar-button-yellow black caption" style={{ borderColor: '#FFCC32' }} onClick={(e) => { this.openApp() }}>Open App</Button>
+                                            </span>
                                         </div>
-                                    </Affix>
-                                    :
-                                    null
-                            }
-                        </span>
+                                    </NotWebDevice>
+                                </React.Fragment>
+                    }
+                </div>
+                <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, left: 20, zIndex: 1002 }}  >
+                    {
+                        this.state.scrollY > 300 ?
+                            <Affix offsetBottom={100}>
+                                <div className="wrap-scrolltoTop">
+                                    <Button onClick={() => this.state.window.scrollTo(0, 0)}><CaretUpOutlined /></Button>
+                                </div>
+                            </Affix>
+                            :
+                            null
+                    }
+                </span>
 
-                        <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, right: 20, zIndex: 1002 }}  >
-                            {
-                                this.props.showCompareCarButton != undefined && this.props.showCompareCarButton == false && this.props.showCompareCarButton != null ?
-                                    null
-                                    :
-                                    <Affix offsetBottom={95} className='affix-element-show-on-modal-1'>
-                                        <CompareFloatingButton />
-                                    </Affix>
-                            }
-                        </span>
-                    </div>
-                    {/* <style jsx="true" global="true">{``}</style> */}
-                    <LoginModal />
-                    {/* <RegisterModal/> */}
-                    <CookieConsent
-                        location="bottom"
-                        buttonText="Got it !"
-                        cookieName="consent"
-                        cookieValue={true}
-                        style={{ background: "#2B373B" }}
-                        buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
-                        expires={365}
-                        onAccept={() => {
-                            Cookies.set('consent', v4())
-                        }}
-                        acceptOnScroll={true}
-                    >
-                        By continuing to browse this website, you accept cookies which are used for several reasons such as personalizing content/ads and analyzing how this website is used.
+                <span className='d-inline-block' style={{ position: 'fixed', bottom: 30, right: 20, zIndex: 1002 }}  >
+                    {
+                        this.props.showCompareCarButton != undefined && this.props.showCompareCarButton == false && this.props.showCompareCarButton != null ?
+                            null
+                            :
+                            <Affix offsetBottom={95} className='affix-element-show-on-modal-1'>
+                                <CompareFloatingButton />
+                            </Affix>
+                    }
+                </span>
+                </div>
+                {/* <style jsx="true" global="true">{``}</style> */ }
+        <LoginModal />
+        {/* <RegisterModal/> */ }
+        <CookieConsent
+            location="bottom"
+            buttonText="Got it !"
+            cookieName="consent"
+            cookieValue={true}
+            style={{ background: "#2B373B" }}
+            buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+            expires={365}
+            onAccept={() => {
+                Cookies.set('consent', v4())
+            }}
+            acceptOnScroll={true}
+        >
+            By continuing to browse this website, you accept cookies which are used for several reasons such as personalizing content/ads and analyzing how this website is used.
 
                     </CookieConsent>
-                {/* </WindowScrollDisableWrapper> */}
-            </Layout>
+        {/* </WindowScrollDisableWrapper> */ }
+            </Layout >
         )
     }
 }

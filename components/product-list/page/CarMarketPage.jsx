@@ -22,6 +22,7 @@ import brandFilterTotal from '../../../api/brandFilterTotal'
 import { setProductListLoading } from '../../../redux/actions/productsList-actions'
 import { useMediaQuery } from 'react-responsive';
 import ProductsListFilterCollapse from '../ProductsListFilterCollapse'
+import { routePaths } from '../../../route'
 
 
 const Desktop = ({ children }) => {
@@ -323,7 +324,7 @@ const CarMarketPage = (props) => {
                                                     </Link>
                                                 </Breadcrumb.Item>
                                                 <Breadcrumb.Item>
-                                                    <Link shallow={false}  passHref href={convertParameterToProductListUrl()} >
+                                                    <Link shallow={false}  passHref href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'} >
                                                         <a>Product List</a>
                                                     </Link>
                                                 </Breadcrumb.Item>
@@ -529,7 +530,7 @@ const CarMarketPage = (props) => {
                                             </Link>
                                         </Breadcrumb.Item>
                                         <Breadcrumb.Item>
-                                            <Link shallow={false}  passHref href={convertParameterToProductListUrl()} >
+                                            <Link shallow={false}  passHref  href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'}  >
                                                 <a>Product List</a>
                                             </Link>
                                         </Breadcrumb.Item>
@@ -743,10 +744,10 @@ const CarMarketPage = (props) => {
                                 <Col className="gutter-row" xs={24} sm={24} md={24} lg={18} xl={18}>
                                     <Breadcrumb>
                                         <Breadcrumb.Item>
-                                            <Link href="/">Home</Link>
+                                            <Link href="/"><a>Home</a></Link>
                                         </Breadcrumb.Item>
                                         <Breadcrumb.Item>
-                                            <Link href={convertParameterToProductListUrl()} >Product List</Link>
+                                            <Link  href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'}  > <a>Product List</a></Link>
                                         </Breadcrumb.Item>
                                         {props.router.query.parameter1 ?
                                             <Breadcrumb.Item>

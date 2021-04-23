@@ -28,7 +28,8 @@ const Index = (props) => {
 export async function getServerSideProps(context) {
 
  
-    const { make, model } = context.req.params;
+    let make = _.get(context , `req.params.make`) || _.get(context , `req.query.make`);
+    let model = _.get(context , `req.params.model`) || _.get(context , `req.query.model`);
     let data = {};
     let seoData = {};
     if (make && model) {

@@ -10,6 +10,7 @@ import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
 import { imageNotFound } from '../../../profile/config';
 import OtherClubsBox from './other-clubs-box';
 import Link from 'next/link';
+import { routePaths } from '../../../../route';
 
 
 const PAGE_SIZE = 30;
@@ -148,7 +149,7 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myClubs, function (club) {
                                                     return (
-                                                        <Link shallow={false}  href={`/social-club/${club._id}`} >
+                                                        <Link shallow={false}  href={routePaths.socialClubDetails.to || '/'} as={typeof (routePaths.socialClubDetails.as) == 'function' ? routePaths.socialClubDetails.as(club) : '/'} >
                                                             <a>
                                                                 <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }}>
                                                                     <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
@@ -185,7 +186,7 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myJoinedClubs, function (club) {
                                                     return (
-                                                        <Link shallow={false}  href={`/social-club/${club._id}`} >
+                                                        <Link shallow={false}  href={routePaths.socialClubDetails.to || '/'} as={typeof (routePaths.socialClubDetails.as) == 'function' ? routePaths.socialClubDetails.as(club) : '/'} >
                                                             <a>
                                                                 <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }} >
                                                                     <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />

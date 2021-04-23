@@ -20,6 +20,7 @@ import Car360ViewButton from '../general/car-360-view-button';
 import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import SellerBusinessCard from '../seller/SellerBusinessCard';
+import { routePaths } from '../../route';
 
 
 const ProductList = (props) => {
@@ -170,7 +171,7 @@ const ProductList = (props) => {
     if (notEmptyLength(v.carUrl)) {
       if (v.currentImg != null && v.currentImg < v.carUrl.length) {
         return (
-          <Link shallow={false} passHref href={'/viewCar/' + v._id} >
+          <Link shallow={false} passHref href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -182,7 +183,7 @@ const ProductList = (props) => {
         )
       } else {
         return (
-          <Link shallow={false} passHref href={'/viewCar/' + v._id} >
+          <Link shallow={false} passHref href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
             <a>
               <React.Fragment>
                 <div className="wrap-product-ads-img-horizontal">
@@ -199,7 +200,7 @@ const ProductList = (props) => {
       }
     } else {
       return (
-        <Link shallow={false} passHref href={'/viewCar/' + v._id} >
+        <Link shallow={false} passHref href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
           <a>
             <React.Fragment>
               <div className="wrap-product-ads-img-horizontal">
@@ -551,7 +552,7 @@ const ProductList = (props) => {
             <div className={`${_renderLayout(v)} margin-y-sm round-border padding-md relative-wrapper`} id={_renderTextTitle(v)}>
               {
                 v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' || v.priority === 'addonKingadType3' ?
-                  <Link href={'/viewCar/' + v._id} >
+                  <Link href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
                     <a target="_blank">
                       <span className="d-inline-block" style={{ position: 'absolute', top: 0, left: 40, zIndex: 2 }}>
                         <img src={rayaLamp} style={{ width: 230, height: 230 }} />
@@ -600,7 +601,7 @@ const ProductList = (props) => {
                                                         {_renderCondition(v)}
                                                     </Col> */}
                           <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ padding: '10px 10px' }}>
-                            <Link href={'/viewCar/' + v._id} >
+                            <Link href={routePaths.viewCarDetails.to || '/'} as={typeof (routePaths.viewCarDetails.as) == 'function' ? routePaths.viewCarDetails.as(v) : '/'} >
                               <a target="_blank">
                                 <div className="text-truncate-twoline">
                                   <label>

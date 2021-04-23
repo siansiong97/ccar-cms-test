@@ -19,6 +19,7 @@ import LikePostButton from './like-post-button';
 import SocialInput from './social-input';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
+import { routePaths } from '../../../route';
 
 
 
@@ -239,7 +240,9 @@ const PostModal = (props) => {
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item key={_.get(post, ['_id']) + 'goToPost'}>
-                                        <Link shallow={false}  passHref href={`/car-freaks/${_.get(post, ['_id'])}`}>
+                                        <Link shallow={false} passHref 
+                                        href={routePaths.viewCarFreaks.to || '/'} as={typeof (routePaths.viewCarFreaks.as) == 'function' ? routePaths.viewCarFreaks.as(post) : '/'}
+                                        >
                                             <a>
                                                 <span>Go To Post</span>
                                             </a>
