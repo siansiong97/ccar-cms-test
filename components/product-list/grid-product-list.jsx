@@ -57,7 +57,6 @@ const GridProductList = (props) => {
                     let priority = ''
                     v.priority = '';
                     if (priority === '') {
-
                         if (v.addonKingadType) {
                             if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
                                 priority = 'addonKingadType'
@@ -189,7 +188,7 @@ const GridProductList = (props) => {
     const _renderPrice = (v) => {
 
         let normalPrice =
-            (<div className="wrap-product-ads-price">
+            (<div className="wrap-product-ads-price" style={{ height : 57 }}>
                 <Row><Col xs={14} sm={14} md={16} lg={16} xl={16}><span className='installmentPrice'>RM {formatMoney((calMonth(v.price)).toString())}/month</span></Col></Row>
                 <h4 style={{ marginLeft: '10px' }}>RM {formatMoney((v.price).toString())}</h4>
             </div>)
@@ -198,7 +197,7 @@ const GridProductList = (props) => {
 
             const pattern = /\.(\d*?)0+(\D*)$/gm;
             return (
-                <div className="wrap-product-ads-price">
+                <div className="wrap-product-ads-price"  style={{ height : 57 }}>
                     <span className='gridMoneyText'>RM {formatMoney((price).toString())}</span>
                     <span className="wrap-condition wrap-product-ads-discount-spicydeal" >{(((100 * (price - discountedPrice) / price) * -1).toFixed(1).toString()).replace(pattern, '') + '%'}</span>
                     <h4 style={{ marginLeft: '10px', color: '#FBB040' }}>RM {formatMoney((discountedPrice).toString())}</h4>
@@ -223,7 +222,7 @@ const GridProductList = (props) => {
 
 
             return (
-                <div className="wrap-product-ads-countdown-spicydeal">
+                <div className="wrap-product-ads-countdown-spicydeal"  style={{ height : 57 }}>
                     <span className='gridAddonMainText' style={{ marginLeft: '10px' }} ><span>SuperDeal Ends in</span></span>
                     <Row>
                         <Col xs={14} sm={14} md={16} lg={16} xl={16}>
