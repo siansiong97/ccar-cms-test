@@ -300,7 +300,7 @@ const GridProductList = (props) => {
         if (notEmptyLength(data)) {
             return (
 
-                <Row >
+                <Row type="flex" >
                     {data.map((v, i) => {
                         if (v) {
 
