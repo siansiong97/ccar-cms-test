@@ -30,8 +30,8 @@ const App = (props) => {
             <ReduxPersistWrapper cookie={props.cookie}>
                 {
                     props.app.initedRedux ?
-                        // <ViewCarDetailsPage data={carInfo || {}} />
-                        <ViewCarDetails2Page data={carInfo || {}} />
+                        <ViewCarDetailsPage data={carInfo || {}} />
+                        // <ViewCarDetails2Page data={carInfo || {}} />
                         :
                         null
                 }

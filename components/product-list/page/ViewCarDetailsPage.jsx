@@ -464,8 +464,11 @@ class ViewCarDetailsPage extends React.Component {
                       </div>
                     </Col>
                     <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} >
-                      {this._renderPriceAffix()}
-                    </Col>
+                      <div className="flex-justify-end flex-items-align-center">
+                        <span className='d-inline-block ' >
+                          {this._renderPrice()}
+                        </span>
+                      </div>                    </Col>
                     <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                       <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
                       <span style={{ marginBottom: '0px' }}> <img src="/assets/carDetails/Location@3x.png" alt="location" className="fill-parent" style={{ width: '2%' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.area ? null : this.state.productDetails.companys.area} </span>
@@ -603,7 +606,11 @@ class ViewCarDetailsPage extends React.Component {
                       </div>
                     </Col>
                     <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} >
-                      {this._renderPriceAffix()}
+                      <div className="flex-justify-end flex-items-align-center">
+                        <span className='d-inline-block ' >
+                          {this._renderPrice()}
+                        </span>
+                      </div>
                     </Col>
                     <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                       <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
@@ -952,9 +959,9 @@ class ViewCarDetailsPage extends React.Component {
           </div>
           <div className="padding-y-sm flex-justify-center flex-items-align-center">
             <span className='d-inline-block width-50' >
-              <Link href={routePaths.dealerProfile.to || '/'} as={typeof (routePaths.dealerProfile.as) == 'function' ? routePaths.dealerProfile.as(_.get(this.state.productDetails , `createdBy`)) : '/'} >
+              <Link href={routePaths.dealerProfile.to || '/'} as={typeof (routePaths.dealerProfile.as) == 'function' ? routePaths.dealerProfile.as(_.get(this.state.productDetails, `createdBy`)) : '/'} >
                 <a>
-                <Button block className="black background-ccar-button-yellow" >More Information</Button>
+                  <Button block className="black background-ccar-button-yellow" >More Information</Button>
                 </a>
               </Link>
             </span>
