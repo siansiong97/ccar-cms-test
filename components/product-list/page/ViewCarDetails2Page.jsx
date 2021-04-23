@@ -97,6 +97,81 @@ class ViewCarDetails2Page extends React.Component {
         }
     }
 
+    processAddonProduct() {
+        let currentDateTime = moment().format()
+        if (this.state.productDetails) {
+            console.log('run');
+            let v = _.cloneDeep(this.state.productDetails)
+
+            v.addonSpotlight = _.find(v.addon, { 'addonType': 'spotlight' })
+            v.addonSpicydeal = _.find(v.addon, { 'addonType': 'spicydeal' })
+            v.addonKingadType = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'show' })
+            v.addonKingadType2 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'hide' })
+            v.addonKingadType3 = _.find(v.addon, { 'addonType': 'kingad', 'showPrice': 'highlight' })
+            let priority = ''
+            v.priority = '';
+            if (priority === '') {
+                if (v.addonKingadType) {
+                    if (currentDateTime > moment(v.addonKingadType.startDate).format() && currentDateTime < moment(v.addonKingadType.endDate).format()) {
+                        priority = 'addonKingadType'
+                        v.priority = 'addonKingadType'
+                        v.addonKingadType.endDate = moment(v.addonKingadType.endDate).format()
+                        v.addonKingadType.startDate = moment(v.addonKingadType.startDate).format()
+                    }
+                }
+            }
+
+            if (priority === '') {
+                if (v.addonKingadType2) {
+                    if (currentDateTime > moment(v.addonKingadType2.startDate).format() && currentDateTime < moment(v.addonKingadType2.endDate).format()) {
+                        priority = 'addonKingadType2'
+                        v.priority = 'addonKingadType2'
+                        v.addonKingadType2.startDate = moment(v.addonKingadType2.startDate).format()
+                        v.addonKingadType2.endDate = moment(v.addonKingadType2.endDate).format()
+                    }
+                }
+            }
+
+            if (priority === '') {
+                if (v.addonKingadType3) {
+                    if (currentDateTime > moment(v.addonKingadType3.startDate).format() && currentDateTime < moment(v.addonKingadType3.endDate).format()) {
+                        priority = 'addonKingadType3'
+                        v.priority = 'addonKingadType3'
+                        v.addonKingadType3.startDate = moment(v.addonKingadType3.startDate).format()
+                        v.addonKingadType3.endDate = moment(v.addonKingadType3.endDate).format()
+                    }
+                }
+            }
+
+            if (priority === '') {
+                if (v.addonSpicydeal) {
+                    if (currentDateTime > moment(v.addonSpicydeal.startDate).format() && currentDateTime < moment(v.addonSpicydeal.endDate).format()) {
+                        priority = 'addonSpicydeal'
+                        v.priority = 'addonSpicydeal'
+                        v.addonSpicydeal.startDate = moment(v.addonSpicydeal.startDate).format()
+                        v.addonSpicydeal.endDate = moment(v.addonSpicydeal.endDate).format()
+                    }
+                }
+            }
+
+            if (priority === '') {
+                if (v.addonSpotlight) {
+                    if (currentDateTime > moment(v.addonSpotlight.startDate).format() && currentDateTime < moment(v.addonSpotlight.endDate).format()) {
+                        priority = 'addonSpotlight'
+                        v.priority = 'addonSpotlight'
+                        v.addonSpotlight.startDate = moment(v.addonSpotlight.startDate).format()
+                        v.addonSpotlight.endDate = moment(v.addonSpotlight.endDate).format()
+                    }
+                }
+            }
+
+            this.setState({
+                productDetails: v,
+            })
+        }
+    }
+
+
     componentDidMount() {
 
         console.log(this.state.productDetails);
@@ -136,14 +211,14 @@ class ViewCarDetails2Page extends React.Component {
     }
     componentDidUpdate(prevProps, prevState) {
 
-        // if (typeof (window) != undefined) {
-        //   window.addEventListener('scroll', this.handleScroll, { passive: true });
+        if (typeof (window) != undefined) {
+            window.addEventListener('scroll', this.handleScroll, { passive: true });
 
-        //   return () => {
+            return () => {
 
-        //     window.removeEventListener('scroll', this.handleScroll);
-        //   };
-        // }
+                window.removeEventListener('scroll', this.handleScroll);
+            };
+        }
 
         if (!_.isEqual(prevState.productDetails, this.state.productDetails)) {
             if (_.get(this.state.productDetails, ['status']) == 'sold') {
@@ -152,10 +227,17 @@ class ViewCarDetails2Page extends React.Component {
                 })
             }
 
+
+
             this.getDealerSameModelCars();
             this.getDealerOtherCars();
             this.getSimilarCars();
 
+            processAddonProduct()
+            var interval2 = setInterval(() => {
+                processAddonProduct()
+            }, 60000);
+            return () => clearInterval(interval2);
         }
 
 
@@ -568,7 +650,11 @@ class ViewCarDetails2Page extends React.Component {
                                             </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} >
-                                            {this._renderPriceAffix()}
+                                            <div className="flex-justify-end flex-items-align-center">
+                                                <span className='d-inline-block ' >
+                                                    {this._renderPrice()}
+                                                </span>
+                                            </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                                             <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
@@ -707,7 +793,7 @@ class ViewCarDetails2Page extends React.Component {
                                             </div>
                                         </Col>
                                         <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} >
-                                            {this._renderPriceAffix()}
+                                            {this._renderPrice()}
                                         </Col>
                                         <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                                             <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
@@ -1103,7 +1189,7 @@ class ViewCarDetails2Page extends React.Component {
                                     <div className="h6 font-weight-thin grey-darken-1 margin-y-sm">
                                         Similar Cars
                                 </div>
-                                    <GridProductList data={this.state.similarCars} xs={24} sm={24} md={12} lg={6} xl={6}/>
+                                    <GridProductList data={this.state.similarCars} xs={24} sm={24} md={12} lg={6} xl={6} />
                                 </React.Fragment>
                                 :
                                 null

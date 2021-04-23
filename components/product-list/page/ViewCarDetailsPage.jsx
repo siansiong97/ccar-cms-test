@@ -90,7 +90,6 @@ class ViewCarDetailsPage extends React.Component {
 
   componentDidMount() {
 
-    console.log(this.state.productDetails);
     this.setState({
       window: window,
       soldOutModalVisible: _.get(this.state.productDetails, ['status']) == 'sold',
@@ -125,14 +124,14 @@ class ViewCarDetailsPage extends React.Component {
   }
   componentDidUpdate(prevProps, prevState) {
 
-    // if (typeof (window) != undefined) {
-    //   window.addEventListener('scroll', this.handleScroll, { passive: true });
+    if (typeof (window) != undefined) {
+      window.addEventListener('scroll', this.handleScroll, { passive: true });
 
-    //   return () => {
+      return () => {
 
-    //     window.removeEventListener('scroll', this.handleScroll);
-    //   };
-    // }
+        window.removeEventListener('scroll', this.handleScroll);
+      };
+    }
 
     if (!_.isEqual(prevState.productDetails, this.state.productDetails)) {
       if (_.get(this.state.productDetails, ['status']) == 'sold') {
