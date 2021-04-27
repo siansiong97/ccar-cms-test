@@ -1,5 +1,5 @@
 import { AppstoreOutlined, BarsOutlined } from '@ant-design/icons'
-import { Affix, Breadcrumb, Button, Col, Divider, Drawer, Empty, Icon, Pagination, Radio, Row, Select, Spin, Switch, Tooltip } from 'antd'
+import { Affix, Breadcrumb, Button, Col, Divider, Drawer, Empty, Icon, Pagination, Radio, Row, Select, Spin, Tooltip } from 'antd'
 import axios from 'axios'
 import _ from 'lodash'
 import { withRouter } from 'next/dist/client/router'
@@ -23,7 +23,7 @@ import { setProductListLoading } from '../../../redux/actions/productsList-actio
 import { useMediaQuery } from 'react-responsive';
 import ProductsListFilterCollapse from '../ProductsListFilterCollapse'
 import { routePaths } from '../../../route'
-
+import Switch from "react-switch";
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -48,6 +48,9 @@ const antIcon = <img src="/assets/Ccar-logo.png" style={{ fontSize: 60 }} />;
 const PAGESIZE = 30;
 const searchBarRef = React.createRef();
 let timeoutFunction;
+
+const SWITCH_OFF_COLOR = '#9E9E9E';
+const SWITCH_ON_COLOR = '#FFCC32';
 const CarMarketPage = (props) => {
 
 
@@ -241,8 +244,8 @@ const CarMarketPage = (props) => {
                 )
             } else {
                 return (
-                    <ProductList data={data} loading={_.get(props.productsList, ['productListLoading'])} /> 
-                ) 
+                    <ProductList data={data} loading={_.get(props.productsList, ['productListLoading'])} />
+                )
             }
         } else {
             return (
@@ -319,12 +322,12 @@ const CarMarketPage = (props) => {
                                         <span className='d-inline-block ' >
                                             <Breadcrumb>
                                                 <Breadcrumb.Item>
-                                                    <Link shallow={false}  passHref href="/">
+                                                    <Link shallow={false} passHref href="/">
                                                         <a>Home</a>
                                                     </Link>
                                                 </Breadcrumb.Item>
                                                 <Breadcrumb.Item>
-                                                    <Link shallow={false}  passHref href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'} >
+                                                    <Link shallow={false} passHref href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'} >
                                                         <a>Product List</a>
                                                     </Link>
                                                 </Breadcrumb.Item>
@@ -353,20 +356,20 @@ const CarMarketPage = (props) => {
                                                             <span className="margin-right-md" >
                                                                 Reg Card:
                                                     </span>
-                                                            <Switch checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
 
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 Ready Stock:
                                                         </span>
-                                                            <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 360&deg; View:
                                                         </span>
-                                                            <Switch checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                     </span>
                                                 </div>
@@ -525,12 +528,12 @@ const CarMarketPage = (props) => {
                                 <Col className="gutter-row" xs={24} sm={24} md={24} lg={18} xl={18}>
                                     <Breadcrumb>
                                         <Breadcrumb.Item>
-                                            <Link shallow={false}  passHref href="/">
+                                            <Link shallow={false} passHref href="/">
                                                 <a>Home</a>
                                             </Link>
                                         </Breadcrumb.Item>
                                         <Breadcrumb.Item>
-                                            <Link shallow={false}  passHref  href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'}  >
+                                            <Link shallow={false} passHref href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'}  >
                                                 <a>Product List</a>
                                             </Link>
                                         </Breadcrumb.Item>
@@ -584,20 +587,20 @@ const CarMarketPage = (props) => {
                                                             <span className="margin-right-md" >
                                                                 Reg Card:
                               </span>
-                                                            <Switch checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
 
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 Ready Stock:
                               </span>
-                                                            <Switch checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.readyStock} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }); pushParameterToUrl({ ...currentFilterGroup, readyStock: checked ? 'yes' : null }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                         <span className='flex-items-align-center margin-right-md' >
                                                             <span className="margin-right-md" >
                                                                 360&deg; View:
                               </span>
-                                                            <Switch checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
+                                                            <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
                                                         </span>
                                                     </span>
                                                 </div>
@@ -747,7 +750,7 @@ const CarMarketPage = (props) => {
                                             <Link href="/"><a>Home</a></Link>
                                         </Breadcrumb.Item>
                                         <Breadcrumb.Item>
-                                            <Link  href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'}  > <a>Product List</a></Link>
+                                            <Link href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'}  > <a>Product List</a></Link>
                                         </Breadcrumb.Item>
                                         {props.router.query.parameter1 ?
                                             <Breadcrumb.Item>
@@ -836,7 +839,7 @@ const CarMarketPage = (props) => {
                                             <Row>
                                                 <Col xs={10} sm={14} md={14} lg={14} xl={14} ><label>Reg Card:</label></Col>
                                                 <Col xs={12} sm={12} md={10} lg={10} xl={10} >
-                                                    <Switch checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
+                                                    <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.registrationUrl} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, registrationUrl: checked }); pushParameterToUrl({ ...currentFilterGroup, registrationUrl: checked }, { ...mainConfig, page: 1 }) }} />
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -844,7 +847,7 @@ const CarMarketPage = (props) => {
                                             <Row>
                                                 <Col xs={12} sm={14} md={14} lg={14} xl={14} ><label>360&deg; View:</label></Col>
                                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} >
-                                                    <Switch checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
+                                                    <Switch offColor={SWITCH_OFF_COLOR} onColor={SWITCH_ON_COLOR} height={20} width={40} checkedIcon={null} uncheckedIcon={null} checked={currentFilterGroup.car360View} onChange={(checked) => { setCurrentFilterGroup({ ...currentFilterGroup, car360View: checked }); pushParameterToUrl({ ...currentFilterGroup, car360View: checked }, { ...mainConfig, page: 1 }) }} />
                                                 </Col>
                                             </Row>
                                         </Col>

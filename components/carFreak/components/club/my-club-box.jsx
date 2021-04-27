@@ -136,7 +136,7 @@ const MyClubBox = (props) => {
                 <Col xs={18} sm={18} md={24} lg={18} xl={18}>
                     <React.Fragment>
                         <Card
-                            title="My Clubs"
+                            title="My Club(s)"
                         >
                             {
                                 _.isArray(myClubs) && notEmptyLength(myClubs) ?
@@ -172,7 +172,7 @@ const MyClubBox = (props) => {
                         </Card>
 
                         <Card
-                            title="My Joined Clubs"
+                            title="My Joined Club(s)"
                             className="margin-top-lg"
                         >
                             {

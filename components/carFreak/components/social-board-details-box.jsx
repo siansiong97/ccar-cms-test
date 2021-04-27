@@ -289,6 +289,7 @@ const SocialBoardDetailsBox = (props) => {
                                         <CommentBox
                                             data={v}
                                             className="background-white-opacity-70"
+                                            replyClassName={"background-white-opacity-70"}
                                             pinnedComments={pinnedComments}
                                             pinnable={getObjectId(_.get(post, ['userId'])) && _.get(props.user, ['info', 'user', '_id']) == getObjectId(_.get(post, ['userId']))}
                                             theme="pin"
@@ -323,6 +324,7 @@ const SocialBoardDetailsBox = (props) => {
                                         <CommentBox
                                             data={v}
                                             className="background-white-opacity-50 box-shadow-thin"
+                                            background={"background-transparent"}
                                             pinnedComments={pinnedComments}
                                             pinnable={arrayLengthCount(pinnedCommentIds) < 3 && getObjectId(_.get(post, ['userId'])) && _.get(props.user, ['info', 'user', '_id']) == getObjectId(_.get(post, ['userId']))}
                                             onEditClick={(data) => {

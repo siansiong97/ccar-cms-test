@@ -88,8 +88,6 @@ export default async function (data, limit) {
 
   data.filterGroup = objectRemoveEmptyValue(data.filterGroup);
   let match = { $match: { ...data.filterGroup } }
-  console.log(match);
-  console.log(data.config.sorting);
   return await axios.get(`${client.io.io.uri}carAdsFilterV3`,
     {
       params: {

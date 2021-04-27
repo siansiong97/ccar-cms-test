@@ -122,7 +122,7 @@ const FuelTypeModal = (props) => {
                                                             onClick={() => selectedValue(item.value, index)}
                                                             style={{ height: '3.5em', lineHeight: '3.5em' }}>
                                                             <Col span={5} style={{ height: '100%', padding: 5, lineHeight: 0 }}>
-                                                                <img className="w-100 h-100 obj-fit-c" src={item.icon} />\
+                                                                <img className="w-100 h-100 obj-fit-c" src={item.icon} />
                                                         </Col>
                                                             <Col span={12} style={{ height: '100%' }}>
                                                                 <Highlighter

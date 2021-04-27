@@ -43,9 +43,9 @@ const ClubInviteModal = (props) => {
 
     useEffect(() => {
 
-        if(scrollBarRef){
-    
-            if(scrollBarRef.scrollToTop){
+        if (scrollBarRef) {
+
+            if (scrollBarRef.scrollToTop) {
                 scrollBarRef.scrollToTop();
             }
         }
@@ -111,7 +111,7 @@ const ClubInviteModal = (props) => {
                 }
             }).then(res => {
 
-                
+
                 setUsers(_.isArray(_.get(res, ['data', 'data'])) && !_.isEmpty(_.get(res, ['data', 'data'])) ? userPage <= 1 ? res.data.data : users.concat(res.data.data) : users)
                 setUserTotal(_.get(res, ['data', 'total']));
                 setIsLoading(false)
@@ -206,16 +206,16 @@ const ClubInviteModal = (props) => {
                         </ScrollLoadWrapper>
                     </div>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className="width-100 flex-justify-center" style={{ height: 20 }}>
-                        {
-                            isLoading ?
+                {
+                    isLoading ?
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="width-100 flex-justify-center" style={{ height: 20 }}>
                                 <Icon type="loading" style={{ fontSize: 20 }} />
-                                :
-                                null
-                        }
-                    </div>
-                </Col>
+                            </div>
+                        </Col>
+                        :
+                        null
+                }
 
             </Row>
         </Modal>

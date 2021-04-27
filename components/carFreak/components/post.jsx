@@ -89,7 +89,7 @@ const Post = (props) => {
                                 props.renderHeader(post)
                                 :
                                 <div className="fill-parent text-align-center padding-md" >
-                                    <span className='d-inline-block relative-wrapper' >
+                                    <span className='d-inline-block relative-wrapper width-100' >
                                         {
                                             _.get(post, ['parentType']) == 'club' || _.get(post, ['parentType']) == 'clubEvent' ?
                                                 <ClubAvatar redirectProfile
@@ -97,6 +97,7 @@ const Post = (props) => {
                                                     size={50}
                                                     showName
                                                     avatarClassName="cursor-pointer"
+                                                    style={{ maxWidth : 100 }}
                                                     textClassName="margin-top-sm font-weight-bold grey headline text-truncate cursor-pointer" />
                                                 :
                                                 <UserAvatar redirectProfile

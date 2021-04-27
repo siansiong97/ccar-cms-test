@@ -71,21 +71,21 @@ const CarFreakLayout = (props) => {
                                 <span className="flex-items-align-center flex-justify-start">
                                     <Link shallow={false}  href={routePaths.carFreaks.to || '/'} as={typeof(routePaths.carFreaks.as) == 'function' ? routePaths.carFreaks.as() : '/'}>
                                         <a>
-                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : ' black'} `} >
                                                 CarFreaks
                                             </span>
                                         </a>
                                     </Link>
                                     <Link shallow={false}  href={routePaths.socialBoard.to || '/'} as={typeof(routePaths.socialBoard.as) == 'function' ? routePaths.socialBoard.as() : '/'}>
                                         <a>
-                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `}  >
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : ' black'} `}  >
                                                 Social Board
                                     </span>
                                         </a>
                                     </Link>
                                     <Link shallow={false}  href={routePaths.socialClub.to || '/'} as={typeof(routePaths.socialClub.as) == 'function' ? routePaths.socialClub.as() : '/'}>
                                         <a>
-                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : ' black'} `} >
                                                 CarFreaks Club
                                     </span>
                                         </a>
@@ -112,21 +112,21 @@ const CarFreakLayout = (props) => {
                                 <span className="flex-items-align-center flex-justify-start">
                                     <Link shallow={false}  href={routePaths.carFreaks.to || '/'} as={typeof(routePaths.carFreaks.as) == 'function' ? routePaths.carFreaks.as() : '/'}>
                                         <a>
-                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'car-freaks' ? 'border-bottom-yellow yellow' : ' black'} `} >
                                                 CarFreaks
                                             </span>
                                         </a>
                                     </Link>
                                     <Link shallow={false} href={routePaths.socialBoard.to || '/'} as={typeof(routePaths.socialBoard.as) == 'function' ? routePaths.socialBoard.as() : '/'}>
                                         <a>
-                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `}  >
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-board' ? 'border-bottom-yellow yellow' : ' black'} `}  >
                                                 Social Board
                                             </span>
                                         </a>
                                     </Link>
                                     <Link shallow={false}  href={routePaths.socialClub.to || '/'} as={typeof(routePaths.socialClub.as) == 'function' ? routePaths.socialClub.as() : '/'}>
                                         <a>
-                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : 'border-bottom-black black'} `} >
+                                            <span className={`d-inline-block cursor-pointer margin-right-lg h6 font-weight-bold ${tabKey == 'social-club' ? 'border-bottom-yellow yellow' : ' black'} `} >
                                                 CarFreaks Club
                                             </span>
                                         </a>

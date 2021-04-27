@@ -32,7 +32,21 @@ const WriteClubModal = (props) => {
 
     useEffect(() => {
 
-        setVisible(props.visible ? true : false)
+        let visible = props.visible ? true : false;
+        if (visible) {
+            if (!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) {
+                message.error('Please Login First!');
+                props.loginMode(true);
+                visible = false
+            }
+
+            if (!_.isPlainObject(club) && _.isEmpty(club) && editMode) {
+                message.error('Club Not Found!');
+                visible = false
+            }
+        }
+
+        setVisible(visible)
 
     }, [props.visible])
 

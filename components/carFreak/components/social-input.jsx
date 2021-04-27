@@ -65,7 +65,6 @@ const SocialInput = (props) => {
     }, [props.resetIndicator])
 
     useEffect(() => {
-        console.log('focus');
         if (props.focusIndicator) {
             focus();
         }
@@ -118,7 +117,6 @@ const SocialInput = (props) => {
     }, [searchWord, prefix, suggestListPage])
 
     useEffect(() => {
-        console.log(aliasCode);
         updateAliasText();
     }, [aliasCode])
 
@@ -171,9 +169,7 @@ const SocialInput = (props) => {
             finalText = finalText.replace(/\n/g, "");
         }
         if (props.onSubmit && finalText) {
-            console.log(aliasCode);
             finalText = parseToTagString(finalText, aliasCode)
-            console.log(finalText);
             props.onSubmit(finalText);
             reset();
             focus();
@@ -493,7 +489,7 @@ const SocialInput = (props) => {
                             handleSubmit();
                         }
                     }}
-                    className={`no-border-input thin-border round-border-big background-white padding-sm flex-justify-start relative-wrapper flex-items-align-center ${props.className || ''}`}
+                    className={`no-border-input thin-border round-border-big background-transparent padding-sm flex-justify-start relative-wrapper flex-items-align-center ${props.className || ''}`}
                     style={{ ...props.style }}
                     id={uid}
                 >

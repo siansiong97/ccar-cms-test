@@ -33,6 +33,10 @@ const ReplyBox = (props) => {
     const [totalLike, setTotalLike] = useState(0);
     const [editMode, setEditMode] = useState(false)
 
+    useEffect(() => { 
+    console.log(props.className)
+    } , [props.className])
+    
     useEffect(() => {
 
         if (_.isPlainObject(props.data) && !_.isEmpty(props.data)) {
@@ -110,7 +114,7 @@ const ReplyBox = (props) => {
     return (
         notEmptyLength(objectRemoveEmptyValue(comment)) ?
             <React.Fragment>
-                <div className={`background-white flex-items-align-start flex-justify-start relative-wrapper padding-md ${props.className ? props.className : ''}`} style={{ ...props.style }}>
+                <div className={`flex-items-align-start flex-justify-start relative-wrapper padding-md ${props.className || 'background-white'}`} style={{ ...props.style }}>
                     <Row className="width-100" gutter={[10, 20]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="width-100 flex-items-align-center flex-justify-start ">

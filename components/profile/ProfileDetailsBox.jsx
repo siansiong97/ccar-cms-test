@@ -82,7 +82,7 @@ const ProfileDetailsBox = (props) => {
 
             if (_.isEmpty(newCompanyName) === false) { props.data.newCompanyName = newCompanyName }
             if (_.isEmpty(newArea) === false) { props.data.newArea = newArea }
-            if (_.isEmpty(newAddress) === false) { if(newAddress!==',,,'){props.data.newAddress = newAddress}}
+            if (_.isEmpty(newAddress) === false) { if (newAddress !== ',,,') { props.data.newAddress = newAddress } }
 
             setProfile(props.data);
         } else {
@@ -449,6 +449,14 @@ const ProfileDetailsBox = (props) => {
                                                             <Button className=' border-ccar-button-yellow background-ccar-button-yellow black padding-x-xl'>+ Follow</Button>
                                                         )
                                                     }}
+                                                    followingButton={() => {
+                                                        return (
+                                                            <span className="white">
+                                                                <Icon type="check" style={{ color: '#F57F17' }} className="margin-right-xs" />
+                                                                Following
+                                                            </span>
+                                                        )
+                                                    }}
                                                 />
                                                 <ShareButtonDialog className='padding-x-xl' />
                                             </div>
@@ -537,7 +545,7 @@ const ProfileDetailsBox = (props) => {
                                 <Row type="flex" align="middle">
                                     <Col xs={4} sm={4} md={4} lg={4} xl={4}>
                                         <div className='fill-parent flex-justify-start flex-items-align-center'>
-                                            <UserAvatar showPreview data={profile} size={80} /> 
+                                            <UserAvatar showPreview data={profile} size={80} />
                                         </div>
                                     </Col>
                                     <Col xs={20} sm={20} md={20} lg={20} xl={20}>
@@ -616,6 +624,14 @@ const ProfileDetailsBox = (props) => {
                                                             followButton={() => {
                                                                 return (
                                                                     <Button className=' border-ccar-button-yellow background-ccar-button-yellow black padding-x-xl'>+ Follow</Button>
+                                                                )
+                                                            }}
+                                                            followingButton={() => {
+                                                                return (
+                                                                    <span className="white">
+                                                                        <Icon type="check" style={{ color: '#F57F17' }} className="margin-right-xs" />
+                                                                        Following
+                                                                    </span>
                                                                 )
                                                             }}
                                                         />
@@ -816,6 +832,14 @@ const ProfileDetailsBox = (props) => {
                                                         followButton={() => {
                                                             return (
                                                                 <Button className=' border-ccar-button-yellow background-ccar-button-yellow black padding-x-xl'>+ Follow</Button>
+                                                            )
+                                                        }}
+                                                        followingButton={() => {
+                                                            return (
+                                                                <span className="white">
+                                                                    <Icon type="check" style={{ color: '#F57F17' }} className="margin-right-xs" />
+                                                                    Following
+                                                                </span>
                                                             )
                                                         }}
                                                     />
