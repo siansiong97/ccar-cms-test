@@ -31,7 +31,6 @@ const GridProductList = (props) => {
     const [initLoading, setInitLoading] = useState(true);
 
     useEffect(() => {
-        console.log(props.data);
         // processAddonProduct()
         processAddonProduct()
         var interval2 = setInterval(() => {

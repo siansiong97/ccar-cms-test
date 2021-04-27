@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import client from '../../../feathers';
 import ParseTag from '../../general/ParseTag';
 import UserAvatar from '../../general/UserAvatar';
-import { getUserName, notEmptyLength  } from '../../../common-function';
+import { getUserName, notEmptyLength } from '../../../common-function';
 import { withRouter } from 'next/router';
+import Scrollbars from 'react-custom-scrollbars';
 
 
 
@@ -36,8 +37,8 @@ const TrendingSocialBoardBox = (props) => {
                     chatType: 'socialboard',
                     $populate: 'userId',
                     $limit: TRENDING_PAGE_SIZE,
-                    $sort : {
-                        createdAt : -1,
+                    $sort: {
+                        createdAt: -1,
                     }
                 }
             })
@@ -55,8 +56,6 @@ const TrendingSocialBoardBox = (props) => {
                 style={{
                     borderRadius: '12px',
                     backgroundColor: '#ffffff',
-                    overflowX: 'scroll',
-                    overflow: '-moz-scrollbars-vertical',
                     maxHeight: '900px',
                 }}
             >
@@ -71,54 +70,56 @@ const TrendingSocialBoardBox = (props) => {
                     }}
                 >Trending Today</Row>
 
-                <Row
-                    style={{
-                        // minHeight: '480px',
-                        // padding: '24px',
-                        borderRadius: '0px 0px 12px 12px'
-                    }}
-                >
-                    {
-                        _.isArray(trendingPosts) && notEmptyLength(trendingPosts) ?
+                <Scrollbars autoHeight autoHeightMax={500} autoHide>
+                    <Row
+                        style={{
+                            // minHeight: '480px',
+                            // padding: '24px',
+                            borderRadius: '0px 0px 12px 12px'
+                        }}
+                    >
+                        {
+                            _.isArray(trendingPosts) && notEmptyLength(trendingPosts) ?
 
-                            <React.Fragment>
-                                {
-                                    trendingPosts.map(function (v, i) {
-                                        return (
-                                            <Col key={'trendingChat' + i} style={{ 'cursor': 'pointer' }}
-                                                onClick={(e) => { redirectToSocialBoard(v) }}
-                                                span={24}
-                                            >
-                                                <Row style={{ padding: '12px' }}>
-                                                    <ParseTag data={v.title || ''} className='text-truncate-twoline font-weight-bold width-100' style={{ color: '#000000', fontSize: '20px' }} />
+                                <React.Fragment>
+                                    {
+                                        trendingPosts.map(function (v, i) {
+                                            return (
+                                                <Col key={'trendingChat' + i} style={{ 'cursor': 'pointer' }}
+                                                    onClick={(e) => { redirectToSocialBoard(v) }}
+                                                    span={24}
+                                                >
+                                                    <Row style={{ padding: '12px' }}>
+                                                        <ParseTag data={v.title || ''} className='text-truncate-twoline font-weight-bold width-100' style={{ color: '#000000', fontSize: '20px' }} />
                                                     </Row>
-                                                <Row style={{ marginBottom: '12px' }}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <div className="flex-items-align-center flex-justify-start padding-x-md">
-                                                            <span className="d-inline-block margin-right-md"><UserAvatar redirectProfile style={{ textAlign: 'left' }} data={v.userId} /></span>
-                                                            <span className='d-inline-block' >
-                                        <div className='chatMessageDatexMargin'>{`Posted by ${getUserName(_.get(v , ['userId']), 'freakId')}`}{_.isEmpty(v.location)===false ? <span> in {v.location}</span> : ''}</div>
-                                                                <div className='chatMessageDatexMargin'>{moment(v.createdAt).format('MMM Do')} | {moment(v.createdAt).fromNow()}</div>
-                                                            </span>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
+                                                    <Row style={{ marginBottom: '12px' }}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                            <div className="flex-items-align-center flex-justify-start padding-x-md">
+                                                                <span className="d-inline-block margin-right-md"><UserAvatar redirectProfile style={{ textAlign: 'left' }} data={v.userId} /></span>
+                                                                <span className='d-inline-block' >
+                                                                    <div className='chatMessageDatexMargin'>{`Posted by ${getUserName(_.get(v, ['userId']), 'freakId')}`}{_.isEmpty(v.location) === false ? <span> in {v.location}</span> : ''}</div>
+                                                                    <div className='chatMessageDatexMargin'>{moment(v.createdAt).format('MMM Do')} | {moment(v.createdAt).fromNow()}</div>
+                                                                </span>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
 
-                                                <Row style={{ borderBottom: '1px solid rgb(128 128 128 / .2)', marginTop: '12px' }}>
-                                                </Row>
-                                            </Col>
-                                        )
-                                    })
-                                }
-                            </React.Fragment>
-                            :
-                            <div className="width-100 flex-items-align-center flex-justify-center background-white padding-md" >
-                                <Empty />
-                            </div>
+                                                    <Row style={{ borderBottom: '1px solid rgb(128 128 128 / .2)', marginTop: '12px' }}>
+                                                    </Row>
+                                                </Col>
+                                            )
+                                        })
+                                    }
+                                </React.Fragment>
+                                :
+                                <div className="width-100 flex-items-align-center flex-justify-center background-white padding-md" >
+                                    <Empty />
+                                </div>
 
-                    }
+                        }
 
-                </Row>
+                    </Row>
+                </Scrollbars>
             </div>
         </React.Fragment >
     )

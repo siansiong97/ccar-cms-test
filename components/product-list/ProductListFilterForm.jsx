@@ -1490,7 +1490,7 @@ const ProductsListFilterForm = (props) => {
                 className='width-100 card-padding-0'
             >
                 <div>
-                    <div ref={formRef} className='padding-sm' >
+                    <div ref={formRef} className='padding-y-sm' >
                         <Form
                             // {...layout}
                             name="basic"

@@ -103,7 +103,7 @@ const MyClubInvitationBox = (props) => {
                                                                         null
                                                                 }
                                                                 <div className="headline grey-darken-2">
-                                                                    Requested {moment(_.get(invite, ['createdAt'])).fromNow()} ago
+                                                                    Requested {moment(_.get(invite, ['createdAt'])).fromNow()}
                                                                 </div>
                                                             </span>
                                                         </div>
