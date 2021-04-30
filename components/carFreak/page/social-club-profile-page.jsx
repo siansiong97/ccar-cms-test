@@ -199,7 +199,7 @@ const SocialClubProfilePage = (props) => {
                             </Col>
                             <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                                 <Card
-                                    title="Other CarFreaks Club"
+                                    title="Other Carfreaks Club(s)"
                                 >
                                     <OtherClubsBox clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])} />
                                 </Card>
@@ -239,7 +239,7 @@ const SocialClubProfilePage = (props) => {
                             </Col>
                             {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Card
-                                    title="Other CarFreaks Club"
+                                    title="Other Carfreaks Club(s)"
                                 >
                                     <OtherClubsBox clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])} />
                                 </Card>

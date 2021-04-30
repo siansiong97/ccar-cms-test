@@ -330,8 +330,8 @@ const fuelpriceindex = (props) => {
     return (
         <Spin tip={'Loading...'} spinning={loading} size="large">
             <LayoutV2>
-                <div className="section-version3">
-                    <div className="container-version3 padding-x-xs padding-top-md">
+                <div className="section">
+                    <div className="container padding-x-xs padding-top-md">
                     <Desktop>
                         <Card title="Chart">
                             <LineChart {...config} chartRef={chartRef} data={chartData} description={{ visible: true, text: 'Last Update by ' + lastRecord.date }} />

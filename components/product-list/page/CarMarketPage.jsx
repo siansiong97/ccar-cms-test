@@ -24,6 +24,7 @@ import { useMediaQuery } from 'react-responsive';
 import ProductsListFilterCollapse from '../ProductsListFilterCollapse'
 import { routePaths } from '../../../route'
 import Switch from "react-switch";
+import ProductListSkeleton from '../../skeleton-loader/ProductListSkeleton'
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -258,9 +259,14 @@ const CarMarketPage = (props) => {
                                     {
                                         _.map(_.range(0, 30), function (index) {
                                             return (
-                                                <Col xs={24} sm={12} md={12} lg={8} xl={8}>
-                                                    <GridProductSkeleton />
-                                                </Col>
+                                                mainConfig.view == 'listView' ?
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                        <ProductListSkeleton />
+                                                    </Col>
+                                                    :
+                                                    <Col xs={24} sm={12} md={12} lg={8} xl={8}>
+                                                        <GridProductSkeleton />
+                                                    </Col>
                                             )
                                         })
                                     }
@@ -334,7 +340,7 @@ const CarMarketPage = (props) => {
                                             </Breadcrumb>
                                         </span>
                                         <span className='d-inline-block ' >
-                                            <Radio.Group onChange={(e) => { pushParameterToUrl(currentFilterGroup, { ...mainConfig, view: e.target.value }) }} value={_.get(mainConfig, 'view') || 'gridView'} className="wrap-gridView-btn" style={{ float: 'right' }}>
+                                            <Radio.Group onChange={(e) => { setMainConfig({...mainConfig, view : e.target.value}); pushParameterToUrl(currentFilterGroup, { ...mainConfig, view: e.target.value }) }} value={_.get(mainConfig, 'view') || 'gridView'} className="wrap-gridView-btn" style={{ float: 'right' }}>
                                                 <Tooltip title="List View"><Radio.Button value="listView"><BarsOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
                                                 <Tooltip title="Grid View"><Radio.Button value="gridView"><AppstoreOutlined style={{ fontSize: '14px' }} /> </Radio.Button></Tooltip>
                                             </Radio.Group>
