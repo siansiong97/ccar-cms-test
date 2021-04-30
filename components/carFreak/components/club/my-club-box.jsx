@@ -211,7 +211,7 @@ const MyClubBox = (props) => {
                 </Col>
                 <Col xs={6} sm={6} md={0} lg={6} xl={6}>
                     <Card
-                        title="Other CarFreaks Clubs"
+                        title="Other Carfreaks Club(s)"
                     >
                         <OtherClubsBox userId={props.userId} />
                     </Card>

@@ -1,4 +1,4 @@
-import { Button, Col, Form, Icon, Row, Tooltip } from 'antd';
+import { Button, Col, Empty, Form, Icon, Row, Tooltip } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -21,12 +21,14 @@ import { withRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import SellerBusinessCard from '../seller/SellerBusinessCard';
 import { routePaths } from '../../route';
+import ProductListSkeleton from '../skeleton-loader/ProductListSkeleton';
 
 
 const ProductList = (props) => {
 
   const [descriptionIndex, setDescriptionIndex] = useState(-1)
   const [productList, setProductList] = useState([])
+  const [skeletonLoading, setSkeletonLoading] = useState(true);
 
 
   useEffect(() => {
@@ -44,6 +46,7 @@ const ProductList = (props) => {
     if (notEmptyLength(props.data)) {
       if (props.data != productList) {
         setProductList([]);
+        setSkeletonLoading(true);
         let inputDataList = _.cloneDeep(props.data)
 
         inputDataList.map(function (v) {
@@ -117,6 +120,7 @@ const ProductList = (props) => {
           return v
         })
         setProductList(inputDataList);
+        setSkeletonLoading(false);
       }
     }
 
@@ -798,7 +802,30 @@ const ProductList = (props) => {
           </Col >)
       );
     } else {
-      return null;
+      return skeletonLoading ?
+        <React.Fragment>
+          <Row>
+            {
+              _.map(_.range(0, 30), function (index) {
+                return (
+                  <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <ProductListSkeleton />
+                  </Col>
+                )
+              })
+            }
+          </Row>
+        </React.Fragment>
+        :
+        <div style={{ height: '15em', backgroundColor: '#FFFFFF' }}>
+          <Empty
+            style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)' }}
+            image="/empty.png"
+            imageStyle={{ height: 60, }}
+            description={<span>{props.app.loading ? 'Getting Result' : 'No Result'}</span>}
+          >
+          </Empty>
+        </div>
     }
   }
 
