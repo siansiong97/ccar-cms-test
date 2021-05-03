@@ -520,7 +520,7 @@ class LiveIndex extends React.Component {
               <Col xs={24} sm={24} md={12} lg={8} xl={8} >
                 <Link shallow={false} href={`/live/${broadcaster.dealerSocketId}`} >
                   <a>
-                    <LiveBoxPreview1
+                    <LiveBoxPreview1 
                       data={broadcaster}
                       key={`live-box-${broadcaster.dealerSocketId}`}
                       className='cursor-pointer'

@@ -1496,7 +1496,7 @@ class Filter extends React.Component {
                                         // selected={
                                         //     this.props.newCars ? this.state.filterGroup
                                         //         ? this.state.filterGroup.make
-                                        //             ? this.state.filterGroup.make
+                                        //             ? this.state.filterGroup.make 
                                         //             : ''
                                         //         : ''
                                         //         : ''}

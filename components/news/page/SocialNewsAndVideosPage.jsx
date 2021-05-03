@@ -366,7 +366,6 @@ const SocialNewsAndVideosPage = (props) => {
                                                 ...videoFilterGroup,
                                                 language: nextActiveLanguage != videoActiveLanguage ? nextActiveLanguage : videoActiveLanguage,
                                                 author: author,
-
                                             })
                                             setVideoActiveLanguage(nextActiveLanguage != videoActiveLanguage ? nextActiveLanguage : videoActiveLanguage);
                                             setVideoSelectedAuthor(author);

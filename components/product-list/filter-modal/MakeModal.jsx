@@ -193,7 +193,6 @@ const MakeModal = (props) => {
                                 </div>
                             </Scrollbars>
                         </Col>
-
                     </Row>
                 </Card>
 

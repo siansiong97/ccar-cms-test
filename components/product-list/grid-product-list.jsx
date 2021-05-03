@@ -13,7 +13,7 @@ import { loading } from '../../redux/actions/app-actions';
 import { calMonth, formatMoney, renderMileageRange } from '../../functionContent';
 import AddCompareProductButton from '../general/add-compare-product-button';
 import Car360ViewButton from '../general/car-360-view-button';
-import { flameRed, rayaFlame, rayaFood, rayaLamp, rayaMosque, rayaPeople } from '../../icon';
+import { flameRed, rayaFlame, rayaFood, rayaLamp, rayaMosque, rayaPeople } from '../../icon'; 
 import Loading from '../general/Loading';
 import WhatsAppButton from '../general/whatapps-button';
 import ContactList from '../general/contactList';
@@ -386,7 +386,6 @@ const GridProductList = (props) => {
                                                 }
                                             </div>
                                             <div className="wrap-product-ads-text relative-wrapper">
-
                                                 {
                                                     v.priority === 'addonSpicydeal' || v.priority === 'addonKingadType' || v.priority === 'addonKingadType2' ?
                                                         <img src={rayaMosque}  style={{ width: 100, height: 100, position : 'absolute', bottom : 50 , right : 10}} />

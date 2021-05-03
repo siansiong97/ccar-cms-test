@@ -438,7 +438,7 @@ const Index = (props) => {
                 } else { 
                   message.error('Brand Not Found!')
                 }
-              }} />
+              }} /> 
             </div>
           </Col>
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -515,8 +515,8 @@ const Index = (props) => {
                       <a href={convertParameterToProductListUrl()}><Button type="primary"> Show More </Button></a>
                     </Col>
                     {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} className="margin-top-md margin-bottom-md text-align-center">
-                                <Button type="primary"> Show More </Button>
-                            </Col> */}
+                        <Button type="primary"> Show More </Button>
+                    </Col> */}
                   </Row>
                 </Col>
               </Row>
