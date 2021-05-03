@@ -118,7 +118,7 @@ const ModelModal = (props) => {
                                                 filteredOptions.map((item, index) => {
                                                     return (
                                                         <div style={{ margin: '10px 0px' }} key={index} >
-                                                            <p style={{ fontWeight: '600', fontSize: '16px', textAlign: 'left', textTransform: 'capitalize' }}>{item.bodyType}</p>
+                                                            <p className="font-weight-bold black" style={{ fontSize: '16px', textAlign: 'left', textTransform: 'capitalize' }}>{item.bodyType}</p>
                                                             {item.data.map((v, i) => {
                                                                 return (
                                                                     <div className="flex-justify-space-between flex-items-align-center cursor-pointer"

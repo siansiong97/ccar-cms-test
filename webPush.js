@@ -39,7 +39,6 @@ export const initFirebaseToken = async () => {
         if (status && status === 'granted') {
             //getting token from FCM
             const fcm_token = await messaging.getToken({vapidKey : PUBLIC_VAPID_KEY});
-            console.log('fcm_token', fcm_token);
             if (fcm_token) {
                 //setting FCM token in indexed db using localforage
                 localforage.setItem('fcm_token', fcm_token);
@@ -58,7 +57,6 @@ export const onMessageListener = () => {
     const messaging = firebase.messaging();
     return new Promise((resolve) => {
         messaging.onMessage((payload) => {
-            console.log('get message');
             // console.log(payload);
             resolve(payload);
         });

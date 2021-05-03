@@ -16,7 +16,7 @@ export default async function (data, limit) {
 
   if (!_.has(data, ['filterGroup'])) {
     data.filterGroup = {};
-  }else{
+  } else {
     data.filterGroup = _.cloneDeep(data.filterGroup)
   }
 
@@ -40,6 +40,10 @@ export default async function (data, limit) {
   }
 
   let andFilter = { $and: [] }
+
+  if (_.isArray(data.filterGroup.$and) && !_.isEmpty(data.filterGroup.$and)) {
+    andFilter.$and = [...data.filterGroup.$and];
+  }
 
   if (notEmptyLength(data.filterGroup) && notEmptyLength(data.filterGroup.yearRange)) {
     data.filterGroup.yearRange = convertToRangeFormat(data.filterGroup.yearRange);
@@ -80,6 +84,7 @@ export default async function (data, limit) {
     }
     delete data.filterGroup.engineCapacityRange;
   }
+
 
   data.filterGroup = objectRemoveEmptyValue(data.filterGroup);
   let match = { $match: { ...data.filterGroup } }

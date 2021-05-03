@@ -12,6 +12,7 @@ import { withRouter } from 'next/router';
 import { loading } from '../../redux/actions/app-actions';
 import { setUser } from '../../redux/actions/user-actions';
 import Link from 'next/link';
+import { routePaths } from '../../route';
 
 
 const ANSWERS_PER_COL = 10;
@@ -349,7 +350,7 @@ const AnswerPaperForm = (props) => {
                                 <div className='flex-justify-center width-100 flex-items-align-center margin-bottom-lg'>
                                     {/* <Button className='padding-x-md border-ccar-yellow background-white black margin-x-sm' style={{ minWidth: '100px' }} onClick={(e) => { window.location.reload(); }}> {_.upperCase(props.language) == 'BM' ? 'Saya mahu ujian semula' : 'I want retest'} </Button> */}
                                     <Button className='padding-x-md border-ccar-yellow background-ccar-yellow white margin-x-sm' style={{ minWidth: '100px' }} onClick={(e) => { setModalVisible(false) }}> {_.upperCase(props.language) == 'BM' ? 'Ya' : 'Yes'} </Button>
-                                    <Link shallow={false}  href={'/kpp'} >
+                                    <Link shallow={false}   href={routePaths.kpp.to || '/'} as={typeof (routePaths.kpp.as) == 'function' ? routePaths.kpp.as() : '/'} >
                                         <a>
                                             <Button className='padding-x-md border-ccar-yellow background-white black margin-x-sm' style={{ minWidth: '100px' }}> {_.upperCase(props.language) == 'BM' ? 'Tidak, kembali ke Laman Utama' : 'Back to Home Page'}  </Button>
                                         </a>
@@ -450,7 +451,7 @@ const AnswerPaperForm = (props) => {
                                 onClick={(e) => { handleSubmit() }}
                             > {_.upperCase(props.language) == 'BM' ? 'Hantar' : 'Submit'} </Button>
 
-                            <Link shallow={false}  href={'/kpp'} >
+                            <Link shallow={false} href={routePaths.kpp.to || '/'} as={typeof (routePaths.kpp.as) == 'function' ? routePaths.kpp.as() : '/'} >
                                 <a>
                                     <Button
                                         className='padding-x-xl white font-weight-bold margin-x-sm'
@@ -542,7 +543,7 @@ const AnswerPaperForm = (props) => {
                                 </QueueAnim>
                             </div>
                             <div className="white h6 text-align-center margin-x-lg width-100" style={{ position: 'fixed', bottom: 0 }}>
-                                <Link shallow={false}  href={'/kpp'} >
+                                <Link shallow={false}  href={routePaths.kpp.to || '/'} as={typeof (routePaths.kpp.as) == 'function' ? routePaths.kpp.as() : '/'} >
                                     <a>
                                         <Button className='margin-md'>{_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'}</Button>
                                     </a>
@@ -574,7 +575,7 @@ const AnswerPaperForm = (props) => {
                                 </QueueAnim>
                             </div>
                             <div className="white h6 text-align-center width-100" style={{ position: 'fixed', bottom: 0 }}>
-                                <Link shallow={false}  href={'/kpp'} > 
+                                <Link shallow={false}  href={routePaths.kpp.to || '/'} as={typeof (routePaths.kpp.as) == 'function' ? routePaths.kpp.as() : '/'} > 
                                 <a>
                                 <Button className='margin-md'>{_.upperCase(props.language) == 'BM' ? 'Keluar' : 'Exit'}</Button>
                                 </a>

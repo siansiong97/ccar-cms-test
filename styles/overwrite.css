@@ -371,6 +371,12 @@ video {
 .collapse-body-padding-top-sm .ant-collapse-content-box {
     padding-top: 2px;
 }
+.collapse-content-background-transparent .ant-collapse-content{
+    background-color: transparent !important;
+}
+.collapse-content-background-transparent .ant-collapse {
+    background-color: transparent !important;
+}
 
 .collapse-body-overflow-visible .ant-collapse-content {
     overflow: visible;

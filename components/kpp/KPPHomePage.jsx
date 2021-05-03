@@ -12,6 +12,7 @@ import CustomTabs from '../general/CustomTabs';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 import { address } from '../../icon';
+import { routePaths } from '../../route';
 
 
 
@@ -156,7 +157,7 @@ const KPPIndex = (props) => {
                                 <Row style={{ marginBottom: '6px' }}>
                                     <Col span={24} style={{ textAlign: 'center' }}>
                                         <p style={{ color: '#ffffff', marginBottom: '2px' }}> English KPP Test Paper </p>
-                                        <Link shallow={false}  href={'/kpp/kpp-en'} >
+                                        <Link shallow={false}  href={routePaths.kppEn.to || '/'} as={typeof (routePaths.kppEn.as) == 'function' ? routePaths.kppEn.as() : '/'} >
                                             <a>
                                                 <Button style={{ marginLeft: '-11px', width: '129px' }} type="primary"> KPP Test (EN) </Button>
                                             </a>
@@ -166,7 +167,7 @@ const KPPIndex = (props) => {
                                 <Row style={{ marginBottom: '6px' }}>
                                     <Col span={24} style={{ textAlign: 'center' }}>
                                         <p style={{ color: '#ffffff', marginBottom: '2px' }}> Kertas Ujian KPP Bahasa Melayu </p>
-                                        <Link shallow={false}  href={'/kpp/kpp-bm'} >
+                                        <Link shallow={false}  href={routePaths.kppBm.to || '/'} as={typeof (routePaths.kppBm.as) == 'function' ? routePaths.kppBm.as() : '/'}  >
                                             <a>
                                                 <Button style={{ marginLeft: '-12px' }} type="primary"> Ujian Kpp (BM) </Button>
                                             </a>
@@ -257,17 +258,17 @@ const KPPIndex = (props) => {
 
                             <Col xs={0} sm={0} md={24} lg={24} xl={24}>
                                 <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
-                                    <Link shallow={false}  href={'/kpp/kpp-revision/0/en'} >
+                                    <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 0, language : 'en'}) : '/'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section A</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow={false}  href={'/kpp/kpp-revision/1/en'} >
+                                    <Link shallow={false}   href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 1, language : 'en'}) : '/'}>
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section B</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow={false}  href={'/kpp/kpp-revision/2/en'} >
+                                    <Link shallow={false}   href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 2, language : 'en'}) : '/'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section C</Button>
                                         </a>
@@ -275,17 +276,17 @@ const KPPIndex = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <Link shallow={false}  href={'/kpp/kpp-revision/0/en'} >
+                                <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 0, language : 'en'}) : '/'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Section A</Button>
                                     </div>
                                 </Link>
-                                <Link shallow={false}  href={'/kpp/kpp-revision/1/en'} >
+                                <Link shallow={false}   href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 1, language : 'en'}) : '/'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Section B</Button>
                                     </div>
                                 </Link>
-                                <Link shallow={false}  href={'/kpp/kpp-revision/2/en'} >
+                                <Link shallow={false}   href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 2, language : 'en'}) : '/'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Section C</Button>
                                     </div>
@@ -322,17 +323,17 @@ const KPPIndex = (props) => {
 
                             <Col xs={0} sm={0} md={24} lg={24} xl={24}>
                                 <div className='flex-justify-space-around flex-items-align-center padding-top-md flex-wrap'>
-                                    <Link shallow={false}  href={'/kpp/kpp-revision/0/bm'} >
+                                    <Link shallow={false}   href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 0, language : 'bm'}) : '/'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian A</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow={false}  href={'/kpp/kpp-revision/1/bm'} >
+                                    <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 1, language : 'bm'}) : '/'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian B</Button>
                                         </a>
                                     </Link>
-                                    <Link shallow={false}  href={'/kpp/kpp-revision/2/bm'} >
+                                    <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 2, language : 'bm'}) : '/'} >
                                         <a>
                                             <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian C</Button>
                                         </a>
@@ -340,17 +341,17 @@ const KPPIndex = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={0} lg={0} xl={0}>
-                                <Link shallow={false}  href={'/kpp/kpp-revision/0/bm'} >
+                                <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 0, language : 'bm'}) : '/'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian A</Button>
                                     </div>
                                 </Link>
-                                <Link shallow={false}  href={'/kpp/kpp-revision/1/bm'} >
+                                <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 1, language : 'bm'}) : '/'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold' >Bahagian B</Button>
                                     </div>
                                 </Link>
-                                <Link shallow={false}  href={'/kpp/kpp-revision/2/bm'} >
+                                <Link shallow={false}  href={routePaths.kppRevision.to || '/'} as={typeof (routePaths.kppRevision.as) == 'function' ? routePaths.kppRevision.as({group : 2, language : 'bm'}) : '/'} >
                                     <div className='flex-justify-space-around flex-items-align-center padding-top-md'>
                                         <Button className='border-ccar-yellow background-ccar-yellow white font-weight-bold'>Bahagian C</Button>
                                     </div>

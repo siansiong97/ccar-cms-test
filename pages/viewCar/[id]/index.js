@@ -8,6 +8,7 @@ import client from '../../../feathers'
 import { withRouter } from 'next/router'
 import { checkEnvReturnCmsUrl } from '../../../functionContent'
 import { connect } from 'react-redux'
+import ViewCarDetails2Page from '../../../components/product-list/page/ViewCarDetails2Page'
 var moment = require('moment');
 const App = (props) => {
     const carInfo = _.get(props, 'carInfo') || {};
@@ -30,6 +31,7 @@ const App = (props) => {
                 {
                     props.app.initedRedux ?
                         <ViewCarDetailsPage data={carInfo || {}} />
+                        // <ViewCarDetails2Page data={carInfo || {}} />
                         :
                         null
                 }
@@ -56,7 +58,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))
 export async function getServerSideProps({ req, res, }) {
     try {
 
-        const { id } = req.params
+        let id = _.get(req, `params.id`) || _.get(req, `query.id`);
         let carInfo = {
             condition: '', companys: {}, carspecsAll: {}, registrationUrl: {}
         };

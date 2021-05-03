@@ -13,6 +13,7 @@ import { emptyIcon } from '../../params/common';
 const BrandList = (props) => {
 
     const [brands, setBrands] = useState(carBrandsList)
+    const [value, setValue] = useState('')
     const [limit, setLimit] = useState(-1)
     const [tooltipVisible, setTooltipVisible] = useState({});
 
@@ -51,6 +52,20 @@ const BrandList = (props) => {
 
     }, [props.data])
 
+    useEffect(() => {
+
+        if (_.isString(props.value)) {
+
+            let selectedBrand = _.find(carBrandsList, function (origBrand) {
+                return _.toLower(origBrand.value) == _.toLower(props.value);
+            })
+            setValue(_.get(selectedBrand , `value`) || undefined)
+        }else{
+            setValue(undefined)
+        }
+
+    }, [props.value])
+
 
     return (
         <div className={`width-100 ${props.className || ''}`} style={{ ...props.style }}>
@@ -60,10 +75,10 @@ const BrandList = (props) => {
                         <div className={`d-flex ${props.wrapperClassName || 'flex-justify-space-between flex-items-align-center padding-sm'}`}>
                             {
                                 props.showAllIcon === true ?
-                                    <Tooltip title={`All Brands`} visible={props.showTooltip === true ? _.get(tooltipVisible , ['allIcon']) : false} onVisibleChange={(v) => {
+                                    <Tooltip title={`All Brands`} visible={props.showTooltip === true ? _.get(tooltipVisible, ['allIcon']) : false} onVisibleChange={(v) => {
                                         setTooltipVisible({
                                             ...tooltipVisible,
-                                            allIcon : v,
+                                            allIcon: v,
                                         });
                                     }}>
                                         <span key={'all-brand'} className={`d-inline-block ${props.avatarClassName || ''} background-grey-lighten-2 avatar relative-wrapper flex-items-no-shrink cursor-pointer`}
@@ -82,18 +97,19 @@ const BrandList = (props) => {
                             {
                                 _.map(brands, function (brand, i) {
                                     return (
-                                        <Tooltip title={`${brand.value}`} visible={props.showTooltip === true ? _.get(tooltipVisible , [brand.value]) : false} onVisibleChange={(v) => {
+                                        <Tooltip title={`${brand.value}`} visible={props.showTooltip === true ? _.get(tooltipVisible, [brand.value]) : false} onVisibleChange={(v) => {
                                             setTooltipVisible({
                                                 ...tooltipVisible,
-                                                [brand.value || ''] : v,
+                                                [brand.value || '']: v,
                                             });
                                         }}>
-                                            <span key={'brand' + i} className={`d-inline-block ${props.avatarClassName || ''} relative-wrapper flex-items-no-shrink cursor-pointer`}
+                                            <span key={'brand' + i} className={`d-inline-block ${props.avatarClassName || ''} relative-wrapper flex-items-no-shrink cursor-pointer ${value == brand.value ? props.selectedClassName || 'border-yellow avatar' : ''}`}
                                                 style={{ width: props.size || 50, height: props.size || 50 }}
                                                 onClick={() => {
                                                     if (props.onClickBrand) {
                                                         props.onClickBrand(brand)
                                                     }
+                                                    setValue(brand.value)
                                                 }} >
                                                 <img src={brand.icon || emptyIcon} className=" absolute-center-img-no-stretch"></img>
                                             </span>

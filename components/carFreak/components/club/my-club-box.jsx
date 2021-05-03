@@ -10,6 +10,7 @@ import ScrollLoadWrapper from '../../../general/ScrollLoadWrapper';
 import { imageNotFound } from '../../../profile/config';
 import OtherClubsBox from './other-clubs-box';
 import Link from 'next/link';
+import { routePaths } from '../../../../route';
 
 
 const PAGE_SIZE = 30;
@@ -135,7 +136,7 @@ const MyClubBox = (props) => {
                 <Col xs={18} sm={18} md={24} lg={18} xl={18}>
                     <React.Fragment>
                         <Card
-                            title="My Clubs"
+                            title="My Club(s)"
                         >
                             {
                                 _.isArray(myClubs) && notEmptyLength(myClubs) ?
@@ -148,7 +149,7 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myClubs, function (club) {
                                                     return (
-                                                        <Link shallow={false}  href={`/social-club/${club._id}`} >
+                                                        <Link shallow={false}  href={routePaths.socialClubDetails.to || '/'} as={typeof (routePaths.socialClubDetails.as) == 'function' ? routePaths.socialClubDetails.as(club) : '/'} >
                                                             <a>
                                                                 <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }}>
                                                                     <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
@@ -171,7 +172,7 @@ const MyClubBox = (props) => {
                         </Card>
 
                         <Card
-                            title="My Joined Clubs"
+                            title="My Joined Club(s)"
                             className="margin-top-lg"
                         >
                             {
@@ -185,7 +186,7 @@ const MyClubBox = (props) => {
                                             {
                                                 _.map(myJoinedClubs, function (club) {
                                                     return (
-                                                        <Link shallow={false}  href={`/social-club/${club._id}`} >
+                                                        <Link shallow={false}  href={routePaths.socialClubDetails.to || '/'} as={typeof (routePaths.socialClubDetails.as) == 'function' ? routePaths.socialClubDetails.as(club) : '/'} >
                                                             <a>
                                                                 <span className='d-inline-block relative-wrapper avatar flex-items-no-shrink margin-md cursor-pointer' style={{ height: 150, width: 150, overflow: 'hidden' }} >
                                                                     <img className=" img-cover fill-parent absolute-center" src={_.get(club, ['clubAvatar']) || imageNotFound} />
@@ -210,7 +211,7 @@ const MyClubBox = (props) => {
                 </Col>
                 <Col xs={6} sm={6} md={0} lg={6} xl={6}>
                     <Card
-                        title="Other CarFreaks Clubs"
+                        title="Other Carfreaks Club(s)"
                     >
                         <OtherClubsBox userId={props.userId} />
                     </Card>

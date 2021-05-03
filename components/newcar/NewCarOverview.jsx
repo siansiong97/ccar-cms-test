@@ -12,6 +12,7 @@ import { calculateTimeRange, formatNumber, notEmptyLength, numberToFixed } from 
 import CalculatorModal from '../general/calculator-modal';
 import ShareButtonDialog from '../general/ShareButtonDialog';
 import { loading, updateActiveMenu } from '../../redux/actions/app-actions';
+import { routePaths } from '../../route';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -829,7 +830,7 @@ const NewCarOverview = (props) => {
                             {peerComp.map((item, idx) => {
                                 return (
                                     <Col key={'keyDetails' + idx} xs={12} sm={12} md={6} lg={6} xl={6} >
-                                        <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                                        <Link shallow={false}  href={routePaths.newCarDetails.to || '/'} as={typeof (routePaths.newCarDetails.as) == 'function' ? routePaths.newCarDetails.as(item) : '/'} passHref >
                                             <a>
                                         <div className="cursor-pointer">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>
@@ -859,7 +860,7 @@ const NewCarOverview = (props) => {
                             {peerComp.map((item, idx) => {
                                 return (
                             <Col key={'keyDetails' + idx} xs={12} sm={12} md={6} lg={6} xl={6} >
-                                <Link shallow={false}  href={`/newcar/details/${item.make + '/' + item.model}`} passHref >
+                                <Link shallow={false}  href={routePaths.newCarDetails.to || '/'} as={typeof (routePaths.newCarDetails.as) == 'function' ? routePaths.newCarDetails.as(item) : '/'} passHref >
                                     <a>
                                         <div className="newcars-uniqBy-model cursor-pointer">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px' }}></img>

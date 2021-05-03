@@ -103,7 +103,7 @@ const MyClubInvitationBox = (props) => {
                                                                         null
                                                                 }
                                                                 <div className="headline grey-darken-2">
-                                                                    Requested {moment(_.get(invite, ['createdAt'])).fromNow()} ago
+                                                                    Requested {moment(_.get(invite, ['createdAt'])).fromNow()}
                                                                 </div>
                                                             </span>
                                                         </div>
@@ -150,7 +150,7 @@ const MyClubInvitationBox = (props) => {
                 </Col>
                 <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                     <Card
-                        title="Other CarFreaks Clubs"
+                        title="Other Carfreaks Club(s)"
                     >
                         <OtherClubsBox userId={props.userId} />
                     </Card>

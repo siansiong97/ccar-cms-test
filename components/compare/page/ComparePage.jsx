@@ -13,6 +13,7 @@ import client from '../../../feathers';
 import { convertParameterToProductListUrl, notEmptyLength } from '../../../common-function';
 import CarspecsCompareTable from '../CarspecsCompareTable';
 import Link from 'next/link';
+import { routePaths } from '../../../route';
 
 
 const Desktop = ({ children }) => {
@@ -151,7 +152,7 @@ const CompareIndex = (props) => {
                                     />
                                     {props.productsList.compareIds.length < props.productsList.compareLimit ?
                                         <Col key="add new" className="gutter-row col-centered" xs={24} sm={24} md={5} lg={5} xl={5}>
-                                            <Link shallow={false} href={convertParameterToProductListUrl()} >
+                                            <Link shallow={false} href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'} >
                                                 <a>
                                                     <Button className="w-100" style={{ height: '10em' }}>
                                                         <CarOutlined style={{ fontSize: 40 }} />
@@ -195,7 +196,7 @@ const CompareIndex = (props) => {
             </Desktop>
 
             <Tablet>
-            <div className="section" style={{ touchAction: 'pan-y' }}>
+                <div className="section" style={{ touchAction: 'pan-y' }}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={20} xl={20}>
                             <Card title="Summary" className="card-padding-0 ">
@@ -212,7 +213,7 @@ const CompareIndex = (props) => {
                                     />
                                     {props.productsList.compareIds.length < props.productsList.compareLimit ?
                                         <Col key="add new" className="gutter-row col-centered" xs={24} sm={24} md={5} lg={5} xl={5}>
-                                            <Link shallow={false} href={convertParameterToProductListUrl()} >
+                                            <Link shallow={false} href={routePaths.carsOnSale.to || '/'} as={typeof (routePaths.carsOnSale.as) == 'function' ? routePaths.carsOnSale.as() : '/'} >
                                                 <a>
                                                     <Button className="w-100" style={{ height: '10em' }}>
                                                         <CarOutlined style={{ fontSize: 40 }} />

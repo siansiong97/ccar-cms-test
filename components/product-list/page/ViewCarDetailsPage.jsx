@@ -37,6 +37,7 @@ import RegisterCard from '../../general/registerCard';
 import KeyCarDetails from '../KeyCarDetails';
 import Link from 'next/link';
 import Description from '../Description';
+import { routePaths } from '../../../route';
 
 
 const { TextArea } = Input;
@@ -89,7 +90,6 @@ class ViewCarDetailsPage extends React.Component {
 
   componentDidMount() {
 
-    console.log(this.state.productDetails);
     this.setState({
       window: window,
       soldOutModalVisible: _.get(this.state.productDetails, ['status']) == 'sold',
@@ -125,14 +125,14 @@ class ViewCarDetailsPage extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
 
-    // if (typeof (window) != undefined) {
-    //   window.addEventListener('scroll', this.handleScroll, { passive: true });
+    if (typeof (window) != undefined) {
+      window.addEventListener('scroll', this.handleScroll, { passive: true });
 
-    //   return () => {
+      return () => {
 
-    //     window.removeEventListener('scroll', this.handleScroll);
-    //   };
-    // }
+        window.removeEventListener('scroll', this.handleScroll);
+      };
+    }
 
     if (!_.isEqual(prevState.productDetails, this.state.productDetails)) {
       if (_.get(this.state.productDetails, ['status']) == 'sold') {
@@ -462,8 +462,11 @@ class ViewCarDetailsPage extends React.Component {
                       </div>
                     </Col>
                     <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} >
-                      {this._renderPriceAffix()}
-                    </Col>
+                      <div className="flex-justify-end flex-items-align-center">
+                        <span className='d-inline-block ' >
+                          {this._renderPrice()}
+                        </span>
+                      </div>                    </Col>
                     <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                       <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
                       <span style={{ marginBottom: '0px' }}> <img src="/assets/carDetails/Location@3x.png" alt="location" className="fill-parent" style={{ width: '2%' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.area ? null : this.state.productDetails.companys.area} </span>
@@ -601,7 +604,11 @@ class ViewCarDetailsPage extends React.Component {
                       </div>
                     </Col>
                     <Col xs={12} sm={12} md={6} lg={6} xl={6} style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} >
-                      {this._renderPriceAffix()}
+                      <div className="flex-justify-end flex-items-align-center">
+                        <span className='d-inline-block ' >
+                          {this._renderPrice()}
+                        </span>
+                      </div>
                     </Col>
                     <Col xs={12} sm={12} md={24} lg={24} xl={24}>
                       <span style={{ marginBottom: '0px', marginRight: '5px' }}> <img src="/assets/profile/address-work.png" alt="address" className="fill-parent" style={{ width: '2%', marginTop: '-4px' }}></img> {!this.state.productDetails.companys || !this.state.productDetails.companys.name ? null : this.state.productDetails.companys.name} </span>
@@ -950,9 +957,9 @@ class ViewCarDetailsPage extends React.Component {
           </div>
           <div className="padding-y-sm flex-justify-center flex-items-align-center">
             <span className='d-inline-block width-50' >
-              <Link href={`/dealer/${_.get(this.state.productDetails , 'createdBy.companyurlId') || ''}/${_.get(this.state.productDetails , 'createdBy.userurlId') || ''}`}>
+              <Link href={routePaths.dealerProfile.to || '/'} as={typeof (routePaths.dealerProfile.as) == 'function' ? routePaths.dealerProfile.as(_.get(this.state.productDetails, `createdBy`)) : '/'} >
                 <a>
-                <Button block className="black background-ccar-button-yellow" >More Information</Button>
+                  <Button block className="black background-ccar-button-yellow" >More Information</Button>
                 </a>
               </Link>
             </span>

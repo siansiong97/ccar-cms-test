@@ -15,7 +15,7 @@ import JoinClubButton from './join-club-button';
 import WriteClubModal from './write-club-modal';
 import { loading } from '../../../../redux/actions/app-actions';
 import ShareButtonDialog from '../../../general/ShareButtonDialog';
-import { formatNumber, notEmptyLength  } from '../../../../common-function';
+import { formatNumber, notEmptyLength } from '../../../../common-function';
 import { useMediaQuery } from 'react-responsive';
 
 const Desktop = ({ children }) => {
@@ -53,7 +53,7 @@ const ClubProfolioBanner = (props) => {
         if (!query) {
             query = {};
         }
-        if(query.invite == '1'){
+        if (query.invite == '1') {
             setInviteVisible(true)
         }
     }, [props.router.query])
@@ -67,7 +67,7 @@ const ClubProfolioBanner = (props) => {
     }, [props.viewType])
 
     useEffect(() => {
- 
+
     }, [viewType])
 
     function handleSumbitCoverPhoto(coverPhoto) {
@@ -121,241 +121,241 @@ const ClubProfolioBanner = (props) => {
         <React.Fragment>
 
             <Desktop>
-            <div className={`width-100 relative-wrapper flex-justify-start flex-items-align-center padding-md ${props.className || ''}`} style={{ ...props.style, backgroundImage: `url("${_.get(club, ['clubBackgroundImage'])}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: defaultHeight, backgroundPosition: 'center' }} >
-                <div className='background-black opacity-60 absolute-center'>
-                </div>
-                <span className='width-30 flex-items-align-center height-100' >
-                    <Row gutter={[0, 20]} className="width-100">
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className="width-100 flex-justify-center flex-items-align-center">
-                                <ClubAvatar showPreview data={club} size={200} ></ClubAvatar>
-                            </div>
-                        </Col>
-                        {
-                            viewType == clubProfileViewTypes[0] ?
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={`width-100 flex-justify-center flex-items-align-center`}>
-                                        <Button className=" background-black-opacity-30 white margin-right-md" onClick={(e) => { setClubApprovalVisible(true) }}>Club Request</Button>
-                                        <Button className=" background-black-opacity-30 white" onClick={(e) => { setWriteClubVisible(true) }}>Edit Profile</Button>
-                                    </div>
-                                </Col>
-                                :
-                                null
-                        }
-                    </Row>
-                </span>
-                <span className='width-50 flex-items-align-center height-100' >
-                    <Row gutter={[0, 10]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className=" width-100 flex-justify-start flex-items-align-center h4 white font-weight-bold text-truncate">
-                                {_.get(club, ['clubName']) || ''}
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={`width-100 flex-justify-start flex-items-align-center`}>
-                                <span className='d-inline-block text-align-center margin-right-lg' >
-                                    <div className=" h6 font-weight-normal white">
-                                        {formatNumber(_.get(club, ['clubTotalPosts']), 'auto', true, 0, true) || 0}
-                                    </div>
-                                    <div className=" headline font-weight-light white">
-                                        Posts
-                                    </div>
-                                </span>
-                                <span className='d-inline-block text-align-center margin-right-lg' >
-                                    <div className=" h6 font-weight-normal white">
-                                        {formatNumber(_.get(club, ['clubTotalDiscussions']), 'auto', true, 0, true) || 0}
-                                    </div>
-                                    <div className=" headline font-weight-light white">
-                                        Discussions
-                                    </div>
-                                </span>
-                                <span className='d-inline-block text-align-center margin-right-lg' >
-                                    <div className=" h6 font-weight-normal white">
-                                        {formatNumber(_.get(club, ['clubTotalMembers']), 'auto', true, 0, true) || 0}
-                                    </div>
-                                    <div className=" headline font-weight-thin white">
-                                        Members
-                                    </div>
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={`width-100 flex-justify-start flex-items-align-center`}>
-                                {
-                                    viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ?
-                                        <span className='d-inline-block margin-right-md' >
-                                            <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
-                                                onSuccess={(res) => {
-                                              
-                                                    if (_.get(res, ['type']) == 'approved') {
-                                                        window.location.reload();
-                                                    }
-                                                }}
-                                                joinButton={(joinAction) => {
-                                                    return (
-                                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
-                                                    )
-                                                }}
-                                                joinedButton={() => {
-                                                    return (
-                                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Joined</Button>
-                                                    )
-                                                }}
-                                                pendingButton={() => {
-                                                    return (
-                                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Pending Approval</Button>
-                                                    )
-                                                }}
-                                            />
-                                        </span>
-                                        :
-                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black margin-right-md" onClick={(e) => { setInviteVisible(true) }}>+ Invite</Button>
-                                }
-
-                                <ShareButtonDialog link={`/social-club/${_.get(club, ['_id'])}`}>
-                                    <Button className=" background-white border-white padding-x-xl black"><Icon type="share-alt" ></Icon>Share</Button>
-                                </ShareButtonDialog>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Scrollbars autoHeight autoHeightMax={100}>
-                                <div className="text-overflow-break width-100 white headline font-weight-thin">
-                                    {_.get(club, ['clubBio']) || ''}
+                <div className={`width-100 relative-wrapper flex-justify-start flex-items-align-center padding-md ${props.className || ''}`} style={{ ...props.style, backgroundImage: `url("${_.get(club, ['clubBackgroundImage'])}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: defaultHeight, backgroundPosition: 'center' }} >
+                    <div className='background-black opacity-60 absolute-center'>
+                    </div>
+                    <span className='width-30 flex-items-align-center height-100' >
+                        <Row gutter={[0, 20]} className="width-100">
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="width-100 flex-justify-center flex-items-align-center">
+                                    <ClubAvatar showPreview data={club} size={200} ></ClubAvatar>
                                 </div>
-                            </Scrollbars>
-                        </Col>
-                    </Row>
-                </span>
-                {
-                    viewType == clubProfileViewTypes[0] ?
-                        <span className='d-inline-block ' style={{ position: 'absolute', bottom: 20, right: 20 }} >
-                            <Upload {...props} showUploadList={false} onChange={(e) => { handleSumbitCoverPhoto(e.file); }} multiple={false} accept="image/*">
-                                <Button className='margin-right-md white background-grey-opacity-30'> <Icon type="camera" /> Edit Cover Photo </Button>
-                            </Upload>
-                        </span>
-                        :
-                        null
-                }
-            </div>
+                            </Col>
+                            {
+                                viewType == clubProfileViewTypes[0] ?
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <div className={`width-100 flex-justify-center flex-items-align-center`}>
+                                            <Button className=" background-black-opacity-30 white margin-right-md" onClick={(e) => { setClubApprovalVisible(true) }}>Club Request</Button>
+                                            <Button className=" background-black-opacity-30 white" onClick={(e) => { setWriteClubVisible(true) }}>Edit Club Info</Button>
+                                        </div>
+                                    </Col>
+                                    :
+                                    null
+                            }
+                        </Row>
+                    </span>
+                    <span className='width-50 flex-items-align-center height-100' >
+                        <Row gutter={[0, 10]}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className=" width-100 flex-justify-start flex-items-align-center h4 white font-weight-bold text-truncate">
+                                    {_.get(club, ['clubName']) || ''}
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className={`width-100 flex-justify-start flex-items-align-center`}>
+                                    <span className='d-inline-block text-align-center margin-right-lg' >
+                                        <div className=" h6 font-weight-normal white">
+                                            {formatNumber(_.get(club, ['clubTotalPosts']), 'auto', true, 0, true) || 0}
+                                        </div>
+                                        <div className=" headline font-weight-light white">
+                                            Posts
+                                    </div>
+                                    </span>
+                                    <span className='d-inline-block text-align-center margin-right-lg' >
+                                        <div className=" h6 font-weight-normal white">
+                                            {formatNumber(_.get(club, ['clubTotalDiscussions']), 'auto', true, 0, true) || 0}
+                                        </div>
+                                        <div className=" headline font-weight-light white">
+                                            Discussions
+                                    </div>
+                                    </span>
+                                    <span className='d-inline-block text-align-center margin-right-lg' >
+                                        <div className=" h6 font-weight-normal white">
+                                            {formatNumber(_.get(club, ['clubTotalMembers']), 'auto', true, 0, true) || 0}
+                                        </div>
+                                        <div className=" headline font-weight-thin white">
+                                            Members
+                                    </div>
+                                    </span>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className={`width-100 flex-justify-start flex-items-align-center`}>
+                                    {
+                                        viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ?
+                                            <span className='d-inline-block margin-right-md' >
+                                                <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                                                    onSuccess={(res) => {
+
+                                                        if (_.get(res, ['type']) == 'approved') {
+                                                            window.location.reload();
+                                                        }
+                                                    }}
+                                                    joinButton={(joinAction) => {
+                                                        return (
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
+                                                        )
+                                                    }}
+                                                    joinedButton={() => {
+                                                        return (
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Joined</Button>
+                                                        )
+                                                    }}
+                                                    pendingButton={() => {
+                                                        return (
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Pending Approval</Button>
+                                                        )
+                                                    }}
+                                                />
+                                            </span>
+                                            :
+                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black margin-right-md" onClick={(e) => { setInviteVisible(true) }}>+ Invite</Button>
+                                    }
+
+                                    <ShareButtonDialog link={`/social-club/${_.get(club, ['_id'])}`}>
+                                        <Button className=" background-white border-white padding-x-xl black"><Icon type="share-alt" ></Icon>Share</Button>
+                                    </ShareButtonDialog>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Scrollbars autoHeight autoHeightMax={100}>
+                                    <div className="text-overflow-break width-100 white headline font-weight-thin">
+                                        {_.get(club, ['clubBio']) || ''}
+                                    </div>
+                                </Scrollbars>
+                            </Col>
+                        </Row>
+                    </span>
+                    {
+                        viewType == clubProfileViewTypes[0] ?
+                            <span className='d-inline-block ' style={{ position: 'absolute', bottom: 20, right: 20 }} >
+                                <Upload {...props} showUploadList={false} onChange={(e) => { handleSumbitCoverPhoto(e.file); }} multiple={false} accept="image/*">
+                                    <Button className='margin-right-md white background-grey-opacity-30'> <Icon type="camera" /> Edit Cover Photo </Button>
+                                </Upload>
+                            </span>
+                            :
+                            null
+                    }
+                </div>
             </Desktop>
 
             <Tablet>
-            <div className={`width-100 relative-wrapper flex-justify-start flex-items-align-center padding-md ${props.className || ''}`} style={{ ...props.style, backgroundImage: `url("${_.get(club, ['clubBackgroundImage'])}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: defaultHeight, backgroundPosition: 'center' }} >
-                <div className='background-black opacity-60 absolute-center'>
-                </div>
-                <span className='width-50 flex-items-align-center height-100' >
-                    <Row gutter={[0, 20]} className="width-100">
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className="width-100 flex-justify-center flex-items-align-center">
-                                <ClubAvatar showPreview data={club} size={150} ></ClubAvatar>
-                            </div>
-                        </Col>
-                        {
-                            viewType == clubProfileViewTypes[0] ?
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={`width-100 flex-justify-center flex-items-align-center`}>
-                                        <Button className=" background-black-opacity-30 white margin-right-md" onClick={(e) => { setClubApprovalVisible(true) }}>Club Request</Button>
-                                        <Button className=" background-black-opacity-30 white" onClick={(e) => { setWriteClubVisible(true) }}>Edit Profile</Button>
-                                    </div>
-                                </Col>
-                                :
-                                null
-                        }
-                    </Row>
-                </span>
-                <span className='width-50 flex-items-align-center height-100' >
-                    <Row gutter={[0, 10]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className=" width-100 flex-justify-start flex-items-align-center h4 white font-weight-bold text-truncate">
-                                {_.get(club, ['clubName']) || ''}
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={`width-100 flex-justify-start flex-items-align-center`}>
-                                <span className='d-inline-block text-align-center margin-right-lg' >
-                                    <div className=" h6 font-weight-normal white">
-                                        {formatNumber(_.get(club, ['clubTotalPosts']), 'auto', true, 0, true) || 0}
-                                    </div>
-                                    <div className=" headline font-weight-light white">
-                                        Posts
-                                    </div>
-                                </span>
-                                <span className='d-inline-block text-align-center margin-right-lg' >
-                                    <div className=" h6 font-weight-normal white">
-                                        {formatNumber(_.get(club, ['clubTotalDiscussions']), 'auto', true, 0, true) || 0}
-                                    </div>
-                                    <div className=" headline font-weight-light white">
-                                        Discussions
-                                    </div>
-                                </span>
-                                <span className='d-inline-block text-align-center margin-right-lg' >
-                                    <div className=" h6 font-weight-normal white">
-                                        {formatNumber(_.get(club, ['clubTotalMembers']), 'auto', true, 0, true) || 0}
-                                    </div>
-                                    <div className=" headline font-weight-thin white">
-                                        Members
-                                    </div>
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className={`width-100 flex-justify-start flex-items-align-center`}>
-                                {
-                                    viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ?
-                                        <span className='d-inline-block margin-right-md' >
-                                            <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
-                                                onSuccess={(res) => {
-                                              
-                                                    if (_.get(res, ['type']) == 'approved') {
-                                                        window.location.reload();
-                                                    }
-                                                }}
-                                                joinButton={(joinAction) => {
-                                                    return (
-                                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
-                                                    )
-                                                }}
-                                                joinedButton={() => {
-                                                    return (
-                                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Joined</Button>
-                                                    )
-                                                }}
-                                                pendingButton={() => {
-                                                    return (
-                                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Pending Approval</Button>
-                                                    )
-                                                }}
-                                            />
-                                        </span>
-                                        :
-                                        <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black margin-right-md" onClick={(e) => { setInviteVisible(true) }}>+ Invite</Button>
-                                }
-
-                                <ShareButtonDialog link={`/social-club/${_.get(club, ['_id'])}`}>
-                                    <Button className=" background-white border-white padding-x-xl black"><Icon type="share-alt" ></Icon>Share</Button>
-                                </ShareButtonDialog>
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Scrollbars autoHeight autoHeightMax={100}>
-                                <div className="text-overflow-break width-100 white headline font-weight-thin">
-                                    {_.get(club, ['clubBio']) || ''}
+                <div className={`width-100 relative-wrapper flex-justify-start flex-items-align-center padding-md ${props.className || ''}`} style={{ ...props.style, backgroundImage: `url("${_.get(club, ['clubBackgroundImage'])}")`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: defaultHeight, backgroundPosition: 'center' }} >
+                    <div className='background-black opacity-60 absolute-center'>
+                    </div>
+                    <span className='width-50 flex-items-align-center height-100' >
+                        <Row gutter={[0, 20]} className="width-100">
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className="width-100 flex-justify-center flex-items-align-center">
+                                    <ClubAvatar showPreview data={club} size={150} ></ClubAvatar>
                                 </div>
-                            </Scrollbars>
-                        </Col>
-                    </Row>
-                </span>
-                {
-                    viewType == clubProfileViewTypes[0] ?
-                        <span className='d-inline-block ' style={{ position: 'absolute', bottom: 20, right: 20 }} >
-                            <Upload {...props} showUploadList={false} onChange={(e) => { handleSumbitCoverPhoto(e.file); }} multiple={false} accept="image/*">
-                                <Button className='margin-right-md white background-grey-opacity-30'> <Icon type="camera" /> Edit Cover Photo </Button>
-                            </Upload>
-                        </span>
-                        :
-                        null
-                }
-            </div>
+                            </Col>
+                            {
+                                viewType == clubProfileViewTypes[0] ?
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <div className={`width-100 flex-justify-center flex-items-align-center`}>
+                                            <Button className=" background-black-opacity-30 white margin-right-md" onClick={(e) => { setClubApprovalVisible(true) }}>Club Request</Button>
+                                            <Button className=" background-black-opacity-30 white" onClick={(e) => { setWriteClubVisible(true) }}>Edit Club Info</Button>
+                                        </div>
+                                    </Col>
+                                    :
+                                    null
+                            }
+                        </Row>
+                    </span>
+                    <span className='width-50 flex-items-align-center height-100' >
+                        <Row gutter={[0, 10]}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className=" width-100 flex-justify-start flex-items-align-center h4 white font-weight-bold text-truncate">
+                                    {_.get(club, ['clubName']) || ''}
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className={`width-100 flex-justify-start flex-items-align-center`}>
+                                    <span className='d-inline-block text-align-center margin-right-lg' >
+                                        <div className=" h6 font-weight-normal white">
+                                            {formatNumber(_.get(club, ['clubTotalPosts']), 'auto', true, 0, true) || 0}
+                                        </div>
+                                        <div className=" headline font-weight-light white">
+                                            Posts
+                                    </div>
+                                    </span>
+                                    <span className='d-inline-block text-align-center margin-right-lg' >
+                                        <div className=" h6 font-weight-normal white">
+                                            {formatNumber(_.get(club, ['clubTotalDiscussions']), 'auto', true, 0, true) || 0}
+                                        </div>
+                                        <div className=" headline font-weight-light white">
+                                            Discussions
+                                    </div>
+                                    </span>
+                                    <span className='d-inline-block text-align-center margin-right-lg' >
+                                        <div className=" h6 font-weight-normal white">
+                                            {formatNumber(_.get(club, ['clubTotalMembers']), 'auto', true, 0, true) || 0}
+                                        </div>
+                                        <div className=" headline font-weight-thin white">
+                                            Members
+                                    </div>
+                                    </span>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <div className={`width-100 flex-justify-start flex-items-align-center`}>
+                                    {
+                                        viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ?
+                                            <span className='d-inline-block margin-right-md' >
+                                                <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                                                    onSuccess={(res) => {
+
+                                                        if (_.get(res, ['type']) == 'approved') {
+                                                            window.location.reload();
+                                                        }
+                                                    }}
+                                                    joinButton={(joinAction) => {
+                                                        return (
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
+                                                        )
+                                                    }}
+                                                    joinedButton={() => {
+                                                        return (
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Joined</Button>
+                                                        )
+                                                    }}
+                                                    pendingButton={() => {
+                                                        return (
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Pending Approval</Button>
+                                                        )
+                                                    }}
+                                                />
+                                            </span>
+                                            :
+                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black margin-right-md" onClick={(e) => { setInviteVisible(true) }}>+ Invite</Button>
+                                    }
+
+                                    <ShareButtonDialog link={`/social-club/${_.get(club, ['_id'])}`}>
+                                        <Button className=" background-white border-white padding-x-xl black"><Icon type="share-alt" ></Icon>Share</Button>
+                                    </ShareButtonDialog>
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Scrollbars autoHeight autoHeightMax={100}>
+                                    <div className="text-overflow-break width-100 white headline font-weight-thin">
+                                        {_.get(club, ['clubBio']) || ''}
+                                    </div>
+                                </Scrollbars>
+                            </Col>
+                        </Row>
+                    </span>
+                    {
+                        viewType == clubProfileViewTypes[0] ?
+                            <span className='d-inline-block ' style={{ position: 'absolute', bottom: 20, right: 20 }} >
+                                <Upload {...props} showUploadList={false} onChange={(e) => { handleSumbitCoverPhoto(e.file); }} multiple={false} accept="image/*">
+                                    <Button className='margin-right-md white background-grey-opacity-30'> <Icon type="camera" /> Edit Cover Photo </Button>
+                                </Upload>
+                            </span>
+                            :
+                            null
+                    }
+                </div>
             </Tablet>
 
             <WriteClubModal

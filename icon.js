@@ -37,6 +37,7 @@ export const rayaPeople = '/assets/productList/Orang(Final).gif'
 export const ccarWebLogo400X150 = '/assets/profile/400x150-icon.png'
 export const ccarLogo = '/logo192.png'
 export const ccarLogo2 = '/assets/Ccar-logo.png'
+export const ccarWebLogo2 = '/ccar-web-logo.png'
 
 //Login
 export const loginBackground = '/assets/login/ramadhan.png';

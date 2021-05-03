@@ -426,7 +426,7 @@ const Index = (props) => {
                 </Col> */}
           <Col xs={24} sm={24} md={24} lg={24} xl={24}>
             <div className="width-100">
-              <BrandList limit={10} data={brandList} onClickBrand={(brand) => {
+              <BrandList limit={10} size={66.6} data={brandList} onClickBrand={(brand) => {
                 if (_.get(brand, ['value'])) {
                   let path = '/';
                   if (quickFilterType == 'carMarket') {

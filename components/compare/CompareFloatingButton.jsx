@@ -11,6 +11,7 @@ import { withRouter } from 'next/dist/client/router';
 import { notEmptyLength } from '../../common-function';
 import GridProductList from '../product-list/grid-product-list';
 import Link from 'next/link';
+import { routePaths } from '../../route';
 
 
 const CompareFloatingButton = (props) => {
@@ -163,7 +164,7 @@ const CompareFloatingButton = (props) => {
 
             <Row style={{ margin: 10 }}>
               <Col span={24} style={{ textAlign: 'center' }}>
-                <Link shallow={false}  href={'/compare'} >
+                <Link shallow={false}  href={routePaths.compare.to || '/'} as={typeof (routePaths.compare.as) == 'function' ? routePaths.compare.as() : '/'} >
                   <a>
                     <Button
                       style={{ fontWeight: 'bold' }}

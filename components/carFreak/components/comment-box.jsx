@@ -366,50 +366,56 @@ const CommentBox = (props) => {
                                     }}><MessageOutlined /> Reply</Button>
                                 </span>
                             </div>
-                            <Collapse className="collapse-no-header border-none collapse-body-no-padding collapse-body-overflow-visible" activeKey={expandReplyKey} >
-                                <Collapse.Panel key="1" showArrow={false}>
-                                    <div className="width-100 margin-top-md border-top-grey-lighten-3" style={{ borderTop: 'solid 1px', borderTopColor: '#E0E0E0' }}>
-                                        <div className="padding-left-xl" style={{ overflowY: 'visible' }}>
-                                            {
-                                                _.map(messages, function (v) {
-                                                    return (
-                                                        <div>
-                                                            <ReplyBox data={v}
-                                                                onChange={(data) => {
-                                                                    handleReplyChange(data);
-                                                                }}
-                                                                onRemove={(data) => {
-                                                                    handleReplyRemove(data);
-                                                                }}
-                                                                handleReply={(name, id) => {
-                                                                    if (name && id) {
-                                                                        setExpandReplyKey('1');
-                                                                        addAlias(name || '', getObjectId(id) || '')
-                                                                    }
-                                                                }}
-                                                            />
-                                                            <Divider style={{ margin: 0, padding: 0 }} />
-                                                        </div>
-                                                    )
-                                                })
-                                            }
+                            <div className="collapse-content-background-transparent">
+                                <Collapse className="collapse-no-header border-none collapse-body-no-padding collapse-body-overflow-visible" activeKey={expandReplyKey} >
+                                    <Collapse.Panel key="1" showArrow={false}>
+                                        <div className={props.background || ''}>
+                                            <div className={`width-100 margin-top-md border-top-grey-lighten-3`} style={{ borderTop: 'solid 1px', borderTopColor: '#E0E0E0' }}>
+                                                <div className="padding-left-xl" style={{ overflowY: 'visible' }}>
+                                                    {
+                                                        _.map(messages, function (v) {
+                                                            return (
+                                                                <div>
+                                                                    <ReplyBox
+                                                                        className={`background-transparent`}
+                                                                        data={v}
+                                                                        onChange={(data) => {
+                                                                            handleReplyChange(data);
+                                                                        }}
+                                                                        onRemove={(data) => {
+                                                                            handleReplyRemove(data);
+                                                                        }}
+                                                                        handleReply={(name, id) => {
+                                                                            if (name && id) {
+                                                                                setExpandReplyKey('1');
+                                                                                addAlias(name || '', getObjectId(id) || '')
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                    <Divider style={{ margin: 0, padding: 0 }} />
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className={`padding-top-md`}>
+                                                <SocialInput
+                                                    placeholder="What's on your mind?"
+                                                    inputRef={commentInputRef}
+                                                    editMode={textEditMode}
+                                                    text={text || ''}
+                                                    excludeEnter
+                                                    focusIndicator={focusIndicator}
+                                                    onSubmit={(text) => {
+                                                        handleSubmit(text);
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="padding-top-md">
-                                        <SocialInput
-                                            placeholder="What's on your mind?"
-                                            inputRef={commentInputRef}
-                                            editMode={textEditMode}
-                                            text={text || ''}
-                                            excludeEnter
-                                            focusIndicator={focusIndicator}
-                                            onSubmit={(text) => {
-                                                handleSubmit(text);
-                                            }}
-                                        />
-                                    </div>
-                                </Collapse.Panel>
-                            </Collapse>
+                                    </Collapse.Panel>
+                                </Collapse>
+                            </div>
                         </Col>
 
 

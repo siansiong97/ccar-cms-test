@@ -25,7 +25,7 @@ const Index = (props) => {
 
 export async function getServerSideProps(context) {
 
-    const { id } = context.req.params;
+    let id = _.get(context, `req.params.id`) || _.get(context, `req.query.id`);
     let data = {};
     let seoData = {};
     if (id) {

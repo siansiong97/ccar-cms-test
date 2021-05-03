@@ -12,6 +12,7 @@ import client from '../../../feathers';
 import { carBrandsList } from '../../../params/carBrandsList';
 import { loading, updateActiveMenu } from '../../../redux/actions/app-actions';
 import { fetchNewCarFilterGroup, fetchPopular, fetchPrice, resetNewCarFilterGroup } from '../../../redux/actions/newcars-actions';
+import { routePaths } from '../../../route';
 import LayoutV2 from '../../general/LayoutV2';
 import BrandFiltering from '../BrandFiltering';
 
@@ -1076,7 +1077,7 @@ class Filter extends React.Component {
                     list.push(
                         <React.Fragment>
                             <Col xs={24} sm={24} md={8} lg={6} xl={6} key={i}>
-                                <Link shallow={false} href={`/newcar/details/${item.make + '/' + item.model}`} >
+                                <Link shallow={false} href={routePaths.newCarDetails.to || '/'} as={typeof (routePaths.newCarDetails.as) == 'function' ? routePaths.newCarDetails.as(item) : '/'} >
                                     <a>
                                         <div className="newcars-uniqBy-model">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
@@ -1112,7 +1113,7 @@ class Filter extends React.Component {
                     list.push(
                         <React.Fragment>
                             <Col xs={24} sm={24} md={8} lg={6} xl={6} key={i}>
-                                <Link shallow={false} href={`/newcar/details/${item.make + '/' + item.model}`} >
+                                <Link shallow={false} href={routePaths.newCarDetails.to || '/'} as={typeof (routePaths.newCarDetails.as) == 'function' ? routePaths.newCarDetails.as(item) : '/'} >
                                     <a>
                                         <div className="newcars-uniqBy-model">
                                             <img src={item.uri} style={{ width: '100%', padding: '5px', marginLeft: '5px' }}></img>
@@ -1182,21 +1183,21 @@ class Filter extends React.Component {
                         <div className="container" id="filter-top" >
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/">
+                                    <Link shallow={false} href={routePaths.home.to || '/'} as={typeof (routePaths.home.as) == 'function' ? routePaths.home.as() : '/'}>
                                         <a>
                                             Home
                                             </a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar">
+                                    <Link shallow={false} href={routePaths.newCar.to || '/'} as={typeof (routePaths.newCar.as) == 'function' ? routePaths.newCar.as() : '/'}>
                                         <a>
                                             New Car
                                         </a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false} href="/newcar/filter">
+                                    <Link shallow={false} href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'}>
                                         <a>
                                             Filter
                                         </a></Link>
@@ -1359,21 +1360,21 @@ class Filter extends React.Component {
                         <div className="container-version3 padding-x-sm margin-top-md" id="filter-top" >
                             <Breadcrumb style={{ marginBottom: '5px' }}>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/">
+                                    <Link shallow={false} href={routePaths.home.to || '/'} as={typeof (routePaths.home.as) == 'function' ? routePaths.home.as() : '/'}>
                                         <a>
                                             Home
                                         </a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar">
+                                    <Link shallow={false} href={routePaths.newCar.to || '/'} as={typeof (routePaths.newCar.as) == 'function' ? routePaths.newCar.as() : '/'}>
                                         <a>
                                             New Car
                                         </a>
                                     </Link>
                                 </Breadcrumb.Item>
                                 <Breadcrumb.Item>
-                                    <Link shallow={false}  href="/newcar/filter">
+                                    <Link shallow={false} href={routePaths.newCarFilter.to || '/'} as={typeof (routePaths.newCarFilter.as) == 'function' ? routePaths.newCarFilter.as() : '/'}>
                                         <a>
                                             Filter
                                         </a></Link>
