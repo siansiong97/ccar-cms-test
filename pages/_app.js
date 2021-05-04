@@ -28,10 +28,26 @@ import { RouterContextProvider } from '../hooks/useRouter';
 import { checkEnvReturnCmsUrl } from '../functionContent';
 import client from '../feathers';
 import { ccarLogo2, ccarWebLogo400X150 } from '../icon';
-
-
+import * as ga from '../utils/ga'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const WrappedApp = ({ Component, pageProps, router }) => {
+  const routerGa = useRouter()
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      ga.pageview(url)
+    }
+    //When the component is mounted, subscribe to router changes
+    //and log those page views
+    routerGa.events.on('routeChangeComplete', handleRouteChange)
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method
+    return () => {
+      routerGa.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [routerGa.events])
 
   let seoData = _.isPlainObject(_.get(pageProps, ['seoData'])) && !_.isEmpty(_.get(pageProps, ['seoData'])) ? _.get(pageProps, ['seoData']) : {};
   let title = _.get(seoData, ['title']) || 'CCAR.MY | #1 Car Social Platform'
