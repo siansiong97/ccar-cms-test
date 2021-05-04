@@ -43,12 +43,12 @@ const SocialClubLayout = (props) => {
             <Row gutter={[15, 15]}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className="width-100 flex-justify-end flex-items-align-center">
-                        <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'allClubs' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black border-bottom-black'}`} onClick={(e) => {
+                        <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'allClubs' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black'}`} onClick={(e) => {
                             handleChange('allClubs');
                         }} >
                             All
                         </span>
-                        <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'myClub' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black border-bottom-black'}`} onClick={(e) => {
+                        <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'myClub' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black'}`} onClick={(e) => {
                             handleChange('myClub');
                             if (!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) {
                                 message.error('Please Login First!')
@@ -57,7 +57,7 @@ const SocialClubLayout = (props) => {
                         }} >
                             My Club
                         </span>
-                        <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'myClubInvitation' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black border-bottom-black'}`} onClick={(e) => {
+                        <span className={`d-inline-block margin-right-md subtitle1 black cursor-pointer ${tabKey == 'myClubInvitation' ? 'ccar-button-yellow border-bottom-ccar-button-yellow' : 'black'}`} onClick={(e) => {
                             handleChange('myClubInvitation');
                             if (!_.get(props.user, ['authenticated']) || !_.get(props.user, ['info', 'user', '_id'])) {
                                 message.error('Please Login First!')

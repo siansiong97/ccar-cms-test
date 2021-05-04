@@ -523,6 +523,9 @@ const CarReviewFormPage = (props) => {
                             <div className="body1 font-weight-light flex-justify-start grey-darken-1 flex-wrap text-overflow-break padding-y-sm">
                                 How would you rate your car on the following aspects?
                             </div>
+                            <div className="body1 font-weight-light flex-justify-start grey-darken-1 flex-wrap text-overflow-break padding-y-sm">
+                                Overall Rating
+                            </div>
                             <Form.Item className="w-100" style={{ margin: 0, padding: 0 }}
                                 validateStatus={(isFieldTouched('rating') || !isFieldValidating('rating')) && getFieldError('rating') ? 'error' : ''}
                                 help={(isFieldTouched('rating') || !isFieldValidating('rating')) && getFieldError('rating')}
@@ -534,9 +537,6 @@ const CarReviewFormPage = (props) => {
                                     <Rate style={{ fontSize: 30 }} allowHalf />
                                 )}
                             </Form.Item>
-                            <div className="body1 font-weight-light flex-justify-start grey-darken-1 flex-wrap text-overflow-break padding-y-sm">
-                                Overall Rating
-                            </div>
                             <div className="padding-top-md">
                                 {
                                     _.map(carspecRatingCategories, function (carspecRatingCategory) {

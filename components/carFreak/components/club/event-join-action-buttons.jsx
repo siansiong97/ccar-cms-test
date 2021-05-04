@@ -42,7 +42,7 @@ const EventJoinActionButtons = (props) => {
         {
             value: 'notInterest',
             render: <Button>Can't Go</Button>,
-            activeRender: <Button  type="primary" className="background-ccar-button-yellow border-ccar-button-yellow">Can't Go</Button>
+            activeRender: <Button type="primary" className="background-ccar-button-yellow border-ccar-button-yellow">Can't Go</Button>
         },
     ]
 
@@ -117,9 +117,9 @@ const EventJoinActionButtons = (props) => {
 
     function patchEventJoin(eventId, userId, status) {
 
-        if (eventId && userId && status ) {
+        if (eventId && userId && status) {
             if (_.isPlainObject(eventJoin) && !_.isEmpty(eventJoin)) {
-                if( _.get(eventJoin , ['status']) != status){
+                if (_.get(eventJoin, ['status']) != status) {
                     client.authenticate().then(res => {
                         client.service('eventjoins').patch(eventJoin._id, { eventId, userId, status }).then(res => {
                             setEventJoin(res);
@@ -138,11 +138,11 @@ const EventJoinActionButtons = (props) => {
                 }
             } else {
                 client.authenticate().then(res => {
-                    client.service('eventjoins').create({ 
+                    client.service('eventjoins').create({
                         eventId,
                         userId,
                         status,
-                     }).then(res => {
+                    }).then(res => {
                         setEventJoin(res);
                         if (props.notify) {
                             message.success('Thank you for your response.');
@@ -166,7 +166,15 @@ const EventJoinActionButtons = (props) => {
                 {
                     _.map(dataSources, function (dataSource) {
                         return (
-                            <span className='d-inline-block cursor-pointer margin-right-md' onClick={(e) => { patchEventJoin(props.eventId, props.userId, dataSource.value) }} >
+                            <span className='d-inline-block cursor-pointer margin-right-md' onClick={(e) => {
+                                if (props.readOnly !== true) {
+                                    patchEventJoin(props.eventId, props.userId, dataSource.value)
+                                } else {
+                                    if(props.onClick){
+                                        props.onClick(dataSource.value)
+                                    }
+                                }
+                            }} >
                                 {
                                     _.get(eventJoin, ['status']) == _.get(dataSource, ['value']) ?
                                         dataSource.activeRender

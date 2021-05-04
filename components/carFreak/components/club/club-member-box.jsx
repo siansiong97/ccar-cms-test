@@ -20,7 +20,7 @@ const ClubMemberBox = (props) => {
 
     const [members, setMembers] = useState([]);
     const [admins, setAdmins] = useState([]);
-    const [clubId, setClubId] = useState('');
+    const [club, setClub] = useState({});
     const [adminTotal, setAdminTotal] = useState(0);
     const [adminPage, setAdminPage] = useState(1);
     const [memberTotal, setMemberTotal] = useState(0);
@@ -35,13 +35,14 @@ const ClubMemberBox = (props) => {
     }, [props.viewType])
 
     useEffect(() => {
-        setClubId(props.clubId || '')
-    }, [props.clubId])
+        setClub(_.isPlainObject(props.club) && !_.isEmpty(props.club) ? props.club : {});
+    }, [props.club])
+
 
     useEffect(() => {
         getAdmins(0);
         getMembers(0);
-    }, [clubId])
+    }, [club])
 
     useEffect(() => {
         getMembers((memberPage - 1) * PAGE_SIZE);
@@ -49,7 +50,7 @@ const ClubMemberBox = (props) => {
 
     function getAdmins(skip) {
 
-        if (clubId) {
+        if (_.get(club , `_id`)) {
             if (!isValidNumber(parseInt(skip))) {
                 skip = 0;
             } else {
@@ -60,7 +61,7 @@ const ClubMemberBox = (props) => {
 
             client.service('clubjoin').find({
                 query: {
-                    clubId: clubId,
+                    clubId: _.get(club , `_id`),
                     role: 'admin',
                     status: 'approved',
                     $populate: ['userId'],
@@ -84,7 +85,7 @@ const ClubMemberBox = (props) => {
 
     function getMembers(skip) {
 
-        if (clubId) {
+        if (_.get(club , `_id`)) {
             if (!isValidNumber(parseInt(skip))) {
                 skip = 0;
             } else {
@@ -95,7 +96,7 @@ const ClubMemberBox = (props) => {
 
             client.service('clubjoin').find({
                 query: {
-                    clubId: clubId,
+                    clubId: _.get(club , `_id`),
                     role: 'member',
                     status: 'approved',
                     $populate: ['userId'],
@@ -229,7 +230,7 @@ const ClubMemberBox = (props) => {
 
     return (
         <React.Fragment>
-            <ClubBackdrop viewType={viewType}>
+            <ClubBackdrop viewType={viewType} club={club}>
                 <div className={`thin-border round-border padding-md ${props.className || ''}`} style={{ ...props.style }}>
                     <Row gutter={[10, 10]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

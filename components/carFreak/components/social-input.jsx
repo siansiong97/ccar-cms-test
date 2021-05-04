@@ -117,6 +117,7 @@ const SocialInput = (props) => {
     }, [searchWord, prefix, suggestListPage])
 
     useEffect(() => {
+        console.log(aliasCode);
         updateAliasText();
     }, [aliasCode])
 
@@ -431,8 +432,8 @@ const SocialInput = (props) => {
         let newSearchWord = '';
 
         if (!currentPosition || (text[currentPosition - 1] == ' ' && hashTagActived)) {
-            setHashTagActived(false);
             setTimeout(() => {
+                setHashTagActived(false);
                 setSearchMode(false);
             }, 300);
         }
@@ -530,8 +531,8 @@ const SocialInput = (props) => {
                                 <ScrollLoadWrapper autoHeight autoHeightMax={200} autoHeightMin={200} style={{ width: '100%' }} >
                                     {
                                         _.isArray(_.get(suggestList, [prefix])) && !_.isEmpty(_.get(suggestList, [prefix])) ?
-                                            (suggestList[prefix] || []).map(value => (
-                                                <div className="padding-sm flex-justify-start flex-items-align-center cursor-pointer hover-background-yellow-accent-1"
+                                            (suggestList[prefix] || []).map((value, index) => (
+                                                <div className="padding-sm flex-justify-start flex-items-align-center cursor-pointer hover-background-yellow-accent-1" key={`social-input-dropdown-${index}`}
                                                     onClick={(e) => {
                                                         if (prefix == tagPrefix) {
                                                             setSearchMode(false);
@@ -560,7 +561,7 @@ const SocialInput = (props) => {
                                                             </React.Fragment>
                                                             :
                                                             prefix == hashTagPrefix ?
-                                                                <div className='headline font-weight-black text-truncate' >
+                                                                <div className='headline font-weight-black text-truncate' onClick={(e) => { console.log('clicked')}} >
                                                                     {
                                                                         _.get(value, ['tag'])
                                                                     }

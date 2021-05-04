@@ -50,15 +50,15 @@ const LikePostButton = (props) => {
 
 
     function getPostLike() {
-        if (props[`${likeOn}Id`] && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id']) ) {
+        if (props[`${likeOn}Id`] && _.get(props.user, ['authenticated']) && _.get(props.user, ['info', 'user', '_id'])) {
             let query = {};
             query.likeOn = likeOn
             query[`${likeOn}Id`] = props[`${likeOn}Id`]
             query.userId = _.get(props.user, ['info', 'user', '_id'])
             client.service('chatlikes').find({
-            query: {
-                ...query
-            }
+                query: {
+                    ...query
+                }
             }).then(res => {
                 setPostLike(_.get(res, ['data', 0]) || {})
             }).catch(err => {
@@ -139,15 +139,17 @@ const LikePostButton = (props) => {
                 message.error('Post Not Found')
             }
 
+        } else {
+            if (props.onClick) {
+                props.onClick(isActived)
+            }
         }
     }
 
     return (
 
         <span className={`${props.className ? props.className : ''}`} onClick={(e) => {
-            if (!props.readOnly) {
-                onClickLike()
-            }
+            onClickLike()
         }}>
             {
                 !isActived ?

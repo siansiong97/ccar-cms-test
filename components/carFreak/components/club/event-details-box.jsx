@@ -102,7 +102,13 @@ const EventDetailsBox = (props) => {
                     <div className="flex-items-align-center flex-justify-start padding-y-xs">
                         {
                             _.get(event, ['status']) == 'ongoing' ?
-                                <EventJoinActionButtons notify eventId={_.get(event, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])} />
+                                <EventJoinActionButtons readOnly={props.readOnly} notify eventId={_.get(event, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                                    onClick={(e) => {
+                                        if (props.onEventJoinActionClick) {
+                                            props.onEventJoinActionClick(e);
+                                        }
+                                    }}
+                                />
                                 :
                                 _.get(event, ['status']) == 'expired' ?
                                     <span className='d-inline-block border-red-lighten-4 red subtitle1 padding-x-lg round-border' >

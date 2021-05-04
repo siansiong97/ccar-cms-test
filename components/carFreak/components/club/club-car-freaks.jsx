@@ -40,7 +40,7 @@ const ClubDiscussionBox = (props) => {
     const [postTotal, setPostTotal] = useState(0);
     const [postPage, setPostPage] = useState(1);
 
-    const [clubId, setClubId] = useState('');
+    const [club, setClub] = useState({});
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -67,9 +67,10 @@ const ClubDiscussionBox = (props) => {
         getUserChatLikes(_.map(posts, '_id'))
     }, [props.user.authenticated])
 
+
     useEffect(() => {
-        setClubId(props.clubId || '')
-    }, [props.clubId])
+        setClub(_.isPlainObject(props.club) && !_.isEmpty(props.club) ? props.club : {});
+    }, [props.club])
 
     useEffect(() => {
         setPosts([]);
@@ -79,7 +80,7 @@ const ClubDiscussionBox = (props) => {
         } else {
             setPostPage(1);
         }
-    }, [clubId, tabKey])
+    }, [club, tabKey])
 
     useEffect(() => {
         getPosts((postPage - 1) * PAGE_SIZE);
@@ -106,13 +107,13 @@ const ClubDiscussionBox = (props) => {
     function getPosts(skip) {
         skip = skip || 0
 
-        if (clubId) {
+        if (_.get(club, `_id`)) {
             let query = {
                 chatType: tabKey == 'carfreaks' ? 'carfreaks' : 'socialboard',
                 parentType: {
                     $in: ['club', 'clubEvent']
                 },
-                clubId: clubId,
+                clubId: _.get(club, `_id`),
                 $populate: [
                     {
                         path: 'userId',
@@ -198,7 +199,7 @@ const ClubDiscussionBox = (props) => {
     return (
         <React.Fragment>
 
-            <ClubBackdrop viewType={viewType}>
+            <ClubBackdrop viewType={viewType} club={club} >
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <div className="flex-justify-space-between flex-items-align-center">
@@ -213,8 +214,14 @@ const ClubDiscussionBox = (props) => {
                             </span>
                             <span className='d-inline-block ' >
                                 <Button size="large" className="border-ccar-yellow" onClick={(e) => {
-                                    setWritePostEditMode(false);
-                                    setWritePostVisible(true);
+                                    console.log(viewType);
+                                    if (_.get(club, `clubType`) == 'public' && (viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2])) {
+                                        
+
+                                    } else if (_.get(club, `clubType`) == 'private' && viewType != clubProfileViewTypes[3] && viewType != clubProfileViewTypes[2]) {
+                                        setWritePostEditMode(false);
+                                        setWritePostVisible(true);
+                                    }
                                 }}  ><Icon type="edit" /> Write a Post</Button>
                             </span>
                         </div>
@@ -257,7 +264,7 @@ const ClubDiscussionBox = (props) => {
                                                                         setWritePostVisible(true);
                                                                     }
                                                                 }}
-                                                                clubId={clubId}
+                                                                clubId={_.get(club, `_id`)}
                                                                 onRemoveClick={(data) => {
                                                                     confirmDelete(data)
                                                                 }}
@@ -298,7 +305,7 @@ const ClubDiscussionBox = (props) => {
                     setWritePostVisible(false);
                 }}
                 parentType="club"
-                clubId={clubId}
+                clubId={_.get(club, `_id`)}
                 data={selectedPost}
                 notify
                 onCreatePost={(post) => {

@@ -351,7 +351,7 @@ const CarFreakPage = (props) => {
                 </Desktop>
 
                 <Tablet>
-                <CarFreakLayout>
+                    <CarFreakLayout>
                         <Row gutter={[15, 15]}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <div className="width-100 flex-justify-end flex-items-align-center">
@@ -395,45 +395,45 @@ const CarFreakPage = (props) => {
                                                     return (
                                                         <Col xs={24} sm={12} md={8} lg={6} xl={6} key={`post-${v4()}`}>
                                                             <Post data={v}
-                                                        className="background-white thin-border round-border box-shadow-strong"
-                                                        postLike={_.find(userChatLikes, { chatId: v._id })}
-                                                        onRedirectToPost={(post) => {
-                                                            if (htmlWindow) {
-                                                                if (_.get(post, ['chatType']) == 'event') {
+                                                                className="background-white thin-border round-border box-shadow-strong"
+                                                                postLike={_.find(userChatLikes, { chatId: v._id })}
+                                                                onRedirectToPost={(post) => {
+                                                                    if (htmlWindow) {
+                                                                        if (_.get(post, ['chatType']) == 'event') {
 
-                                                                    const win = htmlWindow.open(`/event-post/${_.get(post, ['_id'])}`, '_blank');
-                                                                    if (win != null) {
-                                                                        win.focus();
+                                                                            const win = htmlWindow.open(`/event-post/${_.get(post, ['_id'])}`, '_blank');
+                                                                            if (win != null) {
+                                                                                win.focus();
+                                                                            }
+                                                                        } else {
+                                                                            setChatInfo(post);
+                                                                            setVisible(true);
+                                                                            setEditMode('');
+                                                                        }
                                                                     }
-                                                                } else {
-                                                                    setChatInfo(post);
-                                                                    setVisible(true);
-                                                                    setEditMode('');
-                                                                }
-                                                            }
-                                                        }}
-                                                        onEditClick={(post) => {
-                                                            setEditMode('edit');
-                                                            setWriteModalVisible(true);
-                                                            setSelectedPost(post);
-                                                        }}
+                                                                }}
+                                                                onEditClick={(post) => {
+                                                                    setEditMode('edit');
+                                                                    setWriteModalVisible(true);
+                                                                    setSelectedPost(post);
+                                                                }}
 
-                                                        onUpdatePost={(data) => {
-                                                            handlePostChange(data);
-                                                        }}
-                                                        onRemoveClick={(post) => {
-                                                            confirmDelete(post)
-                                                        }}
-                                                        onPostLikeChange={(liked, data) => {
-                                                            if (liked) {
-                                                                setUserChatLikes(_.concat(userChatLikes, [data]));
-                                                            } else {
-                                                                setUserChatLikes(_.filter(userChatLikes, function (like) {
-                                                                    return _.get(like, ['chatId']) != _.get(data, ['chatId']);
-                                                                }))
-                                                            }
-                                                        }}
-                                                    />
+                                                                onUpdatePost={(data) => {
+                                                                    handlePostChange(data);
+                                                                }}
+                                                                onRemoveClick={(post) => {
+                                                                    confirmDelete(post)
+                                                                }}
+                                                                onPostLikeChange={(liked, data) => {
+                                                                    if (liked) {
+                                                                        setUserChatLikes(_.concat(userChatLikes, [data]));
+                                                                    } else {
+                                                                        setUserChatLikes(_.filter(userChatLikes, function (like) {
+                                                                            return _.get(like, ['chatId']) != _.get(data, ['chatId']);
+                                                                        }))
+                                                                    }
+                                                                }}
+                                                            />
                                                         </Col>
                                                     )
                                                 })

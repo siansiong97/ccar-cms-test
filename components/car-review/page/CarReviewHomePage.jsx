@@ -51,6 +51,7 @@ const CarReviewHomePage = (props) => {
     const [ratingTotal, setRatingTotal] = useState(0);
     const [ratingLoading, setRatingLoading] = useState(false);
     const [filterGroup, setFilterGroup] = useState({});
+    const [autoCompleteValue, setAutoCompleteValue] = useState({});
 
     useEffect(() => {
         getBrands()
@@ -71,31 +72,35 @@ const CarReviewHomePage = (props) => {
             }
         }
 
+        setAutoCompleteValue({
+            ...filterGroup
+        })
+
     }, [filterGroup])
 
-    useEffect(() => { 
+    useEffect(() => {
 
-        if(filterGroup.make){
+        if (filterGroup.make) {
             getModels();
         }
-    
-    } , [filterGroup.make])
 
-    useEffect(() => { 
+    }, [filterGroup.make])
 
-        if(filterGroup.model){
+    useEffect(() => {
+
+        if (filterGroup.model) {
             getYears();
         }
-    
-    } , [filterGroup.model])
 
-    useEffect(() => { 
+    }, [filterGroup.model])
 
-        if(filterGroup.year){
+    useEffect(() => {
+
+        if (filterGroup.year) {
             getVariants();
         }
-    
-    } , [filterGroup.year])
+
+    }, [filterGroup.year])
 
     function getRatings(skip) {
         if (!_.isNaN(parseInt(skip))) {
@@ -161,24 +166,23 @@ const CarReviewHomePage = (props) => {
 
 
     function getModels() {
-        console.log('get model');
         if (filterGroup.make) {
             console.log(filterGroup.make);
             client.service('carspecs').find({
                 query: {
                     distinctFilter: {
-                        make: filterGroup.make,
                         variant: {
                             $ne: null,
                             $ne: undefined,
                             $ne: '',
                         }
                     },
+                    orRegexExact: {
+                        make: filterGroup.make
+                    },
                     distinct: 'model'
                 }
             }).then(res => {
-                console.log('res');
-                console.log(res);
                 setModels(_.compact(res) || [])
                 setOrigOptions({
                     ...origOptions,
@@ -196,17 +200,20 @@ const CarReviewHomePage = (props) => {
             client.service('carspecs').find({
                 query: {
                     distinctFilter: {
-                        make: filterGroup.make,
-                        model: filterGroup.model,
                         variant: {
                             $ne: null,
                             $ne: undefined,
                             $ne: '',
                         }
                     },
+                    orRegexExact: {
+                        make: filterGroup.make,
+                        model: filterGroup.model,
+                    },
                     distinct: 'year'
                 }
             }).then(res => {
+                console.log(res);
                 setYears(_.compact(res) || [])
                 setOrigOptions({
                     ...origOptions,
@@ -223,14 +230,16 @@ const CarReviewHomePage = (props) => {
             client.service('carspecs').find({
                 query: {
                     distinctFilter: {
-                        make: filterGroup.make,
-                        model: filterGroup.model,
-                        year: filterGroup.year,
                         variant: {
                             $ne: null,
                             $ne: undefined,
                             $ne: '',
                         }
+                    },
+                    orRegexExact: {
+                        make: filterGroup.make,
+                        model: filterGroup.model,
+                        year: filterGroup.year,
                     },
                     distinct: 'variant'
                 }
@@ -280,9 +289,17 @@ const CarReviewHomePage = (props) => {
                                             dataSource={models}
                                             onSelect={(value) => {
                                                 setFilterGroup({
+                                                    ...filterGroup,
                                                     model: value,
                                                     year: undefined,
                                                     variant: undefined,
+                                                })
+                                            }}
+                                            value={_.get(autoCompleteValue, `model`)}
+                                            onChange={(v) => {
+                                                setAutoCompleteValue({
+                                                    ...autoCompleteValue,
+                                                    model: v,
                                                 })
                                             }}
                                             onSearch={(value) => {
@@ -306,8 +323,16 @@ const CarReviewHomePage = (props) => {
                                             dataSource={years}
                                             onSelect={(value) => {
                                                 setFilterGroup({
+                                                    ...filterGroup,
                                                     year: value,
                                                     variant: undefined,
+                                                })
+                                            }}
+                                            value={_.get(autoCompleteValue, `year`)}
+                                            onChange={(v) => {
+                                                setAutoCompleteValue({
+                                                    ...autoCompleteValue,
+                                                    year: v,
                                                 })
                                             }}
                                             onSearch={(value) => {
@@ -330,7 +355,15 @@ const CarReviewHomePage = (props) => {
                                             dataSource={variants}
                                             onSelect={(value) => {
                                                 setFilterGroup({
+                                                    ...filterGroup,
                                                     variant: value,
+                                                })
+                                            }}
+                                            value={_.get(autoCompleteValue, `variant`)}
+                                            onChange={(v) => {
+                                                setAutoCompleteValue({
+                                                    ...autoCompleteValue,
+                                                    variant: v,
                                                 })
                                             }}
                                             onSearch={(value) => {

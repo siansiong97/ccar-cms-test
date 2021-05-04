@@ -143,16 +143,16 @@ const SocialClubProfilePage = (props) => {
     const _renderView = (value) => {
         switch (value) {
             case 'carfreaks':
-                return <ClubFreaksBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} /> 
+                return <ClubFreaksBox viewType={getViewType(clubJoin)} club={club} /> 
                 break;
             case 'socialboard':
-                return <ClubSocialBoardBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
+                return <ClubSocialBoardBox viewType={getViewType(clubJoin)} club={club} />
                 break;
             // case 'discussions':
             //     return <ClubDiscussionBox viewType={getViewType(clubJoin)} clubId={_.get(club, '_id')} />
             //     break;
             case 'members':
-                return <ClubMemberBox viewType={getViewType(clubJoin)} clubId={_.get(club, ['_id'])} />
+                return <ClubMemberBox viewType={getViewType(clubJoin)} club={club} />
                 break;
             case 'events':
                 return <ClubEventBox viewType={getViewType(clubJoin)} data={club} />

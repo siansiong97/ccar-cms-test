@@ -287,15 +287,24 @@ const PostCollapse = (props) => {
                                 postLike={props.postLike}
                                 chatId={_.get(post, ['_id'])}
                                 likeOn="chat"
+                                readOnly={props.readOnly}
                                 onClick={(actived) => {
-                                    setTotalLike(actived ? parseInt(totalLike) + 1 : parseInt(totalLike) - 1);
+                                    if (props.readOnly !== true) {
+                                        setTotalLike(actived ? parseInt(totalLike) + 1 : parseInt(totalLike) - 1);
+                                    }
+
+                                    if (props.onLikeClick) {
+                                        props.onLikeClick();
+                                    }
                                 }}
                                 onSuccessUpdate={(liked, data) => {
-                                    if (props.onPostLikeChange) {
-                                        props.onPostLikeChange(liked, data);
-                                    }
-                                    if (props.onUpdatePost) {
-                                        props.onUpdatePost({ ...post, totalLike: liked ? parseInt(post.totalLike) + 1 : parseInt(post.totalLike) - 1 });
+                                    if (props.readOnly !== true) {
+                                        if (props.onPostLikeChange) {
+                                            props.onPostLikeChange(liked, data);
+                                        }
+                                        if (props.onUpdatePost) {
+                                            props.onUpdatePost({ ...post, totalLike: liked ? parseInt(post.totalLike) + 1 : parseInt(post.totalLike) - 1 });
+                                        }
                                     }
                                 }}
                                 activeButton={
@@ -311,7 +320,15 @@ const PostCollapse = (props) => {
                                 </div>
                             </LikePostButton>
                             <span className='flex-items-align-center cursor-pointer' onClick={(e) => {
-                                setExpandReplyKey(expandReplyKey ? null : '1')
+                                if (props.readOnly === true) {
+
+                                } else {
+                                    setExpandReplyKey(expandReplyKey ? null : '1')
+                                }
+
+                                if (props.onReplyClick) {
+                                    props.onReplyClick();
+                                }
                             }}  >
                                 <span className='margin-right-sm' >
                                     {formatNumber(messageTotal, 'auto', true, 0, true)}

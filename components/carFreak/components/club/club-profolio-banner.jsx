@@ -186,7 +186,6 @@ const ClubProfolioBanner = (props) => {
                                             <span className='d-inline-block margin-right-md' >
                                                 <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
                                                     onSuccess={(res) => {
-
                                                         if (_.get(res, ['type']) == 'approved') {
                                                             window.location.reload();
                                                         }

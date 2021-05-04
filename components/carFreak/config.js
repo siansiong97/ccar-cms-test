@@ -281,3 +281,7 @@ export function validateViewType(data) {
         }) || clubProfileViewTypes[3];
     }
 }
+
+export function isNotAllowedSocialInteraction(club, viewType) {
+    return _.get(club, `clubType`) == 'public' && (viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2])
+}

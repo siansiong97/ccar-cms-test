@@ -2,7 +2,7 @@ import { Divider } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { convertParameterToProductListUrl } from '../../../common-function';
-import { allNewCarImg, carBrandImg, carMoreInfoImg, filterFormImg, newCarFilterFormImg, searchBoxImg, sortingImg } from '../../../icon';
+import { allNewCarImg, carBrandImg, carInfoButtons, filterFormImg, newCarFilterFormImg, homePageNavBarImg, sortingImg } from '../../../icon';
 
 
 const FAQBuyCarBox = (props) => {
@@ -24,7 +24,6 @@ const FAQBuyCarBox = (props) => {
                     <br></br>
                     3. Have fun exploring!
                     <br></br>
-                    <img src={searchBoxImg} />
                     <br></br>
                     2nd way:
                     <br></br>
@@ -42,19 +41,20 @@ const FAQBuyCarBox = (props) => {
                     <br></br>
                     5. Have fun exploring!
                     <br></br>
+                    <br></br>
                     3rd way:
                     <br></br>
                     1. If you are looking for a brand new car, you could go to All-NewCar platform from our menu bar on the home page.
                     <br></br>
-                    <img src={allNewCarImg} />
+                    <img src={homePageNavBarImg} className="img-cover" style={{ maxWidth : '100%' }} />
                     <br></br>
                     2. Choose your favourite brand.
                     <br></br>
-                    <img src={carBrandImg} />
+                    <img src={carBrandImg} className="img-cover" style={{ maxWidth : '100%' }}  />
                     <br></br>
                     3. Utilize our search filter to find your dream car easily.
                     <br></br>
-                    <img src={newCarFilterFormImg} />
+                    <img src={newCarFilterFormImg} className="img-cover" style={{ maxWidth : '100%' }}  />
                     <br></br>
                     4. Enjoy!
                     <br></br>
@@ -69,7 +69,7 @@ const FAQBuyCarBox = (props) => {
                 <div className="subtitle1 text-overflow-break " style={{ lineHeight: 1.75 }}>
                     <span className="font-weight-bold">You could get more information about the car from the following features:</span>
                     <br></br>
-                    <img src={carMoreInfoImg}></img>
+                    <img src={carInfoButtons}></img>
                     <br></br>
                     1. Whatsapp: For the dealer who is available on whatsapp, you are welcomed to give him/her a text.
                     <br></br>

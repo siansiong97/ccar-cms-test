@@ -57,11 +57,6 @@ const notificationTypes = [
         value: 'socialNew',
         editable: true,
     },
-    {
-        name: 'Profile',
-        value: 'profile',
-        editable: true,
-    },
 ];
 
 const profileImage = "/assets/profile/profile-image.png";

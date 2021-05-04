@@ -9,8 +9,9 @@ import EventDetailsBox from './event-details-box';
 import { loading } from '../../../../redux/actions/app-actions';
 import WindowScrollLoadWrapper from '../../../general/WindowScrollLoadWrapper';
 import { arrayLengthCount, isValidNumber } from '../../../../common-function';
-import { validateViewType, clubProfileViewTypes } from '../../config';
+import { validateViewType, clubProfileViewTypes, isNotAllowedSocialInteraction } from '../../config';
 import ClubBackdrop from './club-backdrop';
+import ClubJoinModal from './ClubJoinModal';
 
 
 const PAGE_SIZE = 10;
@@ -19,6 +20,8 @@ const BOX_HEIGHT = 300;
 const ClubEventBox = (props) => {
 
     const [club, setClub] = useState({});
+    const [joinClubModalVisible, setJoinClubModalVisible] = useState(false);
+
     const [writeEventVisible, setWriteEventVisible] = useState(false);
     const [eventEditMode, setEventEditMode] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState({});
@@ -120,14 +123,14 @@ const ClubEventBox = (props) => {
     return (
         <React.Fragment>
 
-            <ClubBackdrop viewType={viewType}>
+            <ClubBackdrop viewType={viewType} club={club}>
                 <div className={`thin-border round-border padding-md ${props.className || ''}`} style={{ ...props.style }}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="flex-justify-space-between flex-items-align-center">
                                 <span className='d-inline-block h7' >
                                     Upcoming Event
-                          </span>
+                                </span>
                                 {
                                     viewType == clubProfileViewTypes[0] ?
                                         <span className='d-inline-block' >
@@ -154,6 +157,7 @@ const ClubEventBox = (props) => {
                                                 <React.Fragment>
                                                     <div className="width-100">
                                                         <EventDetailsBox data={event}
+                                                            readOnly={isNotAllowedSocialInteraction(club, viewType) && _.get(event , `scope`) == 'private'}
                                                             hideDescription
                                                             manualControl
                                                             onEditClick={(data) => {
@@ -163,7 +167,11 @@ const ClubEventBox = (props) => {
                                                                     setWriteEventVisible(true);
                                                                 }
                                                             }}
-
+                                                            onEventJoinActionClick={(e) => {
+                                                                if(isNotAllowedSocialInteraction(club, viewType)){
+                                                                    setJoinClubModalVisible(true)
+                                                                }
+                                                            }}
                                                             onRemoveClick={(data) => {
                                                                 confirmDelete(data)
                                                             }}
@@ -226,6 +234,8 @@ const ClubEventBox = (props) => {
                     }
                 }}
             ></WriteEventModal>
+
+            <ClubJoinModal visible={joinClubModalVisible} club={club} onCancel={() => { setJoinClubModalVisible(false) }} ></ClubJoinModal>
         </React.Fragment>
     );
 }

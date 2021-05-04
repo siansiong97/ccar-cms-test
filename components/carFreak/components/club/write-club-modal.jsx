@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Form, Input, message, Modal, Row, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, message, Modal, Radio, Row, Tooltip, Upload } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
@@ -137,7 +137,21 @@ const WriteClubModal = (props) => {
                     }
                 ).then((res) => {
                     let fileList = _.get(res, ['data', 'result'])
+
                     if (!editMode) {
+                        if (values.clubType == 'public') {
+                            values.nonMemberAccesibilitySettings = {
+                                visible : true,
+                                approval : true,
+                                socialInteraction : false,
+                            }
+                        } else {
+                            values.nonMemberAccesibilitySettings = {
+                                visible : true,
+                                approval : true,
+                                socialInteraction : true,
+                            }
+                        }
                         createClub({ ...values, clubAvatar: _.get(fileList, [0, 'url']) })
                     } else {
                         updateClub(_.get(club, ['_id']), { ...values, clubAvatar: _.get(fileList, [0, 'url']) })
@@ -248,7 +262,26 @@ const WriteClubModal = (props) => {
                                             </div>
                                             <div className="caption text-truncate font-weight-light">
                                                 Admin
-                                    </div>
+                                            </div>
+                                            <Form.Item style={{ margin: 0 }} >
+                                                {getFieldDecorator('clubType', {
+                                                    initialValue: _.get(props.data, ['clubType']) || 'public',
+                                                    rules: [{ required: true, message: 'Please input.' }],
+                                                })(<Radio.Group className=" round-border-radio-button margin-y-xs" buttonStyle="solid">
+                                                    <Radio.Button className="round-border-right" value="public" onClick={(e) => {
+                                                    }}>
+                                                        <span className='d-inline-block caption' >
+                                                            Public
+                                                        </span>
+                                                    </Radio.Button>
+                                                    <Radio.Button className="round-border-left border-left-ccar-button-yellow" value="private" onClick={(e) => {
+                                                    }}>
+                                                        <span className='d-inline-block caption' >
+                                                            Private
+                                                        </span>
+                                                    </Radio.Button>
+                                                </Radio.Group>)}
+                                            </Form.Item>
                                         </span>
                                     </div>
                                 </span>

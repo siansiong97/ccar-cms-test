@@ -4,7 +4,7 @@ import { withRouter } from 'next/dist/client/router';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import client from '../../../../feathers';
-import { validateViewType } from '../../config';
+import { clubProfileViewTypes, isNotAllowedSocialInteraction, validateViewType } from '../../config';
 import EventPost from '../event-post';
 import PostCollapse from '../post-collapse';
 import WriteEventModal from '../write-event-modal';
@@ -14,6 +14,7 @@ import { loading } from '../../../../redux/actions/app-actions';
 import WindowScrollLoadWrapper from '../../../general/WindowScrollLoadWrapper';
 import { arrayLengthCount } from '../../../../common-function';
 import { useMediaQuery } from 'react-responsive';
+import ClubJoinModal from './ClubJoinModal';
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 992 })
@@ -36,16 +37,17 @@ const Default = ({ children }) => {
 const PAGE_SIZE = 10;
 const BOX_HEIGHT = 300;
 
-const ClubDiscussionBox = (props) => {
+const ClubSocialBoardBox = (props) => {
 
     const [posts, setPosts] = useState([]);
     const [postTotal, setPostTotal] = useState(0);
     const [postPage, setPostPage] = useState(1);
 
-    const [clubId, setClubId] = useState('');
+    const [club, setClub] = useState({});
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [joinClubModalVisible, setJoinClubModalVisible] = useState(false);
 
     const [writePostVisible, setWritePostVisible] = useState(false);
     const [writePostEditMode, setWritePostEditMode] = useState(false);
@@ -69,8 +71,8 @@ const ClubDiscussionBox = (props) => {
     }, [props.user.authenticated])
 
     useEffect(() => {
-        setClubId(props.clubId || '')
-    }, [props.clubId])
+        setClub(_.isPlainObject(props.club) && !_.isEmpty(props.club) ? props.club : {});
+    }, [props.club])
 
     useEffect(() => {
         setPosts([]);
@@ -80,7 +82,7 @@ const ClubDiscussionBox = (props) => {
         } else {
             setPostPage(1);
         }
-    }, [clubId])
+    }, [club])
 
     useEffect(() => {
         getPosts((postPage - 1) * PAGE_SIZE);
@@ -107,13 +109,13 @@ const ClubDiscussionBox = (props) => {
     function getPosts(skip) {
         skip = skip || 0
 
-        if (clubId) {
+        if (_.get(club, `_id`)) {
             let query = {
                 chatType: 'socialboard',
                 parentType: {
                     $in: ['club', 'clubEvent']
                 },
-                clubId: clubId,
+                clubId: _.get(club, `_id`),
                 $populate: [
                     {
                         path: 'userId',
@@ -197,139 +199,169 @@ const ClubDiscussionBox = (props) => {
         <React.Fragment>
 
             <Desktop>
-            <ClubBackdrop viewType={viewType}>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className="flex-justify-end flex-items-align-center">
-                            <span className='d-inline-block ' >
-                                <Button size="large" className="border-ccar-yellow" onClick={(e) => {
-                                    setWritePostEditMode(false);
-                                    setWritePostVisible(true);
-                                }}  ><Icon type="edit" /> Write a Post</Button>
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <WindowScrollLoadWrapper scrollRange={document.body.scrollHeight * 0.5} onScrolledBottom={() => {
-                            if (arrayLengthCount(posts) < postTotal) {
-                                setPostPage(postPage + 1);
-                            }
-                        }}>
-                            <div className="padding-md">
+                <ClubBackdrop viewType={viewType} club={club}>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="flex-justify-end flex-items-align-center">
+                                <span className='d-inline-block ' >
+                                    <Button size="large" className="border-ccar-yellow" onClick={(e) => {
+                                        if (isNotAllowedSocialInteraction(club, viewType)) {
+                                            setJoinClubModalVisible(true);
+                                        } else if (viewType != clubProfileViewTypes[3] || viewType != clubProfileViewTypes[2]) {
+                                            setWritePostEditMode(false);
+                                            setWritePostVisible(true);
+                                        }
+                                    }}  ><Icon type="edit" /> Write a Post</Button>
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <WindowScrollLoadWrapper scrollRange={document.body.scrollHeight * 0.5} onScrolledBottom={() => {
+                                if (arrayLengthCount(posts) < postTotal) {
+                                    setPostPage(postPage + 1);
+                                }
+                            }}>
+                                <div className="padding-md">
+                                    {
+                                        _.isArray(posts) && !_.isEmpty(posts) ?
+                                            _.map(posts, function (post) {
+                                                return (
+                                                    <div className="margin-bottom-md">
+                                                        <PostCollapse
+                                                            data={post}
+                                                            readOnly={isNotAllowedSocialInteraction(club, viewType)}
+                                                            postLike={_.find(userChatLikes, { chatId: post._id })}
+                                                            onEditClick={(data) => {
+                                                                if (_.isPlainObject(data) && !_.isEmpty(data)) {
+                                                                    setWritePostEditMode(true);
+                                                                    setSelectedPost(data);
+                                                                    setWritePostVisible(true);
+                                                                }
+                                                            }}
+                                                            clubId={_.get(club, `_id`)}
+                                                            onRemoveClick={(data) => {
+                                                                confirmDelete(data)
+                                                            }}
+                                                            onLikeClick={() => {
+                                                                if(isNotAllowedSocialInteraction(club, viewType)){
+                                                                    setJoinClubModalVisible(true)
+                                                                }
+                                                            }}
+                                                            onReplyClick={() => {
+                                                                if(isNotAllowedSocialInteraction(club, viewType)){
+                                                                    setJoinClubModalVisible(true)
+                                                                }
+                                                            }}
+                                                        ></PostCollapse>
+                                                    </div>
+                                                )
+                                            })
+                                            :
+                                            <div className="padding-md flex-items-align-center flex-justify-center">
+                                                <Empty></Empty>
+                                            </div>
+                                    }
+                                </div>
+                            </WindowScrollLoadWrapper>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                            <div className="flex-justify-center flex-items-align-center" style={{ height: 30 }}>
                                 {
-                                    _.isArray(posts) && !_.isEmpty(posts) ?
-                                        _.map(posts, function (post) {
-                                            return (
-                                                <div className="margin-bottom-md">
-                                                    <PostCollapse
-                                                        data={post}
-                                                        postLike={_.find(userChatLikes, { chatId: post._id })}
-                                                        onEditClick={(data) => {
-                                                            if (_.isPlainObject(data) && !_.isEmpty(data)) {
-                                                                setWritePostEditMode(true);
-                                                                setSelectedPost(data);
-                                                                setWritePostVisible(true);
-                                                            }
-                                                        }}
-                                                        clubId={clubId}
-                                                        onRemoveClick={(data) => {
-                                                            confirmDelete(data)
-                                                        }}
-                                                    ></PostCollapse>
-                                                </div>
-                                            )
-                                        })
+                                    isLoading ?
+                                        <Icon type="loading" style={{ fontSize: 30 }} />
                                         :
-                                        <div className="padding-md flex-items-align-center flex-justify-center">
-                                            <Empty></Empty>
-                                        </div>
+                                        null
                                 }
                             </div>
-                        </WindowScrollLoadWrapper>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
 
-                        <div className="flex-justify-center flex-items-align-center" style={{ height: 30 }}>
-                            {
-                                isLoading ?
-                                    <Icon type="loading" style={{ fontSize: 30 }} />
-                                    :
-                                    null
-                            }
-                        </div>
-
-                    </Col>
-                </Row>
-            </ClubBackdrop>
+                        </Col>
+                    </Row>
+                </ClubBackdrop>
             </Desktop>
 
             <Tablet>
-            <ClubBackdrop viewType={viewType}>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <div className="flex-justify-end flex-items-align-center">
-                            <span className='d-inline-block ' >
-                                <Button size="medium" className="border-ccar-yellow" onClick={(e) => {
-                                    setWritePostEditMode(false);
-                                    setWritePostVisible(true);
-                                }}  ><Icon type="edit" /> Write a Post</Button>
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <WindowScrollLoadWrapper scrollRange={document.body.scrollHeight * 0.5} onScrolledBottom={() => {
-                            if (arrayLengthCount(posts) < postTotal) {
-                                setPostPage(postPage + 1);
-                            }
-                        }}>
-                            <div className="padding-md">
+                <ClubBackdrop viewType={viewType} club={club}>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="flex-justify-end flex-items-align-center">
+                                <span className='d-inline-block ' >
+                                    <Button size="medium" className="border-ccar-yellow" onClick={(e) => {
+                                        if (isNotAllowedSocialInteraction(club, viewType)) {
+                                            setJoinClubModalVisible(true);
+                                        } else if (viewType != clubProfileViewTypes[3] || viewType != clubProfileViewTypes[2]) {
+                                            setWritePostEditMode(false);
+                                            setWritePostVisible(true);
+                                        }
+                                    }}  ><Icon type="edit" /> Write a Post</Button>
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <WindowScrollLoadWrapper scrollRange={document.body.scrollHeight * 0.5} onScrolledBottom={() => {
+                                if (arrayLengthCount(posts) < postTotal) {
+                                    setPostPage(postPage + 1);
+                                }
+                            }}>
+                                <div className="padding-md">
+                                    {
+                                        _.isArray(posts) && !_.isEmpty(posts) ?
+                                            _.map(posts, function (post) {
+                                                return (
+                                                    <div className="margin-bottom-md">
+                                                        <PostCollapse
+                                                            data={post}
+                                                            readOnly={isNotAllowedSocialInteraction(club, viewType)}
+                                                            postLike={_.find(userChatLikes, { chatId: post._id })}
+                                                            onEditClick={(data) => {
+                                                                if (_.isPlainObject(data) && !_.isEmpty(data)) {
+                                                                    setWritePostEditMode(true);
+                                                                    setSelectedPost(data);
+                                                                    setWritePostVisible(true);
+                                                                }
+                                                            }}
+                                                            clubId={_.get(club, `_id`)}
+                                                            onRemoveClick={(data) => {
+                                                                confirmDelete(data)
+                                                            }}
+                                                            onLikeClick={() => {
+                                                                if(isNotAllowedSocialInteraction(club, viewType)){
+                                                                    setJoinClubModalVisible(true)
+                                                                }
+                                                            }}
+                                                            onReplyClick={() => {
+                                                                if(isNotAllowedSocialInteraction(club, viewType)){
+                                                                    setJoinClubModalVisible(true)
+                                                                }
+                                                            }}
+                                                        ></PostCollapse>
+                                                    </div>
+                                                )
+                                            })
+                                            :
+                                            <div className="padding-md flex-items-align-center flex-justify-center">
+                                                <Empty></Empty>
+                                            </div>
+                                    }
+                                </div>
+                            </WindowScrollLoadWrapper>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+
+                            <div className="flex-justify-center flex-items-align-center" style={{ height: 30 }}>
                                 {
-                                    _.isArray(posts) && !_.isEmpty(posts) ?
-                                        _.map(posts, function (post) {
-                                            return (
-                                                <div className="margin-bottom-md">
-                                                    <PostCollapse
-                                                        data={post}
-                                                        postLike={_.find(userChatLikes, { chatId: post._id })}
-                                                        onEditClick={(data) => {
-                                                            if (_.isPlainObject(data) && !_.isEmpty(data)) {
-                                                                setWritePostEditMode(true);
-                                                                setSelectedPost(data);
-                                                                setWritePostVisible(true);
-                                                            }
-                                                        }}
-                                                        clubId={clubId}
-                                                        onRemoveClick={(data) => {
-                                                            confirmDelete(data)
-                                                        }}
-                                                    ></PostCollapse>
-                                                </div>
-                                            )
-                                        })
+                                    isLoading ?
+                                        <Icon type="loading" style={{ fontSize: 30 }} />
                                         :
-                                        <div className="padding-md flex-items-align-center flex-justify-center">
-                                            <Empty></Empty>
-                                        </div>
+                                        null
                                 }
                             </div>
-                        </WindowScrollLoadWrapper>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
 
-                        <div className="flex-justify-center flex-items-align-center" style={{ height: 30 }}>
-                            {
-                                isLoading ?
-                                    <Icon type="loading" style={{ fontSize: 30 }} />
-                                    :
-                                    null
-                            }
-                        </div>
-
-                    </Col>
+                        </Col>
 
 
-                </Row>
-            </ClubBackdrop>
+                    </Row>
+                </ClubBackdrop>
             </Tablet>
 
             <WritePostModal1
@@ -339,7 +371,7 @@ const ClubDiscussionBox = (props) => {
                     setWritePostVisible(false);
                 }}
                 parentType="club"
-                clubId={clubId}
+                clubId={_.get(club, `_id`)}
                 data={selectedPost}
                 notify
                 onCreatePost={(post) => {
@@ -388,6 +420,8 @@ const ClubDiscussionBox = (props) => {
                     }
                 }}
             ></WriteEventModal>
+
+            <ClubJoinModal visible={joinClubModalVisible} club={club} onCancel={() => { setJoinClubModalVisible(false) }} ></ClubJoinModal>
         </React.Fragment>
     );
 }
@@ -401,4 +435,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     loading: loading,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(ClubDiscussionBox)));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(withRouter(ClubSocialBoardBox)));

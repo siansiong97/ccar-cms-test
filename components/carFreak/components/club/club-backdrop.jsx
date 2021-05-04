@@ -10,17 +10,24 @@ import { loading } from '../../../../redux/actions/app-actions';
 const ClubBackdrop = (props) => {
 
     const [viewType, setViewType] = useState('non-member');
+    const [club, setClub] = useState({})
 
     useEffect(() => {
+        console.log(viewType);
         setViewType(validateViewType(props.viewType))
     }, [props.viewType])
+
+    useEffect(() => {
+        console.log(props.club);
+        setClub(_.isPlainObject(props.club) && !_.isEmpty(props.club) ? props.club : {});
+    }, [props.club])
 
 
     return (
         <React.Fragment>
             <div className={`width-100 ${props.className || ''} relative-wrapper`}>
                 {
-                    viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2]?
+                    (viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2]) && _.get(club , `clubType`) != 'public' ?
                         <div className="height-100 flex-items-align-start flex-justify-center padding-top-xl absolute-center" style={{ zIndex : 2 }}>
                             <div className="margin-top-xl text-align-center">
                                 <img src={clubNonMember} style={{ width: 100, height: 100 }} />
@@ -32,7 +39,7 @@ const ClubBackdrop = (props) => {
                         :
                         null
                 }
-                <div className={`${viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ? 'background-blur' : ''}`} style={{ zIndex : 1 }}>
+                <div className={`${(viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2]) && _.get(club , `clubType`) != 'public' ? 'background-blur' : ''}`} style={{ zIndex : 1 }}>
                     {props.children}
                 </div>
             </div>

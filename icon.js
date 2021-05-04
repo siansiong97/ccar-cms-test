@@ -74,14 +74,16 @@ export const faqSellCarIcon = '/assets/faq/sell-a-car.png';
 
 
 export const searchBoxImg = '/assets/faq/Homepage.png';
+export const homePageNavBarImg = '/assets/faq/Homepage.png';
+export const carInfoButtons = '/assets/faq/car-info-buttons.png';
 export const sortingImg = '/assets/faq/carmarket filter.png';
 export const filterFormImg = '/assets/faq/Carmarket quick filter box.png';
 export const allNewCarImg = '/assets/faq/all-newcar brand.png';
-export const carBrandImg = '/assets/faq/sell-a-car.png';
+export const carBrandImg = '/assets/faq/all-newcar brand.png';
 export const newCarFilterFormImg = '/assets/faq/all-newcar filter.png';
 export const carMoreInfoImg = '/assets/faq/sell-a-car.png';
-export const cstarListImg = '/assets/faq/sell-a-car.png';
-export const cstarAnimationImg = '/assets/faq/sell-a-car.png';
+export const cstarListImg = '/assets/faq/CSTAR cost.png';
+export const cstarAnimationImg = '/assets/faq/Animation cost.png';
 
 //Notification
 export const bellInactive = '/assets/notification/bell.png';
@@ -89,3 +91,6 @@ export const bellInactive = '/assets/notification/bell.png';
 
 //Review
 export const ratingBanner = '/assets/car-review/rating.png';
+
+//Error
+export const errorBanner = '/assets/error/404 error@3x.png';

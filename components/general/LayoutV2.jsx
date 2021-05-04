@@ -83,7 +83,8 @@ class LayoutV2 extends React.Component {
             backgroundStyle: {
                 backgroundImage: null,
                 backgroundRepeat: 'no-repeat',
-                backgroundSize: '100% 100%'
+                backgroundSize: '100% 100%',
+                backgroundAttachment : 'fixed'
             },
             window: {},
             showProfileMenu: false,
@@ -823,7 +824,7 @@ class LayoutV2 extends React.Component {
                 icon: '',
                 text: <span className='d-inline-block white background-red  padding-x-md' style={{ borderRadius: '5px' }} >
                     LIVE
-    </span>,
+                </span>,
                 ...routePaths.live
             },
         ];
@@ -865,6 +866,11 @@ class LayoutV2 extends React.Component {
                 icon: '',
                 text: 'Contact Us',
                 ...routePaths.contactUs,
+            },
+            {
+                icon: '',
+                text: 'FAQ',
+                ...routePaths.faq,
             },
 
         ];
