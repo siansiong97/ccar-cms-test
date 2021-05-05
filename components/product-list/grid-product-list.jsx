@@ -185,7 +185,8 @@ const GridProductList = (props) => {
 
 
     const _renderPrice = (v) => {
-
+        console.log(v.title);
+        console.log(v.priority);
         let normalPrice =
             (<div className="wrap-product-ads-price" style={{ height : 57 }}>
                 <Row><Col xs={14} sm={14} md={16} lg={16} xl={16}><span className='installmentPrice'>RM {formatMoney((calMonth(v.price)).toString())}/month</span></Col></Row>
