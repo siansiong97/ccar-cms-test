@@ -237,7 +237,7 @@ const ReviewList = (props) => {
                                                     props.renderCarspec ?
                                                         props.renderCarspec(item)
                                                         :
-                                                        <div className="font-weight-bold padding-left-md padding-top-md subtitle1">{_.trim(`${_.get(item, 'carspecId.make') || ''} ${_.get(item, 'carspecId.model') || ''} ${_.get(item, 'carspecId.variant') || ''}`)}</div>
+                                                        <div className="font-weight-bold padding-left-md padding-top-md subtitle1">{_.trim(`${_.get(item, 'carspecId.make') || ''} ${_.get(item, 'carspecId.model') || ''} ${_.get(item, 'carspecId.variant') || ''} ${_.get(item, 'carspecId.year') || ''} `)}</div>
                                                 }
                                             </div>
                                             :

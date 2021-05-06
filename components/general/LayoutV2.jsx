@@ -37,6 +37,18 @@ import lightBoxGallery from './light-box-gallery';
 const NOTIFICATION_BOX_WIDTH = 400
 const NOTIFICATION_MAX_LIMIT = 200
 const NOTIFICATION_PAGE_SIZE = 10;
+const notificationGroup = {
+    master: 'master',
+    socialNewAndVideo: 'socialNewAndVideo',
+    petrol: 'petrol',
+    live: 'live',
+    carMarket: 'carMarket',
+    carFreaks: 'carFreaks',
+    socialBoard: 'socialBoard',
+    club: 'club',
+    profile: 'profile',
+}
+
 
 const Desktop = ({ children }) => {
     const isDesktop = useMediaQuery({ minWidth: 1025 })
@@ -84,7 +96,7 @@ class LayoutV2 extends React.Component {
                 backgroundImage: null,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',
-                backgroundAttachment : 'fixed'
+                backgroundAttachment: 'fixed'
             },
             window: {},
             showProfileMenu: false,
@@ -133,13 +145,43 @@ class LayoutV2 extends React.Component {
                 this.setState({
                     notificationLoading: true,
                 }, () => {
+
+                    let match = {};
+                    switch (this.state.notificationTabKey) {
+                        case 'carfreaks':
+                            match = {
+                                group: {
+                                    $in: [notificationGroup.carFreaks, notificationGroup.socialBoard, notificationGroup.club]
+                                }
+                            }
+                            break;
+                        case 'carAds':
+                            match = {
+                                group: {
+                                    $in: [notificationGroup.carMarket]
+                                }
+                            }
+                            break;
+                        default:
+                            match = {
+                                group: {
+                                    $nin: [notificationGroup.carFreaks, notificationGroup.socialBoard, notificationGroup.club, notificationGroup.carMarket]
+                                }
+                            }
+                            break;
+                    }
+
                     axios.get(`${client.io.io.uri}getUserNotifications`, {
                         params: {
                             userId: this.props.user.info.user._id,
+                            match: {
+                                ...match
+                            },
                             limit: NOTIFICATION_PAGE_SIZE,
                             skip: skip || 0
                         }
                     }).then(res => {
+                        console.log(res);
                         this.setState({
                             notificationLoading: false,
                             notifications: this.state.notificationPage == 1 ? _.get(res, 'data.data') || [] : _.concat(this.state.notifications, _.get(res, 'data.data') || []),
@@ -371,11 +413,20 @@ class LayoutV2 extends React.Component {
             }
         }
 
+        if (prevState.notificationTabKey != this.state.notificationTabKey && this.props.user.authenticated) {
+            if (this.state.notificationPage == 1) {
+                this.getUserNotifications(0);
+            } else {
+                this.setState({
+                    notificationPage: 1,
+                })
+            }
+        }
+
         if (prevState.notificationBoxVisible != this.state.notificationBoxVisible) {
             if (this.state.notificationBoxRef.current) {
                 this.state.notificationBoxRef.current.scrollToTop();
             }
-
         }
 
         if (prevState.notificationPage != this.state.notificationPage && arrayLengthCount(this.state.notifications) < NOTIFICATION_MAX_LIMIT) {
@@ -666,11 +717,14 @@ class LayoutV2 extends React.Component {
                 }
                 content={
                     <div style={{ width: NOTIFICATION_BOX_WIDTH }}>
-                        {/* <div className="flex-justify-start flex-items-align-center">
+                        <div className="flex-justify-start flex-items-align-center padding-md">
                             {
                                 _.map(tabs, function (tab) {
                                     return (
                                         <span className={`d-inline-block margin-right-md cursor-pointer ${self.state.notificationTabKey == tab.value ? 'ccar-button-yellow' : 'grey-darken-1'}`} onClick={(e) => {
+                                            if (self.state.notificationBoxRef.current) {
+                                                self.state.notificationBoxRef.current.scrollToTop();
+                                            }
                                             self.setState({
                                                 notificationTabKey: tab.value
                                             })
@@ -680,7 +734,7 @@ class LayoutV2 extends React.Component {
                                     )
                                 })
                             }
-                        </div> */}
+                        </div>
                         {
                             _.isArray(self.state.notifications) && !_.isEmpty(self.state.notifications) ?
                                 <ScrollLoadWrapper getRef={(ref) => {

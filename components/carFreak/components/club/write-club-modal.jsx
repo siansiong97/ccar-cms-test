@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Form, Input, message, Modal, Radio, Row, Tooltip, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, message, Modal, Radio, Row, Select, Tooltip, Upload } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
@@ -11,6 +11,7 @@ import { setUser } from '../../../../redux/actions/user-actions';
 import client from '../../../../feathers';
 import UserAvatar from '../../../general/UserAvatar';
 import { getUserName } from '../../../../common-function';
+import { clubPrivateIcon, clubPublicIcon } from '../../../../icon';
 const { TextArea } = Input;
 
 
@@ -141,15 +142,15 @@ const WriteClubModal = (props) => {
                     if (!editMode) {
                         if (values.clubType == 'public') {
                             values.nonMemberAccesibilitySettings = {
-                                visible : true,
-                                approval : true,
-                                socialInteraction : false,
+                                visible: true,
+                                approval: true,
+                                socialInteraction: false,
                             }
                         } else {
                             values.nonMemberAccesibilitySettings = {
-                                visible : true,
-                                approval : true,
-                                socialInteraction : true,
+                                visible: false,
+                                approval: true,
+                                socialInteraction: false,
                             }
                         }
                         createClub({ ...values, clubAvatar: _.get(fileList, [0, 'url']) })
@@ -263,7 +264,7 @@ const WriteClubModal = (props) => {
                                             <div className="caption text-truncate font-weight-light">
                                                 Admin
                                             </div>
-                                            <Form.Item style={{ margin: 0 }} >
+                                            {/* <Form.Item style={{ margin: 0 }} >
                                                 {getFieldDecorator('clubType', {
                                                     initialValue: _.get(props.data, ['clubType']) || 'public',
                                                     rules: [{ required: true, message: 'Please input.' }],
@@ -281,7 +282,7 @@ const WriteClubModal = (props) => {
                                                         </span>
                                                     </Radio.Button>
                                                 </Radio.Group>)}
-                                            </Form.Item>
+                                            </Form.Item> */}
                                         </span>
                                     </div>
                                 </span>
@@ -326,6 +327,51 @@ const WriteClubModal = (props) => {
                                     initialValue: _.get(props.data, ['clubBio']),
                                     rules: [{ required: true, message: 'Please input.' }],
                                 })(<TextArea rows={4} placeholder="Please enter your bio (maximum 1000 characters)" maxLength={1000} />)}
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <div className="headline margin-bottom-sm">
+                                Privacy
+                            </div>
+                            <Form.Item style={{ margin: 0 }} >
+                                {getFieldDecorator('clubType', {
+                                    initialValue: _.get(props.data, ['clubType']) || 'public',
+                                    rules: [{ required: true, message: 'Please input.' }],
+                                })(
+
+                                    <Select 
+                                    placeholder="Choose privacy"
+                                    className="club-privacy-select"
+                                    >
+                                        <Select.Option value="public" className="padding-y-sm">
+                                            <div className="flex-justify-start flex-items-align-center padding-y-sm">
+                                                <img src={clubPublicIcon} style={{ width: 30, height: 30 }} className="margin-right-md"  />
+                                                <span className='d-inline-block 'style={{ lineHeight : 'normal' }} >
+                                                    <div className="font-weight-bold headline no-padding" style={{ lineHeight : 'auto' }}>
+                                                        Public
+                                                  </div>
+                                                    <div className="small-text text-overflow-break no-padding" style={{ lineHeight : 'normal' }}>
+                                                        Anyone can see all the posts, discussions, events and member in the group.
+                                                  </div>
+                                                </span>
+                                            </div>
+                                        </Select.Option>
+                                        <Select.Option value="private">
+
+                                        <div className="flex-justify-start flex-items-align-center padding-y-sm">
+                                                <img src={clubPrivateIcon} style={{ width: 30, height: 30 }} className="margin-right-md"  />
+                                                <span className='d-inline-block 'style={{ lineHeight : 'normal' }} >
+                                                    <div className="font-weight-bold headline no-padding" style={{ lineHeight : 'auto' }}>
+                                                        Private
+                                                  </div>
+                                                    <div className="small-text text-overflow-break no-padding" style={{ lineHeight : 'normal' }}>
+                                                        Only members can see all the posts, discussions, events and member in the group.
+                                                  </div>
+                                                </span>
+                                            </div>
+                                        </Select.Option>
+                                    </Select>
+                                )}
                             </Form.Item>
                         </Col>
 

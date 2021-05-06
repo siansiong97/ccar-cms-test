@@ -425,3 +425,7 @@ video {
 .form-line-height-unset .ant-form-item-control {
     line-height: unset !important;
 }
+
+.club-privacy-select .ant-select-selection--single {
+    height : 50px !important;
+}

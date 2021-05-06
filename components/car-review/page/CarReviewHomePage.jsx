@@ -121,6 +121,7 @@ const CarReviewHomePage = (props) => {
                 }
             }
         }).then(res => {
+            console.log(res);
             setRatings(ratingPage == 1 ? _.get(res, 'data.data') : _.concat(ratings, _.get(res, 'data.data') || []))
             setRatingTotal(_.get(res, 'data.total') || 0);
             setRatingLoading(false);
@@ -151,9 +152,13 @@ const CarReviewHomePage = (props) => {
     }
 
     function getBrands() {
-        console.log('get brand');
 
-        Axios.get(`${client.io.io.uri}getRatedCarspecBrands`).then(res => {
+        Axios.get(`${client.io.io.uri}getRatedCarspecBrands`, {
+            params: {
+                groupBy: 'make',
+            }
+        }).then(res => {
+            console.log(res);
             let data = _.map(_.get(res, 'data.data') || [], function (item) {
                 item.value = item.make;
                 return item;
@@ -167,89 +172,142 @@ const CarReviewHomePage = (props) => {
 
     function getModels() {
         if (filterGroup.make) {
-            console.log(filterGroup.make);
-            client.service('carspecs').find({
-                query: {
-                    distinctFilter: {
-                        variant: {
-                            $ne: null,
-                            $ne: undefined,
-                            $ne: '',
-                        }
+
+            Axios.get(`${client.io.io.uri}getRatedCarspecBrands`, {
+                params: {
+                    match: {
+                        make: filterGroup.make,
                     },
-                    orRegexExact: {
-                        make: filterGroup.make
-                    },
-                    distinct: 'model'
+                    groupBy: 'model',
                 }
             }).then(res => {
-                setModels(_.compact(res) || [])
+                console.log(res);
+                setModels(_.compact(_.map(_.get(res, `data.data`) || [], 'model')) || [])
                 setOrigOptions({
                     ...origOptions,
-                    models: _.compact(res) || [],
+                    models: _.compact(_.map(_.get(res, `data.data`) || [], 'model')) || [],
                 })
+            }).catch(err => {
+                message.error(err.message)
+            });
+            // client.service('carspecs').find({
+            //     query: {
+            //         distinctFilter: {
+            //             variant: {
+            //                 $ne: null,
+            //                 $ne: undefined,
+            //                 $ne: '',
+            //             }
+            //         },
+            //         orRegexExact: {
+            //             make: filterGroup.make
+            //         },
+            //         distinct: 'model'
+            //     }
+            // }).then(res => {
+            //     setModels(_.compact(res) || [])
+            //     setOrigOptions({
+            //         ...origOptions,
+            //         models: _.compact(res) || [],
+            //     })
 
-            })
+            // })
         } else {
             setModels([])
         }
     }
     function getYears() {
-        console.log('get year');
         if (filterGroup.make && filterGroup.model) {
-            client.service('carspecs').find({
-                query: {
-                    distinctFilter: {
-                        variant: {
-                            $ne: null,
-                            $ne: undefined,
-                            $ne: '',
-                        }
-                    },
-                    orRegexExact: {
+            Axios.get(`${client.io.io.uri}getRatedCarspecBrands`, {
+                params: {
+                    match: {
                         make: filterGroup.make,
                         model: filterGroup.model,
                     },
-                    distinct: 'year'
+                    groupBy: 'year',
                 }
             }).then(res => {
                 console.log(res);
-                setYears(_.compact(res) || [])
+                setYears(_.compact(_.map(_.get(res, `data.data`) || [], 'year')) || [])
                 setOrigOptions({
                     ...origOptions,
-                    years: _.compact(res) || [],
+                    years: _.compact(_.map(_.get(res, `data.data`) || [], 'year')) || [],
                 })
-            })
+            }).catch(err => {
+                message.error(err.message)
+            });
+            // client.service('carspecs').find({
+            //     query: {
+            //         distinctFilter: {
+            //             variant: {
+            //                 $ne: null,
+            //                 $ne: undefined,
+            //                 $ne: '',
+            //             }
+            //         },
+            //         orRegexExact: {
+            //             make: filterGroup.make,
+            //             model: filterGroup.model,
+            //         },
+            //         distinct: 'year'
+            //     }
+            // }).then(res => {
+            //     setYears(_.compact(res) || [])
+            //     setOrigOptions({
+            //         ...origOptions,
+            //         years: _.compact(res) || [],
+            //     })
+            // })
         } else {
             setYears([])
         }
     }
     function getVariants() {
-        console.log('get variant');
         if (filterGroup.make && filterGroup.model && filterGroup.year) {
-            client.service('carspecs').find({
-                query: {
-                    distinctFilter: {
-                        variant: {
-                            $ne: null,
-                            $ne: undefined,
-                            $ne: '',
-                        }
-                    },
-                    orRegexExact: {
+            Axios.get(`${client.io.io.uri}getRatedCarspecBrands`, {
+                params: {
+                    match: {
                         make: filterGroup.make,
                         model: filterGroup.model,
                         year: filterGroup.year,
                     },
-                    distinct: 'variant'
+                    groupBy: 'variant',
                 }
             }).then(res => {
-                setVariants(_.compact(res) || [])
+                console.log(res);
+                setVariants(_.compact(_.map(_.get(res, `data.data`) || [], 'variant')) || [])
                 setOrigOptions({
                     ...origOptions,
-                    variants: _.compact(res) || [],
+                    variants: _.compact(_.map(_.get(res, `data.data`) || [], 'variant')) || [],
                 })
-            })
+            }).catch(err => {
+                message.error(err.message)
+            });
+
+            ////Get All
+            // client.service('carspecs').find({
+            //     query: {
+            //         distinctFilter: {
+            //             variant: {
+            //                 $ne: null,
+            //                 $ne: undefined,
+            //                 $ne: '',
+            //             }
+            //         },
+            //         orRegexExact: {
+            //             make: filterGroup.make,
+            //             model: filterGroup.model,
+            //             year: filterGroup.year,
+            //         },
+            //         distinct: 'variant'
+            //     }
+            // }).then(res => {
+            //     setVariants(_.compact(res) || [])
+            //     setOrigOptions({
+            //         ...origOptions,
+            //         variants: _.compact(res) || [],
+            //     })
+            // })
         } else {
             setVariants([]);
         }

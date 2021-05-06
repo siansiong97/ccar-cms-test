@@ -18,6 +18,8 @@ export const clubNonMember = '/assets/car-freak/non-member.png'
 export const uploadPhoto = '/assets/upload_photo.png';
 export const calendarIcon = '/assets/car-freak/calendar.png';
 export const pinIcon = '/assets/car-freak/pin.png';
+export const clubPrivateIcon = '/assets/car-freak/private@3x.png';
+export const clubPublicIcon = '/assets/car-freak/public@3x.png';
 
 //Car Market
 export const carspecNotFoundImage = '/coming-soon.png'

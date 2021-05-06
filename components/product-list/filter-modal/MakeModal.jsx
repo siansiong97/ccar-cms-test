@@ -80,10 +80,10 @@ const MakeModal = (props) => {
 
         if (notEmptyLength(data)) {
             for (let index = start.charCodeAt(0); index <= end.charCodeAt(0); index++) {
-                let selectedCarBrands = _.reverse(_.sortBy(data.filter(function (brand) {
+                let selectedCarBrands = _.sortBy(data.filter(function (brand) {
                     let firstLetter = _.upperCase(brand.value.substr(0, 1));
                     return firstLetter == String.fromCharCode(index);
-                }), ['count', 'value']))
+                }), ['value'])
 
                 if (notEmptyLength(selectedCarBrands)) {
                     let item = {

@@ -31,7 +31,7 @@ const ModelModal = (props) => {
                         v.data.push(v1)
                     }
                 })
-                v.data = _.reverse(_.sortBy(v.data, ['count', 'model']))
+                v.data = _.sortBy(v.data, ['model'])
                 return v;
             })
             setOptions(uniqBodyTypes)
