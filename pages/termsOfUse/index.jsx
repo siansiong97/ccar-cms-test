@@ -10,7 +10,7 @@ const Index = (props) => {
 
 
     return (
-        // <ReduxPersistWrapper cookie={props.cookie}>
+        <ReduxPersistWrapper cookie={props.cookie}>
         <>
             {
                 props.app.initedRedux ?
@@ -19,7 +19,7 @@ const Index = (props) => {
                     null
             }
             </>
-        // </ReduxPersistWrapper>
+        </ReduxPersistWrapper>
     )
 }
 

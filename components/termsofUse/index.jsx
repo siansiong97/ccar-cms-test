@@ -11,7 +11,7 @@ import CcoinAndCstar from './ccoin-cstar'
 
 const { TabPane } = Tabs;
 
-const TermOfUseIndex = () => {
+const TermsOfUseIndex = () => {
     const [ index, setIndex ] = useState('1')
     
     useEffect(()=>{
@@ -54,4 +54,4 @@ const TermOfUseIndex = () => {
       );
 }
  
-export default TermOfUseIndex;
+export default TermsOfUseIndex;
