@@ -122,6 +122,7 @@ class ViewCarDetailsPage extends React.Component {
       }, 3000)
     })
   }
+
   componentDidUpdate(prevProps, prevState) {
 
     if (typeof (window) != undefined) {
@@ -140,8 +141,6 @@ class ViewCarDetailsPage extends React.Component {
         })
       }
     }
-
-
   }
 
   onClickShow = () => {
@@ -364,7 +363,6 @@ class ViewCarDetailsPage extends React.Component {
         }
       }
 
-
       return (
         <div className="wrap-product-ads-countdown-spicydeal">
           <span className='gridAddonMainText' style={{ marginLeft: '10px', color: '#000000' }} ><span>SuperDeal Ends in</span></span>
@@ -452,7 +450,7 @@ class ViewCarDetailsPage extends React.Component {
                     <Col xs={12} sm={12} md={18} lg={18} xl={18}>
                       <div className="text-truncate-twoline">
                         <h1 style={{ marginBottom: '0px', fontWeight: '700', fontSize: '18px' }}>
-                          {this.state.productDetails.title}
+                          {this.state.productDetails.title} 
                           {/* {this.state.productDetails.carspecsAll ?
                                 this.state.productDetails.carspecsAll.year + ' ' +
                                 this.state.productDetails.carspecsAll.make + ' ' +
@@ -501,7 +499,7 @@ class ViewCarDetailsPage extends React.Component {
                           />
                         </span>
                         <span className="d-inline-block" style={{ marginRight: '5px' }}>
-                          <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} />
+                          <ShareButtonDialog readOnly={_.get(this.state, 'productDetails.status') != 'approved'} title={`CCAR.my | ${this.state.productDetails.title}`} /> 
                         </span>
                         <span className="d-inline-block margin-xs">
                           <CalculatorModal data={{ price: this.state.productDetails.searchPrice, downpayment: this.state.productDetails.searchPrice * 0.1, loanPeriod: 9, interestRate: 3 }}
@@ -775,7 +773,7 @@ class ViewCarDetailsPage extends React.Component {
                   <Col span={12}>
                     <div className="text-truncate-twoline">
                       <h1 style={{ marginBottom: '0px', fontWeight: '700', fontSize: '18px' }}>
-                        {this.state.productDetails.title}
+                        {this.state.productDetails.title} 
                       </h1>
                     </div>
                     <p >Posted on {moment(this.state.productDetails.createdAt).format("Do MMM YYYY")}</p>

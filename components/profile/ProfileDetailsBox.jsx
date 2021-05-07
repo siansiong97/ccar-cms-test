@@ -458,7 +458,7 @@ const ProfileDetailsBox = (props) => {
                                                         )
                                                     }}
                                                 />
-                                                <ShareButtonDialog className='padding-x-xl' />
+                                                <ShareButtonDialog className='padding-x-xl' /> 
                                             </div>
                                         </Col>
                                 }

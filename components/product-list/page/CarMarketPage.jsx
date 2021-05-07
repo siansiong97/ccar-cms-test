@@ -631,7 +631,7 @@ const CarMarketPage = (props) => {
                                                         <span className='flex-justify-center flex-items-align-center margin-x-sm' >
                                                             <span className='d-inline-block ' >
                                                                 Year
-                              </span>
+                                                            </span>
                                                             <span className='flex-justify-center flex-items-align-center'>
                                                                 {
                                                                     _.get(mainConfig, ['sorting', 'carspec.year']) == 1 ?

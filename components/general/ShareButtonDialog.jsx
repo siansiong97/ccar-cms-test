@@ -75,7 +75,7 @@ const ShareButtonDialog = (props) => {
             // surfix[0] = `share.${surfix[0]}`;
             surfix[0] = `${surfix[0]}`;
             surfix = surfix.join('/');
-            link[1] = surfix;
+            link[1] = surfix; 
             link = link.join('//');
         } catch (error) {
             link = window.location.href;
