@@ -10,6 +10,7 @@ import { isNumberAndSpace } from '../../common-function';
 import client from '../../feathers';
 import { loading } from '../../redux/actions/app-actions';
 import { setUser } from '../../redux/actions/user-actions';
+import { isDealer } from './config';
 
 
 
@@ -69,6 +70,7 @@ const ProfileForm = (props) => {
 
 
     useEffect(() => {
+        console.log(props.data);
         if (_.isPlainObject(props.data) && !_.isEmpty(props.data)) {
             if (props.data.contactNoPrimary && props.data.contactNoPrimaryPrefix) {
                 props.data.contactNoPrimary = props.data.contactNoPrimary.replace(props.data.contactNoPrimaryPrefix, '')
@@ -214,7 +216,15 @@ const ProfileForm = (props) => {
                 message.error(err.message)
             });
         } else {
-            message.error('FreakId Not Found!')
+            if(!_.get(userForm, ['freakId'])){
+                message.error(`Please fill in FreakId`)
+            }
+            if(!_.get(userForm, ['_id'])){
+                message.error(`Id Not Found`)
+            }
+            if(!_.get(userForm, ['userurlId'])){
+                message.error(`Please fill in User Url`)
+            }
         }
     }
     function handleSubmit(e) {
@@ -371,6 +381,12 @@ const ProfileForm = (props) => {
         setUserForm({ ...userForm, contactNoPrimary: e.target.value, contactNoPrimaryPrefix: contactNoPrimaryPrefix })
     }
 
+    function onChangeUserUrl(e) {
+        var outString = (e.target.value || '').replace(/[`~!@#$%^&*()|+\=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+        props.form.setFieldsValue({ userurlId: outString })
+        setUserForm({ ...userForm, userurlId: outString})
+    }
+
     return (
 
 
@@ -419,9 +435,14 @@ const ProfileForm = (props) => {
                                 }],
                             })(
                                 <Input
+                                addonBefore={
+                                    <div className="headline font-weight-thin grey-darken-1">
+                                        {isDealer(props.data) && _.get(props.data , `companyurlId`) ? `https://ccar.my/dealer/${props.data.companyurlId}/` : `https://ccar.my/profile/`}
+                                    </div>
+                                }
                                     style={{ height: '40px' }}
                                     placeholder="FreakId"
-                                    onChange={(e) => { setUserForm({ ...userForm, userurlId: e.target.value }) }}
+                                    onChange={(e) => { onChangeUserUrl(e) }}
                                 />
                             )}
                         </Form.Item>

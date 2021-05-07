@@ -184,7 +184,7 @@ const ClubProfolioBanner = (props) => {
                                     {
                                         viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ?
                                             <span className='d-inline-block margin-right-md' >
-                                                <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                                                <JoinClubButton club={club} clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
                                                     onSuccess={(res) => {
                                                         if (_.get(res, ['type']) == 'approved') {
                                                             window.location.reload();
@@ -192,7 +192,7 @@ const ClubProfolioBanner = (props) => {
                                                     }}
                                                     joinButton={(joinAction) => {
                                                         return (
-                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Join</Button>
                                                         )
                                                     }}
                                                     joinedButton={() => {
@@ -302,7 +302,7 @@ const ClubProfolioBanner = (props) => {
                                     {
                                         viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2] ?
                                             <span className='d-inline-block margin-right-md' >
-                                                <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                                                <JoinClubButton club={club} clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
                                                     onSuccess={(res) => {
 
                                                         if (_.get(res, ['type']) == 'approved') {
@@ -311,7 +311,7 @@ const ClubProfolioBanner = (props) => {
                                                     }}
                                                     joinButton={(joinAction) => {
                                                         return (
-                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
+                                                            <Button className=" background-ccar-button-yellow border-ccar-button-yellow padding-x-xl black ">Join</Button>
                                                         )
                                                     }}
                                                     joinedButton={() => {

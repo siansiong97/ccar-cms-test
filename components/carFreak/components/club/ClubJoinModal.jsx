@@ -56,7 +56,7 @@ const ClubJoinModal = (props) => {
                             For further interesting informations and posts!
                         </div>
                         <div className="flex-justify-center flex-items-align-center margin-top-md">
-                            <JoinClubButton clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                            <JoinClubButton club={club} clubId={_.get(club, ['_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
                                 onSuccess={(res) => {
                                     if (_.get(res, ['type']) == 'approved') {
                                         window.location.reload();

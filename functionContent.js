@@ -115,7 +115,7 @@ export function renderMileageRange(mileage, mileage2) {
     }
     else {
         mileageRange = mileageRange / 1000
-        return mileageRange + ' KM'
+        return mileageRange + 'K KM'
     }
  
 };

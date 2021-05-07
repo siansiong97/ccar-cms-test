@@ -283,5 +283,10 @@ export function validateViewType(data) {
 }
 
 export function isNotAllowedSocialInteraction(club, viewType) {
-    return _.get(club, `clubType`) == 'public' && (viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2])
+    // return _.get(club, `clubType`) == 'public' && (viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2])
+    return _.get(club, `nonMemberAccessibilitySettings.socialInteraction`) === false && (viewType == clubProfileViewTypes[3] || viewType == clubProfileViewTypes[2])
+}
+
+export function isJoinAutoApproval(club) {
+    return _.get(club, `nonMemberAccessibilitySettings.autoApproval`) === true;
 }

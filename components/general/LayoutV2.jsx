@@ -516,7 +516,7 @@ class LayoutV2 extends React.Component {
 
 
                     <span className='d-inline-block margin-left-md' >
-                        {/* {this._renderNotificationBox()} */}
+                        {this._renderNotificationBox()}
                     </span>
                 </span>
             );

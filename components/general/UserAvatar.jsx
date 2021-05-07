@@ -28,7 +28,12 @@ const UserAvatar = (props) => {
                         if (props.onRedirect) {
                             props.onRedirect()
                         }
-                        props.router.push(`/profile/${props.data.userurlId}`, undefined, { shallow : false })
+
+                        if((_.get(props.data, ['role']) != 'normaluser' && _.get(props.data, ['role']) != 'mobile-user') && _.get(props.data, ['companyurlId'])){
+                            props.router.push(`/dealer/${_.get(props.data, ['companyurlId'])}/${props.data.userurlId}`, undefined, { shallow : false })
+                        }else{
+                            props.router.push(`/profile/${props.data.userurlId}`, undefined, { shallow : false })
+                        }
                     }
                 }}
             >

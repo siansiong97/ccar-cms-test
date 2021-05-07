@@ -14,32 +14,36 @@ const JoinClubButton = (props) => {
 
 
     const [join, setJoin] = useState({});
+    const [club, setClub] = useState({});
     const [joinStatus, setJoinStatus] = useState();
     const [joinAction, setJoinAction] = useState();
-    const [runCheckJoinAction, setRunCheckJoinAction] = useState(false);
+    const [ranCheckJoinStatus, setRanCheckJoinStatus] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
 
+    useEffect(() => {
+        setClub(_.isPlainObject(props.club) && !_.isEmpty(props.club) ? props.club : {});
+    }, [props.club])
 
 
     useEffect(() => {
 
-        if (props.userId && props.clubId && runCheckJoinAction) {
+        if (props.userId && _.get(club, `_id`) && ranCheckJoinStatus) {
             if (!joinStatus) {
-                checkIsInvitedByAdmin(props.userId, props.clubId);
+                checkJoinAction(props.userId, club);
             }
         }
 
-    }, [props.userId, props.clubId, runCheckJoinAction])
+    }, [props.userId, club, ranCheckJoinStatus])
 
 
     useEffect(() => {
 
-        if (props.userId && props.clubId) {
-            checkJoinStatus(props.userId, props.clubId);
+        if (props.userId && _.get(club, `_id`)) {
+            checkJoinStatus(props.userId, _.get(club, `_id`));
         }
 
-    }, [props.userId, props.clubId])
+    }, [props.userId, club._id])
 
 
     function handleSuccess(success) {
@@ -60,7 +64,7 @@ const JoinClubButton = (props) => {
                 }).then(res => {
                     setJoin(_.isArray(_.get(res, ['data'])) && !_.isEmpty(_.get(res, ['data'])) ? _.get(res, ['data', 0]) || {} : {})
                     setJoinStatus(_.isArray(_.get(res, ['data'])) && !_.isEmpty(_.get(res, ['data'])) ? _.get(res, ['data', 0, 'status']) || '' : '');
-                    setRunCheckJoinAction(true);
+                    setRanCheckJoinStatus(true);
                 })
             }).catch(err => {
                 message.error(err.message)
@@ -68,19 +72,23 @@ const JoinClubButton = (props) => {
         }
     }
 
-    function checkIsInvitedByAdmin(requester, clubId) {
+    function checkJoinAction(requester, club) {
 
-        if (requester && clubId) {
-            axios.get(`${client.io.io.uri}checkIsInvitedByClubAdmin`, {
-                params: {
-                    clubId: clubId,
-                    invitee: requester
-                }
-            }).then(res => {
-                setJoinAction(_.get(res, ['data', 'isAdminInvited']) ? 'approved' : !joinStatus ? 'pending' : '');
-            }).catch(err => {
-                message.error(err.message)
-            });
+        if (requester && _.get(club, `_id`)) {
+            if (_.get(club, `nonMemberAccessibilitySettings.autoApproval`) === true) {
+                setJoinAction('approved');
+            } else {
+                axios.get(`${client.io.io.uri}checkIsInvitedByClubAdmin`, {
+                    params: {
+                        clubId:  _.get(club, `_id`),
+                        invitee: requester
+                    }
+                }).then(res => {
+                    setJoinAction(_.get(res, ['data', 'isAdminInvited']) ? 'approved' : !joinStatus ? 'pending' : '');
+                }).catch(err => {
+                    message.error(err.message)
+                });
+            }
         }
     }
 
@@ -92,13 +100,13 @@ const JoinClubButton = (props) => {
 
     function handleSubmit() {
         ;
-        if (props.userId && props.clubId) {
+        if (props.userId && _.get(club, `_id`)) {
             let promises = [];
             setIsLoading(true);
             promises.push(client.authenticate());
             if (!joinStatus && joinAction) {
                 let data = {}
-                data.clubId = props.clubId;
+                data.clubId = _.get(club, `_id`);
                 data.userId = props.userId;
                 data.status = joinAction;
                 if (joinAction == 'approved') {
@@ -153,7 +161,7 @@ const JoinClubButton = (props) => {
             return null;
         }
 
-        if (!props.clubId) {
+        if (!_.get(club, `_id`)) {
             handleError({ message: 'Club not found!' });
             message.error('Club not found!')
             return null;
@@ -193,7 +201,7 @@ const JoinClubButton = (props) => {
                                 props.joinButton ?
                                     props.joinButton(joinAction)
                                     :
-                                    <Button> {joinAction == 'approved' ? 'Accept' : `Join Club`}</Button>
+                                    <Button> {joinAction == 'approved' && !_.get(club , `nonMemberAccessibilitySettings.autoApproval`)?  'Accept' : `Join Club`}</Button>
                             }
                         </a>
             }

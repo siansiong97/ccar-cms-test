@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Form, Input, message, Modal, Radio, Row, Select, Tooltip, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, message, Modal, Radio, Row, Select, Switch, Tooltip, Upload } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
 import { withRouter } from 'next/dist/client/router';
@@ -109,6 +109,7 @@ const WriteClubModal = (props) => {
 
     function handleSubmit() {
         form.validateFields((err, values) => {
+            console.log(values);
             if (err) {
                 return;
             }
@@ -140,19 +141,8 @@ const WriteClubModal = (props) => {
                     let fileList = _.get(res, ['data', 'result'])
 
                     if (!editMode) {
-                        if (values.clubType == 'public') {
-                            values.nonMemberAccesibilitySettings = {
-                                visible: true,
-                                approval: true,
-                                socialInteraction: false,
-                            }
-                        } else {
-                            values.nonMemberAccesibilitySettings = {
-                                visible: false,
-                                approval: true,
-                                socialInteraction: false,
-                            }
-                        }
+                        values.nonMemberAccessibilitySettings = values.nonMemberAccessibilitySettings || { autoApproval : false, socialInteraction : false, };
+                        values.nonMemberAccessibilitySettings.visible = values.clubType == 'public';
                         createClub({ ...values, clubAvatar: _.get(fileList, [0, 'url']) })
                     } else {
                         updateClub(_.get(club, ['_id']), { ...values, clubAvatar: _.get(fileList, [0, 'url']) })
@@ -229,7 +219,6 @@ const WriteClubModal = (props) => {
                         .catch((err) => {
                             setIsLoading(false);
                             message.error("Unable to create club. T.T")
-
                         })
                 }).catch(err => {
                     setIsLoading(false);
@@ -250,7 +239,7 @@ const WriteClubModal = (props) => {
                 width={700}
                 bodyStyle={{ backgroundColor: 'white' }}
             >
-                <Form layout="vertical">
+                <Form layout="vertical" className="padding-md">
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <div className="flex-justify-space-between flex-items-align-start">
@@ -339,18 +328,18 @@ const WriteClubModal = (props) => {
                                     rules: [{ required: true, message: 'Please input.' }],
                                 })(
 
-                                    <Select 
-                                    placeholder="Choose privacy"
-                                    className="club-privacy-select"
+                                    <Select
+                                        placeholder="Choose privacy"
+                                        className="club-privacy-select"
                                     >
                                         <Select.Option value="public" className="padding-y-sm">
                                             <div className="flex-justify-start flex-items-align-center padding-y-sm">
-                                                <img src={clubPublicIcon} style={{ width: 30, height: 30 }} className="margin-right-md"  />
-                                                <span className='d-inline-block 'style={{ lineHeight : 'normal' }} >
-                                                    <div className="font-weight-bold headline no-padding" style={{ lineHeight : 'auto' }}>
+                                                <img src={clubPublicIcon} style={{ width: 30, height: 30 }} className="margin-right-md" />
+                                                <span className='d-inline-block ' style={{ lineHeight: 'normal' }} >
+                                                    <div className="font-weight-bold headline no-padding" style={{ lineHeight: 'auto' }}>
                                                         Public
                                                   </div>
-                                                    <div className="small-text text-overflow-break no-padding" style={{ lineHeight : 'normal' }}>
+                                                    <div className="small-text text-overflow-break no-padding" style={{ lineHeight: 'normal' }}>
                                                         Anyone can see all the posts, discussions, events and member in the group.
                                                   </div>
                                                 </span>
@@ -358,13 +347,13 @@ const WriteClubModal = (props) => {
                                         </Select.Option>
                                         <Select.Option value="private">
 
-                                        <div className="flex-justify-start flex-items-align-center padding-y-sm">
-                                                <img src={clubPrivateIcon} style={{ width: 30, height: 30 }} className="margin-right-md"  />
-                                                <span className='d-inline-block 'style={{ lineHeight : 'normal' }} >
-                                                    <div className="font-weight-bold headline no-padding" style={{ lineHeight : 'auto' }}>
+                                            <div className="flex-justify-start flex-items-align-center padding-y-sm">
+                                                <img src={clubPrivateIcon} style={{ width: 30, height: 30 }} className="margin-right-md" />
+                                                <span className='d-inline-block ' style={{ lineHeight: 'normal' }} >
+                                                    <div className="font-weight-bold headline no-padding" style={{ lineHeight: 'auto' }}>
                                                         Private
                                                   </div>
-                                                    <div className="small-text text-overflow-break no-padding" style={{ lineHeight : 'normal' }}>
+                                                    <div className="small-text text-overflow-break no-padding" style={{ lineHeight: 'normal' }}>
                                                         Only members can see all the posts, discussions, events and member in the group.
                                                   </div>
                                                 </span>
@@ -374,9 +363,63 @@ const WriteClubModal = (props) => {
                                 )}
                             </Form.Item>
                         </Col>
+                        {
+                            props.form.getFieldValue('clubType') == 'public' ?
+                                [
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <div className="flex-justify-space-between flex-items-align-center padding-y-md">
+                                            <span className='d-inline-block ' style={{ maxWidth: '70%' }} >
+                                                <div className="font-weight-bold headline no-padding" style={{ lineHeight: 'auto' }}>
+                                                    Like, Comment & Write Posts
+                                        </div>
+                                                <div className="small-text text-overflow-break no-padding" style={{ lineHeight: 'normal' }}>
+                                                    Anyone can like, comment & write posts in the group.
+                                        </div>
+                                            </span>
+                                            <span className='d-inline-block ' >
+                                                <Form.Item style={{ margin: 0 }} >
+                                                    {getFieldDecorator('nonMemberAccessibilitySettings.socialInteraction', {
+                                                        initialValue: _.get(props.data, ['nonMemberAccessibilitySettings', 'socialInteraction']) || false,
+                                                        rules: [{ required: true, message: 'Please input.' }],
+                                                        valuePropName : 'checked',
+                                                    })(
+                                                        <Switch size="small" />
+                                                    )}
+                                                </Form.Item>
+                                            </span>
+                                        </div>
+                                    </Col>,
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <div className="flex-justify-space-between flex-items-align-center padding-y-md">
+                                            <span className='d-inline-block ' style={{ maxWidth: '70%' }} >
+                                                <div className="font-weight-bold headline no-padding" style={{ lineHeight: 'auto' }}>
+                                                    Automatic Member Approvals
+                                    </div>
+                                                <div className="small-text text-overflow-break no-padding" style={{ lineHeight: 'normal' }}>
+                                                    Anyone can join the group instantly without admin approval
+                                    </div>
+                                            </span>
+                                            <span className='d-inline-block ' >
+                                                <Form.Item style={{ margin: 0 }} >
+                                                    {getFieldDecorator('nonMemberAccessibilitySettings.autoApproval', {
+                                                        initialValue: _.get(props.data, ['nonMemberAccessibilitySettings', 'autoApproval']) || false,
+                                                        rules: [{ required: true, message: 'Please input.' }],
+                                                        valuePropName : 'checked',
+                                                    })(
+                                                        <Switch size="small" />
+                                                    )}
+                                                </Form.Item>
+                                            </span>
+                                        </div>
+                                    </Col>
+                                ]
+                                :
+                                null
+                        }
+
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <div className="width-100">
+                            <div className="width-100 margin-top-md">
                                 <Button block disabled={isLoading} className=" background-ccar-button-yellow" onClick={(e) => { handleSubmit() }}>Submit</Button>
                             </div>
                         </Col>

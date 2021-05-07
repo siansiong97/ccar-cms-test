@@ -113,7 +113,7 @@ const MyClubInvitationBox = (props) => {
                                                             <span className='d-inline-block margin-right-md' >
                                                                 {
                                                                     _.get(invite, ['status']) != 'rejected' ?
-                                                                        <JoinClubButton notify clubId={_.get(invite, ['clubId', '_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
+                                                                        <JoinClubButton club={_.get(invite, ['clubId'])} notify clubId={_.get(invite, ['clubId', '_id'])} userId={_.get(props.user, ['info', 'user', '_id'])}
                                                                             joinButton={(joinAction) => {
                                                                                 return <Button className="padding-x-md background-ccar-button-yellow black ">{joinAction == 'approved' ? 'Accept' : 'Join'}</Button>
                                                                             }}
